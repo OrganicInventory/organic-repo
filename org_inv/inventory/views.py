@@ -7,7 +7,7 @@ from .models import Product
 class AllProductsView(ListView):
     model = Product
     context_object_name = 'all_products'
-    queryset = Product.objects.all().order_by('name').order_by('size')
+    queryset = Product.objects.all().order_by('name', 'size')
     template_name = 'all_products.html'
 
     def get_context_data(self, **kwargs):
