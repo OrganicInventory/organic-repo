@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+import inventory.views as inv_views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^products/$', inv_views.AllProductsView.as_view(), name="all_products"),
 ]
