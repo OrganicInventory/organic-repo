@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView
-from .models import Product, Appointment
+from .models import Product, Appointment, Service
 
 # Create your views here.
 
@@ -23,3 +23,15 @@ class AllAppointmentsView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+
+class AllServicesView(ListView):
+    model = Service
+    context_object_name = 'all_services'
+    queryset = Service.objects.all().order_by('appointment')
+    template_name = 'all_services.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
