@@ -6,7 +6,11 @@ import datetime
 class Product(models.Model):
     name = models.CharField(max_length=255)
     quantity = models.FloatField(default=0)
+    max_quantity = models.FloatField(default=0)
     size = models.IntegerField()
+
+    class Meta:
+        unique_together = ('name', 'size')
 
     def update_quantity(self, quantity_entered):
         add_this = quantity_entered * self.size
@@ -17,6 +21,10 @@ class Product(models.Model):
     @property
     def display_quantity(self):
         return self.quantity / self.size
+
+    def update_max_quantity(self):
+        self.max_quantity = self.quantity
+        self.save()
 
     def __str__(self):
         return self.name
@@ -50,4 +58,7 @@ class Amount(models.Model):
         new_quant = self.product.quantity - self.amount
         self.product.quantity = new_quant
         self.product.save()
+
+    def calculate(self):
+        return self.product.quantity - self.amount
 
