@@ -5,7 +5,7 @@ import datetime
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
-    quantity = models.FloatField()
+    quantity = models.FloatField(default=0)
     size = models.IntegerField()
 
     def update_quantity(self, quantity_entered):
@@ -14,6 +14,7 @@ class Product(models.Model):
         self.quantity = updated
         self.save()
 
+    @property
     def display_quantity(self):
         return self.quantity / self.size
 
@@ -43,5 +44,10 @@ class Amount(models.Model):
     service = models.ForeignKey(Service)
 
     def __str__(self):
-        return self.amount
+        return str(self.amount)
+
+    def subtract(self):
+        new_quant = self.product.quantity - self.amount
+        self.product.quantity = new_quant
+        self.product.save()
 
