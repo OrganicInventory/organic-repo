@@ -3,7 +3,8 @@
 {% block content %}
 
     {% for product in all_products %}
-        {{ product }}
+        {{ product }} --
+        {{ product.size }}oz.<br />
     {% endfor %}
 
 {% endblock %}
