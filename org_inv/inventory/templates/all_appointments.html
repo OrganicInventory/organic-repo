@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+
+    {% for appointment in all_appointments %}
+        {{ appointment }}<br>
+    {% endfor %}
+
+{% endblock %}
+
