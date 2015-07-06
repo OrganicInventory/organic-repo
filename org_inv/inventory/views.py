@@ -37,12 +37,14 @@ def inventory_check(daterange):
         product_dict[product] = product.quantity
 
     for appointment in appointments:
-        for product in appointment.service:
+        for product in appointment.service.products.all():
             amount = Amount.objects.get(product=product, service=appointment.service)
             product_dict[product] -= amount.amount
 
-    for key, value in product_dict.items():
-        if value >= (.3 * key.max_quantity):
-            del product_dict[key]
+    low_products = {}
 
-    return product_dict
+    for key, value in product_dict.items():
+        if value < (.3 * key.max_quantity):
+            low_products[key] = value
+
+    return low_products
