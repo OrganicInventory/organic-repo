@@ -64,3 +64,5 @@ migrations/*
 fixtures/
 .direnv
 .direnv/*
+.envrc
+
