@@ -8,6 +8,9 @@ class Product(models.Model):
     quantity = models.FloatField(default=0)
     size = models.IntegerField()
 
+    class Meta:
+        unique_together = ('name', 'size')
+
     def update_quantity(self, quantity_entered):
         add_this = quantity_entered * self.size
         updated = self.quantity + add_this
