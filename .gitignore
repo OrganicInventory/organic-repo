@@ -55,3 +55,12 @@ docs/_build/
 
 # PyBuilder
 target/
+
+*.sqlite
+*.sqlite3
+migrations/
+migrations/*
+.idea/
+fixtures/
+.direnv
+.direnv/*
