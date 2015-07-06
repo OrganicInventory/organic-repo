@@ -15,3 +15,6 @@ class AllProductsView(ListView):
         return context
 
 
+
+
+
