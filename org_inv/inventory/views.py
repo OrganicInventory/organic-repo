@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from datetime import timedelta
+
+from django.utils import timezone
 from django.views.generic import ListView
-from .models import Product, Appointment
+from .models import Product, Appointment, Amount
+
 
 # Create your views here.
 
@@ -14,6 +17,7 @@ class AllProductsView(ListView):
         context = super().get_context_data(**kwargs)
         return context
 
+
 class AllAppointmentsView(ListView):
     model = Appointment
     context_object_name = 'all_appointments'
@@ -23,3 +27,22 @@ class AllAppointmentsView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+
+def inventory_check(daterange):
+    appointments = Appointment.objects.filter(date__gt=timezone.now()).filter(
+        date__lte=timezone.now() + timedelta(days=daterange))
+    product_dict = {}
+    for product in Product.objects.all():
+        product_dict[product] = product.quantity
+
+    for appointment in appointments:
+        for product in appointment.service:
+            amount = Amount.objects.get(product=product, service=appointment.service)
+            product_dict[product] -= amount.amount
+
+    for key, value in product_dict.items():
+        if value >= (.3 * key.max_quantity):
+            del product_dict[key]
+
+    return product_dict
