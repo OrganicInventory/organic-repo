@@ -27,7 +27,7 @@ class Product(models.Model):
         self.save()
 
     def __str__(self):
-        return self.name
+        return "{}:{}".format(self.name, self.size)
 
 
 class Service(models.Model):
