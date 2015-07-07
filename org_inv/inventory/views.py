@@ -87,7 +87,7 @@ class AppointmentUpdate(UpdateView):
 class AllServicesView(ListView):
     model = Service
     context_object_name = 'all_services'
-    queryset = Service.objects.all().order_by('appointment')
+    queryset = Service.objects.all().order_by('name')
     template_name = 'all_services.html'
 
     def get_context_data(self, **kwargs):
