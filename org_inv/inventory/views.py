@@ -12,8 +12,12 @@ from .forms import ServiceForm, AmountForm, AmountFormSet
 class AllProductsView(ListView):
     model = Product
     context_object_name = 'all_products'
-    queryset = Product.objects.all().order_by('name', 'size')
+
     template_name = 'all_products.html'
+
+    def get_queryset(self):
+        queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -28,6 +32,7 @@ class ProductCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance = form.save(commit=False)
+        form.instance.user = self.request.user
         form.instance.update_max_quantity()
         return super().form_valid(form)
 
@@ -50,6 +55,7 @@ class AppointmentCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance = form.save(commit=False)
+        form.instance.user = self.request.user
         return super().form_valid(form)
 
 
@@ -87,8 +93,11 @@ class AppointmentUpdate(UpdateView):
 class AllServicesView(ListView):
     model = Service
     context_object_name = 'all_services'
-    queryset = Service.objects.all().order_by('name')
     template_name = 'all_services.html'
+
+    def get_queryset(self):
+        queryset = Service.objects.filter(user=self.request.user).order_by('name')
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -113,7 +122,10 @@ class ServiceCreateView(CreateView):
         amounts = context['amounts']
         # with transaction.commit_on_success():
         if amounts.is_valid():
-            self.object = form.save()
+            self.object = form.save(commit=False)
+            self.object.user = self.request.user
+            self.object.save()
+
             amounts.instance = self.object
             amounts.save()
 
@@ -194,8 +206,12 @@ def inventory_check(daterange):
 class LowInventoryView(ListView):
     model = Product
     context_object_name = 'low_products'
-    queryset = Product.objects.all().order_by('name', 'size')
+
     template_name = 'low_products.html'
+
+    def get_queryset(self):
+        queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
