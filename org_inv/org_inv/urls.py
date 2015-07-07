@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^services/new/$', inv_views.ServiceCreateView.as_view(), name="create_service"),
     url(r'^appointments/delete/(?P<app_id>\d+)$', inv_views.AppointmentDelete.as_view(), name='delete_appointment'),
     url(r'^appointments/update/(?P<app_id>\d+)$', inv_views.AppointmentUpdate.as_view(), name='update_appointment'),
+    url(r'^services/update/(?P<serv_id>\d+)$', inv_views.ServiceUpdate.as_view(), name='update_service'),
 ]
