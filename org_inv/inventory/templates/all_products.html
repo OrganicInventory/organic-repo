@@ -1,16 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="main-nav-container">
-    <ul class="main-nav-ul">
-      <li class="main-nav-li">Low Inventory</li>
-      <li class="main-nav-li">All Products</li>
-      <li class="main-nav-li">Services</li>
-      <li class="main-nav-li">Appointments</li>
-    </ul>
-  </div>
+  <div class="main-content">
+    <div class="main-header"></div>
     {% for product in all_products %}
         {{ product }}
     {% endfor %}
-
+  </div>
 {% endblock %}

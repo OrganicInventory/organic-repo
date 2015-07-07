@@ -11,16 +11,23 @@
 </head>
 <body>
   <header class="page-header">
-    <div class="page-logo"></div>
     <div class="top-nav-container">
-      <span class="welcome-user">Welcome User</span>
-      <ul class="top-nav-ul">
-        <li class="top-nav-li">Home</li>
-        <li class="top-nav-li">My Account</li>
-        <li class="top-nav-li">Logout</li>
-      </ul>
+      <div class="user-icon"></div>
+      <span class="user-name">UserName</span>
     </div>
   </header>
+  <div class="wrapper">
+    <div class="page-logo"></div>
+    <div class="main-nav-container">
+      <h1 class="main-heading">All Products</h1>
+      <ul class="main-nav-ul">
+        <li class="main-nav-li">Low Inventory</li>
+        <li class="main-nav-li">All Products</li>
+        <li class="main-nav-li">Services</li>
+        <li class="main-nav-li">Appointments</li>
+      </ul>
+    </div>
+  </div>
 {% block content %}
 {% endblock %}
 <script src="{% static 'js/main.js' %}"></script>
