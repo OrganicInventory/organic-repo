@@ -49,7 +49,7 @@ class ProductDeleteView(DeleteView):
     model = Product
 
     def dispatch(self, request, *args, **kwargs):
-        obj = Product.objects.filter(id=self.kwargs['prod_id'])
+        obj = Product.objects.filter(id=self.kwargs['prod_id'])[0]
         if self.request.user == obj.user:
             return super().dispatch(request, *args, **kwargs)
         else:
