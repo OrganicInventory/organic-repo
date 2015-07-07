@@ -30,26 +30,10 @@ class Product(models.Model):
         return "{}:{}".format(self.name, self.size)
 
 
-class Service(models.Model):
-    name = models.CharField(max_length=255)
-    products = models.ManyToManyField(Product)
-
-    def __str__(self):
-        return self.name
-
-
-class Appointment(models.Model):
-    date = models.DateField()
-    service = models.ForeignKey(Service)
-
-    def __str__(self):
-        return "{}: {}".format(self.service, self.date)
-
-
 class Amount(models.Model):
     amount = models.FloatField()
-    product = models.ForeignKey(Product)
-    service = models.ForeignKey(Service)
+    product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
+    service = models.ForeignKey('Service', null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return str(self.amount)
@@ -61,4 +45,21 @@ class Amount(models.Model):
 
     def calculate(self):
         return self.product.quantity - self.amount
+
+
+class Service(models.Model):
+    name = models.CharField(max_length=255)
+    products = models.ManyToManyField(Product, through=Amount)
+
+    def __str__(self):
+        return self.name
+
+
+class Appointment(models.Model):
+    date = models.DateField()
+    service = models.ForeignKey(Service, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return "{}: {}".format(self.service, self.date)
+
 
