@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^products/$', inv_views.AllProductsView.as_view(), name="all_products"),
     url(r'^appointments/$', inv_views.AllAppointmentsView.as_view(), name='all_appointments'),
+    url(r'^appointments/add/$', inv_views.AppointmentCreateView.as_view(), name='add_appointment'),
     url(r'^services/$', inv_views.AllServicesView.as_view(), name='all_services')
 ]
