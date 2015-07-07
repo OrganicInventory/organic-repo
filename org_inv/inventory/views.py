@@ -65,15 +65,19 @@ class AppointmentCreateView(CreateView):
 class AppointmentDelete(DeleteView):
     model = Appointment
 
+    def dispatch(self, request, *args, **kwargs):
+        obj = Appointment.objects.filter(pk=self.kwargs['app_id'])[0]
+        if self.request.user == obj.user:
+            return super().dispatch(request, *args, **kwargs)
+
+        else:
+            return HttpResponseForbidden()
+
     def get_success_url(self):
         return reverse('all_appointments')
 
     def get_object(self, queryset=None):
-        obj = Appointment.objects.filter(pk=self.kwargs['app_id'])[0]
-        if self.request.user == obj.user:
-            return obj
-        else:
-            return HttpResponseForbidden()
+        return Appointment.objects.filter(pk=self.kwargs['app_id'])[0]
 
     def get_template_names(self):
         return 'appointment_confirm_delete.html'
@@ -83,6 +87,14 @@ class AppointmentUpdate(UpdateView):
     model = Appointment
     fields = ['date', 'service']
     template_name = 'appointment_update_form.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = Appointment.objects.filter(pk=self.kwargs['app_id'])[0]
+        if self.request.user == obj.user:
+            return super().dispatch(request, *args, **kwargs)
+
+        else:
+            return HttpResponseForbidden()
 
     def get_success_url(self):
         return reverse('all_appointments')
@@ -146,6 +158,14 @@ class ServiceUpdate(UpdateView):
     form_class = ServiceForm
     template_name = 'service_update_form.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        obj = Service.objects.get(id=self.kwargs['serv_id'])
+        if self.request.user == obj.user:
+            return super().dispatch(request, *args, **kwargs)
+
+        else:
+            return HttpResponseForbidden()
+
     def get_object(self, queryset=None, **kwargs):
         serv = Service.objects.get(id=self.kwargs['serv_id'])
         return serv
@@ -174,6 +194,14 @@ class ServiceUpdate(UpdateView):
 
 class ServiceDelete(DeleteView):
     model = Service
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = Service.objects.get(id=self.kwargs['serv_id'])
+        if self.request.user == obj.user:
+            return super().dispatch(request, *args, **kwargs)
+
+        else:
+            return HttpResponseForbidden()
 
     def get_success_url(self):
         return reverse('all_services')
