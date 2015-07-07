@@ -1,6 +1,6 @@
 from datetime import timedelta
-
 from django.utils import timezone
+from django.shortcuts import render
 from django.views.generic import ListView, CreateView
 from .models import Product, Appointment, Service, Amount
 
@@ -38,6 +38,16 @@ class AllAppointmentsView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+class AppointmentCreateView(CreateView):
+    model = Appointment
+    fields = ['date', 'service']
+    template_name = 'add_appointment.html'
+    success_url = '/appointments/'
+
+    def form_valid(self, form):
+        form.instance = form.save(commit=False)
+        return super().form_valid(form)
 
 
 class AllServicesView(ListView):
