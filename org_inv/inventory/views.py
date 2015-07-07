@@ -142,3 +142,16 @@ def inventory_check(daterange):
             low_products[key] = value
 
     return low_products
+
+
+class LowInventoryView(ListView):
+    model = Product
+    context_object_name = 'low_products'
+    queryset = Product.objects.all().order_by('name', 'size')
+    template_name = 'low_products.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        low = inventory_check(14)
+        context['low'] = low
+        return context

@@ -20,6 +20,7 @@ import inventory.views as inv_views
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^products/$', inv_views.AllProductsView.as_view(), name="all_products"),
+    url(r'^low/$', inv_views.LowInventoryView.as_view(), name="low_products"),
     url(r'^products/new/$', inv_views.ProductCreateView.as_view(), name="create_product"),
     url(r'^appointments/$', inv_views.AllAppointmentsView.as_view(), name='all_appointments'),
     url(r'^appointments/new/$', inv_views.AppointmentCreateView.as_view(), name='add_appointment'),

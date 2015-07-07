@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if low %}
+        {% for key, value in low.items %}
+            {{ key.name }} --
+            {{ key.size }}oz. --
+            {{ value }}oz. left in 2 weeks<br/>
+        {% endfor %}
+    {% else %}
+        <p>No products are currently low</p>
+    {% endif %}
+
+{% endblock %}
