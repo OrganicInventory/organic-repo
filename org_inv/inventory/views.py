@@ -23,7 +23,6 @@ class AllProductsView(LoginRequiredMixin, ListView):
     model = Product
     context_object_name = 'all_products'
     template_name = 'all_products.html'
-    permission_required = "auth.change_user"
 
     def get_queryset(self):
         queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
@@ -73,9 +72,9 @@ class AppointmentCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+
 class AppointmentDelete(LoginRequiredMixin, DeleteView):
     model = Appointment
-    permission_required = "auth.change_user"
 
     def dispatch(self, request, *args, **kwargs):
         obj = Appointment.objects.filter(pk=self.kwargs['app_id'])[0]
