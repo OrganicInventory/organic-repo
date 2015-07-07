@@ -154,6 +154,21 @@ class ServiceUpdate(UpdateView):
         return reverse('all_services')
 
 
+class ServiceDelete(DeleteView):
+    model = Service
+
+    def get_success_url(self):
+        return reverse('all_services')
+
+    def get_object(self, queryset=None):
+        serv = Service.objects.get(pk=self.kwargs['serv_id'])
+        Appointment.objects.filter(service=serv).delete()
+        Amount.objects.filter(service=serv).delete()
+        return serv
+
+    def get_template_names(self):
+        return 'service_confirm_delete.html'
+
 
 def inventory_check(daterange):
     appointments = Appointment.objects.filter(date__gt=timezone.now()).filter(
