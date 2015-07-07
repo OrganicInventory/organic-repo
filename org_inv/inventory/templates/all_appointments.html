@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+
+    {% for appointment in all_appointments %}
+        {{ appointment }}--<a href="{% url 'delete_appointment' appointment.id %}">Delete</a> | <a href="{% url 'update_appointment' appointment.id %}">Update</a><br>
+    {% endfor %}
+
+{% endblock %}
+

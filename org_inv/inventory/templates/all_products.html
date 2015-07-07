@@ -4,7 +4,8 @@
   <div class="main-content">
     <div class="main-header"></div>
     {% for product in all_products %}
-        {{ product }}
+        {{ product }} --
+        {{ product.size }}oz.<br />
     {% endfor %}
   </div>
 {% endblock %}
