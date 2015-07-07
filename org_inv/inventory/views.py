@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from django.utils import timezone
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 from .models import Product, Appointment, Service, Amount
 
 # Create your views here.
@@ -15,6 +15,18 @@ class AllProductsView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ['name', 'size', 'quantity']
+    template_name = 'create_product.html'
+    success_url = '/products/'
+
+    def form_valid(self, form):
+        form.instance = form.save(commit=False)
+        form.instance.update_max_quantity()
+        return super().form_valid(form)
 
 
 class AllAppointmentsView(ListView):
