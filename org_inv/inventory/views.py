@@ -1,6 +1,7 @@
 from datetime import timedelta
 from django.core.urlresolvers import reverse
 from django.db import transaction
+from django.http import HttpResponseForbidden
 from django.utils import timezone
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView
@@ -39,8 +40,11 @@ class ProductCreateView(CreateView):
 class AllAppointmentsView(ListView):
     model = Appointment
     context_object_name = 'all_appointments'
-    queryset = Appointment.objects.all().order_by('date')
     template_name = 'all_appointments.html'
+
+    def get_queryset(self):
+        queryset = Appointment.objects.filter(user=self.request.user).order_by('date')
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -65,7 +69,11 @@ class AppointmentDelete(DeleteView):
         return reverse('all_appointments')
 
     def get_object(self, queryset=None):
-        return Appointment.objects.filter(pk=self.kwargs['app_id'])[0]
+        obj = Appointment.objects.filter(pk=self.kwargs['app_id'])[0]
+        if self.request.user == obj.user:
+            return obj
+        else:
+            return HttpResponseForbidden()
 
     def get_template_names(self):
         return 'appointment_confirm_delete.html'
