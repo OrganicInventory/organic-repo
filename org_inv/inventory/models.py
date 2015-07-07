@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 import datetime
 
@@ -8,6 +9,7 @@ class Product(models.Model):
     quantity = models.FloatField(default=0)
     max_quantity = models.FloatField(default=0, null=True, blank=True)
     size = models.IntegerField()
+    user = models.ForeignKey(User)
 
     class Meta:
         unique_together = ('name', 'size')
@@ -50,6 +52,7 @@ class Amount(models.Model):
 class Service(models.Model):
     name = models.CharField(max_length=255)
     products = models.ManyToManyField(Product, through=Amount)
+    user = models.ForeignKey(User)
 
     def __str__(self):
         return self.name
@@ -58,6 +61,7 @@ class Service(models.Model):
 class Appointment(models.Model):
     date = models.DateField()
     service = models.ForeignKey(Service, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User)
 
     def __str__(self):
         return "{}: {}".format(self.service, self.date)
