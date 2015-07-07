@@ -5,7 +5,7 @@
         {% for key, value in low.items %}
             {{ key.name }} --
             {{ key.size }}oz. --
-            {{ value }}oz. left in 2 weeks<br/>
+            {{ value|floatformat:2 }}oz. left in 2 weeks<br/>
         {% endfor %}
     {% else %}
         <p>No products are currently low</p>
