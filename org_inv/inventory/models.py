@@ -32,8 +32,8 @@ class Product(models.Model):
 
 class Amount(models.Model):
     amount = models.FloatField()
-    product = models.ForeignKey(Product)
-    service = models.ForeignKey('Service')
+    product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
+    service = models.ForeignKey('Service', null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return str(self.amount)
@@ -57,7 +57,7 @@ class Service(models.Model):
 
 class Appointment(models.Model):
     date = models.DateField()
-    service = models.ForeignKey(Service)
+    service = models.ForeignKey(Service, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return "{}: {}".format(self.service, self.date)
