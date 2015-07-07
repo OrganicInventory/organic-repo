@@ -7,13 +7,15 @@ from django.shortcuts import render
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 from .models import Product, Appointment, Service, Amount
 from .forms import ServiceForm, AmountForm, AmountFormSet
+from braces import views
 
 # Create your views here.
 
-class AllProductsView(ListView):
+class AllProductsView(ListView, views.PermissionRequiredMixin):
     model = Product
     context_object_name = 'all_products'
     template_name = 'all_products.html'
+    permission_required = "auth.change_user"
 
     def get_queryset(self):
         queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
@@ -33,6 +35,7 @@ class ProductCreateView(CreateView):
     def form_valid(self, form):
         form.instance = form.save(commit=False)
         form.instance.user = self.request.user
+        form.instance.new_product_quantity(form.instance.quantity)
         form.instance.update_max_quantity()
         return super().form_valid(form)
 
@@ -62,8 +65,9 @@ class AppointmentCreateView(CreateView):
         return super().form_valid(form)
 
 
-class AppointmentDelete(DeleteView):
+class AppointmentDelete(DeleteView, views.PermissionRequiredMixin):
     model = Appointment
+    permission_required = "auth.change_user"
 
     def dispatch(self, request, *args, **kwargs):
         obj = Appointment.objects.filter(pk=self.kwargs['app_id'])[0]
