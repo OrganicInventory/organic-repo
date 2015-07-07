@@ -1,12 +1,11 @@
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.db import transaction
 from django.http import HttpResponseForbidden
 from django.utils import timezone
 from django.utils.decorators import method_decorator
-from django.shortcuts import render, redirect
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView, View
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View
 from .models import Product, Appointment, Service, Amount
 from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm
 
@@ -46,6 +45,32 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         form.instance.update_max_quantity()
         return super().form_valid(form)
 
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'product_detail.html'
+
+    def get_object(self, queryset=None):
+        return Product.objects.filter(pk=self.kwargs['prod_id'])[0]
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = Product.objects.filter(id=self.kwargs['prod_id'])[0]
+        if self.request.user == obj.user:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden()
+
+    def get_success_url(self):
+        return reverse('all_products')
+
+    def get_object(self, queryset=None):
+        return Product.objects.filter(pk=self.kwargs['prod_id'])[0]
+
+    def get_template_names(self):
+        return 'product_confirm_delete.html'
 
 class AllAppointmentsView(LoginRequiredMixin, ListView):
     model = Appointment

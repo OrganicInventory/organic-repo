@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Product Details</h3>
+
+   Name:  {{ object.name }}<br>
+   Quantity: {{ object.quantity }}<br>
+   Max_Quantity: {{ object.max_quantity }}<br>
+   Size: {{ object.size }}<br>
+   User:  {{ object.user }}<br>
+
+<a href="{% url 'product_confirm_delete' product.id %}">Delete</a>
+
+{% endblock %}
