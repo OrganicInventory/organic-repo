@@ -154,23 +154,6 @@ class ServiceUpdate(UpdateView):
         return reverse('all_services')
 
 
-# class ServiceUpdate(UpdateView):
-#     model = Service
-#     form_class = ServiceForm
-#     template_name = 'service_update_form.html'
-#
-#     def get_success_url(self):
-#         return reverse('all_appointments')
-#
-#     def get_object(self, queryset=None, **kwargs):
-#         appt = Appointment.objects.get(id=self.kwargs['app_id'])
-#         return appt
-#
-#     def form_valid(self, form):
-#         self.object = form.save(commit=False)
-#         self.object.save()
-#         return super().form_valid(form)
-
 
 def inventory_check(daterange):
     appointments = Appointment.objects.filter(date__gt=timezone.now()).filter(
