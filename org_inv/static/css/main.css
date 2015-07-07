@@ -75,19 +75,24 @@ body {
 }
 
 .main-nav-ul {
-  background-color: #b35b5a;
-  /*background-color: #565d6a;*/
   border-radius: 10px 10px 0 0;
 }
 
 .main-nav-li {
   display: inline-block;
-  padding: 20px 30px;
+  padding: 15px 20px;
+  margin: 5px 2px;
   font-size: 18px;
   cursor: pointer;
+  transition: 0.3s all ease-out;
+  background-color: #b35b5a;
+  border-radius: 10px 10px 0 0;
 }
 
 .main-nav-li:hover {
   background-color: #dfdcd6;
   color: #444c5a;
+  transform: scale(1.03);
+  box-shadow: inset 0 -4px 10px -3px #444c5a;
+  transition: 0.3s all ease-in;
 }
