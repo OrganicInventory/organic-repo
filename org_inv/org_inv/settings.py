@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'django_extensions',
 
     'inventory',
+    'users',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -89,6 +90,8 @@ DATABASES = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
+
+LOGIN_REDIRECT_URL = '/products/'
 
 LANGUAGE_CODE = 'en-us'
 
