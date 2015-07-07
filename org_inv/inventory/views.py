@@ -21,6 +21,7 @@ class ProductCreateView(CreateView):
     model = Product
     fields = ['name', 'size', 'quantity']
     template_name = 'create_product.html'
+    success_url = '/products/'
 
     def form_valid(self, form):
         form.instance = form.save(commit=False)
