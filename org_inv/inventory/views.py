@@ -123,6 +123,55 @@ class ServiceCreateView(CreateView):
         return reverse('all_services')
 
 
+class ServiceUpdate(UpdateView):
+    model = Service
+    form_class = ServiceForm
+    template_name = 'service_update_form.html'
+
+    def get_object(self, queryset=None, **kwargs):
+        serv = Service.objects.get(id=self.kwargs['serv_id'])
+        return serv
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data['amounts'] = AmountFormSet(self.request.POST, instance=self.object)
+        else:
+            data['amounts'] = AmountFormSet(instance=self.object)
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        amounts = context['amounts']
+        # with transaction.commit_on_success():
+        if amounts.is_valid():
+            amounts.instance = self.object
+            amounts.save()
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('all_services')
+
+
+# class ServiceUpdate(UpdateView):
+#     model = Service
+#     form_class = ServiceForm
+#     template_name = 'service_update_form.html'
+#
+#     def get_success_url(self):
+#         return reverse('all_appointments')
+#
+#     def get_object(self, queryset=None, **kwargs):
+#         appt = Appointment.objects.get(id=self.kwargs['app_id'])
+#         return appt
+#
+#     def form_valid(self, form):
+#         self.object = form.save(commit=False)
+#         self.object.save()
+#         return super().form_valid(form)
+
+
 def inventory_check(daterange):
     appointments = Appointment.objects.filter(date__gt=timezone.now()).filter(
         date__lte=timezone.now() + timedelta(days=daterange))

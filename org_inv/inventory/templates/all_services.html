@@ -2,7 +2,7 @@
 {% block content %}
 
     {% for service in all_services %}
-        {{ service }}<br>
+        {{ service }}--<a href="{% url 'update_service' service.id %}">Update</a><br>
     {% endfor %}
 
 {% endblock %}
