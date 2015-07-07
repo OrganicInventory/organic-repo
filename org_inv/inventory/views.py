@@ -1,8 +1,10 @@
 from datetime import timedelta
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.http import HttpResponseForbidden
 from django.utils import timezone
+from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, View
 from .models import Product, Appointment, Service, Amount
@@ -10,7 +12,14 @@ from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm
 
 # Create your views here.
 
-class AllProductsView(ListView):
+
+class LoginRequiredMixin(object):
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+
+class AllProductsView(LoginRequiredMixin, ListView):
     model = Product
     context_object_name = 'all_products'
     template_name = 'all_products.html'
@@ -24,7 +33,7 @@ class AllProductsView(ListView):
         return context
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     fields = ['name', 'size', 'quantity']
     template_name = 'create_product.html'
@@ -38,7 +47,7 @@ class ProductCreateView(CreateView):
         return super().form_valid(form)
 
 
-class AllAppointmentsView(ListView):
+class AllAppointmentsView(LoginRequiredMixin, ListView):
     model = Appointment
     context_object_name = 'all_appointments'
     template_name = 'all_appointments.html'
@@ -51,7 +60,7 @@ class AllAppointmentsView(ListView):
         context = super().get_context_data(**kwargs)
         return context
 
-class AppointmentCreateView(CreateView):
+class AppointmentCreateView(LoginRequiredMixin, CreateView):
     model = Appointment
     fields = ['date', 'service']
     template_name = 'add_appointment.html'
@@ -63,7 +72,8 @@ class AppointmentCreateView(CreateView):
         return super().form_valid(form)
 
 
-class AppointmentDelete(DeleteView):
+
+class AppointmentDelete(LoginRequiredMixin, DeleteView):
     model = Appointment
 
     def dispatch(self, request, *args, **kwargs):
@@ -84,7 +94,7 @@ class AppointmentDelete(DeleteView):
         return 'appointment_confirm_delete.html'
 
 
-class AppointmentUpdate(UpdateView):
+class AppointmentUpdate(LoginRequiredMixin, UpdateView):
     model = Appointment
     fields = ['date', 'service']
     template_name = 'appointment_update_form.html'
@@ -110,7 +120,7 @@ class AppointmentUpdate(UpdateView):
         return super().form_valid(form)
 
 
-class AllServicesView(ListView):
+class AllServicesView(LoginRequiredMixin, ListView):
     model = Service
     context_object_name = 'all_services'
     template_name = 'all_services.html'
@@ -124,7 +134,7 @@ class AllServicesView(ListView):
         return context
 
 
-class ServiceCreateView(CreateView):
+class ServiceCreateView(LoginRequiredMixin, CreateView):
     model = Service
     form_class = ServiceForm
     template_name = 'create_service.html'
@@ -154,7 +164,7 @@ class ServiceCreateView(CreateView):
         return reverse('all_services')
 
 
-class ServiceUpdate(UpdateView):
+class ServiceUpdate(LoginRequiredMixin, UpdateView):
     model = Service
     form_class = ServiceForm
     template_name = 'service_update_form.html'
@@ -193,7 +203,7 @@ class ServiceUpdate(UpdateView):
         return reverse('all_services')
 
 
-class ServiceDelete(DeleteView):
+class ServiceDelete(LoginRequiredMixin, DeleteView):
     model = Service
 
     def dispatch(self, request, *args, **kwargs):
@@ -238,7 +248,7 @@ def inventory_check(daterange):
     return low_products
 
 
-class LowInventoryView(ListView):
+class LowInventoryView(LoginRequiredMixin, ListView):
     model = Product
     context_object_name = 'low_products'
     template_name = 'low_products.html'
