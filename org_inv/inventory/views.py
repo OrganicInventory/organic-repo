@@ -4,11 +4,11 @@ from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.http import HttpResponseForbidden
 from django.utils import timezone
-from django.shortcuts import render
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView
+from django.shortcuts import render, redirect
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, View
 from .models import Product, Appointment, Service, Amount
-from .forms import ServiceForm, AmountForm, AmountFormSet
+from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm
 
 # Create your views here.
 
@@ -262,3 +262,20 @@ class LowInventoryView(LoginRequiredMixin, ListView):
         low = inventory_check(14)
         context['low'] = low
         return context
+
+
+class NewOrderView(View):
+    def get(self, request, **kwargs):
+        form = ProductForm(initial={'user': self.request.user})
+        return render(request, "new_order.html", {"form": form})
+
+    def post(self, request, **kwargs):
+        form = ProductForm(request.POST, initial={'user': self.request.user})
+        if Product.objects.filter(name=request.POST.get('name'), size=int(request.POST.get('size'))):
+            prod_instance = Product.objects.filter(name=request.POST.get('name'), size=int(request.POST.get('size')))[0]
+            prod_instance.update_quantity(int(request.POST.get('quantity')))
+            prod_instance.update_max_quantity()
+            prod_instance.save()
+            return redirect("/products/")
+        else:
+            return render(request, "new_order.html", {"form": form})

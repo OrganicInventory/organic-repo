@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import inlineformset_factory
 
-from .models import Service, Amount
+from .models import Service, Amount, Product
 
 
 class ServiceForm(forms.ModelForm):
@@ -17,3 +17,10 @@ class AmountForm(forms.ModelForm):
 
 
 AmountFormSet = inlineformset_factory(Service, Amount, fields=('product', 'amount'), can_delete=False)
+
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['name', 'quantity', 'size']
+
