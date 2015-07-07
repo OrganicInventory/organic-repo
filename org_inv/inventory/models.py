@@ -6,7 +6,7 @@ import datetime
 class Product(models.Model):
     name = models.CharField(max_length=255)
     quantity = models.FloatField(default=0)
-    max_quantity = models.FloatField(default=0)
+    max_quantity = models.FloatField(default=0, null=True, blank=True)
     size = models.IntegerField()
 
     class Meta:
