@@ -31,4 +31,5 @@ urlpatterns = [
     url(r'^appointments/update/(?P<app_id>\d+)$', inv_views.AppointmentUpdate.as_view(), name='update_appointment'),
     url(r'^services/update/(?P<serv_id>\d+)$', inv_views.ServiceUpdate.as_view(), name='update_service'),
     url(r'^services/delete/(?P<serv_id>\d+)$', inv_views.ServiceDelete.as_view(), name='delete_service'),
+    url(r'^products/new_order/$', inv_views.NewOrderView.as_view(), name="new_order"),
 ]
