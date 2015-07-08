@@ -1,1 +1,1 @@
-web: gunicorn health_tracker.wsgi --log-file -
+web: gunicorn org_inv.wsgi --log-file -
