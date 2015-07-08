@@ -36,3 +36,8 @@ class AppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
         fields = ['date', 'service',]
+
+
+class AdjustUsageForm(forms.Form):
+    product = forms.ModelChoiceField(queryset=Product.objects.all())
+    amount_used = forms.FloatField(label='Amount Used (oz.)')

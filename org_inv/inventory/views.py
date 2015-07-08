@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View
 from .models import Product, Appointment, Service, Amount
-from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm, AppointmentForm
+from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm, AppointmentForm, AdjustUsageForm
 
 # Create your views here.
 
@@ -44,6 +44,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         form.instance.new_product_quantity(form.instance.quantity)
         form.instance.update_max_quantity()
         return super().form_valid(form)
+
 
 class ProductDetailView(DetailView):
     model = Product
@@ -107,6 +108,7 @@ class AllAppointmentsView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         return context
 
+
 class AppointmentCreateView(LoginRequiredMixin, CreateView):
     model = Appointment
     form_class = AppointmentForm
@@ -117,7 +119,6 @@ class AppointmentCreateView(LoginRequiredMixin, CreateView):
         form.instance = form.save(commit=False)
         form.instance.user = self.request.user
         return super().form_valid(form)
-
 
 
 class AppointmentDelete(LoginRequiredMixin, DeleteView):
@@ -360,3 +361,22 @@ class EmptyProductView(View):
             amount.amount = new_amt
             amount.save()
         return redirect('/products/')
+
+
+class AdjustUsageView(View):
+    def get(self, request, **kwargs):
+        form = AdjustUsageForm()
+        appt = Appointment.objects.get(id=self.kwargs['appt_id'])
+        return render(request, "adjust_usage.html", {'form': form, 'appt': appt})
+
+    def post(self, request, **kwargs):
+        form = AdjustUsageForm(request.POST)
+        appt = Appointment.objects.get(id=self.kwargs['appt_id'])
+        if form.is_valid():
+            amt = Amount.objects.get(product=form.data['product'], service=appt.service)
+            diff = int(form.data['amount_used']) - amt.amount
+            prod = Product.objects.get(id=form.data['product'])
+            prod.quantity -= diff
+            prod.save()
+        return redirect('/products/')
+
