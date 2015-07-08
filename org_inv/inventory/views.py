@@ -5,7 +5,7 @@ from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView
 from .models import Product, Appointment, Service, Amount
 from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm, AppointmentForm
 
@@ -346,3 +346,25 @@ class NewOrderView(View):
             return redirect("/products/")
         else:
             return render(request, "new_order.html", {"form": form})
+
+
+class Test(TemplateView):
+    template_name = 'test.html'
+
+
+class TestCreateView(LoginRequiredMixin, CreateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'popup.html'
+    success_url = '/products/'
+
+    def form_valid(self, form):
+        form.instance = form.save(commit=False)
+        form.instance.user = self.request.user
+        form.instance.new_product_quantity(form.instance.quantity)
+        form.instance.update_max_quantity()
+        return super().form_valid(form)
+
+
+def popup(request):
+    return render(request, 'popup.html')

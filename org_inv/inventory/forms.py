@@ -32,6 +32,7 @@ class ProductForm(forms.ModelForm):
 
 class AppointmentForm(forms.ModelForm):
     date = forms.DateField(widget=SelectDateWidget)
+    service = forms.ModelChoiceField(queryset=Service.objects.all(), empty_label="Pick a Service", label='')
 
     class Meta:
         model = Appointment
