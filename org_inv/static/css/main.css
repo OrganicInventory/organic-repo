@@ -75,6 +75,7 @@ body {
 
 .main-nav-ul {
   border-radius: 10px 10px 0 0;
+  margin-left: 18px;
   /*background-color: #b35b5a;*/
 }
 
@@ -87,12 +88,14 @@ body {
   transition: 0.2s all ease-out;
   border-radius: 10px 10px 0 0;
   color: #333;
+  /*border-bottom: 8px solid #dfdcd6;*/
 }
 
 .main-nav-li:hover {
   transform: scale(1.04);
   transition: 0.2s background-color color ease-in;
   background-color: #b35b5a;
+  /*border-bottom: 8px solid #b35b5a;*/
   color: #eee;
 }
 
