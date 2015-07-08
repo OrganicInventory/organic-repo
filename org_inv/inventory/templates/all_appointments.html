@@ -1,26 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
 
-  <table class="content-table">
-    <tr class="table-header">
-      <th>Status</th>
-      <th>Title</th>
-      <th>Product Size</th>
-      <th>Qty</th>
-      <th></th>
-    </tr>
-    <tr class="padding-row"><td></td><td></td><td></td><td></td><td></td></tr>
-    {% for appointment in all_appointments %}
-      <td></td>
-      <td>{{ appointment }}</td>
-      <td><a href="{% url 'delete_appointment' appointment.id %}">Delete</a></td>
-      <td><a href="{% url 'update_appointment' appointment.id %}"><button class="update-btn-table">Update</button></a></td>
-    {% endfor %}
-  </table>
+    <table class="content-table">
+        <tr class="table-header">
+            <th>Status</th>
+            <th>Title</th>
+            <th>Product Size</th>
+            <th>Qty</th>
+            <th></th>
+        </tr>
+        <tr class="padding-row">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% for appointment in all_appointments %}
+            <tr>
+                <td></td>
+                <td>{{ appointment }}</td>
+                <td><a href="{% url 'delete_appointment' appointment.id %}">Delete</a></td>
+                <td><a href="{% url 'update_appointment' appointment.id %}">
+                    <button class="update-btn-table">Update</button>
+                </a></td>
+            <td></td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
 
 {% block addbutton %}
 <a href="/appointments/new"><div class="add-content-button">
   <span class="add-button">q</span>
 </div></a>
+
 {% endblock %}

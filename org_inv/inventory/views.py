@@ -74,7 +74,9 @@ class ProductDeleteView(DeleteView):
         return reverse('all_products')
 
     def get_object(self, queryset=None):
-        return Product.objects.filter(pk=self.kwargs['prod_id'])[0]
+        prod = Product.objects.get(pk=self.kwargs['prod_id'])
+        Amount.objects.filter(product=prod).delete()
+        return prod
 
     def get_template_names(self):
         return 'product_confirm_delete.html'
