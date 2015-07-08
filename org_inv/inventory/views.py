@@ -55,6 +55,7 @@ class ProductDetailView(DetailView):
 
 class ProductDeleteView(DeleteView):
     model = Product
+    context_object_name = 'product'
 
     def post(self, request, *args, **kwargs):
         if "cancel" in request.POST:
@@ -75,11 +76,23 @@ class ProductDeleteView(DeleteView):
 
     def get_object(self, queryset=None):
         prod = Product.objects.get(pk=self.kwargs['prod_id'])
-        Amount.objects.filter(product=prod).delete()
         return prod
 
     def get_template_names(self):
         return 'product_confirm_delete.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['affected_services'] = self.object.service_set.all()
+        return context
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        Amount.objects.filter(product=self.object).delete()
+        success_url = self.get_success_url()
+        self.object.delete()
+        return HttpResponseRedirect(success_url)
+
 
 class AllAppointmentsView(LoginRequiredMixin, ListView):
     model = Appointment
