@@ -9,18 +9,26 @@
     <link rel="stylesheet"  href="{% static 'css/main.css' %}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <link href="https://fontastic.s3.amazonaws.com/Cez3KECLTfVWYyJGtXZ3XW/icons.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    
 </head>
 <body>
   <header class="page-header">
     <div class="top-nav-container">
       <div class="user-icon"></div>
-      <span class="user-name">{{request.user.username}}</span>
+      <span class="user-name">Welcome {{request.user.username}}</span>
     </div>
   </header>
   <div class="wrapper">
     <div class="page-logo"></div>
     <div class="main-nav-container">
-      <h1 class="main-heading">All Products</h1>
+      <span class="page-title">
+        {% block pagetitle %}
+        {% endblock %}
+      </span>
       <ul class="main-nav-ul">
         <a href="/low"><li class="main-nav-li">Low Inventory</li></a>
         <a href="/products"><li class="main-nav-li">All Products</li></a>

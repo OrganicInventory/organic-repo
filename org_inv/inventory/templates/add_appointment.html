@@ -1,14 +1,18 @@
 {% extends "base.html" %}
-
 {% block content %}
 <div class="main-content-header">
   <h2 class="secondary-heading">Create Appointment</h2>
 </div>
 <div class="form-container">
   <form class="main-form" method="POST" action="{% url 'add_appointment' %}">
-      {% csrf_token %}
-          {{ form.as_p }}
+    {% csrf_token %}
+    {% for field in form %}
+       <div class="{{ field.label }} input">
 
+           <span class="focus-out">{{ field.label_tag }} </span> {{ field }}
+           {{ field.errors }}
+       </div>
+    {% endfor %}
       <!-- Provide a button to click to submit the form. -->
       <input type="submit" name="submit"  value="Create"/>
   </form>
