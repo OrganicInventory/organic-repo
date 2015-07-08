@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-      <h2 class="secondary-heading">Create Appointment</h2>
-      <div class="form-container">
-        <form class="main-form" method="POST" action="{% url 'add_appointment' %}">
-            {% csrf_token %}
-                {{ form.as_p }}
+<div class="main-content-header">
+  <h2 class="secondary-heading">Create Appointment</h2>
+</div>
+<div class="form-container">
+  <form class="main-form" method="POST" action="{% url 'add_appointment' %}">
+      {% csrf_token %}
+          {{ form.as_p }}
 
-            <!-- Provide a button to click to submit the form. -->
-            <input type="submit" name="submit"  value="Create"/>
-        </form>
-      </div>
+      <!-- Provide a button to click to submit the form. -->
+      <input type="submit" name="submit"  value="Create"/>
+  </form>
+</div>
 {% endblock %}

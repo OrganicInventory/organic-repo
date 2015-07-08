@@ -22,14 +22,18 @@
     <div class="main-nav-container">
       <h1 class="main-heading">All Products</h1>
       <ul class="main-nav-ul">
-        <li class="main-nav-li">Low Inventory</li>
-        <li class="main-nav-li">All Products</li>
-        <li class="main-nav-li">Services</li>
-        <li class="main-nav-li">Appointments</li>
+        <a href="/low"><li class="main-nav-li">Low Inventory</li></a>
+        <a href="/products"><li class="main-nav-li">All Products</li></a>
+        <a href="/services"><li class="main-nav-li">Services</li></a>
+        <a href="/appointments"><li class="main-nav-li">Appointments</li></a>
       </ul>
     </div>
     <div class="main-content">
       {% block content %}
+      {% endblock %}
+    </div>
+    <div class="test-container">
+      {% block addbutton %}
       {% endblock %}
     </div>
   </div>

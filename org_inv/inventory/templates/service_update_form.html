@@ -1,18 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Update Service</h2>
-
-
-    <form method="post" action="">
+<div class="main-content-header">
+  <h2 class="secondary-heading">Update Service</h2>
+</div>
+  <div class="form-container">
+    <form class="main-form" method="post" action="">
     {% csrf_token %}
     {{ form }}
         {{ amounts.management_form }}
-        <table>
+        <!-- <table> -->
             {% for form in amounts %}
                 {{ form }}
             {% endfor %}
-        </table>
+        <!-- </table> -->
     <input type="submit" value="Update"/>
     </form>
+  </div>
 {% endblock %}
