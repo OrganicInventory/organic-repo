@@ -11,10 +11,13 @@
     </tr>
     <tr class="padding-row"><td></td><td></td><td></td><td></td><td></td></tr>
     {% for service in all_services %}
+        <tr>
       <td></td>
       <td>{{ service }}</td>
       <td><a href="{% url 'delete_service' service.id %}">Delete</a></td>
       <td><a href="{% url 'update_service' service.id %}"><button class="update-btn-table">Update</button></a></td>
+        <td></td>
+        </tr>
     {% endfor %}
   </table>
 {% endblock %}
