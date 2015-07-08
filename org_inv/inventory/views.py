@@ -34,7 +34,7 @@ class AllProductsView(LoginRequiredMixin, ListView):
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
-    fields = ['name', 'size', 'quantity']
+    form_class = ProductForm
     template_name = 'create_product.html'
     success_url = '/products/'
 

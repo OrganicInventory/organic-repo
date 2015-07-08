@@ -23,4 +23,7 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['name', 'size', 'quantity']
-
+        labels = {
+            'size': 'Size (oz)',
+            'quantity': "Quantity (units)"
+        }
