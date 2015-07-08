@@ -3,6 +3,7 @@
   lighter off white - #ebecf0
   navy - #444c5a
   darker tan - #d5c1b2
+  redish - #b35b5a;
 */
 
 /*DEFAULTS*/
@@ -75,14 +76,14 @@ body {
 
 .main-nav-ul {
   border-radius: 10px 10px 0 0;
-  margin-left: 18px;
+  margin-left: 19px;
   /*background-color: #b35b5a;*/
 }
 
 .main-nav-li {
   display: inline-block;
   padding: 15px 10px;
-  margin: 5px 10px;
+  margin: 5px 9px;
   font-size: 18px;
   cursor: pointer;
   transition: 0.2s all ease-out;
@@ -105,7 +106,7 @@ body {
   background-color: #eee;
   width: 76%;
   margin: 0 auto;
-  margin-top: -5px;
+  margin-top: -10px;
   border-radius: 10px;
   box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
 }
@@ -190,10 +191,27 @@ body {
   padding-left: 20px;
 }
 
-.main-form label {
+.focus-out {
+  position: absolute;
+  top: 15px;
+  left: 135px;
+  z-index: 100;
+  color: #999;
+  font-size: 16px;
+  transition: 0.25s all ease;
+}
+
+.focus-in {
+  position: absolute;
+  top: 5px;
+  z-index: 100;
+  font-size: 10px;
+  transition: 0.25s all ease;
+}
+
+.input {
   display: block;
   position: relative;
-  color: green;
 }
 
 /*ADD BUTTON*/
@@ -209,6 +227,16 @@ body {
   cursor: pointer;
 }
 
+.add-content-button:hover .add-button {
+  transition: all 0.2s ease;
+  transform: translate(-50%, -50%) scale(1.1) rotate(90deg);
+  /*color: #444c5a;*/
+}
+
+.add-content-button:hover {
+  /*background-color: #b35b5a;*/
+}
+
 .add-button {
   font-family: untitled-font-1;
   font-size: 1.8em;
@@ -217,4 +245,22 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   color: #eee;
+  transition: all 0.2s ease;
+}
+
+.form-button {
+  text-align: center;
+  padding: 10px 20px;
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 20px;
+}
+
+.form-button:hover {
+  cursor: pointer;
+}
+
+form {
+  padding-bottom: 50px;
 }
