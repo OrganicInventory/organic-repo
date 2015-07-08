@@ -1,7 +1,7 @@
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404, redirect
@@ -55,6 +55,13 @@ class ProductDetailView(DetailView):
 
 class ProductDeleteView(DeleteView):
     model = Product
+
+    def post(self, request, *args, **kwargs):
+        if "cancel" in request.POST:
+            url = self.get_success_url()
+            return HttpResponseRedirect(url)
+        else:
+            return super(ProductDeleteView, self).post(request, *args, **kwargs)
 
     def dispatch(self, request, *args, **kwargs):
         obj = Product.objects.filter(id=self.kwargs['prod_id'])[0]
@@ -117,6 +124,13 @@ class AppointmentDelete(LoginRequiredMixin, DeleteView):
 
     def get_template_names(self):
         return 'appointment_confirm_delete.html'
+
+    def post(self, request, *args, **kwargs):
+        if "cancel" in request.POST:
+            url = self.get_success_url()
+            return HttpResponseRedirect(url)
+        else:
+            return super(AppointmentDelete, self).post(request, *args, **kwargs)
 
 
 class AppointmentUpdate(LoginRequiredMixin, UpdateView):
@@ -250,6 +264,13 @@ class ServiceDelete(LoginRequiredMixin, DeleteView):
 
     def get_template_names(self):
         return 'service_confirm_delete.html'
+
+    def post(self, request, *args, **kwargs):
+        if "cancel" in request.POST:
+            url = self.get_success_url()
+            return HttpResponseRedirect(url)
+        else:
+            return super(ServiceDelete, self).post(request, *args, **kwargs)
 
 
 def inventory_check(daterange):
