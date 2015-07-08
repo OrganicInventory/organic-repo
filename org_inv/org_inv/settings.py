@@ -87,8 +87,8 @@ DATABASES = {
     },
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'UrlyBird',
-        'USER': 'urlybird',
+        'NAME': 'org_inv',
+        'USER': 'org_inv',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': '5432'
