@@ -346,3 +346,17 @@ class NewOrderView(View):
             return redirect("/products/")
         else:
             return render(request, "new_order.html", {"form": form})
+
+
+class EmptyProductView(View):
+    def dispatch(self, request, *args, **kwargs):
+        prod = Product.objects.get(id=self.kwargs['prod_id'])
+        prod.quantity = 0
+        prod.save()
+        amounts = Amount.objects.filter(product=prod)
+        for amount in amounts:
+            up_perc = .1 * amount.amount
+            new_amt = amount.amount + up_perc
+            amount.amount = new_amt
+            amount.save()
+        return redirect('/products/')
