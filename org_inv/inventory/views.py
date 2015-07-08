@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View
 from .models import Product, Appointment, Service, Amount
-from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm
+from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm, AppointmentForm
 
 # Create your views here.
 
@@ -96,7 +96,7 @@ class AllAppointmentsView(LoginRequiredMixin, ListView):
 
 class AppointmentCreateView(LoginRequiredMixin, CreateView):
     model = Appointment
-    fields = ['date', 'service']
+    form_class = AppointmentForm
     template_name = 'add_appointment.html'
     success_url = '/appointments/'
 
