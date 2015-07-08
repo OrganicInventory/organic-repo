@@ -273,8 +273,6 @@ class ServiceDelete(LoginRequiredMixin, DeleteView):
 
     def get_object(self, queryset=None):
         serv = Service.objects.get(pk=self.kwargs['serv_id'])
-        Appointment.objects.filter(service=serv).delete()
-        Amount.objects.filter(service=serv).delete()
         return serv
 
     def get_template_names(self):
@@ -286,6 +284,14 @@ class ServiceDelete(LoginRequiredMixin, DeleteView):
             return HttpResponseRedirect(url)
         else:
             return super(ServiceDelete, self).post(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        Amount.objects.filter(service=self.object).delete()
+        Appointment.objects.filter(service=self.object).delete()
+        success_url = self.get_success_url()
+        self.object.delete()
+        return HttpResponseRedirect(success_url)
 
 
 def inventory_check(daterange):
