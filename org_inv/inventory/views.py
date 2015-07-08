@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View
 from .models import Product, Appointment, Service, Amount
-from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm
+from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm, AppointmentForm
 
 # Create your views here.
 
@@ -34,7 +34,7 @@ class AllProductsView(LoginRequiredMixin, ListView):
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
-    fields = ['name', 'size', 'quantity']
+    form_class = ProductForm
     template_name = 'create_product.html'
     success_url = '/products/'
 
@@ -55,6 +55,7 @@ class ProductDetailView(DetailView):
 
 class ProductDeleteView(DeleteView):
     model = Product
+    context_object_name = 'product'
 
     def post(self, request, *args, **kwargs):
         if "cancel" in request.POST:
@@ -75,11 +76,23 @@ class ProductDeleteView(DeleteView):
 
     def get_object(self, queryset=None):
         prod = Product.objects.get(pk=self.kwargs['prod_id'])
-        Amount.objects.filter(product=prod).delete()
         return prod
 
     def get_template_names(self):
         return 'product_confirm_delete.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['affected_services'] = self.object.service_set.all()
+        return context
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        Amount.objects.filter(product=self.object).delete()
+        success_url = self.get_success_url()
+        self.object.delete()
+        return HttpResponseRedirect(success_url)
+
 
 class AllAppointmentsView(LoginRequiredMixin, ListView):
     model = Appointment
@@ -96,7 +109,7 @@ class AllAppointmentsView(LoginRequiredMixin, ListView):
 
 class AppointmentCreateView(LoginRequiredMixin, CreateView):
     model = Appointment
-    fields = ['date', 'service']
+    form_class = AppointmentForm
     template_name = 'add_appointment.html'
     success_url = '/appointments/'
 
@@ -260,8 +273,6 @@ class ServiceDelete(LoginRequiredMixin, DeleteView):
 
     def get_object(self, queryset=None):
         serv = Service.objects.get(pk=self.kwargs['serv_id'])
-        Appointment.objects.filter(service=serv).delete()
-        Amount.objects.filter(service=serv).delete()
         return serv
 
     def get_template_names(self):
@@ -273,6 +284,14 @@ class ServiceDelete(LoginRequiredMixin, DeleteView):
             return HttpResponseRedirect(url)
         else:
             return super(ServiceDelete, self).post(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        Amount.objects.filter(service=self.object).delete()
+        Appointment.objects.filter(service=self.object).delete()
+        success_url = self.get_success_url()
+        self.object.delete()
+        return HttpResponseRedirect(success_url)
 
 
 def inventory_check(daterange):
@@ -327,3 +346,17 @@ class NewOrderView(View):
             return redirect("/products/")
         else:
             return render(request, "new_order.html", {"form": form})
+
+
+class EmptyProductView(View):
+    def dispatch(self, request, *args, **kwargs):
+        prod = Product.objects.get(id=self.kwargs['prod_id'])
+        prod.quantity = 0
+        prod.save()
+        amounts = Amount.objects.filter(product=prod)
+        for amount in amounts:
+            up_perc = .1 * amount.amount
+            new_amt = amount.amount + up_perc
+            amount.amount = new_amt
+            amount.save()
+        return redirect('/products/')

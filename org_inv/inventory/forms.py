@@ -1,7 +1,8 @@
 from django import forms
 from django.forms import inlineformset_factory
+from django.forms.extras import SelectDateWidget
 
-from .models import Service, Amount, Product
+from .models import Service, Amount, Product, Appointment
 
 
 class ServiceForm(forms.ModelForm):
@@ -22,5 +23,16 @@ AmountFormSet = inlineformset_factory(Service, Amount, fields=('product', 'amoun
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'quantity', 'size']
+        fields = ['name', 'size', 'quantity']
+        labels = {
+            'size': 'Size (oz)',
+            'quantity': "Quantity (units)"
+        }
 
+
+class AppointmentForm(forms.ModelForm):
+    date = forms.DateField(widget=SelectDateWidget)
+
+    class Meta:
+        model = Appointment
+        fields = ['date', 'service',]
