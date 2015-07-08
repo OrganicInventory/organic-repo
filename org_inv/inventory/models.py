@@ -9,20 +9,24 @@ class Product(models.Model):
     quantity = models.FloatField(default=0)
     max_quantity = models.FloatField(default=0, null=True, blank=True)
     size = models.IntegerField()
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True)
 
     class Meta:
         unique_together = ('name', 'size')
+
+    @property
+    def display_quantity(self):
+        return self.quantity / self.size
+
+    def new_product_quantity(self, quantity_entered):
+        self.quantity = quantity_entered * self.size
+        self.save()
 
     def update_quantity(self, quantity_entered):
         add_this = quantity_entered * self.size
         updated = self.quantity + add_this
         self.quantity = updated
         self.save()
-
-    @property
-    def display_quantity(self):
-        return self.quantity / self.size
 
     def update_max_quantity(self):
         self.max_quantity = self.quantity
@@ -52,7 +56,7 @@ class Amount(models.Model):
 class Service(models.Model):
     name = models.CharField(max_length=255)
     products = models.ManyToManyField(Product, through=Amount)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True)
 
     def __str__(self):
         return self.name
@@ -61,7 +65,7 @@ class Service(models.Model):
 class Appointment(models.Model):
     date = models.DateField()
     service = models.ForeignKey(Service, null=True, on_delete=models.SET_NULL)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True)
 
     def __str__(self):
         return "{}: {}".format(self.service, self.date)

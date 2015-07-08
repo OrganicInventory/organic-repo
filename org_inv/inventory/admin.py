@@ -13,7 +13,7 @@ class ServiceAdmin(admin.ModelAdmin):
     list_display = ['name',]
 
 class AppointmentAdmin(admin.ModelAdmin):
-    list_display = ['date', 'service',]
+    list_display = ['date', 'service', 'id']
 
 class AmountAdmin(admin.ModelAdmin):
     #amt = Amount.objects.get(pk=1)

@@ -1,15 +1,24 @@
 from datetime import timedelta
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.db import transaction
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.utils import timezone
-from django.shortcuts import render
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView
+from django.utils.decorators import method_decorator
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View
 from .models import Product, Appointment, Service, Amount
-from .forms import ServiceForm, AmountForm, AmountFormSet
+from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm
 
 # Create your views here.
 
-class AllProductsView(ListView):
+
+class LoginRequiredMixin(object):
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+
+class AllProductsView(LoginRequiredMixin, ListView):
     model = Product
     context_object_name = 'all_products'
     template_name = 'all_products.html'
@@ -23,7 +32,7 @@ class AllProductsView(ListView):
         return context
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     fields = ['name', 'size', 'quantity']
     template_name = 'create_product.html'
@@ -32,21 +41,58 @@ class ProductCreateView(CreateView):
     def form_valid(self, form):
         form.instance = form.save(commit=False)
         form.instance.user = self.request.user
+        form.instance.new_product_quantity(form.instance.quantity)
         form.instance.update_max_quantity()
         return super().form_valid(form)
 
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'product_detail.html'
 
-class AllAppointmentsView(ListView):
+    def get_object(self, queryset=None):
+        return Product.objects.filter(pk=self.kwargs['prod_id'])[0]
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+
+    def post(self, request, *args, **kwargs):
+        if "cancel" in request.POST:
+            url = self.get_success_url()
+            return HttpResponseRedirect(url)
+        else:
+            return super(ProductDeleteView, self).post(request, *args, **kwargs)
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = Product.objects.filter(id=self.kwargs['prod_id'])[0]
+        if self.request.user == obj.user:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden()
+
+    def get_success_url(self):
+        return reverse('all_products')
+
+    def get_object(self, queryset=None):
+        return Product.objects.filter(pk=self.kwargs['prod_id'])[0]
+
+    def get_template_names(self):
+        return 'product_confirm_delete.html'
+
+class AllAppointmentsView(LoginRequiredMixin, ListView):
     model = Appointment
     context_object_name = 'all_appointments'
-    queryset = Appointment.objects.all().order_by('date')
     template_name = 'all_appointments.html'
+
+    def get_queryset(self):
+        queryset = Appointment.objects.filter(user=self.request.user).order_by('date')
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
 
-class AppointmentCreateView(CreateView):
+class AppointmentCreateView(LoginRequiredMixin, CreateView):
     model = Appointment
     fields = ['date', 'service']
     template_name = 'add_appointment.html'
@@ -58,8 +104,17 @@ class AppointmentCreateView(CreateView):
         return super().form_valid(form)
 
 
-class AppointmentDelete(DeleteView):
+
+class AppointmentDelete(LoginRequiredMixin, DeleteView):
     model = Appointment
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = Appointment.objects.filter(pk=self.kwargs['app_id'])[0]
+        if self.request.user == obj.user:
+            return super().dispatch(request, *args, **kwargs)
+
+        else:
+            return HttpResponseForbidden()
 
     def get_success_url(self):
         return reverse('all_appointments')
@@ -70,11 +125,26 @@ class AppointmentDelete(DeleteView):
     def get_template_names(self):
         return 'appointment_confirm_delete.html'
 
+    def post(self, request, *args, **kwargs):
+        if "cancel" in request.POST:
+            url = self.get_success_url()
+            return HttpResponseRedirect(url)
+        else:
+            return super(AppointmentDelete, self).post(request, *args, **kwargs)
 
-class AppointmentUpdate(UpdateView):
+
+class AppointmentUpdate(LoginRequiredMixin, UpdateView):
     model = Appointment
     fields = ['date', 'service']
     template_name = 'appointment_update_form.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = Appointment.objects.filter(pk=self.kwargs['app_id'])[0]
+        if self.request.user == obj.user:
+            return super().dispatch(request, *args, **kwargs)
+
+        else:
+            return HttpResponseForbidden()
 
     def get_success_url(self):
         return reverse('all_appointments')
@@ -89,7 +159,7 @@ class AppointmentUpdate(UpdateView):
         return super().form_valid(form)
 
 
-class AllServicesView(ListView):
+class AllServicesView(LoginRequiredMixin, ListView):
     model = Service
     context_object_name = 'all_services'
     template_name = 'all_services.html'
@@ -103,7 +173,7 @@ class AllServicesView(ListView):
         return context
 
 
-class ServiceCreateView(CreateView):
+class ServiceCreateView(LoginRequiredMixin, CreateView):
     model = Service
     form_class = ServiceForm
     template_name = 'create_service.html'
@@ -133,10 +203,18 @@ class ServiceCreateView(CreateView):
         return reverse('all_services')
 
 
-class ServiceUpdate(UpdateView):
+class ServiceUpdate(LoginRequiredMixin, UpdateView):
     model = Service
     form_class = ServiceForm
     template_name = 'service_update_form.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = Service.objects.get(id=self.kwargs['serv_id'])
+        if self.request.user == obj.user:
+            return super().dispatch(request, *args, **kwargs)
+
+        else:
+            return HttpResponseForbidden()
 
     def get_object(self, queryset=None, **kwargs):
         serv = Service.objects.get(id=self.kwargs['serv_id'])
@@ -164,8 +242,16 @@ class ServiceUpdate(UpdateView):
         return reverse('all_services')
 
 
-class ServiceDelete(DeleteView):
+class ServiceDelete(LoginRequiredMixin, DeleteView):
     model = Service
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = Service.objects.get(id=self.kwargs['serv_id'])
+        if self.request.user == obj.user:
+            return super().dispatch(request, *args, **kwargs)
+
+        else:
+            return HttpResponseForbidden()
 
     def get_success_url(self):
         return reverse('all_services')
@@ -178,6 +264,13 @@ class ServiceDelete(DeleteView):
 
     def get_template_names(self):
         return 'service_confirm_delete.html'
+
+    def post(self, request, *args, **kwargs):
+        if "cancel" in request.POST:
+            url = self.get_success_url()
+            return HttpResponseRedirect(url)
+        else:
+            return super(ServiceDelete, self).post(request, *args, **kwargs)
 
 
 def inventory_check(daterange):
@@ -201,7 +294,7 @@ def inventory_check(daterange):
     return low_products
 
 
-class LowInventoryView(ListView):
+class LowInventoryView(LoginRequiredMixin, ListView):
     model = Product
     context_object_name = 'low_products'
     template_name = 'low_products.html'
@@ -215,3 +308,20 @@ class LowInventoryView(ListView):
         low = inventory_check(14)
         context['low'] = low
         return context
+
+
+class NewOrderView(View):
+    def get(self, request, **kwargs):
+        form = ProductForm(initial={'user': self.request.user})
+        return render(request, "new_order.html", {"form": form})
+
+    def post(self, request, **kwargs):
+        form = ProductForm(request.POST, initial={'user': self.request.user})
+        if Product.objects.filter(name=request.POST.get('name'), size=int(request.POST.get('size'))):
+            prod_instance = Product.objects.filter(name=request.POST.get('name'), size=int(request.POST.get('size')))[0]
+            prod_instance.update_quantity(int(request.POST.get('quantity')))
+            prod_instance.update_max_quantity()
+            prod_instance.save()
+            return redirect("/products/")
+        else:
+            return render(request, "new_order.html", {"form": form})
