@@ -1,14 +1,23 @@
 {% extends "base.html" %}
-
 {% block content %}
+
+  <table class="content-table">
+    <tr class="table-header">
+      <th>Status</th>
+      <th>Title</th>
+      <th>Product Size</th>
+      <th>Qty</th>
+      <th></th>
+    </tr>
+    <tr class="padding-row"><td></td><td></td><td></td><td></td><td></td></tr>
     {% if low %}
+      <td></td>
         {% for key, value in low.items %}
-            {{ key.name }} --
-            {{ key.size }}oz. --
-            {{ value|floatformat:2 }}oz. left in 2 weeks<br/>
+      <td>{{ key.name }}</td>
+      <td>{{ key.size }}oz.</td>
+      <td>{{ value|floatformat:2 }}oz. left in 2 weeks<br/>
         {% endfor %}
     {% else %}
         <p>No products are currently low</p>
     {% endif %}
-
 {% endblock %}

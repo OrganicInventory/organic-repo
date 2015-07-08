@@ -2,6 +2,9 @@
 
 
 {% block content %}
+<div class="main-content-header">
+  <h2 class="secondary-heading">Header</h2>
+</div>
     <form action="" method="post">{% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Update"/>
