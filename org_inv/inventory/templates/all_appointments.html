@@ -1,9 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 
+  <table class="content-table">
+    <tr class="table-header">
+      <th>Status</th>
+      <th>Title</th>
+      <th>Product Size</th>
+      <th>Qty</th>
+      <th class="add-button">q</th>
+    </tr>
+    <tr class="padding-row"><td></td><td></td><td></td><td></td><td></td></tr>
     {% for appointment in all_appointments %}
-        {{ appointment }}--<a href="{% url 'delete_appointment' appointment.id %}">Delete</a> | <a href="{% url 'update_appointment' appointment.id %}">Update</a><br>
+      <td></td>
+      <td>{{ appointment }}</td>
+      <td><a href="{% url 'delete_appointment' appointment.id %}">Delete</a></td>
+      <td><a href="{% url 'update_appointment' appointment.id %}">Update</a></td>
     {% endfor %}
-
+  </table>
 {% endblock %}
-

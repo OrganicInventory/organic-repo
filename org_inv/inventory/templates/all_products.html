@@ -1,22 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="main-content">
     <table class="content-table">
       <tr class="table-header">
         <th>Status</th>
         <th>Title</th>
         <th>Product Size</th>
         <th>Qty</th>
+        <th class="add-button">q</th>
       </tr>
+      <tr class="padding-row"><td></td><td></td><td></td><td></td><td></td></tr>
     {% for product in all_products %}
       <tr>
         <td></td>
         <td>{{ product.name }} </td>
         <td>{{ product.size }}oz.</td>
         <td>{{ product.quantity }}</td>
+        <td></td>
       </tr>
     {% endfor %}
     </table>
-  </div>
 {% endblock %}
