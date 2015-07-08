@@ -22,5 +22,5 @@ AmountFormSet = inlineformset_factory(Service, Amount, fields=('product', 'amoun
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'quantity', 'size']
+        fields = ['name', 'size', 'quantity']
 
