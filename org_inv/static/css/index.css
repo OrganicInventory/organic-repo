@@ -78,3 +78,72 @@ button{
   font-weight: 800;
   font-size: 200%;
 }
+
+.register{
+  text-align: center;
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 250%;
+  margin-bottom: 5%;
+  text-shadow: 2px 2px #57846d;
+
+  }
+  .register2{
+    font-family: 'Cinzel Decorative', cursive;
+  }
+
+  .register2 input {
+    margin:0 auto;
+    display:block;
+  }
+
+  .btn-register{
+    background-color: #23a061;
+    border-radius: 10%;
+    color: #EEE;
+    padding: 1%;
+    font-family: 'Cinzel Decorative', cursive;
+    margin-left: 45%;
+    font-weight: 500;
+  }
+
+  .register2 label{
+    font-family: 'Cinzel Decorative', cursive;
+    text-align: left;
+    margin-left: 35%;
+    font-size: 130%;
+  }
+
+
+
+  .login1{
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 150%;
+    margin-top: 5%;
+  }
+
+  .loginbtn{
+    background-color: #23a061;
+    border-radius: 10%;
+    color: #EEE;
+    padding: 1%;
+    font-family: 'Cinzel Decorative', cursive;
+    margin-left: 48%;
+    margin-top: 5%;
+
+  }
+
+.nomatch{
+  color: red;
+  text-align: center;
+  font-family: 'Cinzel Decorative', cursive;
+
+}
+
+.logplease{
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 250%;
+  margin-top: 5%;
+  text-align: center;
+  font-weight: 600;
+  text-shadow: 2px 2px #57846d;
+}
