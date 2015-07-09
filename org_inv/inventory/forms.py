@@ -21,12 +21,13 @@ AmountFormSet = inlineformset_factory(Service, Amount, fields=('product', 'amoun
 
 
 class ProductForm(forms.ModelForm):
+    quantity = forms.FloatField(initial="", label="Quantity (units)")
+
     class Meta:
         model = Product
-        fields = ['name', 'size', 'quantity']
+        fields = ['name', 'size', 'quantity', 'upc_code']
         labels = {
-            'size': 'Size (oz)',
-            'quantity': "Quantity (units)"
+            'size': 'Size (oz)'
         }
 
 
@@ -41,3 +42,10 @@ class AppointmentForm(forms.ModelForm):
 class AdjustUsageForm(forms.Form):
     product = forms.ModelChoiceField(queryset=Product.objects.all())
     amount_used = forms.FloatField(label='Amount Used (oz.)')
+
+
+class ProductLookupForm(forms.Form):
+    upc = forms.CharField(label='UPC Code')
+
+    class Meta:
+        fields = ['upc']

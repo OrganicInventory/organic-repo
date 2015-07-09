@@ -7,7 +7,8 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View
 from .models import Product, Appointment, Service, Amount
-from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm, AppointmentForm, AdjustUsageForm
+from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm, AppointmentForm, AdjustUsageForm, \
+    ProductLookupForm
 
 # Create your views here.
 
@@ -23,13 +24,15 @@ class AllProductsView(LoginRequiredMixin, ListView):
     context_object_name = 'all_products'
     template_name = 'all_products.html'
 
-    def get_queryset(self):
-        queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
-        return queryset
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
+def get_queryset(self):
+    queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
+    return queryset
+
+
+def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    return context
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -51,7 +54,7 @@ class ProductDetailView(DetailView):
     template_name = 'product_detail.html'
 
     def get_object(self, queryset=None):
-        return Product.objects.filter(pk=self.kwargs['prod_id'])[0]
+        return Product.objects.filter(upc_code=self.request.GET['upc'])[0]
 
 
 class ProductDeleteView(DeleteView):
@@ -421,4 +424,3 @@ class AdjustUsageView(View):
             prod.quantity -= diff
             prod.save()
         return redirect('/products/')
-
