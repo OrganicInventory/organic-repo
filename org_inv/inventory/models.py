@@ -10,6 +10,7 @@ class Product(models.Model):
     max_quantity = models.FloatField(default=0, null=True, blank=True)
     size = models.IntegerField()
     user = models.ForeignKey(User, null=True)
+    upc_code = models.CharField(max_length=100)
 
     class Meta:
         unique_together = ('name', 'size')
