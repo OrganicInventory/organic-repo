@@ -10,7 +10,7 @@ from django.views.generic import ListView, CreateView, DeleteView, UpdateView, D
 from .models import Product, Appointment, Service, Amount
 from functools import partial, wraps
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
-    ProductLookupForm, make_amount_form
+    ProductLookupForm, make_amount_form, AmountFormSet
 
 # Create your views here.
 
@@ -203,18 +203,16 @@ class ServiceCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        AmountFormSet = inlineformset_factory(Service, Amount, form=make_amount_form(self.request.user),can_delete=False)
         if self.request.POST:
             data['amounts'] = AmountFormSet(self.request.POST)
         else:
-
             data['amounts'] = AmountFormSet()
+            data['amounts'].form.base_fields['product'].queryset = Product.objects.filter(user=self.request.user)
         return data
 
     def form_valid(self, form):
         context = self.get_context_data()
         amounts = context['amounts']
-        # with transaction.commit_on_success():
         if amounts.is_valid():
             self.object = form.save(commit=False)
             self.object.user = self.request.user
@@ -246,19 +244,17 @@ class ServiceUpdate(LoginRequiredMixin, UpdateView):
         return serv
 
     def get_context_data(self, **kwargs):
-        obj = self.get_object()
         data = super().get_context_data(**kwargs)
-        amt_form = make_amount_form(self.request.user)
         if self.request.POST:
-            data['amounts'] = amt_form(self.request.POST, instance=obj)
+            data['amounts'] = AmountFormSet(self.request.POST, instance=self.object)
         else:
-            data['amounts'] = amt_form(instance=obj)
+            data['amounts'] = AmountFormSet(instance=self.object)
+            data['amounts'].form.base_fields['product'].queryset = Product.objects.filter(user=self.request.user)
         return data
 
     def form_valid(self, form):
         context = self.get_context_data()
         amounts = context['amounts']
-        # with transaction.commit_on_success():
         if amounts.is_valid():
             amounts.instance = self.object
             amounts.save()
@@ -423,7 +419,7 @@ class AdjustUsageView(View):
             return HttpResponseForbidden()
 
     def post(self, request, **kwargs):
-        form = AdjustUsageForm(request.POST)
+        form = AdjustUsageForm(request.POST, user=request.user)
         appt = Appointment.objects.get(id=self.kwargs['appt_id'])
         if form.is_valid():
             amt = Amount.objects.get(product=form.data['product'], service=appt.service)
