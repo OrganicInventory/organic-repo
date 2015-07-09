@@ -1,13 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>New Order Entry</h2>
-
-    <form method="POST" action="{% url 'new_order' %}">
+<div class="main-content-header">
+    <h2 class="secondary-heading">New Order Entry</h2>
+</div>
+<div class="form-container">
+    <form class="main-form" method="POST" action="{% url 'new_order' %}">
         {% csrf_token %}
-            {{ form.as_p }}
-
+        {% for field in form %}
+          <div class="{{ field.label }} input">
+           <span class="focus-out">{{ field.label_tag }} </span> {{ field }}
+               {{ field.errors }}
+          </div>
+        {% endfor %}
         <!-- Provide a button to click to submit the form. -->
-        <input type="submit" name="submit"  value="Add"/>
+      <button class="form-button" type="submit" name="submit">Create</button>
     </form>
+</div>
 {% endblock %}
+
+
+
+<div class="form-container">
+  <form class="main-form" method="POST" action="{% url 'add_appointment' %}">
+    {% csrf_token %}
+    {% for field in form %}
+       <div class="{{ field.label }} input">
+
+           <span class="focus-out">{{ field.label_tag }} </span> {{ field }}
+           {{ field.errors }}
+       </div>
+    {% endfor %}
+      <!-- Provide a button to click to submit the form. -->
+      <input type="submit" name="submit"  value="Create"/>
+  </form>
+</div>

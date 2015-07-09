@@ -11,17 +11,16 @@
       <th>Status</th>
       <th>Title</th>
       <th>Product Size</th>
-      <th>Qty</th>
+      <th>Remaining Qty</th>
       <th></th>
     </tr>
-    <tr class="padding-row"><td></td><td></td><td></td><td></td><td></td></tr>
     {% if low %}
       {% for key, value in low.items %}
       <tr>
+        <td></td>
         <td>{{ key.name }}</td>
         <td>{{ key.size }}oz.</td>
         <td>{{ value|floatformat:2 }}oz. left in 2 weeks<br/>
-        <td></td>
         <td></td>
       {% endfor %}
     {% else %}
