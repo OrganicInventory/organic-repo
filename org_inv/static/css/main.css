@@ -15,14 +15,42 @@ body {
 }
 
 .page-header {
-  position: relative;
-  top: 0;
-  right: 0;
+  position: absolute;
   left: 0;
+  right: 0;
+  top: 0;
   background-color: #444c5a;
   height: 60px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   color: #eee;
+  z-index: 50;
+}
+
+.page-header-container {
+  position: relative;
+  right: 0;
+  left: 0;
+  top: 0;
+  height: 200px;
+  background-color: #565d6a;
+}
+
+.page-header-footer {
+  background-color: #444c5a;
+  height: 60px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.5);
+}
+
+.page-title {
+  color: #eee;
+  width: 76%;
+  margin: 0 auto;
+  padding-top: 85px;
 }
 
 .main-heading {
@@ -87,13 +115,13 @@ body {
 .main-nav-container {
   width: 80%;
   color: #333;
-  margin: 25px auto 0 auto;
+  margin: 0 auto;
 }
 
 .main-nav-ul {
   border-radius: 10px 10px 0 0;
-  margin-left: 19px;
-  /*background-color: #b35b5a;*/
+  width: 76%;
+  margin-left: 6px;
 }
 
 .main-nav-li {
@@ -104,16 +132,13 @@ body {
   cursor: pointer;
   transition: 0.2s all ease-out;
   border-radius: 10px 10px 0 0;
-  color: #333;
-  /*border-bottom: 8px solid #dfdcd6;*/
+  color: #eee;
+  border-bottom: 4px solid #444c5a;
 }
 
 .main-nav-li:hover {
-  transform: scale(1.04);
-  transition: 0.2s background-color color ease-in;
-  background-color: #b35b5a;
-  /*border-bottom: 8px solid #b35b5a;*/
-  color: #eee;
+  border-bottom: 4px solid #b35b5a;
+  transition: 0.2s all ease-in;
 }
 
 /*CONTENT*/
@@ -122,9 +147,9 @@ body {
   background-color: #eee;
   width: 76%;
   margin: 0 auto;
-  margin-top: -10px;
   border-radius: 10px;
   box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
+  margin-top: 25px;
 }
 
 .main-header {
@@ -264,6 +289,8 @@ form {
   padding-bottom: 50px;
 }
 
+
+
 /*BUTTONS*/
 
 .add-content-button {
@@ -327,4 +354,16 @@ form {
 .gen-btn:hover {
   /*background-color: #eee;
   border: none;*/
+}
+
+.scan-btn {
+  float: right;
+  margin-top: -22px;
+  padding: 5px 10px;
+}
+
+.scan-form {
+  margin: 0 auto;
+  margin-top: 25px;
+  transform: translate(-25%, 0);
 }

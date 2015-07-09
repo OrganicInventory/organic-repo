@@ -12,19 +12,19 @@
 
 </head>
 <body>
-  <header class="page-header">
-    <div class="top-nav-container">
-      <div class="user-icon"></div>
-      <span class="user-name">Welcome {{request.user.username}}</span>
+  <div class="page-header-container">
+    <header class="page-header">
+      <div class="top-nav-container">
+        <div class="user-icon"></div>
+        <span class="user-name">Welcome {{request.user.username}}</span>
+      </div>
+    </header>
+    <div class="page-title">
+      {% block pagetitle %}
+      {% endblock %}
     </div>
-  </header>
-  <div class="wrapper">
-    <div class="page-logo"></div>
-    <div class="main-nav-container">
-      <span class="page-title">
-        {% block pagetitle %}
-        {% endblock %}
-      </span>
+    <div class="page-header-footer">
+      <div class="main-nav-container">
       <ul class="main-nav-ul">
         <a href="/low"><li class="main-nav-li">Low Inventory</li></a>
         <a href="/products"><li class="main-nav-li">All Products</li></a>
@@ -32,6 +32,14 @@
         <a href="/appointments"><li class="main-nav-li">Appointments</li></a>
         <a href="/products/new_order"><li class="main-nav-li">New Order</li></a>
       </ul>
+    </div>
+    </div>
+  </div>
+  <div class="wrapper">
+    <div class="page-logo"></div>
+    <div class="scanner-section">
+      {% block scancontent %}
+      {% endblock %}
     </div>
     <div class="main-content">
       {% block content %}
