@@ -406,7 +406,10 @@ class AdjustUsageView(View):
     def get(self, request, **kwargs):
         form = AdjustUsageForm()
         appt = Appointment.objects.get(id=self.kwargs['appt_id'])
-        return render(request, "adjust_usage.html", {'form': form, 'appt': appt})
+        if self.request.user == appt.user:
+            return render(request, "adjust_usage.html", {'form': form, 'appt': appt})
+        else:
+            return HttpResponseForbidden()
 
     def post(self, request, **kwargs):
         form = AdjustUsageForm(request.POST)
