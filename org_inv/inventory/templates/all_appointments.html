@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+
+{% block pagetitle %}
+<h1 class="main-heading">All Appointments</h1>
+{% endblock %}
+
 {% block content %}
 
     <table class="content-table">
@@ -24,7 +29,7 @@
                 <td><a href="{% url 'update_appointment' appointment.id %}">
                     <button class="update-btn-table">Update</button>
                 </a></td>
-            <td></td>
+            <td><a href="{% url 'adjust_usage' appointment.id %}">Adjust Usage</a></td>
             </tr>
         {% endfor %}
     </table>
