@@ -1,16 +1,14 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.forms import inlineformset_factory
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView
 from .models import Product, Appointment, Service, Amount
-from functools import partial, wraps
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
-    ProductLookupForm, make_amount_form, AmountFormSet
+    ProductLookupForm, AmountFormSet
 
 # Create your views here.
 
@@ -368,6 +366,20 @@ class EmptyProductView(View):
             amount.amount = new_amt
             amount.save()
         return redirect('/products/')
+
+
+class CloseShopView(View):
+    def dispatch(self, request, *args, **kwargs):
+        appts = Appointment.objects.filter(date=datetime.today(), done=False)
+        for appt in appts:
+            appt.done = True
+            appt.save()
+            service = appt.service
+            for prod in service.products.all():
+                amt = Amount.objects.get(product=prod, service=service)
+                prod.quantity -= amt.amount
+                prod.save()
+        return redirect('/low/')
 
 
 class TooMuchProductView(LoginRequiredMixin, UpdateView):

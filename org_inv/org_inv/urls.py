@@ -38,4 +38,5 @@ urlpatterns = [
     url(r'^products/empty/(?P<prod_id>\d+)$', inv_views.EmptyProductView.as_view(), name="product_empty"),
     url(r'^products/adjust/(?P<prod_id>\d+)$', inv_views.TooMuchProductView.as_view(), name="adjust_product"),
     url(r'^adjust_usage/(?P<appt_id>\d+)$', inv_views.AdjustUsageView.as_view(), name="adjust_usage"),
+    url(r'^close_shop/', inv_views.CloseShopView.as_view(), name="close_shop"),
 ]
