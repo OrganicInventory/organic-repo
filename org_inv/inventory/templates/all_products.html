@@ -1,28 +1,41 @@
 {% extends "base.html" %}
+
+{% block pagetitle %}
+<h1 class="main-heading">All Products</h1>
+{% endblock %}
+
 {% block content %}
     <table class="content-table">
-      <tr class="table-header">
-        <th>Status</th>
-        <th>Title</th>
-        <th>Product Size</th>
-        <th>Qty</th>
-        <th></th>
-      </tr>
-      <tr class="padding-row"><td></td><td></td><td></td><td></td><td></td></tr>
-    {% for product in all_products %}
-      <tr>
-        <td></td>
-        <td>{{ product.name }} </td>
-        <td>{{ product.size }}oz.</td>
-        <td>{{ product.display_quantity }}</td>
-        <td></td>
-      </tr>
-    {% endfor %}
+        <tr class="table-header">
+            <th>Status</th>
+            <th>Title</th>
+            <th>Product Size</th>
+            <th>Qty</th>
+            <th></th>
+        </tr>
+        <tr class="padding-row">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% for product in all_products %}
+            <tr>
+                <td></td>
+                <td>{{ product.name }} </td>
+                <td>{{ product.size }}oz.</td>
+                <td>{{ product.display_quantity }}</td>
+                <td><a href="{% url 'product_empty' product.id %}">I'm Out</a></td>
+            </tr>
+        {% endfor %}
     </table>
 {% endblock %}
 
 {% block addbutton %}
-<a href="/products/new"><div class="add-content-button">
-  <span class="add-button">q</span>
-</div></a>
+    <a href="/products/new">
+        <div class="add-content-button">
+            <span class="add-button">q</span>
+        </div>
+    </a>
 {% endblock %}

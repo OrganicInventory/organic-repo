@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+  {% block pagetitle %}
+  <h1 class="main-heading">Adjust Usage</h1>
+  {% endblock %}
+{% block content %}
+<div class="main-content-header">
+  <h2 class="secondary-heading">{{ appt.date }}: {{ appt.service }}</h2>
+</div>
+    <form class="main-form" method="POST" action="{% url 'adjust_usage' appt.id %}">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit" />
+    </form>
+{% endblock %}

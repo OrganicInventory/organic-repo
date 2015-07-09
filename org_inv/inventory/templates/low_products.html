@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+
+{% block pagetitle %}
+<h1 class="main-heading">Low Inventory</h1>
+{% endblock %}
+
 {% block content %}
 
   <table class="content-table">
@@ -11,13 +16,17 @@
     </tr>
     <tr class="padding-row"><td></td><td></td><td></td><td></td><td></td></tr>
     {% if low %}
-      <td></td>
-        {% for key, value in low.items %}
-      <td>{{ key.name }}</td>
-      <td>{{ key.size }}oz.</td>
-      <td>{{ value|floatformat:2 }}oz. left in 2 weeks<br/>
-        {% endfor %}
+      {% for key, value in low.items %}
+      <tr>
+        <td>{{ key.name }}</td>
+        <td>{{ key.size }}oz.</td>
+        <td>{{ value|floatformat:2 }}oz. left in 2 weeks<br/>
+        <td><a href="{% url 'adjust_product' key.id %}">Adjust Inventory</a></td>
+        <td></td>
+      {% endfor %}
     {% else %}
-        <p>No products are currently low</p>
+      <tr>
+        <td><p>No products are currently low</p></td>
+      </tr>
     {% endif %}
 {% endblock %}
