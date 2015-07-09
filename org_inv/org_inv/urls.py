@@ -19,6 +19,7 @@ import inventory.views as inv_views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^b/', inv_views.IndexView.as_view(), name='index'),
     url(r'^users/', include('users.urls')),
     url(r'^products/$', inv_views.AllProductsView.as_view(), name="all_products"),
     url(r'^low/$', inv_views.LowInventoryView.as_view(), name="low_products"),
