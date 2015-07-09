@@ -7,7 +7,8 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View
 from .models import Product, Appointment, Service, Amount
-from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm, AppointmentForm, AdjustUsageForm
+from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm, AppointmentForm, AdjustUsageForm, \
+    ProductLookupForm
 
 # Create your views here.
 
@@ -23,13 +24,32 @@ class AllProductsView(LoginRequiredMixin, ListView):
     context_object_name = 'all_products'
     template_name = 'all_products.html'
 
-    def get_queryset(self):
-        queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
-        return queryset
+    # def get(self, request, *args, **kwargs):
+    #     if request.POST:
+    #         form = ProductLookupForm(request.POST)
+    #         if form.is_valid():
+    #             prod = Product.objects.get(upc_code=form.data['upc'])
+    #             # return render(request, 'product_detail.html', {'prod': prod.id})
+    #             return HttpResponseRedirect('products/detail/{}'.format(prod.id))
+    #             # return redirect('products/detail/{}'.format(prod.id))
+    #     else:
+    #         form = ProductLookupForm()
+    #         return super().get(self, request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
+
+def get_queryset(self):
+    queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
+    return queryset
+
+
+def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context['form'] = ProductLookupForm()
+    # if self.request.method == 'POST':
+    #     context['prod'] = Product.objects.get(upc_code=self.request.POST['upc'])
+    # else:
+    #     context['prod'] = 9
+    return context
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -421,4 +441,3 @@ class AdjustUsageView(View):
             prod.quantity -= diff
             prod.save()
         return redirect('/products/')
-

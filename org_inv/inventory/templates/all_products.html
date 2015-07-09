@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block pagetitle %}
-<h1 class="main-heading">All Products</h1>
+    <h1 class="main-heading">All Products</h1>
 {% endblock %}
 
 {% block content %}
@@ -30,6 +30,11 @@
             </tr>
         {% endfor %}
     </table>
+    <form class="main-form" method="GET" action="{% url 'product_detail' 9 %}">
+        {% csrf_token %}
+        <p>product lookup: {{ form }}</p>
+        <button class="" type="submit" name="submit">Search</button>
+    </form>
 {% endblock %}
 
 {% block addbutton %}
