@@ -54,8 +54,13 @@ class AppointmentForm(forms.ModelForm):
 
 
 class AdjustUsageForm(forms.Form):
-    product = forms.ModelChoiceField(queryset=Product.objects.filter())
+    product = forms.ModelChoiceField(queryset=Product.objects.all())
     amount_used = forms.FloatField(label='Amount Used (oz.)')
+
+    def __init__(self, request, *args, **kwargs):
+        user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+        self.fields['product'].queryset = Product.objects.filter(user=user)
 
 
 class ProductLookupForm(forms.Form):

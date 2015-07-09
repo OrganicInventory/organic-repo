@@ -246,11 +246,13 @@ class ServiceUpdate(LoginRequiredMixin, UpdateView):
         return serv
 
     def get_context_data(self, **kwargs):
+        obj = self.get_object()
         data = super().get_context_data(**kwargs)
+        amt_form = make_amount_form(self.request.user)
         if self.request.POST:
-            data['amounts'] = AmountFormSet(self.request.POST, instance=self.object)
+            data['amounts'] = amt_form(self.request.POST, instance=obj)
         else:
-            data['amounts'] = AmountFormSet(instance=self.object)
+            data['amounts'] = amt_form(instance=obj)
         return data
 
     def form_valid(self, form):
@@ -348,9 +350,9 @@ class NewOrderView(View):
 
     def post(self, request, **kwargs):
         form = ProductForm(request.POST, initial={'user': self.request.user})
-        if Product.objects.filter(name=request.POST.get('name'), size=int(request.POST.get('size'))):
-            prod_instance = Product.objects.filter(name=request.POST.get('name'), size=int(request.POST.get('size')))[0]
-            prod_instance.update_quantity(int(request.POST.get('quantity')))
+        if Product.objects.filter(name=request.POST.get('name'), size=float(request.POST.get('size'))).filter(user=request.user):
+            prod_instance = Product.objects.filter(name=request.POST.get('name'), size=float(request.POST.get('size')))[0]
+            prod_instance.update_quantity(float(request.POST.get('quantity')))
             prod_instance.update_max_quantity()
             prod_instance.save()
             return redirect("/products/")
@@ -413,7 +415,7 @@ class TooMuchProductView(LoginRequiredMixin, UpdateView):
 
 class AdjustUsageView(View):
     def get(self, request, **kwargs):
-        form = AdjustUsageForm()
+        form = AdjustUsageForm(user=request.user)
         appt = Appointment.objects.get(id=self.kwargs['appt_id'])
         if self.request.user == appt.user:
             return render(request, "adjust_usage.html", {'form': form, 'appt': appt})
