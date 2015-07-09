@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2 class="secondary-heading">Adjust Product Quantity</h2>
+  <div class="form-container">
+    <form class="main-form" method="POST" action="{% url 'adjust_product' product.id %}">
+        {% csrf_token %}
+            {{ form.as_p }}
+
+        <!-- Provide a button to click to submit the form. -->
+        <input type="submit" name="submit"  value="Add"/>
+    </form>
+  </div>
+{% endblock %}

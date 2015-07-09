@@ -360,3 +360,42 @@ class EmptyProductView(View):
             amount.amount = new_amt
             amount.save()
         return redirect('/products/')
+
+
+class TooMuchProductView(LoginRequiredMixin, UpdateView):
+    model = Product
+    fields = ['quantity']
+    template_name = "adjust_product.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = Product.objects.filter(pk=self.kwargs['prod_id'])[0]
+        if self.request.user == obj.user:
+            return super().dispatch(request, *args, **kwargs)
+
+        else:
+            return HttpResponseForbidden()
+
+    def get_queryset(self):
+        prod = Product.objects.filter(id=self.kwargs['prod_id'])
+        return prod
+
+    def get_success_url(self):
+        return reverse('all_products')
+
+    def get_object(self, queryset=None, **kwargs):
+        prod = Product.objects.get(id=self.kwargs['prod_id'])
+        return prod
+
+    def get_initial(self):
+        return {'quantity': self.object.display_quantity}
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.new_product_quantity(float(self.request.POST['quantity']))
+        amounts = Amount.objects.filter(product=self.object)
+        for amount in amounts:
+            down_perc = .1 * amount.amount
+            new_amt = amount.amount - down_perc
+            amount.amount = new_amt
+            amount.save()
+        return redirect('/products/')
