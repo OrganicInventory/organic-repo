@@ -21,7 +21,8 @@
         <td>{{ key.name }}</td>
         <td>{{ key.size }}oz.</td>
         <td>{{ value|floatformat:2 }}oz. left in 2 weeks<br/>
-        <td></td>
+        <td><a href="{% url 'adjust_product' key.id %}">Adjust Inventory</a></td>
+
       {% endfor %}
     {% else %}
       <tr>
