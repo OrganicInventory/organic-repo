@@ -10,24 +10,6 @@ class ServiceForm(forms.ModelForm):
         model = Service
         fields = ['name',]
 
-
-class UpdateAmountForm(forms.ModelForm):
-    class Meta:
-        model = Amount
-        fields = ['amount', 'product', 'service',]
-
-def make_amount_form(user):
-    class AmountForm(forms.ModelForm):
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            self.fields['product'].queryset = Product.objects.filter(user=user)
-
-        class Meta:
-            model = Amount
-            fields = ['amount', 'product', 'service',]
-
-    return AmountForm
-
 AmountFormSet = inlineformset_factory(Service, Amount, fields=['product', 'amount'], can_delete=False)
 
 
