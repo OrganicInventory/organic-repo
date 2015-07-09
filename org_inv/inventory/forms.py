@@ -21,12 +21,13 @@ AmountFormSet = inlineformset_factory(Service, Amount, fields=('product', 'amoun
 
 
 class ProductForm(forms.ModelForm):
+    quantity = forms.FloatField(initial="", label="Quantity (units)")
+
     class Meta:
         model = Product
-        fields = ['upc_code', 'name', 'size', 'quantity']
+        fields = ['name', 'size', 'quantity', 'upc_code']
         labels = {
-            'size': 'Size (oz)',
-            'quantity': "Quantity (units)"
+            'size': 'Size (oz)'
         }
 
 
