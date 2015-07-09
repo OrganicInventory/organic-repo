@@ -13,20 +13,13 @@
             <th>Qty</th>
             <th></th>
         </tr>
-        <tr class="padding-row">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
         {% for product in all_products %}
             <tr>
                 <td></td>
                 <td><a href="{% url 'product_detail' %}?upc={{ product.upc_code }}">{{ product.name }}</a> </td>
                 <td>{{ product.size }}oz.</td>
                 <td>{{ product.display_quantity }}</td>
-                <td><a href="{% url 'product_empty' product.id %}">I'm Out</a></td>
+                <td><a href="{% url 'product_empty' product.id %}"><button class="gen-btn">Out of Stock</button></a></td>
             </tr>
         {% endfor %}
     </table>

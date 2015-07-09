@@ -1,14 +1,24 @@
 {% extends "base.html" %}
+
+{% block pagetitle %}
+<h1 class="main-heading">Product Details</h1>
+{% endblock %}
+
 {% block content %}
+<div class="main-content-header">
+  <h2 class="secondary-heading">{{object.name}}</h2>
+</div>
+<div class="list-container">
+  <ul class="list-container-ul">
+    <li class="list-container-li">Name:  {{ object.name }}</li>
+    <li class="list-container-li">Quantity: {{ object.quantity }}</li>
+    <li class="list-container-li">Max_Quantity: {{ object.max_quantity }}</li>
+    <li class="list-container-li">Size: {{ object.size }}</li>
+    <li class="list-container-li">User:  {{ object.user }}</li>
+  </ul>
+  <a href="{% url 'product_confirm_delete' product.id %}"><button class="gen-btn">Delete</button></a>
 
-<h3>Product Details</h3>
-
-   Name:  {{ object.name }}<br>
-   Quantity: {{ object.quantity }}<br>
-   Max_Quantity: {{ object.max_quantity }}<br>
-   Size: {{ object.size }}<br>
-   User:  {{ object.user }}<br>
-
-<a href="{% url 'product_confirm_delete' product.id %}">Delete</a>
+</div>
+<div class="list-container-footer"></div>
 
 {% endblock %}
