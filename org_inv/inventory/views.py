@@ -5,7 +5,7 @@ from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView
 from .models import Product, Appointment, Service, Amount
 from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm, AppointmentForm, AdjustUsageForm, \
     ProductLookupForm
@@ -19,20 +19,22 @@ class LoginRequiredMixin(object):
         return super().dispatch(request, *args, **kwargs)
 
 
+class IndexView(TemplateView):
+    template_name = 'index.html'
+
+
 class AllProductsView(LoginRequiredMixin, ListView):
     model = Product
     context_object_name = 'all_products'
     template_name = 'all_products.html'
 
+    def get_queryset(self):
+        queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
+        return queryset
 
-def get_queryset(self):
-    queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
-    return queryset
-
-
-def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
