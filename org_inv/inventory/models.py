@@ -13,7 +13,7 @@ class Product(models.Model):
     upc_code = models.CharField(max_length=100, null=True)
 
     class Meta:
-        unique_together = ('name', 'size')
+        unique_together = ('name', 'size', 'user')
 
     @property
     def display_quantity(self):

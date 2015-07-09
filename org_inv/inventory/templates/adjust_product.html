@@ -6,7 +6,6 @@
     <form class="main-form" method="POST" action="{% url 'adjust_product' product.id %}">
         {% csrf_token %}
             {{ form.as_p }}
-
         <!-- Provide a button to click to submit the form. -->
         <input type="submit" name="submit"  value="Add"/>
     </form>

@@ -1,14 +1,16 @@
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.forms import inlineformset_factory
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView
 from .models import Product, Appointment, Service, Amount
-from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm, AppointmentForm, AdjustUsageForm, \
-    ProductLookupForm
+from functools import partial, wraps
+from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
+    ProductLookupForm, make_amount_form
 
 # Create your views here.
 
@@ -19,20 +21,22 @@ class LoginRequiredMixin(object):
         return super().dispatch(request, *args, **kwargs)
 
 
+class IndexView(TemplateView):
+    template_name = 'index.html'
+
+
 class AllProductsView(LoginRequiredMixin, ListView):
     model = Product
     context_object_name = 'all_products'
     template_name = 'all_products.html'
 
+    def get_queryset(self):
+        queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
+        return queryset
 
-def get_queryset(self):
-    queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
-    return queryset
-
-
-def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -54,7 +58,7 @@ class ProductDetailView(DetailView):
     template_name = 'product_detail.html'
 
     def get_object(self, queryset=None):
-        return Product.objects.filter(upc_code=self.request.GET['upc'])[0]
+        return Product.objects.filter(user=self.request.user).filter(upc_code=self.request.GET['upc'])[0]
 
 
 class ProductDeleteView(DeleteView):
@@ -199,9 +203,11 @@ class ServiceCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
+        AmountFormSet = inlineformset_factory(Service, Amount, form=make_amount_form(self.request.user),can_delete=False)
         if self.request.POST:
             data['amounts'] = AmountFormSet(self.request.POST)
         else:
+
             data['amounts'] = AmountFormSet()
         return data
 
@@ -298,11 +304,11 @@ class ServiceDelete(LoginRequiredMixin, DeleteView):
         return HttpResponseRedirect(success_url)
 
 
-def inventory_check(daterange):
-    appointments = Appointment.objects.filter(date__gt=timezone.now()).filter(
+def inventory_check(daterange, user):
+    appointments = Appointment.objects.filter(user=user).filter(date__gt=timezone.now()).filter(
         date__lte=timezone.now() + timedelta(days=daterange))
     product_dict = {}
-    for product in Product.objects.all():
+    for product in Product.objects.filter(user=user):
         product_dict[product] = product.quantity
 
     for appointment in appointments:
@@ -330,7 +336,7 @@ class LowInventoryView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        low = inventory_check(14)
+        low = inventory_check(14, self.request.user)
         context['low'] = low
         return context
 
