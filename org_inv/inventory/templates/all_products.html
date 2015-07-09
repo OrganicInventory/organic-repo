@@ -30,10 +30,10 @@
             </tr>
         {% endfor %}
     </table>
-    <form class="main-form" method="GET" action="{% url 'product_detail' 9 %}">
-        {% csrf_token %}
-        <p>product lookup: {{ form }}</p>
-        <button class="" type="submit" name="submit">Search</button>
+    <form class="main-form" method="GET" action="{% url 'product_detail' %}">
+        <input type="text" name="upc" class="form-control"
+                                           placeholder="Product Lookup">
+{#        <button class="" type="submit" name="submit">Search</button>#}
     </form>
 {% endblock %}
 

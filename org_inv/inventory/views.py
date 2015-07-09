@@ -24,18 +24,6 @@ class AllProductsView(LoginRequiredMixin, ListView):
     context_object_name = 'all_products'
     template_name = 'all_products.html'
 
-    # def get(self, request, *args, **kwargs):
-    #     if request.POST:
-    #         form = ProductLookupForm(request.POST)
-    #         if form.is_valid():
-    #             prod = Product.objects.get(upc_code=form.data['upc'])
-    #             # return render(request, 'product_detail.html', {'prod': prod.id})
-    #             return HttpResponseRedirect('products/detail/{}'.format(prod.id))
-    #             # return redirect('products/detail/{}'.format(prod.id))
-    #     else:
-    #         form = ProductLookupForm()
-    #         return super().get(self, request, *args, **kwargs)
-
 
 def get_queryset(self):
     queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
@@ -44,11 +32,6 @@ def get_queryset(self):
 
 def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
-    context['form'] = ProductLookupForm()
-    # if self.request.method == 'POST':
-    #     context['prod'] = Product.objects.get(upc_code=self.request.POST['upc'])
-    # else:
-    #     context['prod'] = 9
     return context
 
 
@@ -71,7 +54,7 @@ class ProductDetailView(DetailView):
     template_name = 'product_detail.html'
 
     def get_object(self, queryset=None):
-        return Product.objects.filter(pk=self.kwargs['prod_id'])[0]
+        return Product.objects.filter(upc_code=self.request.GET['upc'])[0]
 
 
 class ProductDeleteView(DeleteView):
