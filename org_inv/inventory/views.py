@@ -459,7 +459,7 @@ def get_prod_data(prod_id):
     for appt in appts:
         amt = Amount.objects.get(service=appt.service, product=product)
         date = appt.date
-        if appt.date in usages.keys():
+        if date in usages.keys():
             usages[date] += amt.amount
         else:
             usages[date] = amt.amount
