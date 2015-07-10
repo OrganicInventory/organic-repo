@@ -8,23 +8,16 @@
 
     <table class="content-table">
         <tr class="table-header">
-            <th>Status</th>
             <th>Title</th>
-            <th>Product Size</th>
-            <th>Qty</th>
+            <th>Date</th>
             <th></th>
-        </tr>
-        <tr class="padding-row">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <th></th>
+            <th></th>
         </tr>
         {% for appointment in all_appointments %}
             <tr>
-                <td></td>
-                <td>{{ appointment }}</td>
+                <td>{{ appointment.service }}</td>
+                <td>{{ appointment.date }}</td>
                 <td><a href="{% url 'delete_appointment' appointment.id %}">Delete</a></td>
                 <td><a href="{% url 'update_appointment' appointment.id %}">
                     <button class="update-btn-table">Update</button>

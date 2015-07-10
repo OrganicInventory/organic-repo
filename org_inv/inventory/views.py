@@ -1,13 +1,16 @@
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.forms import inlineformset_factory
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView
 from .models import Product, Appointment, Service, Amount
-from .forms import ServiceForm, AmountForm, AmountFormSet, ProductForm, AppointmentForm, AdjustUsageForm
+from functools import partial, wraps
+from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
+    ProductLookupForm, make_amount_form, AmountFormSet
 
 # Create your views here.
 
@@ -16,6 +19,10 @@ class LoginRequiredMixin(object):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
+
+
+class IndexView(TemplateView):
+    template_name = 'index.html'
 
 
 class AllProductsView(LoginRequiredMixin, ListView):
@@ -51,7 +58,7 @@ class ProductDetailView(DetailView):
     template_name = 'product_detail.html'
 
     def get_object(self, queryset=None):
-        return Product.objects.filter(pk=self.kwargs['prod_id'])[0]
+        return Product.objects.filter(user=self.request.user).filter(upc_code=self.request.GET['upc'])[0]
 
 
 class ProductDeleteView(DeleteView):
@@ -200,12 +207,12 @@ class ServiceCreateView(LoginRequiredMixin, CreateView):
             data['amounts'] = AmountFormSet(self.request.POST)
         else:
             data['amounts'] = AmountFormSet()
+            data['amounts'].form.base_fields['product'].queryset = Product.objects.filter(user=self.request.user)
         return data
 
     def form_valid(self, form):
         context = self.get_context_data()
         amounts = context['amounts']
-        # with transaction.commit_on_success():
         if amounts.is_valid():
             self.object = form.save(commit=False)
             self.object.user = self.request.user
@@ -242,12 +249,12 @@ class ServiceUpdate(LoginRequiredMixin, UpdateView):
             data['amounts'] = AmountFormSet(self.request.POST, instance=self.object)
         else:
             data['amounts'] = AmountFormSet(instance=self.object)
+            data['amounts'].form.base_fields['product'].queryset = Product.objects.filter(user=self.request.user)
         return data
 
     def form_valid(self, form):
         context = self.get_context_data()
         amounts = context['amounts']
-        # with transaction.commit_on_success():
         if amounts.is_valid():
             amounts.instance = self.object
             amounts.save()
@@ -343,9 +350,9 @@ class NewOrderView(View):
 
     def post(self, request, **kwargs):
         form = ProductForm(request.POST, initial={'user': self.request.user})
-        if Product.objects.filter(name=request.POST.get('name'), size=int(request.POST.get('size'))):
-            prod_instance = Product.objects.filter(name=request.POST.get('name'), size=int(request.POST.get('size')))[0]
-            prod_instance.update_quantity(int(request.POST.get('quantity')))
+        if Product.objects.filter(name=request.POST.get('name'), size=float(request.POST.get('size'))).filter(user=request.user):
+            prod_instance = Product.objects.filter(name=request.POST.get('name'), size=float(request.POST.get('size')))[0]
+            prod_instance.update_quantity(float(request.POST.get('quantity')))
             prod_instance.update_max_quantity()
             prod_instance.save()
             return redirect("/products/")
@@ -408,7 +415,7 @@ class TooMuchProductView(LoginRequiredMixin, UpdateView):
 
 class AdjustUsageView(View):
     def get(self, request, **kwargs):
-        form = AdjustUsageForm()
+        form = AdjustUsageForm(user=request.user)
         appt = Appointment.objects.get(id=self.kwargs['appt_id'])
         if self.request.user == appt.user:
             return render(request, "adjust_usage.html", {'form': form, 'appt': appt})
@@ -416,7 +423,7 @@ class AdjustUsageView(View):
             return HttpResponseForbidden()
 
     def post(self, request, **kwargs):
-        form = AdjustUsageForm(request.POST)
+        form = AdjustUsageForm(request.POST, user=request.user)
         appt = Appointment.objects.get(id=self.kwargs['appt_id'])
         if form.is_valid():
             amt = Amount.objects.get(product=form.data['product'], service=appt.service)
@@ -425,4 +432,3 @@ class AdjustUsageView(View):
             prod.quantity -= diff
             prod.save()
         return redirect('/products/')
-
