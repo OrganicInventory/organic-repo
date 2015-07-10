@@ -1,3 +1,4 @@
+<body class="all-products-body">
 {% extends "base.html" %}
 
 {% block pagetitle %}
@@ -18,7 +19,7 @@
 {% endblock %}
 
 {% block content %}
-  <table class="content-table">
+  <table class="content-table content-table-links">
       <tr class="table-header">
           <th>Status</th>
           <th>Title</th>
@@ -29,7 +30,13 @@
       {% for product in all_products %}
           <tr>
               <td></td>
-              <td><a href="{% url 'product_detail' %}?upc={{ product.upc_code }}">{{ product.name }}</a> </td>
+              <td>
+                <a href="{% url 'product_detail' %}?upc={{ product.upc_code }}">
+                  <div class="table-id-link">
+                    {{ product.name }}
+                  </div>
+                </a>
+              </td>
               <td>{{ product.size }}oz.</td>
               <td>{{ product.display_quantity }}</td>
               <td><a href="{% url 'product_empty' product.id %}"><button class="gen-btn">Out of Stock</button></a></td>
@@ -45,3 +52,4 @@
         </div>
     </a>
 {% endblock %}
+</body>

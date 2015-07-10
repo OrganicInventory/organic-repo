@@ -37,9 +37,17 @@ $(function() {
 
   $('.scan-form').submit(function(e) {
     e.preventDefault();
+    e.stopPropagation();
 
-    alert('test');
+    alert($('.scan-form input').val());
   });
+
+  // var value = $("a").attr("href");
+  // console.log(value);
+  //
+  // if (value) {
+  //   alert('it is');
+  // }
 
 
 });
