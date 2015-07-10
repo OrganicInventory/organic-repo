@@ -58,6 +58,12 @@ class ProductDetailView(DetailView):
     def get_object(self, queryset=None):
         return Product.objects.filter(user=self.request.user).filter(upc_code=self.request.GET['upc'])[0]
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data'] = get_prod_data(self.object.id)
+        return context
+
+
 
 class ProductDeleteView(DeleteView):
     model = Product
@@ -444,3 +450,23 @@ class AdjustUsageView(View):
             prod.quantity -= diff
             prod.save()
         return redirect('/products/')
+
+
+def get_prod_data(prod_id):
+    product = Product.objects.get(id=prod_id)
+    services = Service.objects.filter(products__pk__contains=product.id)
+    appts = Appointment.objects.filter(service__in=services).order_by('date')
+    values =[]
+    usages = {}
+    for appt in appts:
+        amt = Amount.objects.get(service=appt.service, product=product)
+        date = str(appt.date)
+        if date in usages.keys():
+            usages[date] += amt.amount
+        else:
+            usages[date] = amt.amount
+    for key, value in sorted(usages.items(), key=lambda x: x[0]):
+        values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
+    data = []
+    data.append({'values': values, 'key': 'product usage (oz)', 'area': 'True'})
+    return data
