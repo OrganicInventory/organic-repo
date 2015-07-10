@@ -468,5 +468,5 @@ def get_prod_data(prod_id):
     for key, value in sorted(usages.items(), key=lambda x: x[0]):
         values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
     data = []
-    data.append({'values': values, 'key': 'product usage', 'area': 'True'})
+    data.append({'values': values, 'key': 'product usage (oz)', 'area': 'True'})
     return data
