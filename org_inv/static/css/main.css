@@ -73,6 +73,14 @@ body {
   margin-bottom: 25px;
 }
 
+table a {
+  color: #333;
+}
+
+table a:hover {
+  text-decoration: underline;
+}
+
 /*.drop-down-btn {
   text-transform: none;
   font-family: untitled-font-1;
@@ -331,17 +339,17 @@ form {
   border-radius: 100%;
   background-color: #444c5a;
   cursor: pointer;
-  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.add-content-button:hover {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
 }
 
 .add-content-button:hover .add-button {
   transition: all 0.2s ease;
   transform: translate(-50%, -50%) scale(1.1) rotate(90deg);
   /*color: #444c5a;*/
-}
-
-.add-content-button:hover {
-  /*background-color: #b35b5a;*/
 }
 
 .add-button {
@@ -369,6 +377,10 @@ form {
   padding: 6px 10px;
   cursor: pointer;
   color: #333;
+  border-radius: 2px;
+  border:none;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  background-color: #eee;
 }
 
 .gen-btn a {
@@ -378,8 +390,7 @@ form {
 }
 
 .gen-btn:hover {
-  /*background-color: #eee;
-  border: none;*/
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
 
 .scan-form {
@@ -399,19 +410,19 @@ form {
   border: none;
   background-color: #dfdcd6;
   /*border-bottom: 1px solid black;*/
-  background-color: #eee;
+  background-color: #fff;
 }
 
 .scan-btn {
   position: absolute;
-  right: 30px;
+  right: 40px;
   top: 50%;
-  padding: 11px 10px;
+  padding: 12px 10px;
   transform: translate(0, -68%);
   border: none;
-  border-left: 1px solid #333;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  background-color: inherit;
+  background-color: #eee;
 }
 
 .scan-btn:hover {
