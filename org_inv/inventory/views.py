@@ -58,6 +58,11 @@ class ProductDetailView(DetailView):
     def get_object(self, queryset=None):
         return Product.objects.filter(user=self.request.user).filter(upc_code=self.request.GET['upc'])[0]
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data'] = get_prod_data(self.object.id)
+        return context
+
 
 class ProductDeleteView(DeleteView):
     model = Product
@@ -106,7 +111,7 @@ class AllAppointmentsView(LoginRequiredMixin, ListView):
     template_name = 'all_appointments.html'
 
     def get_queryset(self):
-        queryset = Appointment.objects.filter(user=self.request.user).order_by('date')
+        queryset = Appointment.objects.filter(user=self.request.user, date__gte=datetime.today()).order_by('date')
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -332,7 +337,11 @@ class LowInventoryView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        low = inventory_check(14, self.request.user)
+        daterange = self.request.GET.get('range')
+        if daterange:
+            low = inventory_check(int(daterange), self.request.user)
+        else:
+            low = inventory_check(14, self.request.user)
         context['low'] = low
         return context
 
@@ -440,3 +449,19 @@ class AdjustUsageView(View):
             prod.quantity -= diff
             prod.save()
         return redirect('/products/')
+
+
+def get_prod_data(prod_id):
+    product = Product.objects.get(id=prod_id)
+    services = Service.objects.filter(products__contains=product)
+    appts = Appointment.objects.filter(service__in=services)
+    usages = {}
+    for appt in appts:
+        amt = Amount.objects.get(service=appt.service, product=product)
+        date = appt.date
+        if appt.date in usages.keys():
+            usages[date] += amt.amount
+        else:
+            usages[date] = amt.amount
+    data = {'values': usages, 'key': 'product usage', 'color': 'ff7f0e'}
+    return data
