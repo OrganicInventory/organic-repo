@@ -7,13 +7,15 @@ nv.addGraph(function() {
                 .showLegend(true)       //Show the legend, allowing users to turn on/off line series.
                 .showYAxis(true)        //Show the y-axis
                 .showXAxis(true)        //Show the x-axis
-  ;
+                .forceY([0])
+                .interpolate('monotone')
+      ;
 
 
   chart.xAxis     //Chart x-axis settings
       .axisLabel('Date')
       .tickFormat(function(d) {
-    return d3.time.format('%x')(new Date(d * 1000))
+    return d3.time.format('%x')(new Date((d + 86400) * 1000))
 });
 
   chart.yAxis     //Chart y-axis settings
