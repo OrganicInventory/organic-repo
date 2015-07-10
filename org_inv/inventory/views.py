@@ -332,7 +332,11 @@ class LowInventoryView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        low = inventory_check(14, self.request.user)
+        daterange = self.request.GET.get('range')
+        if daterange:
+            low = inventory_check(int(daterange), self.request.user)
+        else:
+            low = inventory_check(14, self.request.user)
         context['low'] = low
         return context
 
