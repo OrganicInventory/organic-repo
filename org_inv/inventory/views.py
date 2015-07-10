@@ -295,11 +295,11 @@ class ServiceDelete(LoginRequiredMixin, DeleteView):
         return HttpResponseRedirect(success_url)
 
 
-def inventory_check(daterange):
-    appointments = Appointment.objects.filter(date__gt=timezone.now()).filter(
+def inventory_check(daterange, user):
+    appointments = Appointment.objects.filter(user=user).filter(date__gt=timezone.now()).filter(
         date__lte=timezone.now() + timedelta(days=daterange))
     product_dict = {}
-    for product in Product.objects.all():
+    for product in Product.objects.filter(user=user):
         product_dict[product] = product.quantity
 
     for appointment in appointments:
@@ -327,7 +327,11 @@ class LowInventoryView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        low = inventory_check(14)
+        daterange = self.request.GET.get('range')
+        if daterange:
+            low = inventory_check(int(daterange), self.request.user)
+        else:
+            low = inventory_check(14, self.request.user)
         context['low'] = low
         return context
 
