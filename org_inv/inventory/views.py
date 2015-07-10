@@ -455,7 +455,7 @@ class AdjustUsageView(View):
 def get_prod_data(prod_id):
     product = Product.objects.get(id=prod_id)
     services = Service.objects.filter(products__pk__contains=product.id)
-    appts = Appointment.objects.filter(service__in=services)
+    appts = Appointment.objects.filter(service__in=services).order_by('date')
     values =[]
     usages = {}
     for appt in appts:
@@ -465,8 +465,8 @@ def get_prod_data(prod_id):
             usages[date] += amt.amount
         else:
             usages[date] = amt.amount
-    for key, value in usages.items():
+    for key, value in sorted(usages.items(), key=lambda x: x[0]):
         values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
     data = []
-    data.append({'values': values, 'key': 'product usage', 'color': 'ff7f0e'})
+    data.append({'values': values, 'key': 'product usage', 'area': 'True'})
     return data
