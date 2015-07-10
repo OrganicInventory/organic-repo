@@ -9,9 +9,12 @@ nv.addGraph(function() {
                 .showXAxis(true)        //Show the x-axis
   ;
 
+
   chart.xAxis     //Chart x-axis settings
       .axisLabel('Date')
-      .tickFormat(d3.format(',r'));
+      .tickFormat(function(d) {
+    return d3.time.format('%x')(new Date(d * 1000))
+});
 
   chart.yAxis     //Chart y-axis settings
       .axisLabel('Product Usage (oz)')
