@@ -1,3 +1,4 @@
+<body class="low-inventory-body">
 {% extends "base.html" %}
 
 {% block pagetitle %}
@@ -16,7 +17,8 @@
         </select>
     </form>
 
-    <table class="content-table">
+
+  <table class="content-table content-table-links">
     <tr class="table-header">
         <th>Status</th>
         <th>Title</th>
@@ -25,19 +27,30 @@
         <th></th>
     </tr>
     {% if low %}
-        {% for key, value in low.items %}
-            <tr>
-            <td></td>
-            <td>{{ key.name }}</td>
-            <td>{{ key.size }}oz.</td>
-            <td>{{ value|floatformat:2 }}oz. left<br/>
-            <td><a href="{% url 'adjust_product' key.id %}">Adjust Inventory</a></td>
-
-        {% endfor %}
-
+      {% for key, value in low.items %}
+      <tr>
+        <td></td>
+        <td>
+          <a href="{% url 'product_detail' %}?upc={{ product.upc_code }}">
+            <div class="table-id-link">
+              {{ key.name }}
+            </div>
+          </a>
+        </td>
+        <td>{{ key.size }}oz.</td>
+        <td>{{ value|floatformat:2 }}oz. left in 2 weeks</td>
+        <td><a href="{% url 'adjust_product' key.id %}">Adjust Inventory</a></td>
+      </tr>
+      {% endfor %}
     {% else %}
-        <tr>
-            <td><p>No products are currently low</p></td>
-        </tr>
+      <tr>
+        <td>No products are currently low</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
     {% endif %}
+  </table>
 {% endblock %}
+</body>

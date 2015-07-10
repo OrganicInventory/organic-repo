@@ -1,3 +1,4 @@
+<body class="appointments-body">
 {% extends "base.html" %}
 
 {% block pagetitle %}
@@ -18,7 +19,7 @@
             <tr>
                 <td>{{ appointment.service }}</td>
                 <td>{{ appointment.date }}</td>
-                <td><a href="{% url 'delete_appointment' appointment.id %}">Delete</a></td>
+                <td><a href="{% url 'delete_appointment' appointment.id %}"><button class="delete-btn-table">Delete</button></a></td>
                 <td><a href="{% url 'update_appointment' appointment.id %}">
                     <button class="update-btn-table">Update</button>
                 </a></td>
@@ -34,3 +35,4 @@
 </div></a>
 
 {% endblock %}
+</body>

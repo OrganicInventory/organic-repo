@@ -1,21 +1,25 @@
-<!-{% extends "base.html" %}
+{% load staticfiles%}
 
-{% block content %}->
+<!DOCTYPE html>
+<html>
 <head>
   <meta charset="UTF-8">
   <title>Spa-ventory</title>
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="{% static 'css/index.css' %}" />
   <link href='http://fonts.googleapis.com/css?family=Cinzel+Decorative' rel='stylesheet' type='text/css'>
 </head>
-
-    <h2>Register</h2>
-
-    <form method="POST" action="{% url 'user_register' %}" class='signup2'>
+<body>
+    <h2 class='register'>Register</h2>
+    <form method="POST" action="{% url 'user_register' %}" class='register2'>
         {% csrf_token %}
-        {{ form1.as_p }}
-        {{ form2.as_p }}
+
+        {% include "form-fields.html" with frm=form1 %}
+        {% include "form-fields.html" with frm=form2 %}
+
         <!-- Provide a button to click to submit the form. -->
-        <button type="submit" class="btn btn-default">Register</button>
-{#        <input type="hidden" name="next" id="id_next" value="{{ request.REQUEST.next }}" />#}
+        <input type="hidden" name="next" id="id_next" value="{{ request.REQUEST.next }}" />
     </form>
-<!-{% endblock %}->
+    <button type="submit" class="btn-register">Register</button>
+
+</body>
+</html>
