@@ -13,6 +13,17 @@ $(function() {
   //  });
 
  // Form
+  $('input, select, textarea').each(function(){
+    var val = $(this).val();
+    if (val.length){
+      $(this).siblings('span').addClass('focus-in');
+    }
+  });
+
+  // $('select').each(function() {
+  //   $('label').remove();
+  // });
+
   $('input').focusin(function() {
     $(this).siblings('span').addClass('focus-in');
   });
@@ -23,10 +34,6 @@ $(function() {
       $(this).siblings('span').removeClass('focus-in');
     }
   });
-
-  $('#id_service').siblings().remove();
-  // $('select option:label').text('test');
-  // $('option').attr('label').remove();
 
 
 });

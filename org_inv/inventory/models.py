@@ -8,11 +8,12 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     quantity = models.FloatField(default=0)
     max_quantity = models.FloatField(default=0, null=True, blank=True)
-    size = models.IntegerField()
+    size = models.FloatField()
     user = models.ForeignKey(User, null=True)
+    upc_code = models.CharField(max_length=100, null=True)
 
     class Meta:
-        unique_together = ('name', 'size')
+        unique_together = ('name', 'size', 'user')
 
     @property
     def display_quantity(self):
@@ -66,6 +67,7 @@ class Appointment(models.Model):
     date = models.DateField()
     service = models.ForeignKey(Service, null=True, on_delete=models.SET_NULL)
     user = models.ForeignKey(User, null=True)
+    done = models.BooleanField(default=False)
 
     def __str__(self):
         return "{}: {}".format(self.service, self.date)

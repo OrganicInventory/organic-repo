@@ -10,23 +10,17 @@ class ServiceForm(forms.ModelForm):
         model = Service
         fields = ['name',]
 
-
-class AmountForm(forms.ModelForm):
-    class Meta:
-        model = Amount
-        fields = ['amount', 'product', 'service',]
-
-
-AmountFormSet = inlineformset_factory(Service, Amount, fields=('product', 'amount'), can_delete=False)
+AmountFormSet = inlineformset_factory(Service, Amount, fields=['product', 'amount'], can_delete=False)
 
 
 class ProductForm(forms.ModelForm):
+    quantity = forms.FloatField(initial="", label="Quantity (units)")
+
     class Meta:
         model = Product
-        fields = ['name', 'size', 'quantity']
+        fields = ['name', 'size', 'quantity', 'upc_code']
         labels = {
-            'size': 'Size (oz)',
-            'quantity': "Quantity (units)"
+            'size': 'Size (oz)'
         }
 
 
@@ -41,3 +35,15 @@ class AppointmentForm(forms.ModelForm):
 class AdjustUsageForm(forms.Form):
     product = forms.ModelChoiceField(queryset=Product.objects.all())
     amount_used = forms.FloatField(label='Amount Used (oz.)')
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+        self.fields['product'].queryset = Product.objects.filter(user=user)
+
+
+class ProductLookupForm(forms.Form):
+    upc = forms.CharField(label='UPC Code')
+
+    class Meta:
+        fields = ['upc']
