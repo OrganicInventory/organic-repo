@@ -31,6 +31,7 @@
         <a href="/services"><li class="main-nav-li services">Services</li></a>
         <a href="/appointments"><li class="main-nav-li appointments">Appointments</li></a>
         <a href="/products/new_order"><li class="main-nav-li new-order">New Order</li></a>
+        <a href="{% url 'close_shop' %}"><div class="close-shop"><span class="close-shop-icon">e</span></div></a>
       </ul>
     </div>
     </div>
@@ -42,7 +43,7 @@
       {% endblock %}
     </div>
     <div class="main-content">
-    <a href="{% url 'close_shop' %}"><button class="gen-btn">Close Shop</button></a>
+
       {% block content %}
 
       {% endblock %}
