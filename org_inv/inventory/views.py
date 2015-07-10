@@ -465,7 +465,8 @@ def get_prod_data(prod_id):
             usages[date] += amt.amount
         else:
             usages[date] = amt.amount
-    values.append(usages)
+    for key, value in usages.items():
+        values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
     data = []
     data.append({'values': values, 'key': 'product usage', 'color': 'ff7f0e'})
     return data
