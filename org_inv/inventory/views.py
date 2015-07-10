@@ -505,9 +505,17 @@ def get_prod_data(prod_id):
 
 
 def get_product(upc_code):
+<<<<<<< HEAD
     factual = Factual("gCKclwfy6eBki5UyHDxS56x7zmcvCMaGJ7l7v9cM", "Dt8V4ngb4859SxbycgpOsJL0ENckwxX0")
     products = factual.table('products')
     data = products.filters({'upc': {'$includes': upc_code}}).data()
     upc_data = data[0]
     new = json.loads(upc_data)
     return new
+=======
+     factual = Factual("gCKclwfy6eBki5UyHDxS56x7zmcvCMaGJ7l7v9cM", "Dt8V4ngb484Blmyaw5G9SxbycgpOsJL0ENckwxX0")
+     products = factual.table('products')
+     data = products.filters({'upc':{'$includes':upc_code}}).data()
+     upc_data = data[0]
+     return upc_data
+>>>>>>> 957eb3813ea95a1eef7a7f054dafb98b706f951d

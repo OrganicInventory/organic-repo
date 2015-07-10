@@ -65,7 +65,7 @@ body {
 
 .update-btn-table, .delete-btn-table {
   padding: 5px;
-  color #eee;
+  color: #eee;
   cursor: pointer;
 }
 
