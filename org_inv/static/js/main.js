@@ -14,8 +14,6 @@ $(function() {
   //   }
   // });
 
-
-
   // $('select').each(function() {
   //   $('label').remove();
   // });
@@ -50,22 +48,24 @@ $(function() {
 
     return vars;
 }
-
 getUrlVars();
-var urlRange = getUrlVars()['range'];
 
   $(document).ready(function() {
-    console.log(urlRange);
+  var urlRange = getUrlVars()['range'];
+
+  $('.date-dropdown').val(urlRange);
     if (urlRange === '1') {
       $('.date-range-display').text('1 Day');
     } else if (urlRange === '7') {
-      $('.date-range-display').text('One Week');
+      $('.date-range-display').text('1 Week');
     } else if (urlRange === '14') {
-      $('.date-range-display').text('Two Weeks');
+      $('.date-range-display').text('2 Weeks');
     } else if (urlRange === '30') {
       $('.date-range-display').text('1 Month');
     } else if (urlRange === '60') {
       $('.date-range-display').text('2 Months');
+    } else {
+      $('.date-dropdown').val('14');
     }
 
   });
