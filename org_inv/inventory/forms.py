@@ -25,11 +25,17 @@ class ProductForm(forms.ModelForm):
 
 
 class AppointmentForm(forms.ModelForm):
-    date = forms.DateField(widget=SelectDateWidget)
+
 
     class Meta:
         model = Appointment
         fields = ['date', 'service',]
+        labels = {
+            'date': ''
+        }
+        widgets = {
+            'date' : forms.DateInput(attrs={'type':'date'})
+        }
 
 
 class AdjustUsageForm(forms.Form):
