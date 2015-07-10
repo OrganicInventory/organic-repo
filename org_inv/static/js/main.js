@@ -35,5 +35,11 @@ $(function() {
     }
   });
 
+  $('.scan-form').submit(function(e) {
+    e.preventDefault();
+
+    alert('test');
+  });
+
 
 });

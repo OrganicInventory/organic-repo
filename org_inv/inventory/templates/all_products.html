@@ -8,10 +8,9 @@
 
 {% block scancontent %}
 <div class="form-container scan-form">
-  <form class="main-form" method="GET" action="{% url 'product_detail' %}">
+  <form class="main-form scan-form" method="GET" action="{% url 'product_detail' %}">
     <label class="input">
-      <span class="focus-out">Scan a UPC Code</span>
-      <input type="text" name="upc" class="form-control scan-input">
+      <input type="text" name="upc" class="form-control scan-input" placeholder="Scan UPC to Search for Product"/>
     </label>
       <button class="scan-btn" type="submit">Search</button>
   </form>
