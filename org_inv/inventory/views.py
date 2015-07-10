@@ -1,3 +1,4 @@
+from factual import Factual
 from datetime import timedelta, datetime
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
@@ -470,3 +471,10 @@ def get_prod_data(prod_id):
     data = []
     data.append({'values': values, 'key': 'product usage (oz)', 'area': 'True'})
     return data
+
+def get_product(upc_code):
+     factual = Factual("gCKclwfy6eBki5UyHDxS56x7zmcvCMaGJ7l7v9cM", "Dt8V4ngb4859SxbycgpOsJL0ENckwxX0")
+     products = factual.table('products')
+     data = products.filters({'upc':{'$includes':upc_code}}).data()
+     upc_data = data[0]
+     return upc_data
