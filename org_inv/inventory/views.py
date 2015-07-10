@@ -1,3 +1,4 @@
+from factual import Factual
 from datetime import timedelta, datetime
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
@@ -125,6 +126,11 @@ class AppointmentCreateView(LoginRequiredMixin, CreateView):
     form_class = AppointmentForm
     template_name = 'add_appointment.html'
     success_url = '/appointments/'
+
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
+        return form_class(self.request, **self.get_form_kwargs())
 
     def form_valid(self, form):
         form.instance = form.save(commit=False)
@@ -355,7 +361,7 @@ class NewOrderView(View):
     def post(self, request, **kwargs):
         form = ProductForm(request.POST, initial={'user': self.request.user})
         if Product.objects.filter(name=request.POST.get('name'), size=float(request.POST.get('size'))).filter(user=request.user):
-            prod_instance = Product.objects.filter(name=request.POST.get('name'), size=float(request.POST.get('size')))[0]
+            prod_instance = Product.objects.get(name=request.POST.get('name'), size=float(request.POST.get('size')), user=request.user)
             prod_instance.update_quantity(float(request.POST.get('quantity')))
             prod_instance.update_max_quantity()
             prod_instance.save()
@@ -470,3 +476,10 @@ def get_prod_data(prod_id):
     data = []
     data.append({'values': values, 'key': 'product usage (oz)', 'area': 'True'})
     return data
+
+def get_product(upc_code):
+     factual = Factual("gCKclwfy6eBki5UyHDxS56x7zmcvCMaGJ7l7v9cM", "Dt8V4ngb4859SxbycgpOsJL0ENckwxX0")
+     products = factual.table('products')
+     data = products.filters({'upc':{'$includes':upc_code}}).data()
+     upc_data = data[0]
+     return upc_data
