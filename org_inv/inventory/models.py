@@ -67,6 +67,7 @@ class Appointment(models.Model):
     date = models.DateField()
     service = models.ForeignKey(Service, null=True, on_delete=models.SET_NULL)
     user = models.ForeignKey(User, null=True)
+    done = models.BooleanField(default=False)
 
     def __str__(self):
         return "{}: {}".format(self.service, self.date)

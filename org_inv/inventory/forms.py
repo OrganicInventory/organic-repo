@@ -10,28 +10,7 @@ class ServiceForm(forms.ModelForm):
         model = Service
         fields = ['name',]
 
-
-# class AmountForm(forms.ModelForm):
-#     def __init__(self, request, *args, **kwargs):
-#         user = kwargs.pop('user')
-#         super().__init__(*args, **kwargs)
-#         self.fields['product'].queryset = Product.objects.filter(user=user)
-#
-#     class Meta:
-#         model = Amount
-#         fields = ['amount', 'product', 'service',]
-
-def make_amount_form(user):
-    class AmountForm(forms.ModelForm):
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            self.fields['product'].queryset = Product.objects.filter(user=user)
-
-        class Meta:
-            model = Amount
-            fields = ['amount', 'product', 'service',]
-
-    return AmountForm
+AmountFormSet = inlineformset_factory(Service, Amount, fields=['product', 'amount'], can_delete=False)
 
 
 class ProductForm(forms.ModelForm):
@@ -54,8 +33,13 @@ class AppointmentForm(forms.ModelForm):
 
 
 class AdjustUsageForm(forms.Form):
-    product = forms.ModelChoiceField(queryset=Product.objects.filter())
+    product = forms.ModelChoiceField(queryset=Product.objects.all())
     amount_used = forms.FloatField(label='Amount Used (oz.)')
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+        self.fields['product'].queryset = Product.objects.filter(user=user)
 
 
 class ProductLookupForm(forms.Form):
