@@ -69,9 +69,13 @@ class TestCreateView(LoginRequiredMixin, CreateView):
 
 class TestView(View):
     def get(self, request, **kwargs):
-        prod_data = get_product(request.GET.get("upc"))
+        if request.GET.get("upc"):
+            prod_data = get_product(request.GET.get("upc"))
+        else:
+            return render(request, "test.html")
+        return render(request, "create_product.html", {'data':prod_data})
 
-        return render(request, "test.html")
+
 
         # def post(self, request, **kwargs):
         #     Product.objects.get(upc=request.POST.get('upc'))
@@ -505,17 +509,19 @@ def get_prod_data(prod_id):
 
 
 def get_product(upc_code):
-<<<<<<< HEAD
-    factual = Factual("gCKclwfy6eBki5UyHDxS56x7zmcvCMaGJ7l7v9cM", "Dt8V4ngb4859SxbycgpOsJL0ENckwxX0")
+    factual = Factual("gCKclwfy6eBki5UyHDxS56x7zmcvCMaGJ7l7v9cM", "Dt8V4ngb484Blmyaw5G9SxbycgpOsJL0ENckwxX0")
     products = factual.table('products')
     data = products.filters({'upc': {'$includes': upc_code}}).data()
     upc_data = data[0]
-    new = json.loads(upc_data)
-    return new
-=======
-     factual = Factual("gCKclwfy6eBki5UyHDxS56x7zmcvCMaGJ7l7v9cM", "Dt8V4ngb484Blmyaw5G9SxbycgpOsJL0ENckwxX0")
-     products = factual.table('products')
-     data = products.filters({'upc':{'$includes':upc_code}}).data()
-     upc_data = data[0]
-     return upc_data
->>>>>>> 957eb3813ea95a1eef7a7f054dafb98b706f951d
+    wanted = ['size', 'product_name']
+    new = {}
+    for pair in upc_data.items():
+        if pair[0] in wanted:
+            if pair[0] == 'product_name':
+                new['name'] = pair[1]
+            elif pair[0] == 'size':
+                new['size'] = pair[1][0]
+            else:
+                new[pair[0]] = pair[1]
+    new_json = json.dumps(new)
+    return new_json

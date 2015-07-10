@@ -4,14 +4,10 @@
     <div class="main-content-header">
         <h2 class="secondary-heading">Add Product</h2>
     </div>
-    <form id='test_form' method="get" action="test.html">
-        {% csrf_token %}
+    <form id='test_form' method="get" action="{% url 'create_product' %}">
         <input name='upc' type="text"/>
-        <button class="form-button" type="submit" name="submit">Add New</button>
+        <button class="form-button" type="submit">Add New</button>
     </form>
-    <script>
-        $('#test_form').populate({{ data.size }})
-    </script>
     <div class="form-container">
         <form class="main-form" method="POST" action="{% url 'test' %}">
             {% csrf_token %}
