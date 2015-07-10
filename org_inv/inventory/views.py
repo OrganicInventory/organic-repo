@@ -355,7 +355,7 @@ class NewOrderView(View):
     def post(self, request, **kwargs):
         form = ProductForm(request.POST, initial={'user': self.request.user})
         if Product.objects.filter(name=request.POST.get('name'), size=float(request.POST.get('size'))).filter(user=request.user):
-            prod_instance = Product.objects.filter(name=request.POST.get('name'), size=float(request.POST.get('size')))[0]
+            prod_instance = Product.objects.get(name=request.POST.get('name'), size=float(request.POST.get('size')), user=request.user)
             prod_instance.update_quantity(float(request.POST.get('quantity')))
             prod_instance.update_max_quantity()
             prod_instance.save()
