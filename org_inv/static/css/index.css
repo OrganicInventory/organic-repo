@@ -5,7 +5,7 @@ body{
 }
 
 .header{
-  font-family: 'Cinzel Decorative', cursive;
+  font-family: 'Cinzel Decorative', serif, sans-serif;
   text-align: center;
   font-size: 400%;
   margin-top: 7%;
@@ -16,8 +16,7 @@ body{
 }
 
 .nav{
-  font-family: 'Cinzel Decorative', cursive;
-  margin-top:0;
+  font-family: 'Cinzel Decorative', serif, sans-serif;  margin-top:0;
   margin-right: 2%;
   display: inline-block;
   float: right;
@@ -29,8 +28,7 @@ body{
 }
 
 .box{
-  font-family: 'Cinzel Decorative', cursive;
-  float:left;
+  font-family: 'Cinzel Decorative', serif, sans-serif;  float:left;
 	margin:10% 1.5%;
 	width:30%;
   text-align: left;
@@ -46,8 +44,7 @@ body{
 
 .signup{
   text-align: center;
-  font-family: 'Cinzel Decorative', cursive;
-  font-size: 300%;
+  font-family: 'Cinzel Decorative', serif, sans-serif;  font-size: 300%;
   text-shadow: 2px 2px #EEE;
 }
 
@@ -56,8 +53,7 @@ button{
   border-radius: 10%;
   color: #EEE;
   padding: 1%;
-  font-family: 'Cinzel Decorative', cursive;
-}
+  font-family: 'Cinzel Decorative', serif, sans-serif;}
 
 .caps{
   font-size: 250%;
@@ -70,8 +66,7 @@ button{
 }
 
 .signup2{
-  font-family: 'Cinzel Decorative', cursive;
-  float:left;
+  font-family: 'Cinzel Decorative', serif, sans-serif;  float:left;
   margin:10% 1.5%;
   width:30%;
   text-align: left;
@@ -81,14 +76,14 @@ button{
 
 .register{
   text-align: center;
-  font-family: 'Cinzel Decorative', cursive;
+  font-family: 'Cinzel Decorative', serif, sans-serif;
   font-size: 250%;
   margin-bottom: 5%;
   text-shadow: 2px 2px #57846d;
 
   }
   .register2{
-    font-family: 'Cinzel Decorative', cursive;
+  font-family: 'Cinzel Decorative', serif, sans-serif;
   }
 
   .register2 input {
@@ -101,13 +96,13 @@ button{
     border-radius: 10%;
     color: #EEE;
     padding: 1%;
-    font-family: 'Cinzel Decorative', cursive;
+    font-family: 'Cinzel Decorative', serif, sans-serif;
     margin-left: 45%;
     font-weight: 500;
   }
 
   .register2 label{
-    font-family: 'Cinzel Decorative', cursive;
+    font-family: 'Cinzel Decorative', serif, sans-serif;
     text-align: left;
     margin-left: 35%;
     font-size: 130%;
@@ -116,7 +111,7 @@ button{
 
 
   .login1{
-    font-family: 'Cinzel Decorative', cursive;
+    font-family: 'Cinzel Decorative', serif, sans-serif;
     font-size: 150%;
     margin-top: 5%;
   }
@@ -126,7 +121,7 @@ button{
     border-radius: 10%;
     color: #EEE;
     padding: 1%;
-    font-family: 'Cinzel Decorative', cursive;
+    font-family: 'Cinzel Decorative', serif, sans-serif;
     margin-left: 48%;
     margin-top: 5%;
 
@@ -135,12 +130,11 @@ button{
 .nomatch{
   color: red;
   text-align: center;
-  font-family: 'Cinzel Decorative', cursive;
-
+  font-family: 'Cinzel Decorative', serif, sans-serif;
 }
 
 .logplease{
-  font-family: 'Cinzel Decorative', cursive;
+  font-family: 'Cinzel Decorative', serif, sans-serif;
   font-size: 250%;
   margin-top: 5%;
   text-align: center;
