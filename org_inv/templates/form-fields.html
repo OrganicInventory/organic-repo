@@ -1,0 +1,6 @@
+{% for field in frm %}
+   <div class="{{ field.label }} input">
+       <span class="focus-out">{{ field.label_tag }} </span> {{ field }}
+       {{ field.errors }}
+   </div>
+{% endfor %}
