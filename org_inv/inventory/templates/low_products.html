@@ -7,7 +7,7 @@
 
 {% block content %}
     <form id='range' action="{% url 'low_products' %}">
-        <select id='range' form="range" name="range" onchange="this.form.submit();">
+        <select class="date-dropdown" id='range' form="range" name="range" onchange="this.form.submit();">
             <option selected disabled>Date Range</option>
             <option value="1">1 Day</option>
             <option value="7">1 Week</option>
@@ -38,7 +38,7 @@
           </a>
         </td>
         <td>{{ key.size }}oz.</td>
-        <td>{{ value|floatformat:2 }}oz. left in 2 weeks</td>
+        <td>{{ value|floatformat:2 }}oz. left in <span class="date-range-display">2 Weeks</span></td>
         <td><a href="{% url 'adjust_product' key.id %}">Adjust Inventory</a></td>
       </tr>
       {% endfor %}

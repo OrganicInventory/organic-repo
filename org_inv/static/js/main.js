@@ -1,10 +1,4 @@
 $(function() {
-
-  // $('#datepicker').datepicker();
-
-  // $('#id_date').addClass('datepicker');
-  // $('#id_date').attr('id', 'datepicker');
-
   // $('label').each(function() {
   //    var $this = $(this);
   //    var labelText = $this.text();
@@ -13,12 +7,14 @@ $(function() {
   //  });
 
  // Form
-  $('input, select, textarea').each(function(){
-    var val = $(this).val();
-    if (val.length){
-      $(this).siblings('span').addClass('focus-in');
-    }
-  });
+  // $('input, select, textarea').each(function(){
+  //   var val = $(this).val();
+  //   if (val.length) {
+  //     $(this).siblings('span').addClass('focus-in');
+  //   }
+  // });
+
+
 
   // $('select').each(function() {
   //   $('label').remove();
@@ -35,19 +31,43 @@ $(function() {
     }
   });
 
-  $('.scan-form').submit(function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    alert($('.scan-form input').val());
-  });
-
-  // var value = $("a").attr("href");
-  // console.log(value);
+  // $('.scan-form').submit(function(e) {
+  //   e.preventDefault();
+  //   e.stopPropagation();
   //
-  // if (value) {
-  //   alert('it is');
-  // }
+  //   alert($('.scan-form input').val());
+  // });
 
+  function getUrlVars() {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+
+    for(var i = 0; i < hashes.length; i++) {
+      hash = hashes[i].split('=');
+      vars.push(hash[0]);
+      vars[hash[0]] = hash[1];
+    }
+
+    return vars;
+}
+
+getUrlVars();
+var urlRange = getUrlVars()['range'];
+
+  $(document).ready(function() {
+    console.log(urlRange);
+    if (urlRange === '1') {
+      $('.date-range-display').text('1 Day');
+    } else if (urlRange === '7') {
+      $('.date-range-display').text('One Week');
+    } else if (urlRange === '14') {
+      $('.date-range-display').text('Two Weeks');
+    } else if (urlRange === '30') {
+      $('.date-range-display').text('1 Month');
+    } else if (urlRange === '60') {
+      $('.date-range-display').text('2 Months');
+    }
+
+  });
 
 });
