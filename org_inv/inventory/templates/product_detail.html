@@ -1,23 +1,36 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block pagetitle %}
-<h1 class="main-heading">Product Details</h1>
+    <h1 class="main-heading">Product Details</h1>
 {% endblock %}
 
 {% block content %}
-<div class="main-content-header">
-  <h2 class="secondary-heading">{{object.name}}</h2>
-</div>
-<div class="list-container">
-  <ul class="list-container-ul">
-    <li class="list-container-li">Name:  {{ object.name }}</li>
-    <li class="list-container-li">Quantity: {{ object.quantity }}</li>
-    <li class="list-container-li">Size: {{ object.size }}</li>
-    <li class="list-container-li">User:  {{ object.user }}</li>
-  </ul>
-  <a href="{% url 'product_confirm_delete' product.id %}"><button class="gen-btn">Delete</button></a>
+    <div class="main-content-header">
+        <h2 class="secondary-heading">{{ object.name }}</h2>
+    </div>
+    <div class="list-container">
+        <ul class="list-container-ul">
+            <li class="list-container-li">Name: {{ object.name }}</li>
+            <li class="list-container-li">Quantity: {{ object.quantity }}</li>
+            <li class="list-container-li">Size: {{ object.size }}</li>
+            <li class="list-container-li">User: {{ object.user }}</li>
+        </ul>
+        <a href="{% url 'product_confirm_delete' product.id %}">
+            <button class="gen-btn">Delete</button>
+        </a>
 
-</div>
-<div class="list-container-footer"></div>
+    </div>
+    <div class="list-container-footer"></div>
+
+    <div id='chart'>
+        <svg style='height:500px'></svg>
+    </div>
+    <script src="{% static 'd3.min.js' %}"></script>
+   <script src="{% static 'nv.d3.min.js' %}"></script>
+    <script>
+    var productdata = {{ data|safe }};
+    </script>
+    <script src='{% static 'visualization.js' %}' type='text/javascript'></script>
 
 {% endblock %}

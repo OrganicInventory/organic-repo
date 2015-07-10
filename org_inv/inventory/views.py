@@ -64,6 +64,7 @@ class ProductDetailView(DetailView):
         return context
 
 
+
 class ProductDeleteView(DeleteView):
     model = Product
     context_object_name = 'product'
@@ -453,15 +454,18 @@ class AdjustUsageView(View):
 
 def get_prod_data(prod_id):
     product = Product.objects.get(id=prod_id)
-    services = Service.objects.filter(products__contains=product)
+    services = Service.objects.filter(products__pk__contains=product.id)
     appts = Appointment.objects.filter(service__in=services)
+    values =[]
     usages = {}
     for appt in appts:
         amt = Amount.objects.get(service=appt.service, product=product)
-        date = appt.date
+        date = str(appt.date)
         if date in usages.keys():
             usages[date] += amt.amount
         else:
             usages[date] = amt.amount
-    data = {'values': usages, 'key': 'product usage', 'color': 'ff7f0e'}
+    values.append(usages)
+    data = []
+    data.append({'values': values, 'key': 'product usage', 'color': 'ff7f0e'})
     return data
