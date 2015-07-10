@@ -27,6 +27,11 @@ class ProductForm(forms.ModelForm):
 class AppointmentForm(forms.ModelForm):
     date = forms.DateField(widget=SelectDateWidget)
 
+    def __init__(self, request, *args, **kwargs):
+        # user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+        self.fields['service'].queryset = Service.objects.filter(user=request.user)
+
     class Meta:
         model = Appointment
         fields = ['date', 'service',]
