@@ -1,3 +1,4 @@
+<body class="services-body">
 {% extends "base.html" %}
 
 {% block pagetitle %}
@@ -17,10 +18,10 @@
     {% for service in all_services %}
         <tr>
       <td>{{ service }}</td>
-      <td><a href="{% url 'delete_service' service.id %}">Delete</a></td>
+      <td></td>
       <td><a href="{% url 'update_service' service.id %}"><button class="update-btn-table">Update</button></a></td>
       <td></td>
-      <td></td>
+      <td><a href="{% url 'delete_service' service.id %}"><button class="delete-btn-table">X</button></a></td>
         </tr>
     {% endfor %}
   </table>
@@ -31,3 +32,4 @@
   <span class="add-button">q</span>
 </div></a>
 {% endblock %}
+</body>
