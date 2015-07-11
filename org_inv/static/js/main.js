@@ -6,6 +6,19 @@ $(function() {
   //    $this.append('<span class="focus-out">' + labelText + '</span>');
   //  });
 
+  $('.nav-dropdown-btn').click(function() {
+    $('.main-nav-ul').slideToggle('slow');
+  });
+
+  $(window).resize(function() {
+    var width = $(window).width();
+    if (width > 700) {
+      stickyHeader();
+    } else if (width <= 700) {
+
+    }
+  }).resize();
+
  // Form
   $('input, select, textarea').each(function(){
     var val = $(this).val();
@@ -86,31 +99,23 @@ getUrlVars();
   $('#id_service').siblings().remove();
   $('#id_product').siblings().remove();
 
-  $('.nav-dropdown-btn').click(function() {
-    $('.main-nav-ul').slideToggle('slow');
-  });
 
-  $(window).resize(function() {
-    var width = $(window).width();
-    if (width > 700) {
-      stickyHeader();
-    } else if (width <= 700) {
 
-    }
-  }).resize();
-
-  function iconColorChange() {
-    var icon = $('.nav-dropdown-btn');
-
-    $(window).scroll(function () {
-      if ($(this).scrollTop() >= 40) {
-        $(icon).css('color', '#444c5a');
-      } else {
-        $(icon).css('color', '#eee');
-      }
-    });
-  }
-  iconColorChange();
+  // function iconColorChange() {
+  //   var icon = $('.nav-dropdown-btn');
+  //   var addIcon = $('.add-btn-mobile');
+  //
+  //   $(window).scroll(function () {
+  //     if ($(this).scrollTop() >= 40) {
+  //       $(icon).css('color', '#444c5a');
+  //       $(addIcon).css('color', '#444c5a');
+  //     } else {
+  //       $(icon).css('color', '#eee');
+  //       $(addIcon).css('color', '#eee');
+  //     }
+  //   });
+  // }
+  // iconColorChange();
 
 
 });
