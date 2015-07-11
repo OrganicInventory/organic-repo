@@ -6,17 +6,21 @@ $(function() {
   //    $this.append('<span class="focus-out">' + labelText + '</span>');
   //  });
 
- // Form
-  $('input, select, textarea').each(function(){
-    var val = $(this).val();
-    if (val.length) {
-      $(this).siblings('span').addClass('focus-in');
-    }
+  $('.nav-dropdown-btn').click(function() {
+    $('.main-nav-ul').slideToggle('slow');
   });
 
-  // $('select label').each(function() {
-  //   $('label').remove();
-  // });
+  $(window).resize(function() {
+    var width = $(window).width();
+    if (width > 700) {
+      stickyHeader();
+    } else if (width <= 700) {
+
+    }
+  }).resize();
+
+ // Form
+
 
   $('input').focusin(function() {
     $(this).siblings('span').addClass('focus-in');
@@ -85,27 +89,33 @@ getUrlVars();
       }
     });
   }
-  stickyHeader();
+
 
   $('#id_service').siblings().remove();
   $('#id_product').siblings().remove();
 
-  // function checkStatus() {
-  // var status = $('.status-count').length;
-  // var statusVal = $('.status-count').text();
-  // console.log(status);
-  //   for (var i = 0; i < status; i++) {
-  //     console.log(statusVal[i]);
-  //     if (statusVal[i] < 10) {
-  //       $('.product-status').text('e');
+  $('input, select, textarea').each(function(){
+    var val = $(this).val();
+    if (val.length) {
+      $(this).siblings('span').addClass('focus-in');
+    }
+  });
+
+  // function iconColorChange() {
+  //   var icon = $('.nav-dropdown-btn');
+  //   var addIcon = $('.add-btn-mobile');
+  //
+  //   $(window).scroll(function () {
+  //     if ($(this).scrollTop() >= 40) {
+  //       $(icon).css('color', '#444c5a');
+  //       $(addIcon).css('color', '#444c5a');
   //     } else {
-  //       status[i] === ('f');
+  //       $(icon).css('color', '#eee');
+  //       $(addIcon).css('color', '#eee');
   //     }
-  //   }
+  //   });
   // }
-  // checkStatus();
-
-
+  // iconColorChange();
 
 
 });

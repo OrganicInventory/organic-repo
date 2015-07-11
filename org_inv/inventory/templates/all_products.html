@@ -5,6 +5,11 @@
     <h1 class="main-heading">All Products</h1>
 {% endblock %}
 
+{% block mobileadd %}
+<a href="/products/new">
+  <span class="add-btn-mobile">q</span>
+</a>
+{% endblock %}
 
 
 {% block scancontent %}
@@ -19,9 +24,9 @@
 {% endblock %}
 
 {% block content %}
-  <table class="content-table content-table-links">
+  <table class="content-table content-table-links table-mobile">
       <tr class="table-header">
-          <th>Status</th>
+          <th class="status-th">Status</th>
           <th>Title</th>
           <th>Product Size</th>
           <th>Qty</th>
@@ -29,7 +34,7 @@
       </tr>
       {% for product in all_products %}
           <tr>
-              <td></td>
+              <td class="status-td"></td>
               <td>
                 <a href="{% url 'product_detail' %}?upc={{ product.upc_code }}">
                   <div class="table-id-link">

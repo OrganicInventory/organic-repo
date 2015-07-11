@@ -22,9 +22,9 @@
 
 {% block content %}
 
-  <table class="content-table content-table-links">
+  <table class="content-table content-table-links table-mobile">
     <tr class="table-header">
-        <th>Status</th>
+        <th class="status-th">Status</th>
         <th>Title</th>
         <th>Product Size</th>
         <th>Remaining Qty</th>
@@ -33,7 +33,7 @@
     {% if low %}
       {% for key, value in low.items %}
       <tr>
-        <td></td>
+        <td class="status-td"></td>
         <td>
           <a href="{% url 'product_detail' %}?upc={{ key.upc_code }}">
             <div class="table-id-link">
