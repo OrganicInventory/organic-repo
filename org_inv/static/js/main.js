@@ -14,10 +14,6 @@ $(function() {
     }
   });
 
-  // $('select label').each(function() {
-  //   $('label').remove();
-  // });
-
   $('input').focusin(function() {
     $(this).siblings('span').addClass('focus-in');
   });
@@ -85,27 +81,36 @@ getUrlVars();
       }
     });
   }
-  stickyHeader();
+
 
   $('#id_service').siblings().remove();
   $('#id_product').siblings().remove();
 
-  // function checkStatus() {
-  // var status = $('.status-count').length;
-  // var statusVal = $('.status-count').text();
-  // console.log(status);
-  //   for (var i = 0; i < status; i++) {
-  //     console.log(statusVal[i]);
-  //     if (statusVal[i] < 10) {
-  //       $('.product-status').text('e');
-  //     } else {
-  //       status[i] === ('f');
-  //     }
-  //   }
-  // }
-  // checkStatus();
+  $('.nav-dropdown-btn').click(function() {
+    $('.main-nav-ul').slideToggle('slow');
+  });
 
+  $(window).resize(function() {
+    var width = $(window).width();
+    if (width > 700) {
+      stickyHeader();
+    } else if (width <= 700) {
 
+    }
+  }).resize();
+
+  function iconColorChange() {
+    var icon = $('.nav-dropdown-btn');
+
+    $(window).scroll(function () {
+      if ($(this).scrollTop() >= 40) {
+        $(icon).css('color', '#444c5a');
+      } else {
+        $(icon).css('color', '#eee');
+      }
+    });
+  }
+  iconColorChange();
 
 
 });
