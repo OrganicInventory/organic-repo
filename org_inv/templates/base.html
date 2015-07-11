@@ -25,15 +25,19 @@
     </div>
     <div class="page-header-footer">
       <div class="main-nav-container">
-      <ul class="main-nav-ul">
-        <a href="/low"><li class="main-nav-li low-inventory">Low Inventory</li></a>
-        <a href="/products"><li class="main-nav-li all-products">All Products</li></a>
-        <a href="/services"><li class="main-nav-li services">Services</li></a>
-        <a href="/appointments"><li class="main-nav-li appointments">Appointments</li></a>
-        <a href="/products/new_order"><li class="main-nav-li new-order">New Order</li></a>
-        <a href="{% url 'close_shop' %}"><div class="close-shop"><span class="close-shop-icon">e</span></div></a>
-      </ul>
-    </div>
+        <ul class="main-nav-ul">
+          <a href="/low"><li class="main-nav-li low-inventory">Low Inventory</li></a>
+          <a href="/products"><li class="main-nav-li all-products">All Products</li></a>
+          <a href="/services"><li class="main-nav-li services">Services</li></a>
+          <a href="/appointments"><li class="main-nav-li appointments">Appointments</li></a>
+          <a href="/products/new_order"><li class="main-nav-li new-order">New Order</li></a>
+          <a href="{% url 'close_shop' %}"><div class="close-shop"><span class="close-shop-icon">e</span></div></a>
+        </ul>
+      </div>
+      <div class="top-nav-container-hide">
+        <div class="user-icon"></div>
+        <span class="user-name">Welcome {{request.user.username}}</span>
+      </div>
     </div>
   </div>
   <div class="wrapper">

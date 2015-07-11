@@ -70,4 +70,21 @@ getUrlVars();
 
   });
 
+  function stickyHeader() {
+    var stick = $('.page-header-footer');
+
+    $(window).scroll(function () {
+      if ($(this).scrollTop() >= 136) {
+        stick.addClass('sticky');
+        $('.top-nav-container-hide').fadeIn('slow');
+        $('.top-nav-container').fadeOut('slow');
+      } else {
+        stick.removeClass('sticky');
+        $('.top-nav-container-hide').fadeOut('slow');
+        $('.top-nav-container').fadeIn(2000);
+      }
+    });
+  }
+  stickyHeader();
+
 });
