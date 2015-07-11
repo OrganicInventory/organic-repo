@@ -1,17 +1,19 @@
+from datetime import timedelta, datetime
+import json
+
 import re
 from factual import Factual
-from datetime import timedelta, datetime
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.utils import timezone
 from django.utils.decorators import method_decorator
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView
 from .models import Product, Appointment, Service, Amount
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
-    ProductLookupForm, AmountFormSet
-import json
+    AmountFormSet
+
 
 # Create your views here.
 
@@ -392,7 +394,12 @@ class LowInventoryView(LoginRequiredMixin, ListView):
 
 class NewOrderView(View):
     def get(self, request, **kwargs):
-        form = ProductForm(initial={'user': self.request.user})
+        if self.request.GET.get('upc'):
+            product = Product.objects.filter(user=self.request.user).get(upc_code=self.request.GET.get('upc'))
+            form = ProductForm(initial={'user': self.request.user, 'upc_code': product.upc_code, 'name': product.name,
+                                    'size': product.size})
+        else:
+            form = ProductForm(initial={'user': self.request.user})
         return render(request, "new_order.html", {"form": form})
 
     def post(self, request, **kwargs):
