@@ -1,5 +1,5 @@
 $(function() {
-  // $('label').each(function() {
+  // $('select label').each(function() {
   //    var $this = $(this);
   //    var labelText = $this.text();
   //    $this.empty();
@@ -7,14 +7,14 @@ $(function() {
   //  });
 
  // Form
-  // $('input, select, textarea').each(function(){
-  //   var val = $(this).val();
-  //   if (val.length) {
-  //     $(this).siblings('span').addClass('focus-in');
-  //   }
-  // });
+  $('input, select, textarea').each(function(){
+    var val = $(this).val();
+    if (val.length) {
+      $(this).siblings('span').addClass('focus-in');
+    }
+  });
 
-  // $('select').each(function() {
+  // $('select label').each(function() {
   //   $('label').remove();
   // });
 
@@ -86,5 +86,24 @@ getUrlVars();
     });
   }
   stickyHeader();
+
+
+  // function checkStatus() {
+  // var status = $('.status-count').length;
+  // var statusVal = $('.status-count').text();
+  // console.log(status);
+  //   for (var i = 0; i < status; i++) {
+  //     console.log(statusVal[i]);
+  //     if (statusVal[i] < 10) {
+  //       $('.product-status').text('e');
+  //     } else {
+  //       status[i] === ('f');
+  //     }
+  //   }
+  // }
+  // checkStatus();
+
+
+
 
 });
