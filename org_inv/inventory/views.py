@@ -1,3 +1,4 @@
+import re
 from factual import Factual
 from datetime import timedelta, datetime
 from django.contrib.auth.decorators import login_required
@@ -45,6 +46,14 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = 'create_product.html'
     success_url = '/products/'
 
+    def get_initial(self):
+        if self.request.GET.get('upc'):
+            initial = json.loads(get_product(self.request.GET.get("upc")))
+            initial['upc_code'] = self.request.GET.get('upc')
+            return initial
+        else:
+            return super().get_initial()
+
     def form_valid(self, form):
         form.instance = form.save(commit=False)
         form.instance.user = self.request.user
@@ -73,7 +82,7 @@ class TestView(View):
             prod_data = get_product(request.GET.get("upc"))
         else:
             return render(request, "test.html")
-        return render(request, "create_product.html", {'data':prod_data})
+        return render(request, "create_product.html", {'data': prod_data})
 
 
 
@@ -520,7 +529,7 @@ def get_product(upc_code):
             if pair[0] == 'product_name':
                 new['name'] = pair[1]
             elif pair[0] == 'size':
-                new['size'] = pair[1][0]
+                new['size'] = float(re.search(r'\d+', pair[1][0]).group())
             else:
                 new[pair[0]] = pair[1]
     new_json = json.dumps(new)

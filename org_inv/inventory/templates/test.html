@@ -8,19 +8,19 @@
         <input name='upc' type="text"/>
         <button class="form-button" type="submit">Add New</button>
     </form>
-    <div class="form-container">
-        <form class="main-form" method="POST" action="{% url 'test' %}">
-            {% csrf_token %}
-            {% for field in form %}
-                <div class="{{ field.label }} input">
-
-                    <span class="focus-out">{{ field.label_tag }} </span> {{ field }}
-                    {{ field.errors }}
-                </div>
-            {% endfor %}
-
-            <!-- Provide a button to click to submit the form. -->
-            <button class="form-button" type="submit" name="submit">Add New</button>
-        </form>
+{#    <div class="form-container">#}
+{#        <form class="main-form" method="POST" action="{% url 'test' %}">#}
+{#            {% csrf_token %}#}
+{#            {% for field in form %}#}
+{#                <div class="{{ field.label }} input">#}
+{##}
+{#                    <span class="focus-out">{{ field.label_tag }} </span> {{ field }}#}
+{#                    {{ field.errors }}#}
+{#                </div>#}
+{#            {% endfor %}#}
+{##}
+{#            <!-- Provide a button to click to submit the form. -->#}
+{#            <button class="form-button" type="submit" name="submit">Add New</button>#}
+{#        </form>#}
     </div>
 {% endblock %}
