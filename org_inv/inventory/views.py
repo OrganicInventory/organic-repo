@@ -10,6 +10,7 @@ from django.views.generic import ListView, CreateView, DeleteView, UpdateView, D
 from .models import Product, Appointment, Service, Amount
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
     ProductLookupForm, AmountFormSet
+import json
 
 # Create your views here.
 
@@ -52,6 +53,34 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+class TestCreateView(LoginRequiredMixin, CreateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'test.html'
+    success_url = '/products/'
+
+    def form_valid(self, form):
+        form.instance = form.save(commit=False)
+        form.instance.user = self.request.user
+        form.instance.new_product_quantity(form.instance.quantity)
+        form.instance.update_max_quantity()
+        return super().form_valid(form)
+
+
+class TestView(View):
+    def get(self, request, **kwargs):
+        if request.GET.get("upc"):
+            prod_data = get_product(request.GET.get("upc"))
+        else:
+            return render(request, "test.html")
+        return render(request, "create_product.html", {'data':prod_data})
+
+
+
+        # def post(self, request, **kwargs):
+        #     Product.objects.get(upc=request.POST.get('upc'))
+
+
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'product_detail.html'
@@ -63,7 +92,6 @@ class ProductDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['data'] = get_prod_data(self.object.id)
         return context
-
 
 
 class ProductDeleteView(DeleteView):
@@ -360,8 +388,10 @@ class NewOrderView(View):
 
     def post(self, request, **kwargs):
         form = ProductForm(request.POST, initial={'user': self.request.user})
-        if Product.objects.filter(name=request.POST.get('name'), size=float(request.POST.get('size'))).filter(user=request.user):
-            prod_instance = Product.objects.get(name=request.POST.get('name'), size=float(request.POST.get('size')), user=request.user)
+        if Product.objects.filter(name=request.POST.get('name'), size=float(request.POST.get('size'))).filter(
+                user=request.user):
+            prod_instance = Product.objects.get(name=request.POST.get('name'), size=float(request.POST.get('size')),
+                                                user=request.user)
             prod_instance.update_quantity(float(request.POST.get('quantity')))
             prod_instance.update_max_quantity()
             prod_instance.save()
@@ -462,7 +492,7 @@ def get_prod_data(prod_id):
     product = Product.objects.get(id=prod_id)
     services = Service.objects.filter(products__pk__contains=product.id)
     appts = Appointment.objects.filter(service__in=services).order_by('date')
-    values =[]
+    values = []
     usages = {}
     for appt in appts:
         amt = Amount.objects.get(service=appt.service, product=product)
@@ -477,9 +507,21 @@ def get_prod_data(prod_id):
     data.append({'values': values, 'key': 'product usage (oz)', 'area': 'True'})
     return data
 
+
 def get_product(upc_code):
-     factual = Factual("gCKclwfy6eBki5UyHDxS56x7zmcvCMaGJ7l7v9cM", "Dt8V4ngb484Blmyaw5G9SxbycgpOsJL0ENckwxX0")
-     products = factual.table('products')
-     data = products.filters({'upc':{'$includes':upc_code}}).data()
-     upc_data = data[0]
-     return upc_data
+    factual = Factual("gCKclwfy6eBki5UyHDxS56x7zmcvCMaGJ7l7v9cM", "Dt8V4ngb484Blmyaw5G9SxbycgpOsJL0ENckwxX0")
+    products = factual.table('products')
+    data = products.filters({'upc': {'$includes': upc_code}}).data()
+    upc_data = data[0]
+    wanted = ['size', 'product_name']
+    new = {}
+    for pair in upc_data.items():
+        if pair[0] in wanted:
+            if pair[0] == 'product_name':
+                new['name'] = pair[1]
+            elif pair[0] == 'size':
+                new['size'] = pair[1][0]
+            else:
+                new[pair[0]] = pair[1]
+    new_json = json.dumps(new)
+    return new_json

@@ -1,16 +1,15 @@
 {% extends "base.html" %}
-{% load static %}
 
 {% block content %}
-    <script src="{% static 'auto-fill.js' %}"></script>
     <div class="main-content-header">
         <h2 class="secondary-heading">Add Product</h2>
     </div>
+    <form id='test_form' method="get" action="{% url 'create_product' %}">
+        <input name='upc' type="text"/>
+        <button class="form-button" type="submit">Add New</button>
+    </form>
     <div class="form-container">
-    <script>
-        $('#test').populate('{"size": ["14 oz"], "name": "Eyebrow Mousse Black"}')
-    </script>
-        <form id='test' class="main-form" method="POST" action="{% url 'create_product' %}">
+        <form class="main-form" method="POST" action="{% url 'test' %}">
             {% csrf_token %}
             {% for field in form %}
                 <div class="{{ field.label }} input">
@@ -23,6 +22,5 @@
             <!-- Provide a button to click to submit the form. -->
             <button class="form-button" type="submit" name="submit">Add New</button>
         </form>
-
     </div>
 {% endblock %}
