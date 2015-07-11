@@ -6,22 +6,27 @@
 {% endblock %}
 
 {% block content %}
+<!-- <div class="main-content-header">
+    <h2 class="secondary-heading">New Order Entry</h2>
+</div> -->
 
   <table class="content-table">
     <tr class="table-header">
       <th>Title</th>
       <th></th>
       <th></th>
-      <th></th>
-      <th></th>
     </tr>
     {% for service in all_services %}
+    <!-- <div class="test">
+      {{ service }}
+      <br />
+      <a href="{% url 'update_service' service.id %}"><button class="update-btn-table">Update</button>
+      <a href="{% url 'delete_service' service.id %}"><button class="delete-btn-table">X</button>
+    </div> -->
         <tr>
       <td>{{ service }}</td>
-      <td></td>
       <td><a href="{% url 'update_service' service.id %}"><button class="update-btn-table">Update</button></a></td>
-      <td></td>
-      <td><a href="{% url 'delete_service' service.id %}"><button class="delete-btn-table">X</button></a></td>
+      <td><a href="{% url 'delete_service' service.id %}"><button class="delete-btn-table">Delete</button></a></td>
         </tr>
     {% endfor %}
   </table>

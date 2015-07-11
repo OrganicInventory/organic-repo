@@ -5,18 +5,22 @@
     <h1 class="main-heading">Low Inventory</h1>
 {% endblock %}
 
-{% block content %}
-    <form id='range' action="{% url 'low_products' %}">
-        <select class="date-dropdown" id='range' form="range" name="range" onchange="this.form.submit();">
-            <option selected disabled>Date Range</option>
-            <option value="1">1 Day</option>
-            <option value="7">1 Week</option>
-            <option value="14">2 Weeks</option>
-            <option value="30">1 Month</option>
-            <option value="60">2 Months</option>
-        </select>
-    </form>
+{% block scancontent %}
+<div class="date-dropdown-container">
+  <form class="date-dropdown-form" id='range' action="{% url 'low_products' %}">
+      <select class="date-dropdown" id='range' form="range" name="range" onchange="this.form.submit();">
+          <option selected disabled>Date Range</option>
+          <option value="1">1 Day</option>
+          <option value="7">1 Week</option>
+          <option value="14">2 Weeks</option>
+          <option value="30">1 Month</option>
+          <option value="60">2 Months</option>
+      </select>
+  </form>
+</div>
+{% endblock %}
 
+{% block content %}
 
   <table class="content-table content-table-links">
     <tr class="table-header">
