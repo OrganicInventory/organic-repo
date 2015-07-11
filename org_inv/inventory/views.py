@@ -95,7 +95,7 @@ class ProductDetailView(DetailView):
     template_name = 'product_detail.html'
 
     def get_object(self, queryset=None):
-        return Product.objects.filter(user=self.request.user).filter(upc_code=self.request.GET['upc'])[0]
+        return Product.objects.get(user=self.request.user, upc_code=self.request.GET['upc'])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
