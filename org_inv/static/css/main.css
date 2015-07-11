@@ -63,6 +63,13 @@ body {
   text-align: center;
 }
 
+
+.update-btn-table, .delete-btn-table {
+  padding: 5px;
+  color: #eee;
+  cursor: pointer;
+}
+
 .wrapper {
   margin-bottom: 25px;
 }
