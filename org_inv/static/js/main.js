@@ -87,6 +87,8 @@ getUrlVars();
   }
   stickyHeader();
 
+  $('#id_service').siblings().remove();
+  $('#id_product').siblings().remove();
 
   // function checkStatus() {
   // var status = $('.status-count').length;

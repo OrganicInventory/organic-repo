@@ -378,7 +378,7 @@ td a {
   display: block;
   position: absolute;
   right: 0;
-  bottom: 45px;
+  bottom: 48px;
   cursor: pointer;
 }
 
@@ -403,11 +403,8 @@ td a {
 }
 
 .update-btn-table, .delete-btn-table {
-  padding: 5px;
-  color #eee;
   cursor: pointer;
   padding: 6px 10px;
-  cursor: pointer;
   color: #333;
   border-radius: 2px;
   border:none;
