@@ -20,12 +20,7 @@ $(function() {
   }).resize();
 
  // Form
-  $('input, select, textarea').each(function(){
-    var val = $(this).val();
-    if (val.length) {
-      $(this).siblings('span').addClass('focus-in');
-    }
-  });
+
 
   $('input').focusin(function() {
     $(this).siblings('span').addClass('focus-in');
@@ -99,7 +94,12 @@ getUrlVars();
   $('#id_service').siblings().remove();
   $('#id_product').siblings().remove();
 
-
+  $('input, select, textarea').each(function(){
+    var val = $(this).val();
+    if (val.length) {
+      $(this).siblings('span').addClass('focus-in');
+    }
+  });
 
   // function iconColorChange() {
   //   var icon = $('.nav-dropdown-btn');
