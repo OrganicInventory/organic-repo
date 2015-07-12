@@ -50,9 +50,13 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
     def get_initial(self):
         if self.request.GET.get('upc'):
-            initial = json.loads(get_product(self.request.GET.get("upc")))
-            initial['upc_code'] = self.request.GET.get('upc')
-            return initial
+            if get_product(self.request.GET.get('upc')):
+                initial = json.loads(get_product(self.request.GET.get("upc")))
+                initial['upc_code'] = self.request.GET.get('upc')
+                return initial
+            else:
+                initial = []
+                return initial
         else:
             return super().get_initial()
 
@@ -85,7 +89,6 @@ class TestView(View):
         else:
             return render(request, "test.html")
         return render(request, "create_product.html", {'data': prod_data})
-
 
 
         # def post(self, request, **kwargs):
@@ -528,16 +531,19 @@ def get_product(upc_code):
     factual = Factual("gCKclwfy6eBki5UyHDxS56x7zmcvCMaGJ7l7v9cM", "Dt8V4ngb484Blmyaw5G9SxbycgpOsJL0ENckwxX0")
     products = factual.table('products')
     data = products.filters({'upc': {'$includes': upc_code}}).data()
-    upc_data = data[0]
-    wanted = ['size', 'product_name']
-    new = {}
-    for pair in upc_data.items():
-        if pair[0] in wanted:
-            if pair[0] == 'product_name':
-                new['name'] = pair[1]
-            elif pair[0] == 'size':
-                new['size'] = float(re.search(r'\d+', pair[1][0]).group())
-            else:
-                new[pair[0]] = pair[1]
-    new_json = json.dumps(new)
-    return new_json
+    if data:
+        upc_data = data[0]
+        wanted = ['size', 'product_name']
+        new = {}
+        for pair in upc_data.items():
+            if pair[0] in wanted:
+                if pair[0] == 'product_name':
+                    new['name'] = pair[1]
+                elif pair[0] == 'size':
+                    new['size'] = float(re.search(r'\d+', pair[1][0]).group())
+                else:
+                    new[pair[0]] = pair[1]
+        new_json = json.dumps(new)
+        return new_json
+    else:
+        return None
