@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block pagetitle %}
+    <link href="{% static 'nv.d3.min.css' %}" rel="stylesheet">
+    <h1 class="main-heading">Service Details</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="main-content-header">
+        <h2 class="secondary-heading">{{ object.name }}</h2>
+    </div>
+    <div class="list-container">
+        <ul class="list-container-ul">
+            <li class="list-container-li">Name: {{ object.name }}</li>
+            <li class="list-container-li">Products: <br />{% for prod in prods %} -{{ prod.name }}<br /> {% endfor %}</li>
+            <li class="list-container-li">User: {{ object.user }}</li>
+        </ul>
+        <a href="{% url 'delete_service' object.id %}">
+            <button class="gen-btn">Delete</button>
+        </a>
+
+    </div>
+    <div class="list-container-footer"></div>
+
+    <div id='chart'>
+        <svg style='height:500px'></svg>
+    </div>
+    <script src="{% static 'd3.min.js' %}"></script>
+   <script src="{% static 'nv.d3.min.js' %}"></script>
+    <script>
+    var servicedata = {{ data|safe }};
+    </script>
+    <script src='{% static 'visualization.js' %}' type='text/javascript'></script>
+
+{% endblock %}
