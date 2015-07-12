@@ -26,7 +26,7 @@
     <header class="page-header">
       <div class="top-nav-container">
         <div class="user-icon"></div>
-        <span class="user-name">Welcome {{request.user.username}}</span>
+        <span class="user-name">Welcome <a href="{% url 'show_user' request.user.id %}">{{request.user.username}}</a></span>
       </div>
     </header>
     <div class="page-title">
