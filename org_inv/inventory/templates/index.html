@@ -4,16 +4,20 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Spa-ventory</title>
+    <title>P.I.M.</title>
     <link rel="stylesheet" href="../../static/css/index.css">
     <link href='http://fonts.googleapis.com/css?family=Cinzel+Decorative' rel='stylesheet' type='text/css'>
 </head>
 <body>
 <div class="nav">
-    <a href="{% url 'login' %}" class='login-link'>Login</a>
+    <a href="{% url 'login' %}">
+      <button class='login-link'>Login</button>
+    </a>
 </div>
 <header class="header">
-    Spa-ventory
+    P.I.M.
+    <p class="headspa"><img class="logo" src="https://cdn2.iconfinder.com/data/icons/flaticons-stroke/16/leaf-1-512.png"> Spa Edition</p>
+    <p class="sub-header">Predictive Inventory Management</p>
 </header>
 <div class='box'>
     Create Appointments
