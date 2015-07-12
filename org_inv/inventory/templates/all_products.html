@@ -6,9 +6,9 @@
 {% endblock %}
 
 {% block mobileadd %}
-<a href="/products/new">
-  <span class="add-btn-mobile">q</span>
-</a>
+    <a href="/products/new">
+        <span class="add-btn-mobile">q</span>
+    </a>
 {% endblock %}
 
 
@@ -37,56 +37,53 @@
             return true;
         }
     </script>
-    <form name ='test_form' class="form-control scan-form" id='test_form' method="get" onsubmit="return OnSubmitForm();">
-        <input name='upc'  class="form-control scan-input" placeholder="Scan Product UPC" type="text"/>
-<div class="scan-btns">
-        <button class="scan-btn" onclick="document.pressed=this.value" type="submit" value="New">New</button>
+    <form name='test_form' class="form-control scan-form" id='test_form' method="get" onsubmit="return OnSubmitForm();">
+        <input name='upc' class="form-control scan-input" placeholder="Scan Product UPC" type="text"/>
 
-        <button class="scan-btn" onclick="document.pressed=this.value" type="submit" value="Update">Update</button>
+        <div class="scan-btns">
+            <button class="scan-btn" onclick="document.pressed=this.value" type="submit" value="New">New</button>
 
-        <button class="scan-btn" onclick="document.pressed=this.value" type="submit" value="Detail">Details</button>
-</div>
-{#        <input type="submit" onclick="document.pressed=this.value" value="New"/>#}
+            <button class="scan-btn" onclick="document.pressed=this.value" type="submit" value="Update">Update</button>
 
-{#        <input type="submit" onclick="document.pressed=this.value" value="Update"/>#}
-
-{#        <input type="submit" onclick="document.pressed=this.value" value="Detail"/>#}
-
+            <button class="scan-btn" onclick="document.pressed=this.value" type="submit" value="Detail">Details</button>
+        </div>
     </form>
 {% endblock %}
 {% block content %}
-  <table class="content-table content-table-links table-mobile">
-      <tr class="table-header">
-          <th class="status-th">Status</th>
-          <th>Title</th>
-          <th>Product Size</th>
-          <th>Qty</th>
-          <th></th>
-      </tr>
-      {% for product in all_products %}
-          <tr>
-              <td class="status-td"></td>
-              <td>
-                <a href="{% url 'product_detail' %}?upc={{ product.upc_code }}">
-                  <div class="table-id-link">
-                    {{ product.name }}
-                  </div>
-                </a>
-              </td>
-              <td>{{ product.size }}oz.</td>
-              <td>{{ product.display_quantity }}</td>
-              <td><a href="{% url 'product_empty' product.id %}"><button class="gen-btn">Out of Stock</button></a></td>
-          </tr>
-      {% endfor %}
-  </table>
+    <table class="content-table content-table-links table-mobile">
+        <tr class="table-header">
+            <th class="status-th">Status</th>
+            <th>Title</th>
+            <th>Product Size</th>
+            <th>Qty</th>
+            <th></th>
+        </tr>
+        {% for product in all_products %}
+            <tr>
+                <td class="status-td"></td>
+                <td>
+                    <a href="{% url 'product_detail' %}?upc={{ product.upc_code }}">
+                        <div class="table-id-link">
+                            {{ product.name }}
+                        </div>
+                    </a>
+                </td>
+                <td>{{ product.size }}oz.</td>
+                <td>{{ product.display_quantity }}</td>
+                <td><a href="{% url 'product_empty' product.id %}">
+                    <button class="gen-btn">Out of Stock</button>
+                </a></td>
+            </tr>
+        {% endfor %}
+    </table>
 
-  <!-- <div class="modal-container">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="secondary-heading">New Product</h2>
+    <!-- <div class="modal-container">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="secondary-heading">New Product</h2>
+        </div>
       </div>
-    </div>
-  </div> -->
+    </div> -->
 
 {% endblock %}
 
