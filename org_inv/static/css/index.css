@@ -1,5 +1,5 @@
 body{
-  background:url("https://unsplash.imgix.net/photo-1416339411116-62e1226aacd8?dpr=2&fit=crop&fm=jpg&h=1400&q=75&w=1050");
+  background:url("spa_Fotor.jpg");
   background-size: cover;
   width:100%;
 
@@ -8,7 +8,7 @@ body{
 body:before {
     content: " ";
     width: 100%;
-    height: 1650px;
+    height: 1110px;
     position: absolute;
     z-index: -1;
     top: 0;
@@ -171,6 +171,7 @@ button{
   font-size: 40%;
   color:#23a061;
   text-shadow: none;
+    text-shadow: 2px 2px #13442b;
 }
 .logo{
   height:60px;
