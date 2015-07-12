@@ -12,17 +12,48 @@
 {% endblock %}
 
 
+{#{% block scancontent %}#}
+{#<div class="form-container scan-form">#}
+{#  <form class="main-form scan-form" method="GET" action="{% url 'product_detail' %}">#}
+{#    <label class="input">#}
+{#      <input type="text" name="upc" class="form-control scan-input" placeholder="Scan UPC to Search for Product"/>#}
+{#    </label>#}
+{#      <button class="scan-btn" type="submit">Search</button>#}
+{#  </form>#}
+{#</div>#}
+{#{% endblock %}#}
 {% block scancontent %}
-<div class="form-container scan-form">
-  <form class="main-form scan-form" method="GET" action="{% url 'product_detail' %}">
-    <label class="input">
-      <input type="text" name="upc" class="form-control scan-input" placeholder="Scan UPC to Search for Product"/>
-    </label>
-      <button class="scan-btn" type="submit">Search</button>
-  </form>
-</div>
-{% endblock %}
+    <script type="text/javascript">
+        function OnSubmitForm() {
+            if (document.pressed == 'New') {
+                document.test_form.action = "{% url 'create_product' %}";
+            }
+            else if (document.pressed == 'Update') {
+                document.test_form.action = "{% url 'new_order' %}";
+            }
+            else if (document.pressed == 'Detail') {
+                document.test_form.action = "{% url 'product_detail' %}";
+            }
+            return true;
+        }
+    </script>
+    <form name ='test_form' class="form-control scan-form" id='test_form' method="get" onsubmit="return OnSubmitForm();">
+        <input name='upc'  class="form-control scan-input" placeholder="Scan Product UPC" type="text"/>
+<div class="scan-btns">
+        <button class="scan-btn" onclick="document.pressed=this.value" type="submit" value="New">New</button>
 
+        <button class="scan-btn" onclick="document.pressed=this.value" type="submit" value="Update">Update</button>
+
+        <button class="scan-btn" onclick="document.pressed=this.value" type="submit" value="Detail">Details</button>
+</div>
+{#        <input type="submit" onclick="document.pressed=this.value" value="New"/>#}
+
+{#        <input type="submit" onclick="document.pressed=this.value" value="Update"/>#}
+
+{#        <input type="submit" onclick="document.pressed=this.value" value="Detail"/>#}
+
+    </form>
+{% endblock %}
 {% block content %}
   <table class="content-table content-table-links table-mobile">
       <tr class="table-header">
