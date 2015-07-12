@@ -536,6 +536,7 @@ def get_prod_data(prod_id):
     data.append({'values': values, 'key': 'product usage (oz)', 'area': 'True'})
     return data
 
+
 def get_service_data(serv_id):
     service = Service.objects.get(id=serv_id)
     appts = Appointment.objects.filter(service=service)
