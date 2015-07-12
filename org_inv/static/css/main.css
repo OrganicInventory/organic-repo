@@ -694,6 +694,10 @@ td a {
   .main-content, body.new-order-body .main-content {
     width: 90%;
   }
+
+  .date-dropdown {
+    right: 5%;
+  }
 }
 
 @media (max-width: 500px) {
@@ -723,5 +727,10 @@ td a {
 
   .list-container-ul {
     margin-top: 0;
+  }
+
+  .date-dropdown {
+    right: 50%;
+    transform: translate(50%, 0);
   }
 }
