@@ -15,8 +15,9 @@
 {% block scancontent %}
 <div class="form-container scan-form">
   <form class="main-form scan-form" method="GET" action="{% url 'product_detail' %}">
-    <label class="input">
-      <input type="text" name="upc" class="form-control scan-input" placeholder="Scan UPC to Search for Product"/>
+    <label class="input scan-label">
+      <span class="focus-out focus-out-scan">Scan UPC to Search for Product</span>
+      <input type="text" name="upc" class="form-control scan-input"/>
     </label>
       <button class="scan-btn" type="submit">Search</button>
   </form>

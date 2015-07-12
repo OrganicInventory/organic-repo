@@ -449,6 +449,10 @@ td a {
   background-color: #fff;
 }
 
+.focus-out-scan {
+  left: 58px;
+}
+
 .close-shop {
   font-family: untitled-font-1;
   position: fixed;

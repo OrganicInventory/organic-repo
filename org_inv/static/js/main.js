@@ -19,6 +19,8 @@ getUrlVars();
   $(document).ready(function() {
   var urlRange = getUrlVars()['range'];
 
+  $('.scan-input').focus();
+
   $('.date-dropdown').val(urlRange);
     if (urlRange === '1') {
       $('.date-range-display').text('1 Day');
