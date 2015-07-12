@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="main-content-header">
+        <h2 class="secondary-heading">Add Product</h2>
+    </div>
+    <script type="text/javascript">
+        function OnSubmitForm() {
+            if (document.pressed == 'New') {
+                document.test_form.action = "{% url 'create_product' %}";
+            }
+            else if (document.pressed == 'Update') {
+                document.test_form.action = "{% url 'new_order' %}";
+            }
+            else if (document.pressed == 'Detail') {
+                document.test_form.action = "{% url 'product_detail' %}";
+            }
+            return true;
+        }
+    </script>
+    <form name ='test_form' id='test_form' method="get" onsubmit="return OnSubmitForm();">
+        <input name='upc' type="text"/>
+
+        <input type="submit" onclick="document.pressed=this.value" value="New"/>
+
+        <input type="submit" onclick="document.pressed=this.value" value="Update"/>
+
+        <input type="submit" onclick="document.pressed=this.value" value="Detail"/>
+
+    </form>
+    {#    <div class="form-container">#}
+    {#        <form class="main-form" method="POST" action="{% url 'test' %}">#}
+    {#            {% csrf_token %}#}
+    {#            {% for field in form %}#}
+    {#                <div class="{{ field.label }} input">#}
+    {##}
+    {#                    <span class="focus-out">{{ field.label_tag }} </span> {{ field }}#}
+    {#                    {{ field.errors }}#}
+    {#                </div>#}
+    {#            {% endfor %}#}
+    {##}
+    {#            <!-- Provide a button to click to submit the form. -->#}
+    {#            <button class="form-button" type="submit" name="submit">Add New</button>#}
+    {#        </form>#}
+    </div>
+{% endblock %}
