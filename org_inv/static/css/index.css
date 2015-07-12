@@ -61,6 +61,13 @@ button{
   padding: 1%;
   font-family: 'Cinzel Decorative', serif, sans-serif;}
 
+button:hover {
+  background: rgba(0,0,0,0);
+	color: #13442b;
+	box-shadow: inset 0 0 0 3px #13442b;
+  cursor: pointer;
+}
+
 .caps{
   font-size: 250%;
   font-weight: 500;
@@ -68,7 +75,6 @@ button{
 }
 
 .login-link{
-  text-decoration: none;
   background-color: #23a061;
   border-radius: 10%;
   color: #EEE;
