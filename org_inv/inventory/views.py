@@ -1,14 +1,19 @@
 from datetime import timedelta, datetime
+import json
+
+import re
+from factual import Factual
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.utils import timezone
 from django.utils.decorators import method_decorator
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView
 from .models import Product, Appointment, Service, Amount
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
-    ProductLookupForm, AmountFormSet
+    AmountFormSet
+
 
 # Create your views here.
 
@@ -43,6 +48,14 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = 'create_product.html'
     success_url = '/products/'
 
+    def get_initial(self):
+        if self.request.GET.get('upc'):
+            initial = json.loads(get_product(self.request.GET.get("upc")))
+            initial['upc_code'] = self.request.GET.get('upc')
+            return initial
+        else:
+            return super().get_initial()
+
     def form_valid(self, form):
         form.instance = form.save(commit=False)
         form.instance.user = self.request.user
@@ -51,12 +64,45 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+class TestCreateView(LoginRequiredMixin, CreateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'test.html'
+    success_url = '/products/'
+
+    def form_valid(self, form):
+        form.instance = form.save(commit=False)
+        form.instance.user = self.request.user
+        form.instance.new_product_quantity(form.instance.quantity)
+        form.instance.update_max_quantity()
+        return super().form_valid(form)
+
+
+class TestView(View):
+    def get(self, request, **kwargs):
+        if request.GET.get("upc"):
+            prod_data = get_product(request.GET.get("upc"))
+        else:
+            return render(request, "test.html")
+        return render(request, "create_product.html", {'data': prod_data})
+
+
+
+        # def post(self, request, **kwargs):
+        #     Product.objects.get(upc=request.POST.get('upc'))
+
+
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'product_detail.html'
 
     def get_object(self, queryset=None):
-        return Product.objects.filter(user=self.request.user).filter(upc_code=self.request.GET['upc'])[0]
+        return Product.objects.get(user=self.request.user, upc_code=self.request.GET['upc'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data'] = get_prod_data(self.object.id)
+        return context
 
 
 class ProductDeleteView(DeleteView):
@@ -119,6 +165,11 @@ class AppointmentCreateView(LoginRequiredMixin, CreateView):
     form_class = AppointmentForm
     template_name = 'add_appointment.html'
     success_url = '/appointments/'
+
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
+        return form_class(self.request, **self.get_form_kwargs())
 
     def form_valid(self, form):
         form.instance = form.save(commit=False)
@@ -343,13 +394,20 @@ class LowInventoryView(LoginRequiredMixin, ListView):
 
 class NewOrderView(View):
     def get(self, request, **kwargs):
-        form = ProductForm(initial={'user': self.request.user})
+        if self.request.GET.get('upc'):
+            product = Product.objects.filter(user=self.request.user).get(upc_code=self.request.GET.get('upc'))
+            form = ProductForm(initial={'user': self.request.user, 'upc_code': product.upc_code, 'name': product.name,
+                                    'size': product.size})
+        else:
+            form = ProductForm(initial={'user': self.request.user})
         return render(request, "new_order.html", {"form": form})
 
     def post(self, request, **kwargs):
         form = ProductForm(request.POST, initial={'user': self.request.user})
-        if Product.objects.filter(name=request.POST.get('name'), size=float(request.POST.get('size'))).filter(user=request.user):
-            prod_instance = Product.objects.filter(name=request.POST.get('name'), size=float(request.POST.get('size')))[0]
+        if Product.objects.filter(name=request.POST.get('name'), size=float(request.POST.get('size'))).filter(
+                user=request.user):
+            prod_instance = Product.objects.get(name=request.POST.get('name'), size=float(request.POST.get('size')),
+                                                user=request.user)
             prod_instance.update_quantity(float(request.POST.get('quantity')))
             prod_instance.update_max_quantity()
             prod_instance.save()
@@ -444,3 +502,42 @@ class AdjustUsageView(View):
             prod.quantity -= diff
             prod.save()
         return redirect('/products/')
+
+
+def get_prod_data(prod_id):
+    product = Product.objects.get(id=prod_id)
+    services = Service.objects.filter(products__pk__contains=product.id)
+    appts = Appointment.objects.filter(service__in=services).order_by('date')
+    values = []
+    usages = {}
+    for appt in appts:
+        amt = Amount.objects.get(service=appt.service, product=product)
+        date = str(appt.date)
+        if date in usages.keys():
+            usages[date] += amt.amount
+        else:
+            usages[date] = amt.amount
+    for key, value in sorted(usages.items(), key=lambda x: x[0]):
+        values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
+    data = []
+    data.append({'values': values, 'key': 'product usage (oz)', 'area': 'True'})
+    return data
+
+
+def get_product(upc_code):
+    factual = Factual("gCKclwfy6eBki5UyHDxS56x7zmcvCMaGJ7l7v9cM", "Dt8V4ngb484Blmyaw5G9SxbycgpOsJL0ENckwxX0")
+    products = factual.table('products')
+    data = products.filters({'upc': {'$includes': upc_code}}).data()
+    upc_data = data[0]
+    wanted = ['size', 'product_name']
+    new = {}
+    for pair in upc_data.items():
+        if pair[0] in wanted:
+            if pair[0] == 'product_name':
+                new['name'] = pair[1]
+            elif pair[0] == 'size':
+                new['size'] = float(re.search(r'\d+', pair[1][0]).group())
+            else:
+                new[pair[0]] = pair[1]
+    new_json = json.dumps(new)
+    return new_json
