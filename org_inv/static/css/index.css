@@ -202,3 +202,19 @@ button:hover {
 .logo{
   height:60px;
 }
+
+.pim{
+  font-family: 'Cinzel Decorative', serif, sans-serif;
+  text-align: center;
+  font-size: 180%;
+  font-weight: 300;
+  color:#13442b;
+  text-shadow: 2px 2px #EEE;
+
+}
+
+.logo1{
+  height:40px;
+  display: block;
+  margin: 0 auto;
+}
