@@ -424,7 +424,7 @@ class NewOrderView(View):
             prod_instance.update_quantity(float(request.POST.get('quantity')))
             prod_instance.update_max_quantity()
             prod_instance.save()
-            return redirect("/products/")
+            return redirect("/products/new_order")
         else:
             return render(request, "new_order.html", {"form": form})
 
@@ -568,7 +568,7 @@ def get_product(upc_code):
                 if pair[0] == 'product_name':
                     new['name'] = pair[1]
                 elif pair[0] == 'size':
-                    new['size'] = float(re.search(r'\d+', pair[1][0]).group())
+                    new['size'] = float(re.search(r'[\d\.]+', pair[1][0]).group())
                 else:
                     new[pair[0]] = pair[1]
         new_json = json.dumps(new)
