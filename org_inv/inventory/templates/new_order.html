@@ -6,9 +6,6 @@
 {% endblock %}
 
 {% block content %}
-<div class="main-content-header">
-    <h2 class="secondary-heading">New Order Entry</h2>
-</div>
 <div class="form-container">
     <form class="main-form" method="POST" action="{% url 'new_order' %}">
         {% csrf_token %}

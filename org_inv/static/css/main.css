@@ -80,6 +80,7 @@ a {
 
 table a {
   color: #333;
+  font-weight: bold;
 }
 
 table a:hover {
@@ -117,7 +118,30 @@ body.services-body .main-content {
 }
 
 body.new-order-body .main-content {
-  width: 70%;
+  width: 100%;
+  box-shadow: none;
+  background-color: #dfdcd6;
+}
+
+body.new-order-body .main-content input {
+  background-color: #dfdcd6;
+  width: 80%;
+}
+
+body.new-order-body .main-content .form-container {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+body.new-order-body .main-content .form-container .focus-out {
+  position: absolute;
+  left: 70px;
+}
+
+body.new-order-body .main-content .form-button {
+  right: 50%;
+  transform: translate(50%, 200%);
 }
 
 body.user-profile-body .main-content {
