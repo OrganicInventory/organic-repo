@@ -120,6 +120,10 @@ body.new-order-body .main-content {
   width: 70%;
 }
 
+body.user-profile-body .main-content {
+  width: 40%;
+}
+
 /*TOP-NAV*/
 
 .top-nav-container, .top-nav-container-hide {
@@ -616,9 +620,9 @@ td a {
     border-bottom: 3px solid #b35b5a;
   }
 
-  .user-name {
+  /*.user-name {
     display: none;
-  }
+  }*/
 
   .user-icon {
     float: right;
@@ -725,6 +729,10 @@ td a {
     width: 80%;
   }
 
+  body.user-profile-body .main-content {
+    width: 60%;
+  }
+
   .main-content, body.new-order-body .main-content {
     width: 90%;
   }
@@ -748,7 +756,7 @@ td a {
   }
 
   .form-container, body.new-order-body .main-content,
-  body.services-body .main-content, .list-container {
+  body.services-body, body.user-profile-body .main-content, .main-content, .list-container {
     width: 100%;
   }
 
