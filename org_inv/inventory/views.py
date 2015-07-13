@@ -15,7 +15,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView, FormView
 from .models import Product, Appointment, Service, Amount, Brand
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
-    AmountFormSet, OrderForm
+    AmountFormSet, ThresholdForm
+
 
 
 # Create your views here.
@@ -56,8 +57,8 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
     def get_initial(self):
         if self.request.GET.get('upc'):
-            if get_product(self.request.GET.get('upc')):
-                initial = json.loads(get_product(self.request.GET.get("upc")))
+            if get_product(self.request.GET.get('upc'))[0]:
+                initial = json.loads(get_product(self.request.GET.get("upc"))[0])
                 initial['upc_code'] = self.request.GET.get('upc')
                 brand = initial['brand']
                 if Brand.objects.filter(user=self.request.user).filter(name=brand):
@@ -87,28 +88,27 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
 #######################################################################################################################
 
-class TestCreateView(LoginRequiredMixin, CreateView):
-    model = Product
-    form_class = ProductForm
-    template_name = 'test.html'
-    success_url = '/products/'
+# class TestCreateView(LoginRequiredMixin, CreateView):
+#     model = Product
+#     form_class = ProductForm
+#     template_name = 'test.html'
+#     success_url = '/products/'
+#
+#     def form_valid(self, form):
+#         form.instance = form.save(commit=False)
+#         form.instance.user = self.request.user
+#         form.instance.new_product_quantity(form.instance.quantity)
+#         form.instance.update_max_quantity()
+#         return super().form_valid(form)
 
-    def form_valid(self, form):
-        form.instance = form.save(commit=False)
-        form.instance.user = self.request.user
-        form.instance.new_product_quantity(form.instance.quantity)
-        form.instance.update_max_quantity()
-        return super().form_valid(form)
-
-#######################################################################################################################
-
-class TestView(View):
-    def get(self, request, **kwargs):
-        if request.GET.get("upc"):
-            prod_data = get_product(request.GET.get("upc"))
-        else:
-            return render(request, "test.html")
-        return render(request, "create_product.html", {'data': prod_data})
+#
+# class TestView(View):
+#     def get(self, request, **kwargs):
+#         if request.GET.get("upc"):
+#             prod_data = get_product(request.GET.get("upc"))
+#         else:
+#             return render(request, "test.html")
+#         return render(request, "create_product.html", {'data': prod_data})
 
 #######################################################################################################################
 
@@ -122,6 +122,8 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['data'] = get_prod_data(self.object.id)
+        json_data, pic = get_product(self.object.upc_code)
+        context['pic'] = pic
         return context
 
 #######################################################################################################################
@@ -290,6 +292,7 @@ class ServiceCreateView(LoginRequiredMixin, CreateView):
         context = self.get_context_data()
         amounts = context['amounts']
         if amounts.is_valid():
+            # raise Exception
             self.object = form.save(commit=False)
             self.object.user = self.request.user
             self.object.save()
@@ -410,8 +413,12 @@ def inventory_check(daterange, user):
     low_products = {}
 
     for key, value in product_dict.items():
-        if value < (.3 * key.max_quantity):
-            low_products[key] = value
+        if user.profile.threshold:
+            if value < ((user.profile.threshold * .01) * key.max_quantity):
+                low_products[key] = value
+        else:
+            if value < (.3 * key.max_quantity):
+                low_products[key] = value
 
     return low_products
 
@@ -484,7 +491,7 @@ class EmptyProductView(View):
 
 class CloseShopView(View):
     def dispatch(self, request, *args, **kwargs):
-        appts = Appointment.objects.filter(date=datetime.today(), done=False)
+        appts = Appointment.objects.filter(date__lte=datetime.today(), done=False)
         for appt in appts:
             appt.done = True
             appt.save()
@@ -588,6 +595,49 @@ class OrderView(View):
 
 #######################################################################################################################
 
+class SettingsView(LoginRequiredMixin, View):
+    def get(self, request, **kwargs):
+        form = ThresholdForm()
+        brands = Brand.objects.filter(user=request.user)
+        return render(request, 'settings.html', {'form': form, 'brands': brands})
+
+    def post(self, request, **kwargs):
+        form = ThresholdForm(request.POST)
+        if form.is_valid():
+            amt = form.data['percent']
+            prof = request.user.profile
+            prof.threshold = amt
+            prof.save()
+        return redirect('/settings/')
+
+
+
+class EmailUpdate(LoginRequiredMixin, UpdateView):
+    model = Brand
+    fields = ['name', 'email']
+    template_name = 'update_email.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = Brand.objects.get(pk=self.kwargs['brand_id'])
+        if self.request.user == obj.user:
+            return super().dispatch(request, *args, **kwargs)
+
+        else:
+            return HttpResponseForbidden()
+
+    def get_success_url(self):
+        return reverse('settings')
+
+    def get_object(self, queryset=None, **kwargs):
+        brand = Brand.objects.get(id=self.kwargs['brand_id'])
+        return brand
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        return super().form_valid(form)
+
+
 def get_prod_data(prod_id):
     product = Product.objects.get(id=prod_id)
     services = Service.objects.filter(products__pk__contains=product.id)
@@ -629,12 +679,12 @@ def get_service_data(serv_id):
 #######################################################################################################################
 
 def get_product(upc_code):
-    factual = Factual("gCKclwfy6eBki5UyHDxS56x7zmcvCMaGJ7l7v9cM", "Dt8V4ngb484Blmyaw5G9SxbycgpOsJL0ENckwxX0")
+    factual = Factual("9ChT3yOP38Lc4EKULs2EbuzPDIXrgYBNv47PzMJ9", "L7LIrdc8HS3uwJuSVkaEO2Cfij4F0QYZFGnGGtbp")
     products = factual.table('products')
     data = products.filters({'upc': {'$includes': upc_code}}).data()
     if data:
         upc_data = data[0]
-        wanted = ['size', 'product_name', 'brand']
+        wanted = ['size', 'product_name', 'brand', 'image_urls']
         new = {}
         for pair in upc_data.items():
             if pair[0] in wanted:
@@ -642,9 +692,12 @@ def get_product(upc_code):
                     new['name'] = pair[1]
                 elif pair[0] == 'size':
                     new['size'] = float(re.search(r'[\d\.]+', pair[1][0]).group())
+                elif pair[0] == 'image_urls':
+                    new['pic'] = pair[1][0]
                 else:
                     new[pair[0]] = pair[1]
         new_json = json.dumps(new)
-        return new_json
+        return new_json, new['pic']
     else:
         return None
+

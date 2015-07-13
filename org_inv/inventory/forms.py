@@ -30,6 +30,13 @@ class ProductForm(forms.ModelForm):
         }
 
 
+class ThresholdForm(forms.Form):
+    percent = forms.IntegerField(label='low at ___ %')
+
+    class Meta:
+        fields = ['percent']
+
+
 class AppointmentForm(forms.ModelForm):
     def __init__(self, request, *args, **kwargs):
         super().__init__(*args, **kwargs)

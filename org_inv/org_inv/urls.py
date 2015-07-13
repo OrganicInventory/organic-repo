@@ -41,4 +41,6 @@ urlpatterns = [
     url(r'^adjust_usage/(?P<appt_id>\d+)$', inv_views.AdjustUsageView.as_view(), name="adjust_usage"),
     url(r'^close_shop/', inv_views.CloseShopView.as_view(), name="close_shop"),
     url(r'^order/', inv_views.OrderView.as_view(), name="order"),
+    url(r'^settings/', inv_views.SettingsView.as_view(), name="settings"),
+    url(r'^update_email/(?P<brand_id>\d+)$', inv_views.EmailUpdate.as_view(), name="update_email"),
 ]
