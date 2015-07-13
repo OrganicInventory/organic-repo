@@ -4,12 +4,18 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Spa-ventory</title>
+  <title>Register</title>
   <link rel="stylesheet" href="{% static 'css/index.css' %}" />
   <link href='http://fonts.googleapis.com/css?family=Cinzel+Decorative' rel='stylesheet' type='text/css'>
 </head>
 <body>
-    <h2 class='register'>Register</h2>
+  <div>
+    <h2 class='register'>Create an Account
+    </h2>
+    <img class="logo1" src="https://cdn2.iconfinder.com/data/icons/flaticons-stroke/16/leaf-1-512.png">
+    <p class="pim">P.I.M.
+      <br>Predictive Inventory Management</br>
+    </p>
     <form method="POST" action="{% url 'user_register' %}" class='register2'>
         {% csrf_token %}
 
@@ -20,6 +26,6 @@
         <input type="hidden" name="next" id="id_next" value="{{ request.REQUEST.next }}" />
     </form>
     <button type="submit" class="btn-register">Register</button>
-
+  </div>
 </body>
 </html>

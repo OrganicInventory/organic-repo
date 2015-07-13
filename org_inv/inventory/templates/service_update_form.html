@@ -9,11 +9,9 @@
     {% csrf_token %}
     {{ form }}
         {{ amounts.management_form }}
-        <!-- <table> -->
             {% for form in amounts %}
                 {{ form }}
             {% endfor %}
-        <!-- </table> -->
     <input type="submit" value="Update"/>
     </form>
   </div>
