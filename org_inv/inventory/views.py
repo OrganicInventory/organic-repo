@@ -1,5 +1,6 @@
 from datetime import timedelta, datetime
 import json
+from django.contrib import messages
 
 import re
 from factual import Factual
@@ -63,6 +64,9 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance = form.save(commit=False)
         form.instance.user = self.request.user
+        brand = form.instance.brand
+        if Brand.objects.filter(user=self.request.user).filter(name=brand):
+            pass
         form.instance.new_product_quantity(form.instance.quantity)
         form.instance.update_max_quantity()
         return super().form_valid(form)
@@ -424,6 +428,8 @@ class NewOrderView(View):
             prod_instance.update_quantity(float(request.POST.get('quantity')))
             prod_instance.update_max_quantity()
             prod_instance.save()
+            messages.add_message(self.request, messages.SUCCESS,
+                             "Product Successfully Updated!")
             return redirect("/products/new_order")
         else:
             return render(request, "new_order.html", {"form": form})
@@ -572,7 +578,7 @@ def get_product(upc_code):
     data = products.filters({'upc': {'$includes': upc_code}}).data()
     if data:
         upc_data = data[0]
-        wanted = ['size', 'product_name']
+        wanted = ['size', 'product_name', 'brand']
         new = {}
         for pair in upc_data.items():
             if pair[0] in wanted:

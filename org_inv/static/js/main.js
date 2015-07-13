@@ -101,9 +101,12 @@ getUrlVars();
     }
   });
 
-  $('.scan-form').submit(function(e) {
+//PREVENT SCAN FROM FROM AUTO SUBMITTING
+  $('.scan-form').keypress(function(e) {
+    if(e.which === 13) {
     e.preventDefault();
     e.stopPropagation();
+    }
   });
 
 });
