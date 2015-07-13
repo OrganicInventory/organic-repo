@@ -25,7 +25,7 @@
   <div class="page-header-container">
     <header class="page-header">
       <div class="top-nav-container">
-        <div class="user-icon"></div>
+        <div class="user-icon"><a href="{% url 'show_user' request.user.id %}"><span class="user-icon-image">t</span></a></div>
         <span class="user-name"><span class="user-welcome">Welcome </span><a href="{% url 'show_user' request.user.id %}">{{request.user.username}}</a></span>
       </div>
     </header>
@@ -45,7 +45,7 @@
         </ul>
       </div>
       <div class="top-nav-container-hide">
-        <div class="user-icon"></div>
+        <div class="user-icon"><span class="user-icon-image">t</span></div>
         <span class="user-name"><span class="user-welcome">Welcome </span><a href="{% url 'show_user' request.user.id %}">{{request.user.username}}</a></span>
       </div>
     </div>
