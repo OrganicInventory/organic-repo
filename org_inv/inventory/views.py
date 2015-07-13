@@ -54,6 +54,12 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
             if get_product(self.request.GET.get('upc')):
                 initial = json.loads(get_product(self.request.GET.get("upc")))
                 initial['upc_code'] = self.request.GET.get('upc')
+                brand = initial['brand']
+                if Brand.objects.filter(user=self.request.user).filter(name=brand):
+                    initial['brand'] = Brand.objects.get(user=self.request.user, name=brand)
+                else:
+                    new_brand = Brand.objects.create(name=brand, user=self.request.user)
+                    initial['brand'] = new_brand
                 return initial
             else:
                 initial = []
@@ -64,9 +70,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance = form.save(commit=False)
         form.instance.user = self.request.user
-        brand = form.instance.brand
-        if Brand.objects.filter(user=self.request.user).filter(name=brand):
-            pass
+
         form.instance.new_product_quantity(form.instance.quantity)
         form.instance.update_max_quantity()
         return super().form_valid(form)
