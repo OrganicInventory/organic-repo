@@ -9,6 +9,9 @@ class Brand(models.Model):
     email = models.EmailField(null=True, blank=True)
     user = models.ForeignKey(User, null=True)
 
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
     name = models.CharField(max_length=255)
     quantity = models.FloatField(default=0)
