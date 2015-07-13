@@ -64,6 +64,9 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance = form.save(commit=False)
         form.instance.user = self.request.user
+        brand = form.instance.brand
+        if Brand.objects.filter(name=brand):
+
         form.instance.new_product_quantity(form.instance.quantity)
         form.instance.update_max_quantity()
         return super().form_valid(form)
@@ -564,7 +567,7 @@ def get_product(upc_code):
     data = products.filters({'upc': {'$includes': upc_code}}).data()
     if data:
         upc_data = data[0]
-        wanted = ['size', 'product_name']
+        wanted = ['size', 'product_name', 'brand']
         new = {}
         for pair in upc_data.items():
             if pair[0] in wanted:
