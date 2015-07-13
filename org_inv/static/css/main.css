@@ -513,7 +513,7 @@ td a {
 
 .main-content {
   box-sizing: border-box;
-  max-width: 800px;
+  /*max-width: 800px;*/
 }
 
 .date-dropdown-container {
@@ -597,6 +597,10 @@ td a {
 
 body.user-profile-body td:first-child {
   font-weight: bold;
+}
+
+th {
+  text-align: left;
 }
 
 
