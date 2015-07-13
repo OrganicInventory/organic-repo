@@ -101,6 +101,7 @@ getUrlVars();
     }
   });
 
+//PREVENT SCAN FROM FROM AUTO SUBMITTING
   $('.scan-form').submit(function(e) {
     e.preventDefault();
     e.stopPropagation();
