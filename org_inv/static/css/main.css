@@ -127,9 +127,16 @@ body.new-order-body .main-content {
   background-color: #dfdcd6;
 }
 
-body.new-order-body .main-content input {
+body.new-order-body .main-content input, body.new-order-body .main-content select {
   background-color: #dfdcd6;
   width: 80%;
+}
+
+body.new-order-body .main-content select,
+body.create-product-body .main-content select {
+  border: none;
+  border-bottom: 2px solid #b35b5a;
+  border-left: 2px solid #b35b5a;
 }
 
 body.new-order-body .main-content .form-container {
