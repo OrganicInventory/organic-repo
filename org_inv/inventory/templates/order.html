@@ -1,0 +1,22 @@
+<body class="new-order-body">
+{% extends "base.html" %}
+
+{% block pagetitle %}
+    <h1 class="main-heading">New Order</h1>
+{% endblock %}
+
+{% block content %}
+<div class="main-content-header">
+    <h2 class="secondary-heading">New Order</h2>
+</div>
+<div class="form-container">
+    <form class="main-form" method="POST" action="{% url 'order' %}">
+        {% csrf_token %}
+        {% for product in products %}
+         <p>{{ product.name }} ({{ product.size }} oz): </p><input class="form-control scan-input" type="text" name="{{ product.upc_code }}"/>
+        {% endfor %}
+        <button class="form-button" type="submit">Email Reps</button>
+    </form>
+</div>
+{% endblock %}
+</body>
