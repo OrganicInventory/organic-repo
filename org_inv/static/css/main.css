@@ -427,7 +427,7 @@ td a {
 
 .add-content-button:hover .add-button {
   transition: all 0.2s ease;
-  transform: translate(-50%, -50%) scale(1.1);
+  transform: translate(-50%, -50%) scale(1.1) rotateZ(90deg);
 }
 
 .add-button {
