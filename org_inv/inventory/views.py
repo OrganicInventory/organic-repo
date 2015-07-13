@@ -51,8 +51,8 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
     def get_initial(self):
         if self.request.GET.get('upc'):
-            if get_product(self.request.GET.get('upc')):
-                initial = json.loads(get_product(self.request.GET.get("upc")))
+            if get_product(self.request.GET.get('upc'))[0]:
+                initial = json.loads(get_product(self.request.GET.get("upc"))[0])
                 initial['upc_code'] = self.request.GET.get('upc')
                 brand = initial['brand']
                 if Brand.objects.filter(user=self.request.user).filter(name=brand):
@@ -114,6 +114,8 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['data'] = get_prod_data(self.object.id)
+        json_data, pic = get_product(self.object.upc_code)
+        context['pic'] = pic
         return context
 
 
@@ -275,6 +277,7 @@ class ServiceCreateView(LoginRequiredMixin, CreateView):
         context = self.get_context_data()
         amounts = context['amounts']
         if amounts.is_valid():
+            # raise Exception
             self.object = form.save(commit=False)
             self.object.user = self.request.user
             self.object.save()
@@ -623,7 +626,7 @@ def get_product(upc_code):
     data = products.filters({'upc': {'$includes': upc_code}}).data()
     if data:
         upc_data = data[0]
-        wanted = ['size', 'product_name', 'brand']
+        wanted = ['size', 'product_name', 'brand', 'image_urls']
         new = {}
         for pair in upc_data.items():
             if pair[0] in wanted:
@@ -636,6 +639,7 @@ def get_product(upc_code):
                 else:
                     new[pair[0]] = pair[1]
         new_json = json.dumps(new)
-        return new_json
+        return new_json, new['pic']
     else:
         return None
+
