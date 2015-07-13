@@ -277,6 +277,7 @@ class ServiceCreateView(LoginRequiredMixin, CreateView):
         context = self.get_context_data()
         amounts = context['amounts']
         if amounts.is_valid():
+            # raise Exception
             self.object = form.save(commit=False)
             self.object.user = self.request.user
             self.object.save()
