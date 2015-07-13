@@ -392,8 +392,12 @@ def inventory_check(daterange, user):
     low_products = {}
 
     for key, value in product_dict.items():
-        if value < ((user.profile.threshold * .01) * key.max_quantity):
-            low_products[key] = value
+        if user.profile.threshold:
+            if value < ((user.profile.threshold * .01) * key.max_quantity):
+                low_products[key] = value
+        else:
+            if value < (.3 * key.max_quantity):
+                low_products[key] = value
 
     return low_products
 
@@ -614,7 +618,7 @@ def get_service_data(serv_id):
 
 
 def get_product(upc_code):
-    factual = Factual("gCKclwfy6eBki5UyHDxS56x7zmcvCMaGJ7l7v9cM", "Dt8V4ngb484Blmyaw5G9SxbycgpOsJL0ENckwxX0")
+    factual = Factual("9ChT3yOP38Lc4EKULs2EbuzPDIXrgYBNv47PzMJ9", "L7LIrdc8HS3uwJuSVkaEO2Cfij4F0QYZFGnGGtbp")
     products = factual.table('products')
     data = products.filters({'upc': {'$includes': upc_code}}).data()
     if data:
@@ -627,8 +631,8 @@ def get_product(upc_code):
                     new['name'] = pair[1]
                 elif pair[0] == 'size':
                     new['size'] = float(re.search(r'[\d\.]+', pair[1][0]).group())
-                # elif pair[0] == 'image_urls':
-                #     new['pic'] = pair[1][0]
+                elif pair[0] == 'image_urls':
+                    new['pic'] = pair[1][0]
                 else:
                     new[pair[0]] = pair[1]
         new_json = json.dumps(new)
