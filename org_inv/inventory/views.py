@@ -523,15 +523,10 @@ class AdjustUsageView(View):
         return redirect('/products/')
 
 
-class SettingsView(View):
+class SettingsView(LoginRequiredMixin, View):
     def dispatch(self, request, *args, **kwargs):
         brands = Brand.objects.filter(user=request.user)
-        for amount in amounts:
-            up_perc = .1 * amount.amount
-            new_amt = amount.amount + up_perc
-            amount.amount = new_amt
-            amount.save()
-        return redirect('/products/')
+        return render('settings.html', {'brands': brands})
 
 
 def get_prod_data(prod_id):
