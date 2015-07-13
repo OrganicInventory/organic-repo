@@ -50,9 +50,13 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
     def get_initial(self):
         if self.request.GET.get('upc'):
-            initial = json.loads(get_product(self.request.GET.get("upc")))
-            initial['upc_code'] = self.request.GET.get('upc')
-            return initial
+            if get_product(self.request.GET.get('upc')):
+                initial = json.loads(get_product(self.request.GET.get("upc")))
+                initial['upc_code'] = self.request.GET.get('upc')
+                return initial
+            else:
+                initial = []
+                return initial
         else:
             return super().get_initial()
 
@@ -85,11 +89,6 @@ class TestView(View):
         else:
             return render(request, "test.html")
         return render(request, "create_product.html", {'data': prod_data})
-
-
-
-        # def post(self, request, **kwargs):
-        #     Product.objects.get(upc=request.POST.get('upc'))
 
 
 class ProductDetailView(DetailView):
@@ -351,6 +350,20 @@ class ServiceDelete(LoginRequiredMixin, DeleteView):
         return HttpResponseRedirect(success_url)
 
 
+class ServiceDetailView(DetailView):
+    model = Service
+    template_name = 'service_detail.html'
+
+    def get_object(self, queryset=None):
+        return Service.objects.get(user=self.request.user, id=self.kwargs['serv_id'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data'] = get_service_data(self.object.id)
+        context['prods'] = self.object.products.all()
+        return context
+
+
 def inventory_check(daterange, user):
     appointments = Appointment.objects.filter(user=user).filter(date__gt=timezone.now()).filter(
         date__lte=timezone.now() + timedelta(days=daterange))
@@ -524,20 +537,41 @@ def get_prod_data(prod_id):
     return data
 
 
+def get_service_data(serv_id):
+    service = Service.objects.get(id=serv_id)
+    appts = Appointment.objects.filter(service=service)
+    values = []
+    usages = {}
+    for appt in appts:
+        date = str(appt.date)
+        if date in usages.keys():
+            usages[date] += 1
+        else:
+            usages[date] = 1
+    for key, value in sorted(usages.items(), key=lambda x: x[0]):
+        values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
+    data = []
+    data.append({'values': values, 'key': 'number of appointments', 'area': 'True'})
+    return data
+
+
 def get_product(upc_code):
     factual = Factual("gCKclwfy6eBki5UyHDxS56x7zmcvCMaGJ7l7v9cM", "Dt8V4ngb484Blmyaw5G9SxbycgpOsJL0ENckwxX0")
     products = factual.table('products')
     data = products.filters({'upc': {'$includes': upc_code}}).data()
-    upc_data = data[0]
-    wanted = ['size', 'product_name']
-    new = {}
-    for pair in upc_data.items():
-        if pair[0] in wanted:
-            if pair[0] == 'product_name':
-                new['name'] = pair[1]
-            elif pair[0] == 'size':
-                new['size'] = float(re.search(r'\d+', pair[1][0]).group())
-            else:
-                new[pair[0]] = pair[1]
-    new_json = json.dumps(new)
-    return new_json
+    if data:
+        upc_data = data[0]
+        wanted = ['size', 'product_name']
+        new = {}
+        for pair in upc_data.items():
+            if pair[0] in wanted:
+                if pair[0] == 'product_name':
+                    new['name'] = pair[1]
+                elif pair[0] == 'size':
+                    new['size'] = float(re.search(r'\d+', pair[1][0]).group())
+                else:
+                    new[pair[0]] = pair[1]
+        new_json = json.dumps(new)
+        return new_json
+    else:
+        return None

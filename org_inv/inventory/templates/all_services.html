@@ -20,7 +20,12 @@
     </tr>
     {% for service in all_services %}
         <tr>
-      <td>{{ service }}</td>
+
+      <td><a href="{% url 'service_detail' service.id %}">
+                        <div class="table-id-link">
+                            {{ service }}
+                        </div>
+                    </a></td>
       <td><a href="{% url 'update_service' service.id %}"><button class="update-btn-table">Update</button></a></td>
       <td><a href="{% url 'delete_service' service.id %}"><button class="delete-btn-table">Delete</button></a></td>
         </tr>
