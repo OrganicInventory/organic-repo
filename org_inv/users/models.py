@@ -7,6 +7,7 @@ class Profile(models.Model):
     location = models.CharField(max_length=255, null=True, blank=True)
     spa_name = models.CharField(max_length=255, null=True)
     phone_number = models.CharField(max_length=15)
+    threshold = models.IntegerField(null=True, default=30)
     user = models.OneToOneField(User, null=True)
 
     def __str__(self):

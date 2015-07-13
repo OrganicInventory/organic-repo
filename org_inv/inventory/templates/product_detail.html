@@ -16,6 +16,7 @@
             <li class="list-container-li">Quantity: {{ object.quantity }}</li>
             <li class="list-container-li">Size: {{ object.size }}</li>
             <li class="list-container-li">User: {{ object.user }}</li>
+            <li class="list-container-li"><img src="{{ object.pic }}" alt="product image" height="50" width="50"></li>
         </ul>
         <a href="{% url 'product_confirm_delete' product.id %}">
             <button class="form-button details-button">Delete</button>
