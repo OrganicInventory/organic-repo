@@ -64,7 +64,7 @@
                 <td>{{ product.size }}oz.</td>
                 <td>{{ product.display_quantity|floatformat:2 }}</td>
                 <td><a href="{% url 'product_empty' product.id %}">
-                    <button class="gen-btn">Out of Stock</button>
+                    <button class="gen-btn">I'm Out</button>
                 </a></td>
             </tr>
         {% endfor %}

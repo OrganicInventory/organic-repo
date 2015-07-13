@@ -1,5 +1,6 @@
 from datetime import timedelta, datetime
 import json
+from django.contrib import messages
 
 import re
 from factual import Factual
@@ -424,6 +425,8 @@ class NewOrderView(View):
             prod_instance.update_quantity(float(request.POST.get('quantity')))
             prod_instance.update_max_quantity()
             prod_instance.save()
+            messages.add_message(self.request, messages.SUCCESS,
+                             "Product Successfully Updated!")
             return redirect("/products/new_order")
         else:
             return render(request, "new_order.html", {"form": form})
