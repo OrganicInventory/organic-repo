@@ -24,10 +24,12 @@ class LoginRequiredMixin(object):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
+#######################################################################################################################
 
 class IndexView(TemplateView):
     template_name = 'index.html'
 
+#######################################################################################################################
 
 class AllProductsView(LoginRequiredMixin, ListView):
     model = Product
@@ -42,6 +44,7 @@ class AllProductsView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         return context
 
+#######################################################################################################################
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
@@ -80,6 +83,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         form.instance.update_max_quantity()
         return super().form_valid(form)
 
+#######################################################################################################################
 
 class TestCreateView(LoginRequiredMixin, CreateView):
     model = Product
@@ -94,6 +98,7 @@ class TestCreateView(LoginRequiredMixin, CreateView):
         form.instance.update_max_quantity()
         return super().form_valid(form)
 
+#######################################################################################################################
 
 class TestView(View):
     def get(self, request, **kwargs):
@@ -103,6 +108,7 @@ class TestView(View):
             return render(request, "test.html")
         return render(request, "create_product.html", {'data': prod_data})
 
+#######################################################################################################################
 
 class ProductDetailView(DetailView):
     model = Product
@@ -116,6 +122,7 @@ class ProductDetailView(DetailView):
         context['data'] = get_prod_data(self.object.id)
         return context
 
+#######################################################################################################################
 
 class ProductDeleteView(DeleteView):
     model = Product
@@ -157,6 +164,7 @@ class ProductDeleteView(DeleteView):
         self.object.delete()
         return HttpResponseRedirect(success_url)
 
+#######################################################################################################################
 
 class AllAppointmentsView(LoginRequiredMixin, ListView):
     model = Appointment
@@ -171,6 +179,7 @@ class AllAppointmentsView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         return context
 
+#######################################################################################################################
 
 class AppointmentCreateView(LoginRequiredMixin, CreateView):
     model = Appointment
@@ -188,6 +197,7 @@ class AppointmentCreateView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+#######################################################################################################################
 
 class AppointmentDelete(LoginRequiredMixin, DeleteView):
     model = Appointment
@@ -216,6 +226,7 @@ class AppointmentDelete(LoginRequiredMixin, DeleteView):
         else:
             return super(AppointmentDelete, self).post(request, *args, **kwargs)
 
+#######################################################################################################################
 
 class AppointmentUpdate(LoginRequiredMixin, UpdateView):
     model = Appointment
@@ -242,6 +253,7 @@ class AppointmentUpdate(LoginRequiredMixin, UpdateView):
         self.object.save()
         return super().form_valid(form)
 
+#######################################################################################################################
 
 class AllServicesView(LoginRequiredMixin, ListView):
     model = Service
@@ -256,6 +268,7 @@ class AllServicesView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         return context
 
+#######################################################################################################################
 
 class ServiceCreateView(LoginRequiredMixin, CreateView):
     model = Service
@@ -286,6 +299,7 @@ class ServiceCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('all_services')
 
+#######################################################################################################################
 
 class ServiceUpdate(LoginRequiredMixin, UpdateView):
     model = Service
@@ -325,6 +339,7 @@ class ServiceUpdate(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse('all_services')
 
+#######################################################################################################################
 
 class ServiceDelete(LoginRequiredMixin, DeleteView):
     model = Service
@@ -362,6 +377,7 @@ class ServiceDelete(LoginRequiredMixin, DeleteView):
         self.object.delete()
         return HttpResponseRedirect(success_url)
 
+#######################################################################################################################
 
 class ServiceDetailView(DetailView):
     model = Service
@@ -397,6 +413,7 @@ def inventory_check(daterange, user):
 
     return low_products
 
+#######################################################################################################################
 
 class LowInventoryView(LoginRequiredMixin, ListView):
     model = Product
@@ -417,19 +434,20 @@ class LowInventoryView(LoginRequiredMixin, ListView):
         context['low'] = low
         return context
 
+#######################################################################################################################
 
 class NewOrderView(View):
     def get(self, request, **kwargs):
         if self.request.GET.get('upc'):
             product = Product.objects.filter(user=self.request.user).get(upc_code=self.request.GET.get('upc'))
-            form = ProductForm(initial={'user': self.request.user, 'upc_code': product.upc_code, 'name': product.name,
-                                    'size': product.size})
+            form = ProductForm(request, initial={'user': self.request.user, 'upc_code': product.upc_code, 'name': product.name,
+                                    'size': product.size, 'brand': product.brand})
         else:
-            form = ProductForm(initial={'user': self.request.user})
+            form = ProductForm(request, initial={'user': self.request.user})
         return render(request, "new_order.html", {"form": form})
 
     def post(self, request, **kwargs):
-        form = ProductForm(request.POST, initial={'user': self.request.user})
+        form = ProductForm(request, request.POST, initial={'user': self.request.user})
         if Product.objects.filter(name=request.POST.get('name'), size=float(request.POST.get('size'))).filter(
                 user=request.user):
             prod_instance = Product.objects.get(name=request.POST.get('name'), size=float(request.POST.get('size')),
@@ -443,6 +461,7 @@ class NewOrderView(View):
         else:
             return render(request, "new_order.html", {"form": form})
 
+#######################################################################################################################
 
 class EmptyProductView(View):
     def dispatch(self, request, *args, **kwargs):
@@ -457,6 +476,7 @@ class EmptyProductView(View):
             amount.save()
         return redirect('/products/')
 
+#######################################################################################################################
 
 class CloseShopView(View):
     def dispatch(self, request, *args, **kwargs):
@@ -471,6 +491,7 @@ class CloseShopView(View):
                 prod.save()
         return redirect('/low/')
 
+#######################################################################################################################
 
 class TooMuchProductView(LoginRequiredMixin, UpdateView):
     model = Product
@@ -510,6 +531,7 @@ class TooMuchProductView(LoginRequiredMixin, UpdateView):
             amount.save()
         return redirect('/products/')
 
+#######################################################################################################################
 
 class AdjustUsageView(View):
     def get(self, request, **kwargs):
@@ -531,6 +553,7 @@ class AdjustUsageView(View):
             prod.save()
         return redirect('/products/')
 
+#######################################################################################################################
 
 def get_prod_data(prod_id):
     product = Product.objects.get(id=prod_id)
@@ -551,6 +574,7 @@ def get_prod_data(prod_id):
     data.append({'values': values, 'key': 'product usage (oz)', 'area': 'True'})
     return data
 
+#######################################################################################################################
 
 def get_service_data(serv_id):
     service = Service.objects.get(id=serv_id)
@@ -569,6 +593,7 @@ def get_service_data(serv_id):
     data.append({'values': values, 'key': 'number of appointments', 'area': 'True'})
     return data
 
+#######################################################################################################################
 
 def get_product(upc_code):
     factual = Factual("gCKclwfy6eBki5UyHDxS56x7zmcvCMaGJ7l7v9cM", "Dt8V4ngb484Blmyaw5G9SxbycgpOsJL0ENckwxX0")
