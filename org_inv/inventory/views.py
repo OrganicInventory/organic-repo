@@ -1,6 +1,8 @@
 from datetime import timedelta, datetime
 import json
 from django.contrib import messages
+from django.core.mail import send_mail
+from org_inv import settings
 
 import re
 from factual import Factual
@@ -10,10 +12,10 @@ from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView, FormView
 from .models import Product, Appointment, Service, Amount, Brand
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
-    AmountFormSet
+    AmountFormSet, OrderForm
 
 
 # Create your views here.
@@ -431,6 +433,8 @@ class LowInventoryView(LoginRequiredMixin, ListView):
             low = inventory_check(int(daterange), self.request.user)
         else:
             low = inventory_check(14, self.request.user)
+
+        context['range'] = daterange
         context['low'] = low
         return context
 
@@ -552,6 +556,35 @@ class AdjustUsageView(View):
             prod.quantity -= diff
             prod.save()
         return redirect('/products/')
+
+#######################################################################################################################
+
+class OrderView(View):
+    def get(self, request, **kwargs):
+        daterange = self.request.GET.get('range')
+        if daterange != 'None':
+            low = inventory_check(int(daterange), self.request.user).keys()
+        else:
+            low = inventory_check(14, self.request.user).keys()
+        return render(request, "order.html", {'products': low})
+
+    def post(self, request, *args, **kwargs):
+        products = {Product.objects.get(user=request.user, upc_code=key): value for key, value in self.request.POST.items() if key != 'csrfmiddlewaretoken'}
+        brands = {key.brand for key in products.keys()}
+        for brand in brands:
+            brand_products = []
+            message = "Hello from {}!\nWould you please order the following products for us:\n".format(request.user.profile.spa_name)
+            for key, value in products.items():
+                if key.brand == brand:
+                    brand_products.append(key)
+                    message += "{} (upc {}): {} units".format(key.name, key.upc_code, value) + "\n"
+
+            send_mail('Order from {}'.format(request.user.profile.spa_name), message, settings.EMAIL_HOST_USER,
+    [brand.email], fail_silently=False)
+            return redirect('/products/')
+
+
+
 
 #######################################################################################################################
 

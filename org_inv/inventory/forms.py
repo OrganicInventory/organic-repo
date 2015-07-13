@@ -63,3 +63,10 @@ class ProductLookupForm(forms.Form):
 
     class Meta:
         fields = ['upc']
+
+
+class OrderForm(forms.Form):
+    number = forms.IntegerField()
+
+    class Meta:
+        fields = ['number']
