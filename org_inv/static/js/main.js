@@ -102,9 +102,11 @@ getUrlVars();
   });
 
 //PREVENT SCAN FROM FROM AUTO SUBMITTING
-  $('.scan-form').submit(function(e) {
+  $('.scan-form').keypress(function(e) {
+    if(e.which === 13) {
     e.preventDefault();
     e.stopPropagation();
+    }
   });
 
 });

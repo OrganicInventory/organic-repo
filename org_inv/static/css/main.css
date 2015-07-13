@@ -599,6 +599,10 @@ body.user-profile-body td:first-child {
   font-weight: bold;
 }
 
+th {
+  text-align: left;
+}
+
 
 /*RESPONSIVE*/
 
