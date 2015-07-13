@@ -7,6 +7,7 @@ import datetime
 class Brand(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField(null=True, blank=True)
+    user = models.ForeignKey(User, null=True)
 
 class Product(models.Model):
     name = models.CharField(max_length=255)

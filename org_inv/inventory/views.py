@@ -11,7 +11,7 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView
-from .models import Product, Appointment, Service, Amount
+from .models import Product, Appointment, Service, Amount, Brand
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
     AmountFormSet
 
@@ -65,8 +65,8 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         form.instance = form.save(commit=False)
         form.instance.user = self.request.user
         brand = form.instance.brand
-        if Brand.objects.filter(name=brand):
-
+        if Brand.objects.filter(user=self.request.user).filter(name=brand):
+            pass
         form.instance.new_product_quantity(form.instance.quantity)
         form.instance.update_max_quantity()
         return super().form_valid(form)
