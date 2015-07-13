@@ -672,6 +672,10 @@ body.user-profile-body td:first-child {
     border-radius: 0;
   }
 
+  .top-nav-container {
+    display: none;
+  }
+
   .status-th, .status-td, .add-content-button, .user-icon, .page-title {
     display: none;
   }
@@ -679,6 +683,7 @@ body.user-profile-body td:first-child {
   .page-header-footer {
     position: fixed;
     top: 0;
+    z-index: 500;
   }
 
   .user-icon {
