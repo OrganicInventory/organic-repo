@@ -453,6 +453,10 @@ td a {
   left: 58px;
 }
 
+.focus-out-order {
+  left: 145px;
+}
+
 .close-shop {
   font-family: untitled-font-1;
   position: fixed;
@@ -736,5 +740,11 @@ td a {
   .date-dropdown {
     right: 50%;
     transform: translate(50%, 0);
+  }
+}
+
+@media (max-width: 500px) {
+  .focus-out-order {
+    left: 120px;
   }
 }
