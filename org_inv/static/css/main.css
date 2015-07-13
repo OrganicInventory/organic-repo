@@ -624,15 +624,16 @@ body.user-profile-body td:first-child {
     padding: 10px;
     border-bottom: 3px solid #b35b5a;
   }
+}
 
-  /*.user-name {
+@media (max-width: 960px) {
+  .user-welcome {
     display: none;
-  }*/
-
-  .user-icon {
-    float: right;
   }
 
+  .top-nav-container-hide, .top-nav-container {
+    transform: translate(30%, -50%);
+  }
 }
 
 @media (max-width: 700px) {
