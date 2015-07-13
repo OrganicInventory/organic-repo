@@ -27,6 +27,7 @@
       <div class="top-nav-container">
         <div class="user-icon"></div>
         <span class="user-name"><span class="user-welcome">Welcome </span><a href="{% url 'show_user' request.user.id %}">{{request.user.username}}</a></span>
+        <a href="/users/logout">Logout</a>
       </div>
     </header>
     <div class="page-title">
