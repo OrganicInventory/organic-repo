@@ -13,8 +13,8 @@
     <h2 class='register'>Create an Account
     </h2>
     <img class="logo1" src="https://cdn2.iconfinder.com/data/icons/flaticons-stroke/16/leaf-1-512.png">
-    <p class="pim">P.I.M.
-      <br>Predictive Inventory Management</br>
+    <p class="pim">P.I.M.<br />
+      Predictive Inventory Management
     </p>
     <form method="POST" action="{% url 'user_register' %}" class='register2'>
         {% csrf_token %}
@@ -24,8 +24,9 @@
 
         <!-- Provide a button to click to submit the form. -->
         <input type="hidden" name="next" id="id_next" value="{{ request.REQUEST.next }}" />
+        <button type="submit" class="btn-register">Register</button>
     </form>
-    <button type="submit" class="btn-register">Register</button>
+
   </div>
 </body>
 </html>
