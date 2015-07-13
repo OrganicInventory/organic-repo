@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.views.generic import DetailView, View
 from .forms import UserForm, ProfileForm
-from .models import Profile
+from .models import Profile, get_profile
 
 # Create your views here.
 
@@ -48,3 +48,16 @@ class ShowUserDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+@login_required
+def edit_profile(request):
+    profile = get_profile(request.user)
+    if request.method == "GET":
+        profile_form = ProfileForm(instance=profile)
+    elif request.method == "POST":
+        profile_form = ProfileForm(instance=profile, data=request.POST)
+        if profile_form.is_valid():
+            profile_form.save()
+    return render(request, "edit_profile.html", {"form": profile_form})
+
+
