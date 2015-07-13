@@ -424,7 +424,7 @@ class NewOrderView(View):
             prod_instance.update_quantity(float(request.POST.get('quantity')))
             prod_instance.update_max_quantity()
             prod_instance.save()
-            return redirect("/products/")
+            return redirect("/products/new_order")
         else:
             return render(request, "new_order.html", {"form": form})
 
