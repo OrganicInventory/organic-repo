@@ -8,9 +8,16 @@
     <h2>{{ user.username }}</h2>
 
     {% for brand in brands %}
-        <p>{{ brand }}--{{ brand.email }}</p><a href="{% url 'update_email' brand.id %}"><button class="update-btn-table">Update Order Email</button></a>
+        <p>{{ brand }}--{{ brand.email }}</p><a href="{% url 'update_email' brand.id %}">
+        <button class="update-btn-table">Update Order Email</button>
+    </a>
     {% endfor %}
 
-    <p>Low inventory threshold: {{ request.user.profile.threshold }}</p><a href="{% url 'update_threshold' %}"><button class="update-btn-table">Update Threshold</button></a>
+    <p>Low inventory threshold: {{ request.user.profile.threshold }}%</p>
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="update-btn-table">Update Threshold</button>
+    </form>
 {% endblock %}
 </body>
