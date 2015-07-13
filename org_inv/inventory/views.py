@@ -67,6 +67,11 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         else:
             return super().get_initial()
 
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
+        return form_class(self.request, **self.get_form_kwargs())
+
     def form_valid(self, form):
         form.instance = form.save(commit=False)
         form.instance.user = self.request.user
