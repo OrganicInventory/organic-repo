@@ -256,7 +256,7 @@ body.user-profile-body .main-content {
 
 .content-table th {
   padding: 10px 15px;
-  text-align: left;
+  /*text-align: left;*/
   font-weight: bold;
   background-color: #b35b5a;
   color: #eee;
@@ -513,6 +513,7 @@ td a {
 
 .main-content {
   box-sizing: border-box;
+  max-width: 800px;
 }
 
 .date-dropdown-container {
@@ -593,6 +594,10 @@ td a {
   transform: translate(-50%, -50%);
   transition: 1s all ease;
 }*/
+
+body.user-profile-body td:first-child {
+  font-weight: bold;
+}
 
 
 /*RESPONSIVE*/
@@ -756,7 +761,7 @@ td a {
   }
 
   .form-container, body.new-order-body .main-content,
-  body.services-body, body.user-profile-body .main-content, .main-content, .list-container {
+  body.services-body .main-content, body.user-profile-body .main-content, .main-content, .list-container {
     width: 100%;
   }
 
