@@ -652,6 +652,10 @@ th {
   text-align: left;
 }
 
+.settings-links {
+  display: none;
+}
+
 
 /*RESPONSIVE*/
 
@@ -690,6 +694,10 @@ th {
 }
 
 @media (max-width: 700px) {
+  .main-nav-li {
+    display: none;
+  }
+
   .main-nav-container {
     width: 100%;
     margin: 0;
@@ -720,16 +728,23 @@ th {
   }
 
   .main-nav-li:hover {
-    border-bottom: 3px solid #444c5a;
+    border-bottom: 3px solid #565d6a;
     background-color: #565d6a;
     border-radius: 0;
+  }
+
+  .settings-links {
+    display: block;
+    background-color: #565d6a;
+    border-radius: 0;
+    border-bottom: 3px solid #565d6a;
   }
 
   .top-nav-container {
     display: none;
   }
 
-  .status-th, .status-td, .add-content-button, .user-icon, .page-title {
+  .status-th, .status-td, .add-content-button, .user-icon, .page-title, .user-name a {
     display: none;
   }
 

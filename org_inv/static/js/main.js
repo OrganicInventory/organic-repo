@@ -40,16 +40,16 @@ getUrlVars();
 
 //HAMBURGER DROPDOWN MENU
   $('.nav-dropdown-btn').click(function() {
-    $('.main-nav-ul').slideToggle('slow');
+    $('.main-nav-ul').toggle('slow');
   });
 
 //STICKY HEADER ON RESIZE
   $(window).resize(function() {
     var width = $(window).width();
-    if (width > 700) {
+    if (width < 701) {
       stickyHeader();
-    } else if (width <= 700) {
-
+    } else if (width > 700) {
+      $('.main-nav-ul').show();
     }
   }).resize();
 
