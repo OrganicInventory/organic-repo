@@ -10,7 +10,7 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView
-from .models import Product, Appointment, Service, Amount
+from .models import Product, Appointment, Service, Amount, Brand
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
     AmountFormSet
 
@@ -68,27 +68,27 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class TestCreateView(LoginRequiredMixin, CreateView):
-    model = Product
-    form_class = ProductForm
-    template_name = 'test.html'
-    success_url = '/products/'
+# class TestCreateView(LoginRequiredMixin, CreateView):
+#     model = Product
+#     form_class = ProductForm
+#     template_name = 'test.html'
+#     success_url = '/products/'
+#
+#     def form_valid(self, form):
+#         form.instance = form.save(commit=False)
+#         form.instance.user = self.request.user
+#         form.instance.new_product_quantity(form.instance.quantity)
+#         form.instance.update_max_quantity()
+#         return super().form_valid(form)
 
-    def form_valid(self, form):
-        form.instance = form.save(commit=False)
-        form.instance.user = self.request.user
-        form.instance.new_product_quantity(form.instance.quantity)
-        form.instance.update_max_quantity()
-        return super().form_valid(form)
-
-
-class TestView(View):
-    def get(self, request, **kwargs):
-        if request.GET.get("upc"):
-            prod_data = get_product(request.GET.get("upc"))
-        else:
-            return render(request, "test.html")
-        return render(request, "create_product.html", {'data': prod_data})
+#
+# class TestView(View):
+#     def get(self, request, **kwargs):
+#         if request.GET.get("upc"):
+#             prod_data = get_product(request.GET.get("upc"))
+#         else:
+#             return render(request, "test.html")
+#         return render(request, "create_product.html", {'data': prod_data})
 
 
 class ProductDetailView(DetailView):
@@ -514,6 +514,17 @@ class AdjustUsageView(View):
             prod = Product.objects.get(id=form.data['product'])
             prod.quantity -= diff
             prod.save()
+        return redirect('/products/')
+
+
+class SettingsView(View):
+    def dispatch(self, request, *args, **kwargs):
+        brands = Brand.objects.filter(user=request.user)
+        for amount in amounts:
+            up_perc = .1 * amount.amount
+            new_amt = amount.amount + up_perc
+            amount.amount = new_amt
+            amount.save()
         return redirect('/products/')
 
 
