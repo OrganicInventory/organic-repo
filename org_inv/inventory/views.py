@@ -568,7 +568,7 @@ def get_product(upc_code):
                 if pair[0] == 'product_name':
                     new['name'] = pair[1]
                 elif pair[0] == 'size':
-                    new['size'] = float(re.search(r'\d+', pair[1][0]).group())
+                    new['size'] = float(re.search(r'[\d\.]+', pair[1][0]).group())
                 else:
                     new[pair[0]] = pair[1]
         new_json = json.dumps(new)
