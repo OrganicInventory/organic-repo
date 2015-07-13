@@ -101,4 +101,9 @@ getUrlVars();
     }
   });
 
+  $('.scan-form').submit(function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
 });
