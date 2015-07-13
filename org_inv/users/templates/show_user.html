@@ -2,9 +2,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="main-content-header">
-      <h2 class="secondary-heading">User Profile</h2>
-  </div>
+    <div class="main-content-header">
+        <h2 class="secondary-heading">User Profile</h2>
+    </div>
     <!-- <h2>{{ user.username }}</h2>
     <p>
         Spa: {{ user.profile.spa_name }}<br/>
@@ -12,22 +12,26 @@
         Phone: {{ user.profile.phone_number }}
     </p> -->
     <table class="content-table">
-      <tr>
-        <td>User Name</td>
-        <td>{{ user.username }}</td>
-      </tr>
-      <tr>
-        <td>Spa</td>
-        <td>{{ user.profile.spa_name }}</td>
-      </tr>
-      <tr>
-        <td>Location</td>
-        <td>{{ user.profile.location }}</td>
-      </tr>
-      <tr>
-        <td>Phone</td>
-        <td>{{ user.profile.phone_number }}</td>
-      </tr>
+        <tr>
+            <td>User Name</td>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <td>Spa</td>
+            <td>{{ user.profile.spa_name }}</td>
+        </tr>
+        <tr>
+            <td>Location</td>
+            <td>{{ user.profile.location }}</td>
+        </tr>
+        <tr>
+            <td>Phone</td>
+            <td>{{ user.profile.phone_number }}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{ user.email }}</td>
+        </tr>
     </table>
 {% endblock %}
 </body>
