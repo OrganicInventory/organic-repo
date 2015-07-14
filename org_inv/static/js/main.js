@@ -48,6 +48,14 @@ getUrlVars();
     $('.main-nav-ul').toggle('slow');
   });
 
+  $('.dropdown-icon').click(function() {
+    $('.slide-in-menu').slideDown('slow');
+  });
+
+  $('.slide-in-menu-exit').click(function() {
+    $('.slide-in-menu').slideUp('slow');
+  });
+
 //STICKY HEADER ON RESIZE
   $(window).resize(function() {
     var width = $(window).width();
@@ -117,8 +125,8 @@ getUrlVars();
   });
 
 //USER INFO DROPDOWN
-  $('.secondary-dropdown-icon').hover(function() {
-    $('.secondary-dropdown-ul').toggle();
-  });
+  // $('.secondary-dropdown-icon').hover(function() {
+  //   $('.secondary-dropdown-ul').toggle();
+  // });
 
 });
