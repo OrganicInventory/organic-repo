@@ -63,6 +63,7 @@ getUrlVars();
       stickyHeader();
       $('.main-nav-ul').show();
       $('.slide-in-menu').css('display', 'none');
+      $('.dropdown-icon-bottom').css('display', 'none');
     } else {
 
     }
@@ -89,10 +90,12 @@ getUrlVars();
         stick.addClass('sticky');
         $('.top-nav-container').css('display', 'none');
         $('.top-nav-container-hide').css('display', 'block');
+        $('.dropdown-icon-bottom').css('display', 'block');
       } else {
         stick.removeClass('sticky');
         $('.top-nav-container').css('display', 'block');
         $('.top-nav-container-hide').css('display', 'none');
+        $('.dropdown-icon-bottom').css('display', 'none');
       }
     });
   }

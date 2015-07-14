@@ -721,6 +721,14 @@ th {
   transform: translate(0, -50%);
 }
 
+.dropdown-icon-bottom {
+  color: #eee;
+}
+
+.dropdown-icon-bottom {
+  display: none;
+}
+
 .submenu-ul {
   margin-top: 100px;
   border-top: 3px solid #565d6a;
