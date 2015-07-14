@@ -1,14 +1,16 @@
 body{
-  background:url("spa_Fotor.jpg");
+  background:url("http://img2.goodfon.su/original/5616x3744/4/1e/spa-spa-kamni-svechi-cvety-546.jpg");
   background-size: cover;
   width:100%;
+  font-family: 'Raleway', sans-serif;
+
 
 }
 
 body:before {
     content: " ";
     width: 100%;
-    height: 1010px;
+    height: 865px;
     max-height: 1500px;
     position: absolute;
     z-index: -1;
@@ -17,24 +19,21 @@ body:before {
     background: -webkit-radial-gradient(top center, ellipse cover, rgba(255,255,255,0.2) 0%,rgba(0,0,0,0.5) 100%);
   }
 .header{
-  font-family: 'Cinzel Decorative', serif, sans-serif;
   text-align: center;
   font-size: 400%;
   font-weight: 500;
-  color:black;
-  text-shadow: 2px 2px #EEE;
+  color:#EEE;
   margin-top: 5%;
 }
 
 .box{
-  font-family: 'Cinzel Decorative', serif, sans-serif;  float:left;
+  float:left;
 	margin:8% 1.5%;
 	width:30%;
   text-align: left;
   font-weight: 800;
   font-size: 180%;
   color:#EEE;
-  text-shadow: 2px 2px #13442b;
   min-width: 250px;
   display:block;
 ;
@@ -42,10 +41,8 @@ body:before {
 }
 
 .sub-box{
-  font-family: serif, sans-serif;
   font-size: 60%;
   font-weight: 300;
-  text-shadow: 2px 2px #13442b;
   line-height: 150%;
 }
 
@@ -53,46 +50,39 @@ body:before {
   display: block;
   margin: 0 auto;
   text-align: center;
-  font-family: 'Cinzel Decorative', serif, sans-serif;  font-size: 300%;
   color:#EEE;
-  text-shadow: 2px 2px #13442b;
   font-size: 350%;
 
   }
 
 button{
-  background-color: #68dbd6;
-  border-radius: 10%;
+  background-color: #EEE;
+  border-radius: 5%;
   color: black;
   padding: 1%;
-  font-family: 'Cinzel Decorative', serif, sans-serif;
+  border: none;
   }
 
 button:hover {
-  background: #EEE;
-	color: #13442b;
-	box-shadow: inset 0 0 0 3px #13442b;
+  background-color: #83bc82;
   cursor: pointer;
 }
 
 .caps{
-  font-size: 250%;
+  font-size: 150%;
   font-weight: 500;
-  text-shadow: 5px #EEE;
 }
 
-.login-link{
+/*.login-link{
   background-color: #68dbd6;
-  border-radius: 10%;
+  border-radius: 5%;
   color: black;
   padding: 1%;
-  font-family: 'Cinzel Decorative', serif, sans-serif;
   margin-left: 2%;
 
-}
+}*/
 
 .signup2{
-  font-family: 'Cinzel Decorative', serif, sans-serif;  float:left;
   margin:10% 1.5%;
   width:30%;
   text-align: left;
@@ -101,21 +91,17 @@ button:hover {
 }
 
 .register{
-  font-family: 'Cinzel Decorative', serif, sans-serif;
   text-align: center;
   font-size: 280%;
   font-weight: 500;
   color:#13442b;
-  text-shadow: 2px 2px #EEE;
   margin-top: 5%;
 
   }
   .register2{
-  font-family: 'Cinzel Decorative', serif, sans-serif;
   font-weight: 500;
   font-size: 120%;
   color:#EEE;
-  text-shadow: 2px 2px #13442b;
   display:block;
   }
 
@@ -125,11 +111,9 @@ button:hover {
   }
 
   .btn-register{
-    background-color: #68dbd6;
     border-radius: 10%;
     color: black;
     padding: 1%;
-    font-family: 'Cinzel Decorative', serif, sans-serif;
     display: block;
     margin:0 auto;
     font-weight: 800;
@@ -138,7 +122,6 @@ button:hover {
   }
 
   .register2 label{
-    font-family: 'Cinzel Decorative', serif, sans-serif;
     text-align: left;
     margin-left: 35%;
     font-size: 130%;
@@ -147,23 +130,20 @@ button:hover {
 
 
   .login1{
-    font-family: 'Cinzel Decorative', serif, sans-serif;
     font-size: 150%;
     margin-top: 5%;
     font-weight: 800;
     color:#EEE;
-    text-shadow: 2px 2px #13442b;
     min-width: 250px;
     display:block;
 
   }
 
   .loginbtn{
-    background-color: #68dbd6;
-    border-radius: 10%;
+    border-radius: 5%;
     color: black;
     padding: 1%;
-    font-family: 'Cinzel Decorative', serif, sans-serif;
+    font-family: 'Raleway', sans-serif;
     display: block;
     margin:0 auto;
   }
@@ -171,50 +151,37 @@ button:hover {
 .loginbtn:hover {
   background: rgba(0,0,0,0);
 	color: #13442b;
-	box-shadow: inset 0 0 0 3px #13442b;
   cursor: pointer;
 }
 
 .nomatch{
   color: red;
   text-align: center;
-  font-family: 'Cinzel Decorative', serif, sans-serif;
 }
 
 .logplease{
-  font-family: 'Cinzel Decorative', serif, sans-serif;
   text-align: center;
   font-size: 280%;
   font-weight: 500;
-  color:#13442b;
-  text-shadow: 2px 2px #EEE;
   margin-top: 5%;
 }
 
 .sub-header{
   font-size: 50%;
-  text-shadow: none;
-  color:#13442b;
 }
 
 .headspa{
-  color: #68dbd6;
   font-size: 50%;
   font-weight: 400;
-  text-shadow: 2px 2px black;
 }
 .logo{
   height:60px;
 }
 
 .pim{
-  font-family: 'Cinzel Decorative', serif, sans-serif;
   text-align: center;
   font-size: 180%;
   font-weight: 300;
-  color:#13442b;
-  text-shadow: 2px 2px #EEE;
-
 }
 
 .logo1{
