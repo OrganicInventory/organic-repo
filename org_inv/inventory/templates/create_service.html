@@ -1,19 +1,38 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-<div class="main-content-header">
-  <h2 class="secondary-heading">Add Service</h2>
-</div>
-  <div class="form-container">
-    <form class="main-form" method="post" action="">
-    {% csrf_token %}
-    {{ form }}
-        {{ amounts.management_form }}
+    <div class="main-content-header">
+        <h2 class="secondary-heading">Add Service</h2>
+    </div>
+    <div class="form-container">
+
+
+        <form class="main-form" method="post" action="">
+
+
+            {% csrf_token %}
+            {{ form }}
+            {{ amounts.management_form }}
             {% for form in amounts %}
-                {{ form }}
+                <div class="table">
+                    <table class='no_error'>
+                        {{ form.as_table }}
+                    </table>
+                </div>
             {% endfor %}
-    <button class="gen-btn" type="button">Add Product</button>
-    <button class="form-button" type="submit" name="submit">Add New</button>
-    </form>
-  </div>
+
+        <button class="form-button" type="submit" name="submit">Add New</button>
+        <button class="form-button" type="submit" name="submit">Submit</button>
+      </form>
+
+    </div>
+
+    <input type="button" value="Add More" id="add_more">
+    <script>
+        $('#add_more').click(function () {
+            cloneMore('div.table:last', 'amount_set');
+        });
+    </script>
+    <script src='{% static 'add_forms.js' %}' type='text/javascript'></script>
 {% endblock %}

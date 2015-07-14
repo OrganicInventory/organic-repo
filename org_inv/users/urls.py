@@ -21,7 +21,8 @@ urlpatterns = [
     url(r'^register/$', users_views.AddUserView.as_view(), name="user_register"),
     url(r'^user/(?P<user_id>\d+)$', users_views.ShowUserDetailView.as_view(), name="show_user"),
     url(r'^login/$', views.login, {'template_name': 'login.html'}, name="login"),
-    url(r'^logout/$', views.logout, {'next_page': 'login'}, name='logout'),
+    url(r'^logout/$', views.login,{'template_name': 'login.html'}, name='logout'),
+    url(r'^user/edit_profile/', users_views.edit_profile, name="edit_profile"),
 ]
 
 
