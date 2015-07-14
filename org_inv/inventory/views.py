@@ -96,7 +96,7 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['data'] = get_prod_data(self.object.id)
+        context['data'] = get_usage_data(self.object.id)
         context['pic'] = self.object.url
         return context
 
@@ -715,4 +715,20 @@ def get_product(upc_code):
         return new_json, new['pic']
     else:
         return None, None
+
+#######################################################################################################################
+
+def get_usage_data(prod_id):
+    prod = Product.objects.get(pk=prod_id)
+    stocks = Stock.objects.filter(product=prod, date__lte=datetime.today(), date__gte=(datetime.today() - timedelta(days=365))).order_by('date')
+    usage_values = []
+    stock_values = []
+    for stock in stocks:
+        usage_values.append({'x': datetime.strptime(str(stock.date), "%Y-%m-%d").timestamp(), 'y': stock.used})
+        stock_values.append({'x': datetime.strptime(str(stock.date), "%Y-%m-%d").timestamp(), 'y': stock.stocked})
+    data1 = []
+    data1.append({'values': usage_values, 'key': 'product usage (oz)', 'area': 'True'})
+    data1.append({'values': stock_values, 'key': 'product in stock (oz)', 'area': 'True'})
+    return data1
+
 
