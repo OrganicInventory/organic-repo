@@ -393,8 +393,8 @@ def inventory_check(daterange, user):
                 if quant < ((user.profile.threshold * .01) * product.max_quantity):
                     product_dict[product][0] -= amount.amount
                     product_dict[product].append(appointment.date)
-                # else:
-                #      product_dict[product][0] -= amount.amount
+                else:
+                     product_dict[product][0] -= amount.amount
 
     low_products = {}
 
