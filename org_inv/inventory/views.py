@@ -400,31 +400,6 @@ class ServiceDetailView(DetailView):
 
 def inventory_check(daterange, user):
     appointments = Appointment.objects.filter(user=user).filter(date__gt=timezone.now()).filter(
-        date__lte=timezone.now() + timedelta(days=daterange))
-    product_dict = {}
-    for product in Product.objects.filter(user=user):
-        product_dict[product] = product.quantity
-
-    for appointment in appointments:
-        for product in appointment.service.products.all():
-            amount = Amount.objects.get(product=product, service=appointment.service)
-            product_dict[product] -= amount.amount
-
-    low_products = {}
-
-    for key, value in product_dict.items():
-        if user.profile.threshold:
-            if value < ((user.profile.threshold * .01) * key.max_quantity):
-                low_products[key] = value
-        else:
-            if value < (.3 * key.max_quantity):
-                low_products[key] = value
-
-    return low_products
-
-
-def inventory_check(daterange, user):
-    appointments = Appointment.objects.filter(user=user).filter(date__gt=timezone.now()).filter(
         date__lte=timezone.now() + timedelta(days=daterange)).order_by('date')
     product_dict = {}
     for product in Product.objects.filter(user=user):
@@ -454,7 +429,6 @@ def inventory_check(daterange, user):
                 low_products[key][0] += 1
 
     return low_products
-
 
 #######################################################################################################################
 
