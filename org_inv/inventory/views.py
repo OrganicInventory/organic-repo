@@ -14,7 +14,7 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView, FormView
-from .models import Product, Appointment, Service, Amount, Brand
+from .models import Product, Appointment, Service, Amount, Brand, Stock
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
     AmountFormSet, ThresholdForm
 
@@ -84,30 +84,6 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         form.instance.new_product_quantity(form.instance.quantity)
         form.instance.update_max_quantity()
         return super().form_valid(form)
-
-#######################################################################################################################
-
-# class TestCreateView(LoginRequiredMixin, CreateView):
-#     model = Product
-#     form_class = ProductForm
-#     template_name = 'test.html'
-#     success_url = '/products/'
-#
-#     def form_valid(self, form):
-#         form.instance = form.save(commit=False)
-#         form.instance.user = self.request.user
-#         form.instance.new_product_quantity(form.instance.quantity)
-#         form.instance.update_max_quantity()
-#         return super().form_valid(form)
-
-#
-# class TestView(View):
-#     def get(self, request, **kwargs):
-#         if request.GET.get("upc"):
-#             prod_data = get_product(request.GET.get("upc"))
-#         else:
-#             return render(request, "test.html")
-#         return render(request, "create_product.html", {'data': prod_data})
 
 #######################################################################################################################
 
@@ -530,7 +506,15 @@ class CloseShopView(View):
             appt.save()
             service = appt.service
             for prod in service.products.all():
+                stock = prod.quantity
                 amt = Amount.objects.get(product=prod, service=service)
+                if Stock.objects.filter(product=prod, date=appt.date):
+                    obj = Stock.objects.get(product=prod, date=appt.date)
+                    obj.used += amt.amount
+                    obj.save()
+                else:
+                    amount_used = amt.amount
+                    Stock.objects.create(product=prod, used=amount_used, stocked=stock, date=appt.date)
                 prod.quantity -= amt.amount
                 prod.save()
         return redirect('/low/')
