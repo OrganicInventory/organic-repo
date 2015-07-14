@@ -25,7 +25,7 @@
   <div class="page-header-container">
     <header class="page-header">
       <div class="top-nav-container">
-        <div class="user-icon"></div>
+        <div class="user-icon"><a href="{% url 'show_user' request.user.id %}"><span class="user-icon-image">t</span></a></div>
         <span class="user-name"><span class="user-welcome">Welcome </span><a href="{% url 'show_user' request.user.id %}">{{request.user.username}}</a></span>
         <a href="/users/logout">Logout</a>
       </div>
@@ -42,11 +42,14 @@
           <a href="/services"><li class="main-nav-li services">Services</li></a>
           <a href="/appointments"><li class="main-nav-li appointments">Appointments</li></a>
           <a href="/products/new_order"><li class="main-nav-li new-order">New Order</li></a>
+          <a href="{% url 'close_shop' %}"><li class="main-nav-li settings-links">My Profile</li></a>
+          <li class="main-nav-li settings-links">Close Shop</li>
+          <li class="main-nav-li settings-links">Logout</li>
 
         </ul>
       </div>
       <div class="top-nav-container-hide">
-        <div class="user-icon"></div>
+        <div class="user-icon"><span class="user-icon-image">t</span></div>
         <span class="user-name"><span class="user-welcome">Welcome </span><a href="{% url 'show_user' request.user.id %}">{{request.user.username}}</a></span>
       </div>
     </div>

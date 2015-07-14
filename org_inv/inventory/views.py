@@ -17,8 +17,6 @@ from .models import Product, Appointment, Service, Amount, Brand
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
     AmountFormSet, ThresholdForm
 
-
-
 # Create your views here.
 
 
@@ -591,9 +589,6 @@ class OrderView(View):
     [brand.email], fail_silently=False)
         return redirect('/products/')
 
-
-
-
 #######################################################################################################################
 
 class SettingsView(LoginRequiredMixin, View):
@@ -701,5 +696,5 @@ def get_product(upc_code):
         new_json = json.dumps(new)
         return new_json, new['pic']
     else:
-        return None
+        return None, None
 
