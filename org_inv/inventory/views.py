@@ -391,17 +391,19 @@ def inventory_check(daterange, user):
             else:
                 quant = product_dict[product][0] - amount.amount
                 if quant < ((user.profile.threshold * .01) * product.max_quantity):
-                        product_dict[product][0] -= amount.amount
-                        product_dict[product].append(appointment.date)
+                    product_dict[product][0] -= amount.amount
+                    product_dict[product].append(appointment.date)
+                else:
+                     product_dict[product][0] -= amount.amount
 
     low_products = {}
 
     for key, value in product_dict.items():
         if len(value) == 2:
             low_products[key] = value
-            low_products[key].append(math.ceil(abs(low_products[key][0])/key.size))
-            if low_products[key][2] == 0:
-                low_products[key][2] += 1
+            low_products[key].append(math.ceil((((user.profile.threshold * .01) * key.max_quantity) - low_products[key][0])/key.size))
+            # if low_products[key][2] == 0:
+            #     low_products[key][2] += 1
 
     return low_products
 
@@ -561,7 +563,7 @@ class OrderView(View):
     def get(self, request, **kwargs):
         daterange = self.request.GET.get('range')
         if daterange != 'None':
-            low = inventory_check(int(daterange), self.request.user).keys()
+            low = inventory_check(int(daterange), self.request.user).items()
         else:
             low = inventory_check(14, self.request.user).items()
         return render(request, "order.html", {'products': low})
@@ -576,7 +578,6 @@ class OrderView(View):
                 if key.brand == brand:
                     brand_products.append(key)
                     message += "{} (upc {}): {} unit(s)".format(key.name, key.upc_code, value) + "\n"
-
             send_mail('Order from {}'.format(request.user.profile.spa_name), message, settings.EMAIL_HOST_USER,
     [brand.email], fail_silently=False)
         return redirect('/products/')
