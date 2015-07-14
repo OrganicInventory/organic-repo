@@ -5,23 +5,29 @@
 <h1 class="main-heading">All Services</h1>
 {% endblock %}
 
-{% block content %}
+{% block mobileadd %}
+<a href="/services/new">
+  <span class="add-btn-mobile">q</span>
+</a>
+{% endblock %}
 
-  <table class="content-table">
+{% block content %}
+  <table class="content-table services-table">
     <tr class="table-header">
       <th>Title</th>
-      <th></th>
-      <th></th>
       <th></th>
       <th></th>
     </tr>
     {% for service in all_services %}
         <tr>
-      <td>{{ service }}</td>
-      <td></td>
-      <td><a href="{% url 'update_service' service.id %}"><button class="update-btn-table">Update</button></a></td>
-      <td></td>
-      <td><a href="{% url 'delete_service' service.id %}"><button class="delete-btn-table">X</button></a></td>
+
+      <td><a href="{% url 'service_detail' service.id %}">
+                        <div class="table-id-link">
+                            {{ service }}
+                        </div>
+                    </a></td>
+      <td><a href="{% url 'update_service' service.id %}"><button class="gen-btn">Update</button></a></td>
+      <td><a href="{% url 'delete_service' service.id %}"><button class="gen-btn">Delete</button></a></td>
         </tr>
     {% endfor %}
   </table>

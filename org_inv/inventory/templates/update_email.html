@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="main-content-header">
+  <h2 class="secondary-heading">Update Email</h2>
+</div>
+  <div class="form-container">
+    <form class="main-form" action="" method="post">
+      {% csrf_token %}
+      {% for field in form %}
+         <div class="{{ field.label }} input">
+
+             <span class="focus-out">{{ field.label_tag }} </span> {{ field }}
+             {{ field.errors }}
+         </div>
+     {% endfor %}
+
+      <!-- Provide a button to click to submit the form. -->
+      <button class="form-button" type="submit" name="submit">Update</button>
+  </form>
+</div>
+{% endblock %}

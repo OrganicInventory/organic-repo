@@ -1,52 +1,64 @@
 body{
-  background:url("https://unsplash.imgix.net/photo-1416339411116-62e1226aacd8?dpr=2&fit=crop&fm=jpg&h=1400&q=75&w=1050");
+  background:linear-gradient(to top,rgba(255,255,255,0.175),rgba(0,0,0,0.3)), url("spa-spa-kamni-svechi-cvety-546.jpg");
+  /*background-image: url("spa-spa-kamni-svechi-cvety-546.jpg");*/
+  background-repeat: no-repeat;
   background-size: cover;
   width:100%;
+
 }
 
+body:before {
+    content: " ";
+    width: 100%;
+    /*height: 1010px;*/
+    max-height: 1500px;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+  }
 .header{
   font-family: 'Cinzel Decorative', serif, sans-serif;
   text-align: center;
-  font-size: 400%;
-  margin-top: 7%;
+  font-size: 500%;
   font-weight: 500;
-  color: #23a061;
-  text-shadow: 2px 2px #424c3b;
-  margin-left: 10%;
-}
-
-.nav{
-  font-family: 'Cinzel Decorative', serif, sans-serif;  margin-top:0;
-  margin-right: 2%;
-  display: inline-block;
-  float: right;
-  font-size: 190%;
-  font-weight: 400;
-  border-radius: 10%;
-  border-style:inset;
-  padding: 1%;
+  color:black;
+  text-shadow: 2px 2px #EEE;
+  margin-top: 5%;
 }
 
 .box{
   font-family: 'Cinzel Decorative', serif, sans-serif;  float:left;
-	margin:10% 1.5%;
+	margin:8% 1.5%;
 	width:30%;
   text-align: left;
   font-weight: 800;
-  font-size: 200%;
+  font-size: 180%;
+  color:#EEE;
+  text-shadow: 2px 2px #13442b;
+  min-width: 250px;
+  display:block;
+;
+
 }
 
 .sub-box{
   font-family: serif, sans-serif;
   font-size: 60%;
   font-weight: 300;
+  text-shadow: 2px 2px #13442b;
+  line-height: 150%;
 }
 
 .signup{
+  display: block;
+  margin: 0 auto;
   text-align: center;
   font-family: 'Cinzel Decorative', serif, sans-serif;  font-size: 300%;
-  text-shadow: 2px 2px #EEE;
-}
+  color:#EEE;
+  text-shadow: 2px 2px #13442b;
+
+  }
 
 button{
   background-color: #23a061;
@@ -55,6 +67,13 @@ button{
   padding: 1%;
   font-family: 'Cinzel Decorative', serif, sans-serif;}
 
+button:hover {
+  background: #EEE;
+	color: #13442b;
+	box-shadow: inset 0 0 0 3px #13442b;
+  cursor: pointer;
+}
+
 .caps{
   font-size: 250%;
   font-weight: 500;
@@ -62,7 +81,13 @@ button{
 }
 
 .login-link{
-  text-decoration: none;
+  background-color: #23a061;
+  border-radius: 10%;
+  color: #EEE;
+  padding: 1%;
+  font-family: 'Cinzel Decorative', serif, sans-serif;
+  margin-left: 2%;
+
 }
 
 .signup2{
@@ -70,20 +95,27 @@ button{
   margin:10% 1.5%;
   width:30%;
   text-align: left;
-  font-weight: 800;
+  font-weight: 500;
   font-size: 200%;
 }
 
 .register{
-  text-align: center;
   font-family: 'Cinzel Decorative', serif, sans-serif;
-  font-size: 250%;
-  margin-bottom: 5%;
-  text-shadow: 2px 2px #57846d;
+  text-align: center;
+  font-size: 280%;
+  font-weight: 500;
+  color:#13442b;
+  text-shadow: 2px 2px #EEE;
+  margin-top: 5%;
 
   }
   .register2{
   font-family: 'Cinzel Decorative', serif, sans-serif;
+  font-weight: 500;
+  font-size: 120%;
+  color:#EEE;
+  text-shadow: 2px 2px #13442b;
+  display:block;
   }
 
   .register2 input {
@@ -97,8 +129,10 @@ button{
     color: #EEE;
     padding: 1%;
     font-family: 'Cinzel Decorative', serif, sans-serif;
-    margin-left: 45%;
+    display: block;
+    margin:0 auto;
     font-weight: 500;
+    margin-top: 2%;
   }
 
   .register2 label{
@@ -114,6 +148,12 @@ button{
     font-family: 'Cinzel Decorative', serif, sans-serif;
     font-size: 150%;
     margin-top: 5%;
+    font-weight: 800;
+    color:#EEE;
+    text-shadow: 2px 2px #13442b;
+    min-width: 250px;
+    display:block;
+
   }
 
   .loginbtn{
@@ -122,10 +162,16 @@ button{
     color: #EEE;
     padding: 1%;
     font-family: 'Cinzel Decorative', serif, sans-serif;
-    margin-left: 48%;
-    margin-top: 5%;
-
+    display: block;
+    margin:0 auto;
   }
+
+.loginbtn:hover {
+  background: rgba(0,0,0,0);
+	color: #13442b;
+	box-shadow: inset 0 0 0 3px #13442b;
+  cursor: pointer;
+}
 
 .nomatch{
   color: red;
@@ -135,9 +181,42 @@ button{
 
 .logplease{
   font-family: 'Cinzel Decorative', serif, sans-serif;
-  font-size: 250%;
-  margin-top: 5%;
   text-align: center;
-  font-weight: 600;
-  text-shadow: 2px 2px #57846d;
+  font-size: 280%;
+  font-weight: 500;
+  color:#13442b;
+  text-shadow: 2px 2px #EEE;
+  margin-top: 5%;
+}
+
+.sub-header{
+  font-size: 50%;
+  text-shadow: none;
+  color:#13442b;
+}
+
+.headspa{
+  font-size: 40%;
+  color:#23a061;
+  text-shadow: none;
+    text-shadow: 2px 2px #13442b;
+}
+.logo{
+  height:60px;
+}
+
+.pim{
+  font-family: 'Cinzel Decorative', serif, sans-serif;
+  text-align: center;
+  font-size: 180%;
+  font-weight: 300;
+  color:#13442b;
+  text-shadow: 2px 2px #EEE;
+
+}
+
+.logo1{
+  height:40px;
+  display: block;
+  margin: 0 auto;
 }

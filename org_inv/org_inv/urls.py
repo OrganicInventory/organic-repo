@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^products/new/$', inv_views.ProductCreateView.as_view(), name="create_product"),
     url(r'^products/delete/(?P<prod_id>\d+)$', inv_views.ProductDeleteView.as_view(), name='product_confirm_delete'),
     url(r'^products/detail/$', inv_views.ProductDetailView.as_view(), name='product_detail'),
+    url(r'^services/detail/(?P<serv_id>\d+)$', inv_views.ServiceDetailView.as_view(), name='service_detail'),
     url(r'^appointments/$', inv_views.AllAppointmentsView.as_view(), name='all_appointments'),
     url(r'^appointments/new/$', inv_views.AppointmentCreateView.as_view(), name='add_appointment'),
     url(r'^services/$', inv_views.AllServicesView.as_view(), name='all_services'),
@@ -39,4 +40,7 @@ urlpatterns = [
     url(r'^products/adjust/(?P<prod_id>\d+)$', inv_views.TooMuchProductView.as_view(), name="adjust_product"),
     url(r'^adjust_usage/(?P<appt_id>\d+)$', inv_views.AdjustUsageView.as_view(), name="adjust_usage"),
     url(r'^close_shop/', inv_views.CloseShopView.as_view(), name="close_shop"),
+    url(r'^order/', inv_views.OrderView.as_view(), name="order"),
+    url(r'^settings/', inv_views.SettingsView.as_view(), name="settings"),
+    url(r'^update_email/(?P<brand_id>\d+)$', inv_views.EmailUpdate.as_view(), name="update_email"),
 ]

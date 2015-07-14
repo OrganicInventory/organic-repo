@@ -1,13 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h2 class="secondary-heading">Adjust Product Quantity</h2>
+<div class="main-content-header">
+    <h2 class="secondary-heading">Adjust Product Quantity</h2>
+</div>
   <div class="form-container">
     <form class="main-form" method="POST" action="{% url 'adjust_product' product.id %}">
         {% csrf_token %}
-            {{ form.as_p }}
-        <!-- Provide a button to click to submit the form. -->
-        <input type="submit" name="submit"  value="Add"/>
+        {% for field in form %}
+          <div class="{{ field.label }} input">
+           <span class="focus-out">{{ field.label_tag }} </span> {{ field }}
+               {{ field.errors }}
+          </div>
+        {% endfor %}
+        <button class="form-button" type="submit" name="submit">Add</button>
     </form>
   </div>
 {% endblock %}
