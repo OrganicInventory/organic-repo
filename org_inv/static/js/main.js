@@ -62,6 +62,7 @@ getUrlVars();
     if (width > 700) {
       stickyHeader();
       $('.main-nav-ul').show();
+      $('.slide-in-menu').css('display', 'none');
     } else {
 
     }
