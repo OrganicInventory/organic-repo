@@ -79,6 +79,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance = form.save(commit=False)
         form.instance.user = self.request.user
+        form.instance.url = get_product(self.request.GET.get("upc"))[1]
 
         form.instance.new_product_quantity(form.instance.quantity)
         form.instance.update_max_quantity()

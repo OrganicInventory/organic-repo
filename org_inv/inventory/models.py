@@ -20,6 +20,7 @@ class Product(models.Model):
     user = models.ForeignKey(User, null=True)
     brand = models.ForeignKey(Brand, null=True)
     upc_code = models.CharField(max_length=100, null=True)
+    url = models.URLField(null=True)
 
     class Meta:
         unique_together = ('name', 'size', 'user')
