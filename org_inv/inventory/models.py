@@ -83,3 +83,10 @@ class Appointment(models.Model):
         return "{}: {}".format(self.service, self.date)
 
 
+class Stock(models.Model):
+    date = models.DateField()
+    product = models.ForeignKey(Product)
+    used = models.FloatField()
+    stocked = models.FloatField()
+
+
