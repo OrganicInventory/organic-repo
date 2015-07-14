@@ -1,5 +1,6 @@
-from datetime import timedelta, datetime
+from datetime import timedelta, datetime, date
 import json
+import math
 from django.contrib import messages
 from django.core.mail import send_mail
 from org_inv import settings
@@ -393,6 +394,7 @@ class ServiceDetailView(DetailView):
         context['prods'] = self.object.products.all()
         return context
 
+#######################################################################################################################
 
 def inventory_check(daterange, user):
     appointments = Appointment.objects.filter(user=user).filter(date__gt=timezone.now()).filter(
@@ -417,6 +419,40 @@ def inventory_check(daterange, user):
                 low_products[key] = value
 
     return low_products
+
+
+def inventory_check(daterange, user):
+    appointments = Appointment.objects.filter(user=user).filter(date__gt=timezone.now()).filter(
+        date__lte=timezone.now() + timedelta(days=daterange)).order_by('date')
+    product_dict = {}
+    for product in Product.objects.filter(user=user):
+        if product.quantity < ((user.profile.threshold * .01) * product.max_quantity):
+            product_dict[product] = [product.quantity, date.today()]
+        else:
+            product_dict[product] = [product.quantity]
+
+    for appointment in appointments:
+        for product in appointment.service.products.all():
+            amount = Amount.objects.get(product=product, service=appointment.service)
+            if len(product_dict[product]) == 2:
+                product_dict[product][0] -= amount.amount
+            else:
+                quant = product_dict[product][0] - amount.amount
+                if quant < ((user.profile.threshold * .01) * product.max_quantity):
+                        product_dict[product][0] -= amount.amount
+                        product_dict[product].append(appointment.date)
+
+    low_products = {}
+
+    for key, value in product_dict.items():
+        if len(value) == 2:
+            low_products[key] = value
+            low_products[key][0] = math.ceil(abs(low_products[key][0])/key.size)
+            if low_products[key][0] == 0:
+                low_products[key][0] += 1
+
+    return low_products
+
 
 #######################################################################################################################
 
@@ -568,25 +604,23 @@ class OrderView(View):
         if daterange != 'None':
             low = inventory_check(int(daterange), self.request.user).keys()
         else:
-            low = inventory_check(14, self.request.user).keys()
+            low = inventory_check(14, self.request.user).items()
         return render(request, "order.html", {'products': low})
 
     def post(self, request, *args, **kwargs):
         products = {Product.objects.get(user=request.user, upc_code=key): value for key, value in self.request.POST.items() if key != 'csrfmiddlewaretoken'}
         brands = {key.brand for key in products.keys()}
-        # raise Exception
         for brand in brands:
             brand_products = []
             message = "Hello from {}!\nWould you please order the following products for us:\n".format(request.user.profile.spa_name)
             for key, value in products.items():
                 if key.brand == brand:
                     brand_products.append(key)
-                    message += "{} (upc {}): {} units".format(key.name, key.upc_code, value) + "\n"
+                    message += "{} (upc {}): {} unit(s)".format(key.name, key.upc_code, value) + "\n"
 
             send_mail('Order from {}'.format(request.user.profile.spa_name), message, settings.EMAIL_HOST_USER,
     [brand.email], fail_silently=False)
         return redirect('/products/')
-
 
 #######################################################################################################################
 
@@ -605,7 +639,7 @@ class SettingsView(LoginRequiredMixin, View):
             prof.save()
         return redirect('/settings/')
 
-
+#######################################################################################################################
 
 class EmailUpdate(LoginRequiredMixin, UpdateView):
     model = Brand
@@ -632,10 +666,11 @@ class EmailUpdate(LoginRequiredMixin, UpdateView):
         self.object.save()
         return super().form_valid(form)
 
+#######################################################################################################################
 
 def get_prod_data(prod_id):
     product = Product.objects.get(id=prod_id)
-    services = Service.objects.filter(products__pk__contains=product.id)
+    services = Service.objects.filter(products__pk=product.id)
     appts = Appointment.objects.filter(service__in=services).order_by('date')
     values = []
     usages = {}
