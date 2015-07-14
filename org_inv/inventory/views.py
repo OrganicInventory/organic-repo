@@ -79,8 +79,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance = form.save(commit=False)
         form.instance.user = self.request.user
-        form.instance.url = get_product(self.request.GET.get("upc"))[1]
-
+        form.instance.url = get_product(form.instance.upc_code)[1]
         form.instance.new_product_quantity(form.instance.quantity)
         form.instance.update_max_quantity()
         return super().form_valid(form)
@@ -121,8 +120,7 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['data'] = get_prod_data(self.object.id)
-        json_data, pic = get_product(self.object.upc_code)
-        context['pic'] = pic
+        context['pic'] = self.object.url
         return context
 
 #######################################################################################################################
