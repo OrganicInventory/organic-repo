@@ -11,6 +11,9 @@
 
 body {
   background-color: #dfdcd6;
+  background-color: #e5e3de;
+  background-color: #e8e6e2;
+  /*background-color: #efedea;*/
   font-family: sans-serif;
   color: #333;
 }
@@ -164,9 +167,9 @@ body.user-profile-body .main-content {
 
 .top-nav-container, .top-nav-container-hide {
   position: absolute;
-  right: 0;
+  left: 0;
   top: 50%;
-  transform: translate(-25%, -50%);
+  transform: translate(15%, -50%);
   width: 200px;
   height: 40px;
   color: #eee;
@@ -336,11 +339,11 @@ body.user-profile-body .main-content {
 }
 
 .content-table tr:nth-child(even) {
-  background-color: #d4d9df;
+  background-color: #e5e5e5;
 }
 
 .content-table tr:nth-child(odd) {
-  background-color: #ebecf0;
+  background-color: #f2f2f2;
 }
 
 .content-table tr:last-child td:first-child {
@@ -683,6 +686,77 @@ th {
   display: none;
 }
 
+.slide-in-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 33%;
+  background-color: #444c5a;
+  z-index: 10002;
+  display: none;
+  border-left: 4px solid #b35b5a;
+}
+
+.slide-in-menu-exit {
+  font-family: untitled-font-1;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  padding: 10px;
+  /*background-color: blue;*/
+  border-radius: 100%;
+  color: #eee;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.dropdown-icon {
+  font-family: untitled-font-1;
+  font-size: 2em;
+  position: absolute;
+  cursor: pointer;
+  top: 50%;
+  right: 25px;
+  transform: translate(0, -50%);
+}
+
+.dropdown-icon-bottom {
+  color: #eee;
+  display: none;
+}
+
+.submenu-ul {
+  margin-top: 100px;
+  border-top: 3px solid #565d6a;
+}
+
+.submenu-ul a {
+  text-decoration: none;
+}
+
+.submenu-li {
+  display: block;
+  margin: 0;
+  font-size: 16px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom: 3px solid #565d6a;
+  border-radius: 0;
+  color: #eee;
+  text-decoration: none;
+  padding-left: 45px;
+}
+
+.submenu-li:hover {
+  background-color: #565d6a;
+}
+
+body.new-order-body li.sub-new-order {
+  background-color: #565d6a;
+  cursor: default;
+}
+
 /*RESPONSIVE*/
 
 @media (max-width: 960px) {
@@ -706,16 +780,6 @@ th {
     display: inline-block;
     padding: 10px;
     border-bottom: 3px solid #b35b5a;
-  }
-}
-
-@media (max-width: 960px) {
-  .user-welcome {
-    display: none;
-  }
-
-  .top-nav-container-hide, .top-nav-container {
-    transform: translate(30%, -50%);
   }
 }
 
@@ -851,6 +915,10 @@ th {
     left: 5%;
     top: 75%;
     padding: 7px;
+  }
+
+  .slide-in-menu, .slide-in-menu-exit, .submenu-ul {
+    display: none !important;
   }
 }
 
