@@ -79,7 +79,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance = form.save(commit=False)
         form.instance.user = self.request.user
-
+        form.instance.url = get_product(form.instance.upc_code)[1]
         form.instance.new_product_quantity(form.instance.quantity)
         form.instance.update_max_quantity()
         return super().form_valid(form)
@@ -120,8 +120,7 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['data'] = get_prod_data(self.object.id)
-        json_data, pic = get_product(self.object.upc_code)
-        context['pic'] = pic
+        context['pic'] = self.object.url
         return context
 
 #######################################################################################################################
@@ -676,7 +675,7 @@ def get_service_data(serv_id):
 #######################################################################################################################
 
 def get_product(upc_code):
-    factual = Factual("9ChT3yOP38Lc4EKULs2EbuzPDIXrgYBNv47PzMJ9", "L7LIrdc8HS3uwJuSVkaEO2Cfij4F0QYZFGnGGtbp")
+    factual = Factual("NKesunTqQ4HJkZuf0snbTjvn1F6gKMG8DwTPJJVh", "suzMzZZLymEzvXHPm5BBO8dg8Zgy1FSeHBfX6Xae")
     products = factual.table('products')
     data = products.filters({'upc': {'$includes': upc_code}}).data()
     if data:
