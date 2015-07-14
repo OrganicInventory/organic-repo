@@ -40,7 +40,7 @@ getUrlVars();
 
 //HAMBURGER DROPDOWN MENU
   $('.nav-dropdown-btn').click(function() {
-    $('.main-nav-ul').slideToggle('slow');
+    $('.main-nav-ul').toggle('slow');
   });
 
 //STICKY HEADER ON RESIZE
@@ -48,7 +48,8 @@ getUrlVars();
     var width = $(window).width();
     if (width > 700) {
       stickyHeader();
-    } else if (width <= 700) {
+      $('.main-nav-ul').show();
+    } else {
 
     }
   }).resize();
@@ -72,12 +73,12 @@ getUrlVars();
     $(window).scroll(function () {
       if ($(this).scrollTop() > 136) {
         stick.addClass('sticky');
-        $('.top-nav-container-hide').fadeIn('slow');
-        $('.top-nav-container').fadeOut('slow');
+        $('.top-nav-container').css('display', 'none');
+        $('.top-nav-container-hide').css('display', 'block');
       } else {
         stick.removeClass('sticky');
-        $('.top-nav-container-hide').fadeOut('slow');
-        $('.top-nav-container').fadeIn(2000);
+        $('.top-nav-container').css('display', 'block');
+        $('.top-nav-container-hide').css('display', 'none');
       }
     });
   }
@@ -92,6 +93,7 @@ getUrlVars();
 //REMOVING SPECIFIC LABELS
   $('#id_service').siblings().remove();
   $('#id_product').siblings().remove();
+  $('#id_brand :selected').text('Pick a Brand');
 
 //SET FLOATING LABELS THAT ALREADY CONTAIN CONTENT
   $('input, textarea').each(function(){

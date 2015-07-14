@@ -13,6 +13,7 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.user)
 
+
 def get_profile(user, save=False):
     if type(user) == AnonymousUser:
         return None

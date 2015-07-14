@@ -2,6 +2,7 @@
   daker off white - #d4d9df
   lighter off white - #ebecf0
   navy - #444c5a
+  rgba(68, 76, 90, 0.5);
   darker tan - #d5c1b2
   redish - #b35b5a;
 */
@@ -67,6 +68,9 @@ a {
   text-align: center;
 }
 
+.heading-description {
+  text-align: center;
+}
 
 .update-btn-table, .delete-btn-table {
   padding: 5px;
@@ -79,7 +83,8 @@ a {
 }
 
 table a {
-  color: #333;
+  color: #444c5a;
+  font-weight: bold;
 }
 
 table a:hover {
@@ -117,7 +122,38 @@ body.services-body .main-content {
 }
 
 body.new-order-body .main-content {
-  width: 70%;
+  width: 100%;
+  box-shadow: none;
+  background-color: #dfdcd6;
+}
+
+body.new-order-body .main-content input, body.new-order-body .main-content select {
+  background-color: #dfdcd6;
+  width: 80%;
+}
+
+body.new-order-body .main-content select,
+body.create-product-body .main-content select {
+  border: none;
+  border-bottom: 2px solid #b35b5a;
+  border-left: 2px solid #b35b5a;
+  color: #999;
+}
+
+body.new-order-body .main-content .form-container {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+body.new-order-body .main-content .form-container .focus-out {
+  position: absolute;
+  left: 70px;
+}
+
+body.new-order-body .main-content .form-button {
+  right: 50%;
+  transform: translate(50%, 200%);
 }
 
 body.user-profile-body .main-content {
@@ -147,11 +183,28 @@ body.user-profile-body .main-content {
   background-color: rgba(255, 255, 255, 0.5);
   display: inline-block;
   cursor: pointer;
+  font-family: untitled-font-1;
+  font-size: 32px;
+  text-align: center;
+  position: relative;
+}
+
+.user-icon-image {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.top-nav-container a, .top-nav-container-hide a {
+  color: #eee;
+  text-decoration: none;
 }
 
 .user-name {
   display: inline-block;
-  transform: translate(0, -110%);
+  position: absolute;
+  transform: translate(0, 120%);
   margin-left: 6px;
   text-transform: uppercase;
   font-size: 12px;
@@ -254,6 +307,10 @@ body.user-profile-body .main-content {
   padding: 15px;
 }
 
+.services-table td {
+  padding: 0 15px;
+}
+
 .content-table th {
   padding: 10px 15px;
   /*text-align: left;*/
@@ -338,8 +395,8 @@ td a {
   top: 15px;
   left: 135px;
   z-index: 100;
-  color: #999;
   font-size: 16px;
+  color: #999;
   transition: 0.25s all ease;
 }
 
@@ -349,6 +406,7 @@ td a {
   z-index: 100;
   font-size: 10px;
   transition: 0.25s all ease;
+  /*color: #eee;*/
 }
 
 .input {
@@ -377,7 +435,7 @@ td a {
 
 .add-content-button:hover .add-button {
   transition: all 0.2s ease;
-  transform: translate(-50%, -50%) scale(1.1);
+  transform: translate(-50%, -50%) scale(1.1) rotateZ(90deg);
 }
 
 .add-button {
@@ -470,7 +528,7 @@ td a {
 
 .scan-btns {
   position: absolute;
-  left: 125px;
+  left: 110px;
   transform: translate(0, 70%);
   padding-top: 15px;
 }
@@ -602,6 +660,10 @@ th {
   text-align: left;
 }
 
+.settings-links {
+  display: none;
+}
+
 
 /*RESPONSIVE*/
 
@@ -640,6 +702,10 @@ th {
 }
 
 @media (max-width: 700px) {
+  .main-nav-li {
+    display: none;
+  }
+
   .main-nav-container {
     width: 100%;
     margin: 0;
@@ -670,16 +736,23 @@ th {
   }
 
   .main-nav-li:hover {
-    border-bottom: 3px solid #444c5a;
+    border-bottom: 3px solid #565d6a;
     background-color: #565d6a;
     border-radius: 0;
+  }
+
+  .settings-links {
+    display: block;
+    background-color: #565d6a;
+    border-radius: 0;
+    border-bottom: 3px solid #565d6a;
   }
 
   .top-nav-container {
     display: none;
   }
 
-  .status-th, .status-td, .add-content-button, .user-icon, .page-title {
+  .status-th, .status-td, .add-content-button, .user-icon, .page-title, .user-name a {
     display: none;
   }
 
