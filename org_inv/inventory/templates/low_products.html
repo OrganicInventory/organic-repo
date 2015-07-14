@@ -27,7 +27,7 @@
             <th class="status-th">Status</th>
             <th>Title</th>
             <th>Product Size</th>
-            <th>Remaining Qty</th>
+            <th>Date Low</th>
             <th></th>
         </tr>
         {% if low %}
@@ -42,7 +42,8 @@
                         </a>
                     </td>
                     <td>{{ key.size }}oz.</td>
-                    <td>{{ value|floatformat:2 }} oz. left in <span class="date-range-display">2 Weeks</span></td>
+                    <td>{{ value.1 }}</td>
+{#                    <td>{{ value|floatformat:2 }} oz. left in <span class="date-range-display">2 Weeks</span></td>#}
                     <td><a href="{% url 'adjust_product' key.id %}">
                         <button class="gen-btn">Adjust Inventory</button>
                     </a></td>
