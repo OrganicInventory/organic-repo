@@ -18,6 +18,7 @@ getUrlVars();
 //CHANGE TEXT VALUE FOR DATE RANGE ON PAGE LOAD
   $(document).ready(function() {
   var urlRange = getUrlVars()['range'];
+  var urlUpc = getUrlVars() ['upc'];
 
   $('.scan-input').focus();
 
@@ -34,6 +35,10 @@ getUrlVars();
       $('.date-range-display').text('2 Months');
     } else {
       $('.date-dropdown').val('14');
+    }
+
+    if (!urlUpc) {
+      $('#id_brand :selected').text('Pick a Brand');
     }
 
   });
@@ -93,7 +98,7 @@ getUrlVars();
 //REMOVING SPECIFIC LABELS
   $('#id_service').siblings().remove();
   $('#id_product').siblings().remove();
-  $('#id_brand :selected').text('Pick a Brand');
+
 
 //SET FLOATING LABELS THAT ALREADY CONTAIN CONTENT
   $('input, textarea').each(function(){
@@ -109,6 +114,11 @@ getUrlVars();
     e.preventDefault();
     e.stopPropagation();
     }
+  });
+
+//USER INFO DROPDOWN
+  $('.secondary-dropdown-icon').hover(function() {
+    $('.secondary-dropdown-ul').toggle();
   });
 
 });

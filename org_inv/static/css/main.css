@@ -683,6 +683,17 @@ th {
   display: none;
 }
 
+.secondary-dropdown-ul {
+  display: none;
+}
+
+.secondary-nav-container {
+  width: 200px;
+  background-color: red;
+  position: absolute;
+  right: 0;
+}
+
 /*RESPONSIVE*/
 
 @media (max-width: 960px) {

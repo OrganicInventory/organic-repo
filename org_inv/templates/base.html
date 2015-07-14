@@ -30,7 +30,16 @@
           <span class="user-welcome">Welcome </span>
           <a href="{% url 'show_user' request.user.id %}">{{request.user.username}}</a>
         </span>
-        <span class="secondary-dropdown-icon">r</span>
+        <div class="secondary-dropdown-contaniner">
+          <span class="secondary-dropdown-icon">r</span>
+          <div class="secondary-nav-container">
+            <ul class="secondary-dropdown-ul">
+              <li class="secondary-dropdown-ul">My Profile</li>
+              <li class="secondary-dropdown-ul">Close Shop</li>
+              <li class="secondary-dropdown-ul">Logout</li>
+            </ul>
+          </div>
+        </div>
         <!-- <a href="/users/logout">Logout</a> -->
       </div>
     </header>
