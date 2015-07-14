@@ -399,9 +399,9 @@ def inventory_check(daterange, user):
     for key, value in product_dict.items():
         if len(value) == 2:
             low_products[key] = value
-            low_products[key].append(math.ceil(abs(low_products[key][0])/key.size))
-            if low_products[key][2] == 0:
-                low_products[key][2] += 1
+            low_products[key].append(math.ceil((((user.profile.threshold * .01) * product.max_quantity) - low_products[key][0])/key.size))
+            # if low_products[key][2] == 0:
+            #     low_products[key][2] += 1
 
     return low_products
 
@@ -564,6 +564,7 @@ class OrderView(View):
             low = inventory_check(int(daterange), self.request.user).keys()
         else:
             low = inventory_check(14, self.request.user).items()
+        raise Exception
         return render(request, "order.html", {'products': low})
 
     def post(self, request, *args, **kwargs):
@@ -576,7 +577,6 @@ class OrderView(View):
                 if key.brand == brand:
                     brand_products.append(key)
                     message += "{} (upc {}): {} unit(s)".format(key.name, key.upc_code, value) + "\n"
-
             send_mail('Order from {}'.format(request.user.profile.spa_name), message, settings.EMAIL_HOST_USER,
     [brand.email], fail_silently=False)
         return redirect('/products/')
