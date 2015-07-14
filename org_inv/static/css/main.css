@@ -723,9 +723,6 @@ th {
 
 .dropdown-icon-bottom {
   color: #eee;
-}
-
-.dropdown-icon-bottom {
   display: none;
 }
 
@@ -755,7 +752,7 @@ th {
   background-color: #565d6a;
 }
 
-body.all-products-body li.sub-all-products {
+body.new-order-body li.sub-new-order {
   background-color: #565d6a;
   cursor: default;
 }
