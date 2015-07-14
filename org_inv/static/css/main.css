@@ -196,6 +196,14 @@ body.user-profile-body .main-content {
   transform: translate(-50%, -50%);
 }
 
+.secondary-dropdown-icon {
+  font-family: untitled-font-1;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 11px;
+}
+
 .top-nav-container a, .top-nav-container-hide a {
   color: #eee;
   text-decoration: none;
@@ -352,6 +360,10 @@ td a {
 
 .table-id-link {
   padding: 20px 0;
+}
+
+table {
+  overflow: hidden;
 }
 
 
@@ -596,6 +608,13 @@ td a {
   display: none;
 }
 
+.create-order-btn {
+  position: absolute;
+  left: 12%;
+  top: 75%;
+  padding: 7px;
+}
+
 /*MODAL*/
 
 .modal-container {
@@ -663,7 +682,6 @@ th {
 .settings-links {
   display: none;
 }
-
 
 /*RESPONSIVE*/
 
@@ -827,6 +845,13 @@ th {
   .date-dropdown {
     right: 5%;
   }
+
+  .create-order-btn {
+    position: absolute;
+    left: 5%;
+    top: 75%;
+    padding: 7px;
+  }
 }
 
 @media (max-width: 500px) {
@@ -858,10 +883,10 @@ th {
     margin-top: 0;
   }
 
-  .date-dropdown {
+  /*.date-dropdown {
     right: 50%;
     transform: translate(50%, 0);
-  }
+  }*/
 }
 
 @media (max-width: 500px) {
