@@ -563,7 +563,7 @@ class OrderView(View):
     def get(self, request, **kwargs):
         daterange = self.request.GET.get('range')
         if daterange != 'None':
-            low = inventory_check(int(daterange), self.request.user).keys()
+            low = inventory_check(int(daterange), self.request.user).items()
         else:
             low = inventory_check(14, self.request.user).items()
         return render(request, "order.html", {'products': low})
