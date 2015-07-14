@@ -17,8 +17,6 @@ from .models import Product, Appointment, Service, Amount, Brand
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
     AmountFormSet, ThresholdForm
 
-
-
 # Create your views here.
 
 
@@ -578,6 +576,7 @@ class OrderView(View):
     def post(self, request, *args, **kwargs):
         products = {Product.objects.get(user=request.user, upc_code=key): value for key, value in self.request.POST.items() if key != 'csrfmiddlewaretoken'}
         brands = {key.brand for key in products.keys()}
+        # raise Exception
         for brand in brands:
             brand_products = []
             message = "Hello from {}!\nWould you please order the following products for us:\n".format(request.user.profile.spa_name)
@@ -588,9 +587,7 @@ class OrderView(View):
 
             send_mail('Order from {}'.format(request.user.profile.spa_name), message, settings.EMAIL_HOST_USER,
     [brand.email], fail_silently=False)
-            return redirect('/products/')
-
-
+        return redirect('/products/')
 
 
 #######################################################################################################################
@@ -699,5 +696,5 @@ def get_product(upc_code):
         new_json = json.dumps(new)
         return new_json, new['pic']
     else:
-        return None
+        return None, None
 
