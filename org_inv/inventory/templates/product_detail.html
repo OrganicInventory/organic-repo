@@ -13,10 +13,13 @@
     <div class="list-container">
         <ul class="list-container-ul">
             <li class="list-container-li">Name: {{ object.name }}</li>
+            <li class="list-container-li">Brand: {{ object.brand }}</li>
             <li class="list-container-li">Quantity: {{ object.quantity }}</li>
             <li class="list-container-li">Size: {{ object.size }}</li>
             <li class="list-container-li">User: {{ object.user }}</li>
+            {% if pic != None %}
             <li class="list-container-li"><img src="{{ pic }}" alt="product image" height="200" width="200"></li>
+            {% endif %}
         </ul>
         <a href="{% url 'product_confirm_delete' product.id %}">
             <button class="form-button details-button">Delete</button>
