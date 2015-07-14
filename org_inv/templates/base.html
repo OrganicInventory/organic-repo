@@ -4,7 +4,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Organic Inventory</title>
+    <title>PIM | Predictive Inventory Management</title>
     <link rel="stylesheet"  href="{% static 'css/reset.css' %}" />
     <link rel="stylesheet"  href="{% static 'css/main.css' %}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -26,8 +26,12 @@
     <header class="page-header">
       <div class="top-nav-container">
         <div class="user-icon"><a href="{% url 'show_user' request.user.id %}"><span class="user-icon-image">t</span></a></div>
-        <span class="user-name"><span class="user-welcome">Welcome </span><a href="{% url 'show_user' request.user.id %}">{{request.user.username}}</a></span>
-        <a href="/users/logout">Logout</a>
+        <span class="user-name">
+          <span class="user-welcome">Welcome </span>
+          <a href="{% url 'show_user' request.user.id %}">{{request.user.username}}</a>
+        </span>
+        <span class="secondary-dropdown-icon">r</span>
+        <!-- <a href="/users/logout">Logout</a> -->
       </div>
     </header>
     <div class="page-title">
@@ -43,8 +47,8 @@
           <a href="/appointments"><li class="main-nav-li appointments">Appointments</li></a>
           <a href="/products/new_order"><li class="main-nav-li new-order">New Order</li></a>
           <a href="{% url 'close_shop' %}"><li class="main-nav-li settings-links">My Profile</li></a>
-          <li class="main-nav-li settings-links">Close Shop</li>
-          <li class="main-nav-li settings-links">Logout</li>
+          <a href="{% url 'close_shop' %}"><li class="main-nav-li settings-links">Close Shop</li></a>
+          <a href="/users/logout"><li class="main-nav-li settings-links">Logout</li></a>
 
         </ul>
       </div>
