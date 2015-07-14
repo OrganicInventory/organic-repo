@@ -137,6 +137,7 @@ body.create-product-body .main-content select {
   border: none;
   border-bottom: 2px solid #b35b5a;
   border-left: 2px solid #b35b5a;
+  color: #999;
 }
 
 body.new-order-body .main-content .form-container {
