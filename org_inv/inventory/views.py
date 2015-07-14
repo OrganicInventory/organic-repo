@@ -676,7 +676,7 @@ def get_service_data(serv_id):
 #######################################################################################################################
 
 def get_product(upc_code):
-    factual = Factual("9ChT3yOP38Lc4EKULs2EbuzPDIXrgYBNv47PzMJ9", "L7LIrdc8HS3uwJuSVkaEO2Cfij4F0QYZFGnGGtbp")
+    factual = Factual("NKesunTqQ4HJkZuf0snbTjvn1F6gKMG8DwTPJJVh", "suzMzZZLymEzvXHPm5BBO8dg8Zgy1FSeHBfX6Xae")
     products = factual.table('products')
     data = products.filters({'upc': {'$includes': upc_code}}).data()
     if data:
