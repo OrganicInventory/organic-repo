@@ -11,11 +11,11 @@
     <link href="https://fontastic.s3.amazonaws.com/Cez3KECLTfVWYyJGtXZ3XW/icons.css" rel="stylesheet">
 
 </head>
-  <a href="{% url 'close_shop' %}">
+  <!-- <a href="{% url 'close_shop' %}">
     <div class="close-shop">
       <span class="close-shop-icon">e</span>
     </div>
-  </a>
+  </a> -->
 
   <div class="nav-dropdown-container">
     <span class="nav-dropdown-btn">l</span>
@@ -25,14 +25,13 @@
   <div class="page-header-container">
     <header class="page-header">
       <div class="top-nav-container">
-        <div class="user-icon"><a href="{% url 'show_user' request.user.id %}"><span class="user-icon-image">t</span></a></div>
+        <a href="{% url 'edit_profile' %}"><div class="user-icon"><span class="user-icon-image">t</span></div></a>
         <span class="user-name">
           <span class="user-welcome">Welcome </span>
-          <a href="{% url 'show_user' request.user.id %}">{{request.user.username}}</a>
+          <a href="{% url 'edit_profile' %}">{{request.user.username}}</a>
         </span>
-        <span class="secondary-dropdown-icon">r</span>
-        <!-- <a href="/users/logout">Logout</a> -->
       </div>
+      <div class=""><span class="dropdown-icon">l</span></div>
     </header>
     <div class="page-title">
       {% block pagetitle %}
@@ -43,20 +42,30 @@
         <ul class="main-nav-ul">
           <a href="/low"><li class="main-nav-li low-inventory">Low Inventory</li></a>
           <a href="/products"><li class="main-nav-li all-products">All Products</li></a>
-          <a href="/services"><li class="main-nav-li services">Services</li></a>
           <a href="/appointments"><li class="main-nav-li appointments">Appointments</li></a>
-          <a href="/products/new_order"><li class="main-nav-li new-order">New Order</li></a>
-          <a href="{% url 'close_shop' %}"><li class="main-nav-li settings-links">My Profile</li></a>
+          <a href="/services"><li class="main-nav-li services settings-links">Services</li></a>
+          <a href="/products/new_order"><li class="main-nav-li new-order settings-links">Receive Order</li></a>
+          <a href="{% url 'edit_profile' %}"><li class="main-nav-li settings-links">My Profile</li></a>
           <a href="{% url 'close_shop' %}"><li class="main-nav-li settings-links">Close Shop</li></a>
           <a href="/users/logout"><li class="main-nav-li settings-links">Logout</li></a>
 
         </ul>
       </div>
       <div class="top-nav-container-hide">
-        <div class="user-icon"><span class="user-icon-image">t</span></div>
-        <span class="user-name"><span class="user-welcome">Welcome </span><a href="{% url 'show_user' request.user.id %}">{{request.user.username}}</a></span>
+        <a href="{% url 'edit_profile' %}"><div class="user-icon"><span class="user-icon-image">t</span></div></a>
       </div>
+      <div class=""><span class="dropdown-icon dropdown-icon-bottom">l</span></div>
     </div>
+  </div>
+  <div class="slide-in-menu">
+    <span class="slide-in-menu-exit">m</span>
+    <ul class="submenu-ul">
+      <a href="/services"><li class="submenu-li">Services</li></a>
+      <a href="/products/new_order"><li class="submenu-li sub-new-order">Receive Order</li></a>
+      <a href="{% url 'edit_profile' %}"><li class="submenu-li">My Profile</li></a>
+      <a href="{% url 'close_shop' %}"><li class="submenu-li">Close Shop</li></a>
+      <a href="/users/logout"><li class="submenu-li">Logout</li></a>
+    </ul>
   </div>
   <div class="wrapper">
     <div class="scanner-section">
@@ -75,10 +84,10 @@
       {% endblock %}
 
     </div>
-    <div class="test-container">
+    <!-- <div class="test-container"> -->
       {% block addbutton %}
       {% endblock %}
-    </div>
+    <!-- </div> -->
   </div>
 
 <script src="{% static 'js/main.js' %}"></script>
