@@ -11,17 +11,6 @@
     </a>
 {% endblock %}
 
-
-{#{% block scancontent %}#}
-{#<div class="form-container scan-form">#}
-{#  <form class="main-form scan-form" method="GET" action="{% url 'product_detail' %}">#}
-{#    <label class="input">#}
-{#      <input type="text" name="upc" class="form-control scan-input" placeholder="Scan UPC to Search for Product"/>#}
-{#    </label>#}
-{#      <button class="scan-btn" type="submit">Search</button>#}
-{#  </form>#}
-{#</div>#}
-{#{% endblock %}#}
 {% block scancontent %}
     <script type="text/javascript">
         function OnSubmitForm() {
@@ -37,18 +26,22 @@
             return true;
         }
     </script>
-    <form name='test_form' class="form-control scan-form" id='test_form' method="get" onsubmit="return OnSubmitForm();">
-        <input name='upc' class="form-control scan-input" placeholder="Scan Product UPC" type="text"/>
+    <div class="form-container scan-form">
+      <form name='test_form' class="form-control scan-form main-form" id='test_form' method="get" onsubmit="return OnSubmitForm();">
+          <span class="focus-out focus-out-scan">Scan Product UPC</span>
+          <input name='upc' class="form-control scan-input" type="text" autocomplete="off"/>
 
-        <div class="scan-btns">
-            <button class="scan-btn" onclick="document.pressed=this.value" type="submit" value="New">New</button>
+          <div class="scan-btns">
+              <button class="gen-btn" onclick="document.pressed=this.value" type="submit" value="New">Create</button>
 
-            <button class="scan-btn" onclick="document.pressed=this.value" type="submit" value="Update">Update</button>
+              <button class="gen-btn" onclick="document.pressed=this.value" type="submit" value="Update">Update</button>
 
-            <button class="scan-btn" onclick="document.pressed=this.value" type="submit" value="Detail">Details</button>
-        </div>
-    </form>
+              <button class="gen-btn" onclick="document.pressed=this.value" type="submit" value="Detail">Details</button>
+          </div>
+      </form>
+    </div>
 {% endblock %}
+
 {% block content %}
     <table class="content-table content-table-links table-mobile">
         <tr class="table-header">
@@ -69,7 +62,7 @@
                     </a>
                 </td>
                 <td>{{ product.size }}oz.</td>
-                <td>{{ product.display_quantity }}</td>
+                <td>{{ product.display_quantity|floatformat:2 }}</td>
                 <td><a href="{% url 'product_empty' product.id %}">
                     <button class="gen-btn">Out of Stock</button>
                 </a></td>

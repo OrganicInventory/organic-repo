@@ -4,12 +4,21 @@ import datetime
 
 # Create your models here.
 
+class Brand(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField(null=True, blank=True)
+    user = models.ForeignKey(User, null=True)
+
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
     name = models.CharField(max_length=255)
     quantity = models.FloatField(default=0)
     max_quantity = models.FloatField(default=0, null=True, blank=True)
     size = models.FloatField()
     user = models.ForeignKey(User, null=True)
+    brand = models.ForeignKey(Brand, null=True)
     upc_code = models.CharField(max_length=100, null=True)
 
     class Meta:

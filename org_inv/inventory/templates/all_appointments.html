@@ -25,7 +25,7 @@
             <tr>
                 <td>{{ appointment.service }}</td>
                 <td>{{ appointment.date }}</td>
-                <td><a href="{% url 'adjust_usage' appointment.id %}">Adjust Usage</a></td>
+                <td><a href="{% url 'adjust_usage' appointment.id %}"><button class="gen-btn">Adjust Usage</button></a></td>
                 <td><a href="{% url 'update_appointment' appointment.id %}">
                     <button class="update-btn-table">Update</button>
                 </a></td>

@@ -1,7 +1,12 @@
 from django.contrib import admin
-from .models import Product, Service, Appointment, Amount
+from .models import Product, Service, Appointment, Amount, Brand
 
 # Register your models here.
+
+
+class BrandAdmin(admin.ModelAdmin):
+    list_display = ['name', 'user']
+
 
 class ProductAdmin(admin.ModelAdmin):
     #prod = Product.objects.get(pk=1)
@@ -26,3 +31,4 @@ admin.site.register(Product, ProductAdmin)
 admin.site.register(Service, ServiceAdmin)
 admin.site.register(Appointment, AppointmentAdmin)
 admin.site.register(Amount, AmountAdmin)
+admin.site.register(Brand, BrandAdmin)

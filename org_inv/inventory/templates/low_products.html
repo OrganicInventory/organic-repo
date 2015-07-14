@@ -6,55 +6,61 @@
 {% endblock %}
 
 {% block scancontent %}
-<div class="date-dropdown-container">
-  <form class="date-dropdown-form" id='range' action="{% url 'low_products' %}">
-      <select class="date-dropdown" id='range' form="range" name="range" onchange="this.form.submit();">
-          <option selected disabled>Date Range</option>
-          <option value="1">1 Day</option>
-          <option value="7">1 Week</option>
-          <option value="14">2 Weeks</option>
-          <option value="30">1 Month</option>
-          <option value="60">2 Months</option>
-      </select>
-  </form>
-</div>
+    <div class="date-dropdown-container">
+        <form class="date-dropdown-form" id='range' action="{% url 'low_products' %}">
+            <select class="date-dropdown" id='range' form="range" name="range" onchange="this.form.submit();">
+                <option selected disabled>Date Range</option>
+                <option value="1">1 Day</option>
+                <option value="7">1 Week</option>
+                <option value="14">2 Weeks</option>
+                <option value="30">1 Month</option>
+                <option value="60">2 Months</option>
+            </select>
+        </form>
+    </div>
 {% endblock %}
 
 {% block content %}
 
-  <table class="content-table content-table-links table-mobile">
-    <tr class="table-header">
-        <th class="status-th">Status</th>
-        <th>Title</th>
-        <th>Product Size</th>
-        <th>Remaining Qty</th>
-        <th></th>
-    </tr>
-    {% if low %}
-      {% for key, value in low.items %}
-      <tr>
-        <td class="status-td"></td>
-        <td>
-          <a href="{% url 'product_detail' %}?upc={{ key.upc_code }}">
-            <div class="table-id-link">
-              {{ key.name }}
-            </div>
-          </a>
-        </td>
-        <td>{{ key.size }}oz.</td>
-        <td>{{ value|floatformat:2 }}oz. left in <span class="date-range-display">2 Weeks</span></td>
-        <td><a href="{% url 'adjust_product' key.id %}">Adjust Inventory</a></td>
-      </tr>
-      {% endfor %}
-    {% else %}
-      <tr>
-        <td>No products are currently low</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    {% endif %}
-  </table>
+    <table class="content-table content-table-links table-mobile">
+        <tr class="table-header">
+            <th class="status-th">Status</th>
+            <th>Title</th>
+            <th>Product Size</th>
+            <th>Remaining Qty</th>
+            <th></th>
+        </tr>
+        {% if low %}
+            {% for key, value in low.items %}
+                <tr>
+                    <td class="status-td"></td>
+                    <td>
+                        <a href="{% url 'product_detail' %}?upc={{ key.upc_code }}">
+                            <div class="table-id-link">
+                                {{ key.name }}
+                            </div>
+                        </a>
+                    </td>
+                    <td>{{ key.size }}oz.</td>
+                    <td>{{ value|floatformat:2 }} oz. left in <span class="date-range-display">2 Weeks</span></td>
+                    <td><a href="{% url 'adjust_product' key.id %}">
+                        <button class="gen-btn">Adjust Inventory</button>
+                    </a></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td>No products are currently low</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        {% endif %}
+    </table>
+    <form method="get" action="{% url 'order' %}">
+        <input type="hidden" value="{{ range }}" name="range">
+        <button class="form-button" type="submit">New Order</button>
+    </form>
 {% endblock %}
 </body>

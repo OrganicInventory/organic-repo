@@ -2,7 +2,7 @@ from django import forms
 from django.forms import inlineformset_factory
 from django.forms.extras import SelectDateWidget
 
-from .models import Service, Amount, Product, Appointment
+from .models import Service, Amount, Product, Appointment, Brand
 
 
 class ServiceForm(forms.ModelForm):
@@ -14,14 +14,27 @@ AmountFormSet = inlineformset_factory(Service, Amount, fields=['product', 'amoun
 
 
 class ProductForm(forms.ModelForm):
+    def __init__(self, request, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['brand'].queryset = Brand.objects.filter(user=request.user)
+
     quantity = forms.FloatField(initial="", label="Quantity (units)")
+    # brand = forms.CharField(max_length=255)
 
     class Meta:
         model = Product
-        fields = ['name', 'size', 'quantity', 'upc_code']
+        fields = ['name', 'brand', 'size', 'quantity', 'upc_code']
         labels = {
-            'size': 'Size (oz)'
+            'size': 'Size (oz)',
+            'brand': ''
         }
+
+
+class ThresholdForm(forms.Form):
+    percent = forms.IntegerField(label='low at ___ %')
+
+    class Meta:
+        fields = ['percent']
 
 
 class AppointmentForm(forms.ModelForm):
@@ -57,3 +70,10 @@ class ProductLookupForm(forms.Form):
 
     class Meta:
         fields = ['upc']
+
+
+class OrderForm(forms.Form):
+    number = forms.IntegerField()
+
+    class Meta:
+        fields = ['number']

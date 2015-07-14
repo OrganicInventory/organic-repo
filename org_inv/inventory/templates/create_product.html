@@ -1,15 +1,12 @@
+<body class="create-product-body">
 {% extends "base.html" %}
 {% load static %}
 
 {% block content %}
-    <script src="{% static 'auto-fill.js' %}"></script>
     <div class="main-content-header">
         <h2 class="secondary-heading">Add Product</h2>
     </div>
     <div class="form-container">
-    <script>
-        $('#test').populate('{"size": ["14 oz"], "name": "Eyebrow Mousse Black"}')
-    </script>
         <form id='test' class="main-form" method="POST" action="{% url 'create_product' %}">
             {% csrf_token %}
             {% for field in form %}
@@ -26,3 +23,4 @@
 
     </div>
 {% endblock %}
+</body>
