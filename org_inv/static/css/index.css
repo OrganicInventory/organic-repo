@@ -19,7 +19,7 @@ body:before {
 .header{
   font-family: 'Cinzel Decorative', serif, sans-serif;
   text-align: center;
-  font-size: 500%;
+  font-size: 400%;
   font-weight: 500;
   color:black;
   text-shadow: 2px 2px #EEE;
@@ -56,15 +56,17 @@ body:before {
   font-family: 'Cinzel Decorative', serif, sans-serif;  font-size: 300%;
   color:#EEE;
   text-shadow: 2px 2px #13442b;
+  font-size: 350%;
 
   }
 
 button{
-  background-color: #23a061;
+  background-color: #68dbd6;
   border-radius: 10%;
-  color: #EEE;
+  color: black;
   padding: 1%;
-  font-family: 'Cinzel Decorative', serif, sans-serif;}
+  font-family: 'Cinzel Decorative', serif, sans-serif;
+  }
 
 button:hover {
   background: #EEE;
@@ -80,9 +82,9 @@ button:hover {
 }
 
 .login-link{
-  background-color: #23a061;
+  background-color: #68dbd6;
   border-radius: 10%;
-  color: #EEE;
+  color: black;
   padding: 1%;
   font-family: 'Cinzel Decorative', serif, sans-serif;
   margin-left: 2%;
@@ -123,14 +125,15 @@ button:hover {
   }
 
   .btn-register{
-    background-color: #23a061;
+    background-color: #68dbd6;
     border-radius: 10%;
-    color: #EEE;
+    color: black;
     padding: 1%;
     font-family: 'Cinzel Decorative', serif, sans-serif;
     display: block;
     margin:0 auto;
-    font-weight: 500;
+    font-weight: 800;
+    font-size: 100%;
     margin-top: 2%;
   }
 
@@ -156,9 +159,9 @@ button:hover {
   }
 
   .loginbtn{
-    background-color: #23a061;
+    background-color: #68dbd6;
     border-radius: 10%;
-    color: #EEE;
+    color: black;
     padding: 1%;
     font-family: 'Cinzel Decorative', serif, sans-serif;
     display: block;
@@ -195,10 +198,10 @@ button:hover {
 }
 
 .headspa{
-  font-size: 40%;
-  color:#23a061;
-  text-shadow: none;
-    text-shadow: 2px 2px #13442b;
+  color: #68dbd6;
+  font-size: 50%;
+  font-weight: 400;
+  text-shadow: 2px 2px black;
 }
 .logo{
   height:60px;
