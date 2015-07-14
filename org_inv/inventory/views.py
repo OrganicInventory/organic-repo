@@ -423,9 +423,9 @@ def inventory_check(daterange, user):
     for key, value in product_dict.items():
         if len(value) == 2:
             low_products[key] = value
-            low_products[key][0] = math.ceil(abs(low_products[key][0])/key.size)
-            if low_products[key][0] == 0:
-                low_products[key][0] += 1
+            low_products[key].append(math.ceil(abs(low_products[key][0])/key.size))
+            if low_products[key][2] == 0:
+                low_products[key][2] += 1
 
     return low_products
 
