@@ -62,10 +62,9 @@ getUrlVars();
     if (width > 700) {
       stickyHeader();
       $('.main-nav-ul').show();
-      $('.slide-in-menu').css('display', 'none');
       $('.dropdown-icon-bottom').css('display', 'none');
     } else {
-
+      $('.slide-in-menu').css('display', 'none');
     }
   }).resize();
 
