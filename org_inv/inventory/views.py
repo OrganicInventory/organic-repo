@@ -397,6 +397,7 @@ class ServiceDetailView(DetailView):
         context['prods'] = self.object.products.all()
         return context
 
+#######################################################################################################################
 
 def inventory_check(daterange, user):
     appointments = Appointment.objects.filter(user=user).filter(date__gt=timezone.now()).filter(
@@ -584,11 +585,11 @@ class OrderView(View):
             for key, value in products.items():
                 if key.brand == brand:
                     brand_products.append(key)
-                    message += "{} (upc {}): {} units".format(key.name, key.upc_code, value) + "\n"
+                    message += "{} (upc {}): {} unit(s)".format(key.name, key.upc_code, value) + "\n"
 
             send_mail('Order from {}'.format(request.user.profile.spa_name), message, settings.EMAIL_HOST_USER,
     [brand.email], fail_silently=False)
-            return redirect('/products/')
+        return redirect('/products/')
 
 
 
@@ -610,7 +611,7 @@ class SettingsView(LoginRequiredMixin, View):
             prof.save()
         return redirect('/settings/')
 
-
+#######################################################################################################################
 
 class EmailUpdate(LoginRequiredMixin, UpdateView):
     model = Brand
@@ -637,10 +638,11 @@ class EmailUpdate(LoginRequiredMixin, UpdateView):
         self.object.save()
         return super().form_valid(form)
 
+#######################################################################################################################
 
 def get_prod_data(prod_id):
     product = Product.objects.get(id=prod_id)
-    services = Service.objects.filter(products__pk__contains=product.id)
+    services = Service.objects.filter(products__pk=product.id)
     appts = Appointment.objects.filter(service__in=services).order_by('date')
     values = []
     usages = {}
@@ -679,7 +681,7 @@ def get_service_data(serv_id):
 #######################################################################################################################
 
 def get_product(upc_code):
-    factual = Factual("9ChT3yOP38Lc4EKULs2EbuzPDIXrgYBNv47PzMJ9", "L7LIrdc8HS3uwJuSVkaEO2Cfij4F0QYZFGnGGtbp")
+    factual = Factual("NKesunTqQ4HJkZuf0snbTjvn1F6gKMG8DwTPJJVh", "suzMzZZLymEzvXHPm5BBO8dg8Zgy1FSeHBfX6Xae")
     products = factual.table('products')
     data = products.filters({'upc': {'$includes': upc_code}}).data()
     if data:
