@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Service, Appointment, Amount, Brand
+from .models import Product, Service, Appointment, Amount, Brand, Stock
 
 # Register your models here.
 
@@ -25,6 +25,9 @@ class AmountAdmin(admin.ModelAdmin):
     #amt.subtract()
     list_display = ['amount', 'service', 'product']
 
+class StockAdmin(admin.ModelAdmin):
+    list_display = ['product', 'used', 'date', 'stocked']
+
 # Register your models here.
 
 admin.site.register(Product, ProductAdmin)
@@ -32,3 +35,4 @@ admin.site.register(Service, ServiceAdmin)
 admin.site.register(Appointment, AppointmentAdmin)
 admin.site.register(Amount, AmountAdmin)
 admin.site.register(Brand, BrandAdmin)
+admin.site.register(Stock, StockAdmin)
