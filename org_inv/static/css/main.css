@@ -704,15 +704,6 @@ table {
     cursor: pointer;
 }
 
-/*.modal-exit-icon {
-  transform: rotateX(45deg);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: 1s all ease;
-}*/
-
 body.user-profile-body td:first-child {
     font-weight: bold;
 }
@@ -796,9 +787,9 @@ body.new-order-body li.sub-new-order {
     cursor: default;
 }
 
-/*.scan-new, .scan-details, .scan-update {
+.scan-new, .scan-details, .scan-update {
   display: none;
-}*/
+}
 
 /*RESPONSIVE*/
 

@@ -51,11 +51,7 @@
             <th></th>
         </tr>
         {% for product in all_products %}
-        <!-- <input type="hidden" class="get-upc" value="{{ product.upc_code }}" /> -->
-            <!-- <tr data-upc="{{product.upc_code}}"> -->
-                <!-- <td class="status-td"></td> -->
-
-            <tr>
+            <tr data-upc="{{product.upc_code}}">
                 {% if product in prods %}
                     {% for pair in pairs %}
                         {% if product == pair.0 %}
@@ -84,7 +80,6 @@
                 <td><a href="{% url 'product_empty' product.id %}">
                     <button class="gen-btn">I'm Out</button>
                 </a></td>
-                <!-- <td>{{ product.upc_code }}</td> -->
             </tr>
         {% endfor %}
     </table>
