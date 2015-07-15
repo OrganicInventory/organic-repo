@@ -29,12 +29,13 @@ a {
 }
 
 .red {
-    text-align: center;
+    /*text-align: center;*/
     vertical-align: middle;
+    margin-left: 20px;
 }
 
 .yellow {
-    text-align: center;
+    /*text-align: center;*/
     vertical-align: middle;
 }
 
@@ -122,6 +123,10 @@ table a:hover {
 
 form {
     padding-bottom: 50px;
+}
+
+table {
+  /*border-collapse: collapse;*/
 }
 
 /*DISPLAY CURRENT PAGE*/
@@ -349,7 +354,7 @@ body.user-profile-body .main-content {
 }
 
 .services-table td {
-    padding: 0 15px;
+    padding: 15px;
 }
 
 .content-table th {
@@ -388,13 +393,13 @@ td a {
     text-decoration: none;
 }
 
-.content-table-links td {
+/*.content-table-links td {
     padding: 0;
-}
+}*/
 
-.table-id-link {
-    padding: 20px 0;
-}
+/*.table-id-link {
+    padding: 0 15px;
+}*/
 
 table {
     overflow: hidden;
