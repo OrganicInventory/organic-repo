@@ -208,7 +208,7 @@ class AppointmentDelete(LoginRequiredMixin, DeleteView):
 
 class AppointmentUpdate(LoginRequiredMixin, UpdateView):
     model = Appointment
-    fields = ['date', 'service']
+    form_class = AppointmentForm
     template_name = 'appointment_update_form.html'
 
     def dispatch(self, request, *args, **kwargs):
@@ -218,6 +218,11 @@ class AppointmentUpdate(LoginRequiredMixin, UpdateView):
 
         else:
             return HttpResponseForbidden()
+
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
+        return form_class(self.request, **self.get_form_kwargs())
 
     def get_success_url(self):
         return reverse('all_appointments')
