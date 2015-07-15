@@ -178,7 +178,7 @@ class AppointmentCreateView(LoginRequiredMixin, CreateView):
     model = Appointment
     form_class = AppointmentForm
     template_name = 'add_appointment.html'
-    success_url = '/appointments/'
+    success_url = '/appointments/new'
 
     def get_form(self, form_class=None):
         if form_class is None:
@@ -225,7 +225,7 @@ class AppointmentDelete(LoginRequiredMixin, DeleteView):
 
 class AppointmentUpdate(LoginRequiredMixin, UpdateView):
     model = Appointment
-    fields = ['date', 'service']
+    form_class = AppointmentForm
     template_name = 'appointment_update_form.html'
 
     def dispatch(self, request, *args, **kwargs):
@@ -235,6 +235,11 @@ class AppointmentUpdate(LoginRequiredMixin, UpdateView):
 
         else:
             return HttpResponseForbidden()
+
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
+        return form_class(self.request, **self.get_form_kwargs())
 
     def get_success_url(self):
         return reverse('all_appointments')
@@ -565,8 +570,8 @@ class TooMuchProductView(LoginRequiredMixin, UpdateView):
 
 class AdjustUsageView(View):
     def get(self, request, **kwargs):
-        form = AdjustUsageForm(user=request.user)
         appt = Appointment.objects.get(id=self.kwargs['appt_id'])
+        form = AdjustUsageForm(user=request.user, appointment=appt)
         if self.request.user == appt.user:
             return render(request, "adjust_usage.html", {'form': form, 'appt': appt})
         else:
