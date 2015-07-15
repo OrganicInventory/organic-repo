@@ -786,6 +786,10 @@ body.new-order-body li.sub-new-order {
     cursor: default;
 }
 
+/*.scan-new, .scan-details, .scan-update {
+  display: none;
+}*/
+
 /*RESPONSIVE*/
 
 @media (max-width: 960px) {

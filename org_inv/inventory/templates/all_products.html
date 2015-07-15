@@ -26,28 +26,31 @@
             }
             return true;
         }
+
+        // function checkUpc() {
+        //   var upcInput  = $('.scan-input').val();
+        //   var productCount = $('.get-upc').length;
+        //   var usedUpc = "{{ product.upc_code }}";
+        //     console.log(productCount);
+        //     console.log(usedUpc);
+        // }
     </script>
     <div class="form-container scan-form">
         <form name='test_form' class="form-control scan-form main-form" id='test_form' method="get"
               onsubmit="return OnSubmitForm();">
             <span class="focus-out focus-out-scan">Scan Product UPC</span>
             <input name='upc' class="form-control scan-input" type="text" autocomplete="off"/>
-
-            <div class="scan-btns">
-                <button class="gen-btn" onclick="document.pressed=this.value" type="submit" value="New">Create</button>
-
-                <button class="gen-btn" onclick="document.pressed=this.value" type="submit" value="Update">Update
-                </button>
-
-                <button class="gen-btn" onclick="document.pressed=this.value" type="submit" value="Detail">Details
-                </button>
-            </div>
-        </form>
+          <div class="scan-btns">
+              <button class="gen-btn scan-new" onclick="document.pressed=this.value" type="submit" value="New">Create</button>
+              <button class="gen-btn scan-update" onclick="document.pressed=this.value" type="submit" value="Update">Update</button>
+              <button class="gen-btn scan-details" onclick="document.pressed=this.value" type="submit" value="Detail">Details</button>
+          </div>
+      </form>
     </div>
 {% endblock %}
 
 {% block content %}
-    <table class="content-table content-table-links table-mobile">
+    <table class="content-table content-table-links table-mobile table-upc">
         <tr class="table-header">
             <th class="status-th">Status</th>
             <th>Title</th>
@@ -56,6 +59,10 @@
             <th></th>
         </tr>
         {% for product in all_products %}
+        <!-- <input type="hidden" class="get-upc" value="{{ product.upc_code }}" /> -->
+            <!-- <tr data-upc="{{product.upc_code}}"> -->
+                <!-- <td class="status-td"></td> -->
+
             <tr>
                 {% if product in prods %}
                     {% for pair in pairs %}
@@ -72,6 +79,7 @@
                 {% else %}
                     <td class="status-td"></td>
                 {% endif %}
+
                 <td>
                     <a href="{% url 'product_detail' %}?upc={{ product.upc_code }}">
                         <div class="table-id-link">
@@ -84,6 +92,7 @@
                 <td><a href="{% url 'product_empty' product.id %}">
                     <button class="gen-btn">I'm Out</button>
                 </a></td>
+                <!-- <td>{{ product.upc_code }}</td> -->
             </tr>
         {% endfor %}
     </table>
