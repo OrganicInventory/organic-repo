@@ -564,7 +564,7 @@ class TooMuchProductView(LoginRequiredMixin, UpdateView):
         return prod
 
     def get_initial(self):
-        return {'quantity': self.object.display_quantity}
+        return {'quantity': round(self.object.display_quantity, 2)}
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
