@@ -351,6 +351,7 @@ body.user-profile-body .main-content {
 
 .content-table td {
     padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .services-table td {
@@ -359,7 +360,6 @@ body.user-profile-body .main-content {
 
 .content-table th {
     padding: 10px 15px;
-    /*text-align: left;*/
     font-weight: bold;
     background-color: #b35b5a;
     color: #eee;
@@ -374,12 +374,16 @@ body.user-profile-body .main-content {
 }
 
 .content-table tr:nth-child(even) {
-    background-color: #e5e5e5;
+    background-color: #f2f2f2;
 }
 
 .content-table tr:nth-child(odd) {
-    background-color: #f2f2f2;
+    background-color: #e5e5e5;
 }
+
+/*.content-table tr {
+    background-color: #f2f2f2;
+}*/
 
 .content-table tr:last-child td:first-child {
     border-bottom-left-radius: 10px;
