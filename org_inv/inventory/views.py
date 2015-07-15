@@ -634,7 +634,8 @@ class OrderView(View):
 
 #######################################################################################################################
 
-class SettingsView(LoginRequiredMixin, View):
+class SettingsView(LoginRequiredMixin,View):
+
     def get(self, request, **kwargs):
         form = ThresholdForm()
         brands = Brand.objects.filter(user=request.user)
@@ -646,10 +647,10 @@ class SettingsView(LoginRequiredMixin, View):
             amt = form.data['percent']
             prof = request.user.profile
             prof.threshold = amt
+            messages.add_message(self.request, messages.SUCCESS,
+                                 "Threshold updated to {}%".format(amt))
             prof.save()
-        return redirect('/settings/')
-
-
+            return redirect('/settings/')
 #######################################################################################################################
 
 class EmailUpdate(LoginRequiredMixin, UpdateView):
