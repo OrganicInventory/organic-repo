@@ -20,7 +20,7 @@ getUrlVars();
   var urlRange = getUrlVars()['range'];
   var urlUpc = getUrlVars() ['upc'];
 
-  $('.scan-input').focus();
+  // $('.scan-input').focus();
 
   $('.date-dropdown').val(urlRange);
     if (urlRange === '1') {
@@ -124,12 +124,50 @@ getUrlVars();
     if(e.which === 13) {
     e.preventDefault();
     e.stopPropagation();
+
+    // checkUpc();
     }
   });
 
-//USER INFO DROPDOWN
-  // $('.secondary-dropdown-icon').hover(function() {
-  //   $('.secondary-dropdown-ul').toggle();
+  // function checkUpc() {
+  //   var upcInput  = parseInt($('.scan-input').val());
+  //   var productCount = $('.get-upc').length;
+  //   var arr = [];
+  //   // var upcVal = $(this).val();
+  //   console.log(upcInput);
+  //
+  //   $('.get-upc').each(function() {
+  //     // console.log($(this).val());
+  //     arr.push($(this).val());
+  //     // console.log(arr.length);
+  //   });
+  //
+  //   for (var i = 0; i < arr.length; i++) {
+  //     console.log(parseInt(arr[i]));
+  //     if (upcInput = 123456789) {
+  //       $('.scan-details').css('display', 'inline');
+  //       $('.scan-update').css('display', 'inline');
+  //       $('.scan-new').css('display', 'none');
+  //     } else {
+  //       $('.scan-new').css('display', 'inline');
+  //       $('.scan-details').css('display', 'none');
+  //       $('.scan-update').css('display', 'none');
+  //     }
+  //   }
+  // }
+
+  // console.log(tr.data('upc'));
+
+  // function checkUpc() {
+  //   $('table-upc tr').each(function (i, tr) {
+  //     var test = tr.data('upc');
+  //   });
+  // }
+  // checkUpc();
+
+
+  // $('table-upc tr').each(function (i, tr) {
+  //   tr.data('upc');
   // });
 
 });
