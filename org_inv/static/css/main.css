@@ -22,6 +22,14 @@ a {
   color: #46b8da;
 }
 
+.red {
+    background-color: #990000;
+}
+
+.yellow {
+    background-color: #f4f379;
+}
+
 .page-header {
   position: absolute;
   left: 0;
