@@ -6,16 +6,16 @@
   <meta charset="UTF-8">
   <title>Register</title>
   <link rel="stylesheet" href="{% static 'css/index.css' %}" />
-  <link href='http://fonts.googleapis.com/css?family=Cinzel+Decorative' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body>
   <div>
     <h2 class='register'>Create an Account
     </h2>
     <img class="logo1" src="https://cdn2.iconfinder.com/data/icons/flaticons-stroke/16/leaf-1-512.png">
-    <p class="pim">P.I.M.
-      <br>Predictive Inventory Management</br>
-    </p>
+    <div class="pim">P.I.M.
+      <p>Predictive Inventory Management</p>
+    </div>
     <form method="POST" action="{% url 'user_register' %}" class='register2'>
         {% csrf_token %}
 
