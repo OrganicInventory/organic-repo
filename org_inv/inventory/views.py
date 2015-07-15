@@ -53,7 +53,7 @@ class AllProductsView(LoginRequiredMixin, ListView):
             prods.append(pair[0])
             amts.append(pair[1][0])
         context['prods'] = prods
-        context['pairs'] = zip(prods, amts)
+        context['pairs'] = list(zip(prods, amts))
         return context
 
 

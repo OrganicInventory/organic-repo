@@ -23,11 +23,23 @@ a {
 }
 
 .red {
-    background-color: #990000;
+  text-align: center;
+  vertical-align: middle;
 }
 
-.yellow {
-    background-color: #f4f379;
+.yellow{
+  text-align: center;
+  vertical-align: middle;
+}
+
+.red img {
+    /*background-color: #990000;*/
+    max-width: 30px;
+}
+
+.yellow img {
+    max-width: 30px;
+    /*background-color: #f4f379;*/
 }
 
 .page-header {

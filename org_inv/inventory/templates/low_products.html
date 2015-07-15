@@ -1,5 +1,6 @@
 <body class="low-inventory-body">
 {% extends "base.html" %}
+{% load static %}
 
 {% block pagetitle %}
     <h1 class="main-heading">Low Inventory</h1>
@@ -38,9 +39,9 @@
             {% for key, value in low.items %}
                 <tr>
                     {% if value.0 <= 0 %}
-                        <td class="red"></td>
+                        <td class="red"><img src="{% static "css/warning-icon-red.png" %}"/></td>
                     {% else %}
-                        <td class="yellow"></td>
+                        <td class="yellow"><img src="{% static "css/warning-icon-yellow.png" %}"/></td>
                     {% endif %}
                     <td>
                         <a href="{% url 'product_detail' %}?upc={{ key.upc_code }}">

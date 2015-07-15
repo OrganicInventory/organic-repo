@@ -1,5 +1,6 @@
 <body class="all-products-body">
 {% extends "base.html" %}
+{% load static %}
 
 {% block pagetitle %}
     <h1 class="main-heading">All Products</h1>
@@ -60,9 +61,11 @@
                     {% for pair in pairs %}
                         {% if product == pair.0 %}
                             {% if pair.1 <= 0 %}
-                                <td class="red"></td>
+                                <td class="red"><img src="{% static "css/warning-icon-red.png" %}"/></td>
+
                             {% else %}
-                                <td class="yellow"></td>
+                                <td class="yellow"><img src="{% static "css/warning-icon-yellow.png" %}"/></td>
+
                             {% endif %}
                         {% endif %}
                     {% endfor %}
