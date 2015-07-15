@@ -18,6 +18,7 @@ getUrlVars();
 //CHANGE TEXT VALUE FOR DATE RANGE ON PAGE LOAD
   $(document).ready(function() {
   var urlRange = getUrlVars()['range'];
+  var urlUpc = getUrlVars() ['upc'];
 
   $('.scan-input').focus();
 
@@ -36,11 +37,23 @@ getUrlVars();
       $('.date-dropdown').val('14');
     }
 
+    if (!urlUpc) {
+      $('#id_brand :selected').text('Pick a Brand');
+    }
+
   });
 
 //HAMBURGER DROPDOWN MENU
   $('.nav-dropdown-btn').click(function() {
-    $('.main-nav-ul').slideToggle('slow');
+    $('.main-nav-ul').toggle('slow');
+  });
+
+  $('.dropdown-icon').click(function() {
+    $('.slide-in-menu').slideDown('slow');
+  });
+
+  $('.slide-in-menu-exit').click(function() {
+    $('.slide-in-menu').slideUp('slow');
   });
 
 //STICKY HEADER ON RESIZE
@@ -48,8 +61,10 @@ getUrlVars();
     var width = $(window).width();
     if (width > 700) {
       stickyHeader();
-    } else if (width <= 700) {
-
+      $('.main-nav-ul').show();
+      $('.dropdown-icon-bottom').css('display', 'none');
+    } else {
+      $('.slide-in-menu').css('display', 'none');
     }
   }).resize();
 
@@ -72,12 +87,14 @@ getUrlVars();
     $(window).scroll(function () {
       if ($(this).scrollTop() > 136) {
         stick.addClass('sticky');
-        $('.top-nav-container-hide').fadeIn('slow');
-        $('.top-nav-container').fadeOut('slow');
+        $('.top-nav-container').css('display', 'none');
+        $('.top-nav-container-hide').css('display', 'block');
+        $('.dropdown-icon-bottom').css('display', 'block');
       } else {
         stick.removeClass('sticky');
-        $('.top-nav-container-hide').fadeOut('slow');
-        $('.top-nav-container').fadeIn(2000);
+        $('.top-nav-container').css('display', 'block');
+        $('.top-nav-container-hide').css('display', 'none');
+        $('.dropdown-icon-bottom').css('display', 'none');
       }
     });
   }
@@ -93,6 +110,7 @@ getUrlVars();
   $('#id_service').siblings().remove();
   $('#id_product').siblings().remove();
 
+
 //SET FLOATING LABELS THAT ALREADY CONTAIN CONTENT
   $('input, textarea').each(function(){
     var val = $(this).val();
@@ -101,9 +119,17 @@ getUrlVars();
     }
   });
 
-  $('.scan-form').submit(function(e) {
+//PREVENT SCAN FROM FROM AUTO SUBMITTING
+  $('.scan-form').keypress(function(e) {
+    if(e.which === 13) {
     e.preventDefault();
     e.stopPropagation();
+    }
   });
+
+//USER INFO DROPDOWN
+  // $('.secondary-dropdown-icon').hover(function() {
+  //   $('.secondary-dropdown-ul').toggle();
+  // });
 
 });

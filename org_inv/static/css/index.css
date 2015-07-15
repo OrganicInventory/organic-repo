@@ -1,4 +1,6 @@
 body{
+  /*background:linear-gradient(to top,rgba(255,255,255,0.175),rgba(0,0,0,0.3)), url("spa-spa-kamni-svechi-cvety-546.jpg");*/
+  background-repeat: no-repeat;
   background:url("spa-spa_fotor_fotor.jpg");
   background-size: cover;
   width:100%;
