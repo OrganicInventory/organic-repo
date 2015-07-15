@@ -189,3 +189,10 @@ button:hover {
   display: block;
   margin: 0 auto;
 }
+
+.errors{
+  font-size: 30%;
+  float:right;
+  margin-right:20%;
+  color: #caed9a;
+}
