@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.views.generic import DetailView, View
 from .forms import UserForm, ProfileForm
+from inventory.views import get_prod_data, get_all_service_data
 from .models import Profile, get_profile
 
 # Create your views here.
@@ -58,6 +59,8 @@ def edit_profile(request):
         profile_form = ProfileForm(instance=profile, data=request.POST)
         if profile_form.is_valid():
             profile_form.save()
-    return render(request, "edit_profile.html", {"form": profile_form})
+    product_data = get_prod_data(request)
+    service_data = get_all_service_data(request)
+    return render(request, "edit_profile.html", {"form": profile_form, 'data1': product_data, 'data2': service_data})
 
 

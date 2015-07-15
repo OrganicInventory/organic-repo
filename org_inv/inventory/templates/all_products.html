@@ -1,5 +1,6 @@
 <body class="all-products-body">
 {% extends "base.html" %}
+{% load static %}
 
 {% block pagetitle %}
     <h1 class="main-heading">All Products</h1>
@@ -35,10 +36,10 @@
         // }
     </script>
     <div class="form-container scan-form">
-      <form name='test_form' class="form-control scan-form main-form" id='test_form' method="get" onsubmit="return OnSubmitForm();">
-          <span class="focus-out focus-out-scan">Scan Product UPC</span>
-          <input name='upc' class="form-control scan-input" type="text" autocomplete="off"/>
-
+        <form name='test_form' class="form-control scan-form main-form" id='test_form' method="get"
+              onsubmit="return OnSubmitForm();">
+            <span class="focus-out focus-out-scan">Scan Product UPC</span>
+            <input name='upc' class="form-control scan-input" type="text" autocomplete="off"/>
           <div class="scan-btns">
               <button class="gen-btn scan-new" onclick="document.pressed=this.value" type="submit" value="New">Create</button>
               <button class="gen-btn scan-update" onclick="document.pressed=this.value" type="submit" value="Update">Update</button>
@@ -59,8 +60,26 @@
         </tr>
         {% for product in all_products %}
         <!-- <input type="hidden" class="get-upc" value="{{ product.upc_code }}" /> -->
-            <tr data-upc="{{product.upc_code}}">
-                <td class="status-td"></td>
+            <!-- <tr data-upc="{{product.upc_code}}"> -->
+                <!-- <td class="status-td"></td> -->
+
+            <tr>
+                {% if product in prods %}
+                    {% for pair in pairs %}
+                        {% if product == pair.0 %}
+                            {% if pair.1 <= 0 %}
+                                <td class="red"><img src="{% static "css/warning-icon-red.png" %}"/></td>
+
+                            {% else %}
+                                <td class="yellow"><img src="{% static "css/warning-icon-yellow.png" %}"/></td>
+
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <td class="status-td"></td>
+                {% endif %}
+
                 <td>
                     <a href="{% url 'product_detail' %}?upc={{ product.upc_code }}">
                         <div class="table-id-link">
@@ -71,7 +90,7 @@
                 <td>{{ product.size }}oz.</td>
                 <td>{{ product.display_quantity|floatformat:2 }}</td>
                 <td><a href="{% url 'product_empty' product.id %}">
-                    <button class="gen-btn">Out of Stock</button>
+                    <button class="gen-btn">I'm Out</button>
                 </a></td>
                 <!-- <td>{{ product.upc_code }}</td> -->
             </tr>
