@@ -8,7 +8,7 @@ import re
 from factual import Factual
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseRedirect, HttpResponse
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
@@ -93,6 +93,9 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         form.instance.url = get_product(form.instance.upc_code)[1]
         form.instance.new_product_quantity(form.instance.quantity)
         form.instance.update_max_quantity()
+        messages.add_message(self.request, messages.SUCCESS,
+                             "{} product was successfully created".format(form.instance.name))
+
         return super().form_valid(form)
 
 
@@ -187,6 +190,9 @@ class AppointmentCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance = form.save(commit=False)
         form.instance.user = self.request.user
+        messages.add_message(self.request, messages.SUCCESS,
+                             "Your appointment for {} was successfully created".format(form.instance.date))
+        form.save()
         return super().form_valid(form)
 
 
@@ -250,6 +256,8 @@ class AppointmentUpdate(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.save()
+        messages.add_message(self.request, messages.SUCCESS,
+                             "Appointment updated")
         return super().form_valid(form)
 
 
@@ -293,6 +301,8 @@ class ServiceCreateView(LoginRequiredMixin, CreateView):
             self.object.user = self.request.user
             self.object.save()
             amounts.instance = self.object
+            messages.add_message(self.request, messages.SUCCESS,
+                             "{} was successfully created".format(self.object))
             amounts.save()
 
         return super().form_valid(form)
@@ -334,6 +344,8 @@ class ServiceUpdate(LoginRequiredMixin, UpdateView):
         amounts = context['amounts']
         if amounts.is_valid():
             amounts.instance = self.object
+            messages.add_message(self.request, messages.SUCCESS,
+                             "{} successfully updated".format(self.object))
             amounts.save()
 
         return super().form_valid(form)
