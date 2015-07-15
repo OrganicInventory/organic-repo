@@ -669,23 +669,29 @@ class EmailUpdate(LoginRequiredMixin, UpdateView):
 
 #######################################################################################################################
 
-def get_prod_data(prod_id):
-    product = Product.objects.get(id=prod_id)
-    services = Service.objects.filter(products__pk=product.id)
-    appts = Appointment.objects.filter(service__in=services).order_by('date')
-    values = []
-    usages = {}
-    for appt in appts:
-        amt = Amount.objects.get(service=appt.service, product=product)
-        date = str(appt.date)
-        if date in usages.keys():
-            usages[date] += amt.amount
-        else:
-            usages[date] = amt.amount
-    for key, value in sorted(usages.items(), key=lambda x: x[0]):
-        values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
+def get_prod_data(request):
+    products = Product.objects.filter(user=request.user)
     data = []
-    data.append({'values': values, 'key': 'product usage (oz)', 'area': 'True'})
+    enabled = True
+    for product in products:
+        services = Service.objects.filter(products__pk=product.id)
+        appts = Appointment.objects.filter(service__in=services).order_by('date')
+        values = []
+        usages = {}
+        for appt in appts:
+            amt = Amount.objects.get(service=appt.service, product=product)
+            date = str(appt.date)
+            if date in usages.keys():
+                usages[date] += amt.amount
+            else:
+                usages[date] = amt.amount
+        for key, value in sorted(usages.items(), key=lambda x: x[0]):
+            values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
+        if enabled:
+            data.append({'values': values, 'key': product.name})
+            enabled = False
+        else:
+            data.append({'values': values, 'key': product.name, 'disabled': 'True'})
     return data
 
 #######################################################################################################################
@@ -705,6 +711,31 @@ def get_service_data(serv_id):
         values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
     data = []
     data.append({'values': values, 'key': 'number of appointments', 'area': 'True'})
+    return data
+
+#######################################################################################################################
+
+def get_all_service_data(request):
+    services = Service.objects.filter(user=request.user)
+    data = []
+    enabled = True
+    for service in services:
+        appts = Appointment.objects.filter(service=service)
+        values = []
+        usages = {}
+        for appt in appts:
+            date = str(appt.date)
+            if date in usages.keys():
+                usages[date] += 1
+            else:
+                usages[date] = 1
+        for key, value in sorted(usages.items(), key=lambda x: x[0]):
+            values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
+        if enabled:
+            data.append({'values': values, 'key': service.name})
+            enabled = False
+        else:
+            data.append({'values': values, 'key': service.name, 'disabled': 'True'})
     return data
 
 #######################################################################################################################

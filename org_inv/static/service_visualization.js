@@ -25,7 +25,7 @@ nv.addGraph(function() {
   /* Done setting the chart up? Time to render it!*/
 
 
-  d3.select('#chart svg')    //Select the <svg> element you want to render the chart in.
+  d3.select('#service_chart svg')    //Select the <svg> element you want to render the chart in.
       .datum(servicedata)         //Populate the <svg> element with chart data...
       .call(chart);          //Finally, render the chart!
 
