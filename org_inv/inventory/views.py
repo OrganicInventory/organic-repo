@@ -564,7 +564,7 @@ class TooMuchProductView(LoginRequiredMixin, UpdateView):
         return prod
 
     def get_initial(self):
-        return {'quantity': self.object.display_quantity}
+        return {'quantity': round(self.object.display_quantity, 2)}
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -620,11 +620,14 @@ class OrderView(View):
             brand_products = []
             message = "Hello from {}!\nWould you please order the following products for us:\n".format(
                 request.user.profile.spa_name)
+            send = False
             for key, value in products.items():
-                if key.brand == brand:
+                if key.brand == brand and int(value) > 0:
                     brand_products.append(key)
+                    send = True
                     message += "{} (upc {}): {} unit(s)".format(key.name, key.upc_code, value) + "\n"
-            send_mail('Order from {}'.format(request.user.profile.spa_name), message, settings.EMAIL_HOST_USER,
+            if send:
+                send_mail('Order from {} in {}'.format(request.user.profile.spa_name, request.user.profile.location), message, settings.EMAIL_HOST_USER,
                       [brand.email], fail_silently=False)
         return redirect('/products/')
 
