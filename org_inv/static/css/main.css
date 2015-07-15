@@ -153,11 +153,11 @@ body.services-body .main-content {
 body.new-order-body .main-content {
     width: 100%;
     box-shadow: none;
-    background-color: #dfdcd6;
+    background-color: #e8e6e2;
 }
 
 body.new-order-body .main-content input, body.new-order-body .main-content select {
-    background-color: #dfdcd6;
+    background-color: #e8e6e2;
     width: 80%;
 }
 
@@ -199,6 +199,7 @@ body.user-profile-body .main-content {
     width: 200px;
     height: 40px;
     color: #eee;
+    z-index: -1;
 }
 
 .top-nav-container-hide {
