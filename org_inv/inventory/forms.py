@@ -30,6 +30,24 @@ class ProductForm(forms.ModelForm):
         }
 
 
+class ProductUpdateForm(forms.Form):
+    def __init__(self, request, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # self.fields['brand'].queryset = Brand.objects.filter(user=request.user)
+
+    upc_code = forms.CharField(initial="", label="UPC Code")
+    quantity = forms.FloatField(initial="", label="Quantity (units)")
+    name = forms.CharField(max_length=255, widget=forms.HiddenInput(), required=False)
+    brand = forms.CharField(max_length=255, widget=forms.HiddenInput(), required=False)
+    size = forms.CharField(max_length=255, widget=forms.HiddenInput(), required=False)
+    # brand = forms.CharField(max_length=255)
+
+    class Meta:
+        model = Product
+        fields = ['upc_code', 'quantity', 'name', 'brand', 'size']
+        labels = {'brand': '', 'name': '', 'size': ''}
+
+
 class ThresholdForm(forms.Form):
     percent = forms.IntegerField(label='low at ___ %')
 

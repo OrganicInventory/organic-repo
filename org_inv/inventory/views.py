@@ -15,7 +15,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView, FormView
 from .models import Product, Appointment, Service, Amount, Brand, Stock
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
-    AmountFormSet, ThresholdForm
+    AmountFormSet, ThresholdForm, ProductUpdateForm
 
 # Create your views here.
 
@@ -465,19 +465,20 @@ class NewOrderView(View):
                                initial={'user': self.request.user, 'upc_code': product.upc_code, 'name': product.name,
                                         'size': product.size, 'brand': product.brand})
         else:
-            form = ProductForm(request, initial={'user': self.request.user})
+            form = ProductUpdateForm(request, initial={'user': self.request.user})
         return render(request, "new_order.html", {"form": form})
 
     def post(self, request, **kwargs):
         form = ProductForm(request, request.POST, initial={'user': self.request.user})
-        if Product.objects.filter(name=request.POST.get('name'), size=float(request.POST.get('size'))).filter(
-                user=request.user):
-            prod_instance = Product.objects.get(name=request.POST.get('name'), size=float(request.POST.get('size')),
-                                                user=request.user)
+        if Product.objects.filter(upc_code=request.POST.get('upc_code'), user=request.user):
+            prod_instance = Product.objects.get(upc_code=request.POST.get('upc_code'), user=request.user)
+            # prod_instance.name = prod_instance.name
+            # prod_instance.brand = prod_instance.brand
+            # prod_instance.size = prod_instance.size
             prod_instance.update_quantity(float(request.POST.get('quantity')))
             prod_instance.update_max_quantity()
             prod_instance.save()
-            messages.add_message(self.request, messages.SUCCESS,
+            messages.add_message(request, messages.SUCCESS,
                                  "Product Successfully Updated!")
             return redirect("/products/new_order")
         else:
