@@ -9,7 +9,7 @@ body{
   top:0;
   right:0;
   left:0;
-}
+  }
 
 body:before {
     content: " ";
@@ -71,7 +71,6 @@ button{
 button:hover {
   background-color: #EEE;
   cursor: pointer;
-  display: inline-block;
 }
 
 .caps{
@@ -116,9 +115,11 @@ button:hover {
     display:block;
   }
 
-  button .btn-register{
-    font-size: 100%;
-    margin-top: 2%;
+  .btn-register{
+  font-size: 70%;
+  display: block;
+  margin: 0 auto;
+  margin-top: 1%;
   }
 
   .register2 label{
