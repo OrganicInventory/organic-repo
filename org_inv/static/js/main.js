@@ -56,18 +56,6 @@ getUrlVars();
     $('.slide-in-menu').slideUp('slow');
   });
 
-//STICKY HEADER ON RESIZE
-  $(window).resize(function() {
-    var width = $(window).width();
-    if (width > 700) {
-      stickyHeader();
-      $('.main-nav-ul').show();
-      $('.dropdown-icon-bottom').css('display', 'none');
-    } else {
-      $('.slide-in-menu').css('display', 'none');
-    }
-  }).resize();
-
 //FORM FLOATING LABELS
   $('input').focusin(function() {
     $(this).siblings('span').addClass('focus-in');
@@ -98,6 +86,17 @@ getUrlVars();
       }
     });
   }
+
+//STICKY HEADER ON RESIZE
+  $(window).resize(function() {
+    var width = $(window).width();
+    if (width > 700) {
+      stickyHeader();
+      $('.main-nav-ul').show();
+    } else {
+      $('.slide-in-menu').css('display', 'none');
+    }
+  }).resize();
 
 //REMOVING SPECIFIC LABELS
   $('#id_service').siblings().remove();

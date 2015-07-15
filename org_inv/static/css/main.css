@@ -549,13 +549,6 @@ table {
     background-color: #eee;
 }
 
-.scan-form {
-    margin: 0 auto;
-    margin-top: 10px;
-    width: 400px;
-    position: relative;
-}
-
 .scan-form .scan-input {
     width: 80%;
     margin: 0 auto;
@@ -566,6 +559,12 @@ table {
     border: none;
     background-color: #dfdcd6;
     background-color: #fff;
+}
+
+.scan-form {
+    margin-top: 10px;
+    width: 400px;
+    position: relative;
 }
 
 .scan-btn {
@@ -869,7 +868,7 @@ body.new-order-body li.sub-new-order {
         display: none;
     }
 
-    .status-th, .status-td, .add-content-button, .user-icon, .page-title, .user-name a {
+    .status-th, .status-td, .add-content-button, .user-icon, .page-title, .user-name a, .red, .yellow {
         display: none;
     }
 
@@ -954,6 +953,10 @@ body.new-order-body li.sub-new-order {
 
     .slide-in-menu, .slide-in-menu-exit, .submenu-ul {
         display: none !important;
+    }
+
+    .dropdown-icon-bottom {
+      display: none !important;
     }
 }
 
