@@ -61,8 +61,9 @@ class AdjustUsageForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
+        appointment = kwargs.pop('appointment')
         super().__init__(*args, **kwargs)
-        self.fields['product'].queryset = Product.objects.filter(user=user)
+        self.fields['product'].queryset = Product.objects.filter(user=user, amount__service__appointment=appointment)
 
 
 class ProductLookupForm(forms.Form):

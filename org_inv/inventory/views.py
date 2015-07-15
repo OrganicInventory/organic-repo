@@ -544,8 +544,8 @@ class TooMuchProductView(LoginRequiredMixin, UpdateView):
 
 class AdjustUsageView(View):
     def get(self, request, **kwargs):
-        form = AdjustUsageForm(user=request.user)
         appt = Appointment.objects.get(id=self.kwargs['appt_id'])
+        form = AdjustUsageForm(user=request.user, appointment=appt)
         if self.request.user == appt.user:
             return render(request, "adjust_usage.html", {'form': form, 'appt': appt})
         else:
