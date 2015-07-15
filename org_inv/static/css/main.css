@@ -19,6 +19,12 @@ a {
   color: #46b8da;
 }
 
+.prod-image {
+  float: left;
+  max-height: 200px;
+  padding-top: 5%;
+}
+
 .page-header {
   position: absolute;
   left: 0;
@@ -288,15 +294,18 @@ body.user-profile-body .main-content {
   box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
   position: relative;
   padding-bottom: 25px;
+  padding-left: 10%;
 }
 
 .list-container-ul {
   margin: 25px 0 25px 50%;
-  transform: translate(-25%, 0);
+  /*transform: translate(-25%, 0);*/
+  display: inline;
 }
 
 .list-container-li {
-  padding: 25px 0 0 0 ;
+  padding-top: 25px;
+  padding-left: 45%;
 }
 
 .list-container-footer {
