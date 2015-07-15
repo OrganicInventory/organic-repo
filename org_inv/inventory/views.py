@@ -178,7 +178,7 @@ class AppointmentCreateView(LoginRequiredMixin, CreateView):
     model = Appointment
     form_class = AppointmentForm
     template_name = 'add_appointment.html'
-    success_url = '/appointments/'
+    success_url = '/appointments/new'
 
     def get_form(self, form_class=None):
         if form_class is None:
