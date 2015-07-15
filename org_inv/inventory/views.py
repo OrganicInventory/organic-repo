@@ -266,7 +266,6 @@ class ServiceCreateView(LoginRequiredMixin, CreateView):
         context = self.get_context_data()
         amounts = context['amounts']
         if amounts.is_valid():
-            # raise Exception
             self.object = form.save(commit=False)
             self.object.user = self.request.user
             self.object.save()
@@ -402,8 +401,6 @@ def inventory_check(daterange, user):
         if len(value) == 2:
             low_products[key] = value
             low_products[key].append(math.ceil((((user.profile.threshold * .01) * key.max_quantity) - low_products[key][0])/key.size))
-            # if low_products[key][2] == 0:
-            #     low_products[key][2] += 1
 
     return low_products
 
@@ -624,6 +621,20 @@ class EmailUpdate(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.save()
+        return super().form_valid(form)
+
+#######################################################################################################################
+
+class BrandCreateView(LoginRequiredMixin, CreateView):
+    model = Brand
+    fields = ['name', 'email']
+    template_name = 'create_brand.html'
+    success_url = '/settings/'
+
+    def form_valid(self, form):
+        form.instance = form.save(commit=False)
+        form.instance.user = self.request.user
+        form.instance.save()
         return super().form_valid(form)
 
 #######################################################################################################################
