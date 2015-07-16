@@ -154,5 +154,10 @@ getUrlVars();
     });
   }
 
+//EXIT SUCCESS MESSAGES
+  $('.success-exit').click(function() {
+    $(this).parent().slideUp();
+  });
+
 
 });
