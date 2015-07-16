@@ -39,9 +39,9 @@
             {% for key, value in low.items %}
                 <tr>
                     {% if value.0 <= 0 %}
-                        <td class="red">o</td>
+                        <td class="red">p</td>
                     {% else %}
-                        <td class="yellow">p</td>
+                        <td class="yellow">o</td>
                     {% endif %}
                     <td>
                         <a href="{% url 'product_detail' %}?upc={{ key.upc_code }}">

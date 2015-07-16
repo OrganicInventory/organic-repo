@@ -28,21 +28,22 @@ a {
   padding-top: 5%;
 }
 
+.red, .yellow {
+  font-family: untitled-font-1;
+  font-size: 28px;
+}
+
 .red {
   /*text-align: center;*/
   vertical-align: middle;
   margin-left: 20px;
-  color: #cc0000;
+  color: #b35b5a;
 }
 
 .yellow {
-  color: #ffcc00;
+  color: #e5b700;
   vertical-align: middle;
-}
-
-.red, .yellow {
-  font-family: untitled-font-1;
-  font-size: 28px;
+  font-size: 30px;
 }
 
 .page-header {

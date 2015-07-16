@@ -1,4 +1,4 @@
-<body class="new-order-body">
+<body class="place-order-body">
 {% extends "base.html" %}
 
 {% block pagetitle %}
@@ -13,7 +13,9 @@
     <form class="main-form" method="POST" action="{% url 'order' %}">
         {% csrf_token %}
         {% for product, value in products %}
-         <p>{{ product.brand }} {{ product.name }} ({{ product.size }} oz): </p><input class="form-control scan-input" type="text" name="{{ product.upc_code }}" value="{{ value.2 }}"/>
+        <div class="{{ field.label }} input">
+         <p class="focus-out">{{ product.brand }} {{ product.name }} ({{ product.size }} oz): </p><input class="form-control scan-input" type="text" name="{{ product.upc_code }}" value="{{ value.2 }}"/>
+        </div>
         {% endfor %}
         <button class="form-button" type="submit">Email Reps</button>
     </form>
