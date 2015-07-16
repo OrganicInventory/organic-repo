@@ -1,3 +1,4 @@
+<body class="add-appointment-body">
 {% extends "base.html" %}
 {% block content %}
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -11,14 +12,14 @@
   <form class="main-form" method="POST" action="{% url 'add_appointment' %}">
     {% csrf_token %}
     {% for field in form %}
-       <div class="{{ field.label }} input">
-
-           <span class="focus-out">{{ field.label_tag }} </span> {{ field }}
-           {{ field.errors }}
-       </div>
+      <div class="{{ field.label }} input">
+        <span class="focus-out">{{ field.label_tag }} </span> {{ field }}
+        {{ field.errors }}
+      </div>
     {% endfor %}
       <!-- Provide a button to click to submit the form. -->
       <button class="form-button" type="submit" name="submit">Create</button>
   </form>
 </div>
 {% endblock %}
+</body>

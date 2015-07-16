@@ -56,10 +56,10 @@
                     {% for pair in pairs %}
                         {% if product == pair.0 %}
                             {% if pair.1 <= 0 %}
-                                <td class="red"><img src="{% static "css/warning-icon-red.png" %}"/></td>
+                                <td class="red">p</td>
 
                             {% else %}
-                                <td class="yellow"><img src="{% static "css/warning-icon-yellow.png" %}"/></td>
+                                <td class="yellow">o</td>
 
                             {% endif %}
                         {% endif %}
