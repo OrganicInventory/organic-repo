@@ -16,10 +16,11 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 import inventory.views as inv_views
+from django.contrib.auth import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', inv_views.IndexView.as_view(), name='index'),
+    url(r'^$', views.login, {'template_name': 'index.html'}, name="login"),
     url(r'^users/', include('users.urls')),
     url(r'^products/$', inv_views.AllProductsView.as_view(), name="all_products"),
     url(r'^low/$', inv_views.LowInventoryView.as_view(), name="low_products"),
