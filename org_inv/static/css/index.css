@@ -138,6 +138,7 @@ button:hover {
     color:#EEE;
     min-width: 250px;
     display:block;
+    float: left;
 
   }
 

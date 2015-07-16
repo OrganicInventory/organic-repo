@@ -9,10 +9,38 @@
     <link href='http://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body>
+
+{% if form.errors %}
+  <p class="nomatch">Sorry, your username and password didn't match. Please try again.</p>
+  {% endif %}
+
+  {% if next %}
+      {% if user.is_authenticated %}
+      <p>Your account doesn't have access to this page. To proceed,
+      please login with an account that has access.</p>
+      {% else %}
+  {#    <p>Please login to see this page.</p>#}
+      {% endif %}
+  {% endif %}
+  <form method="post" action="{% url 'django.contrib.auth.views.login' %}" class="login1">
+  {% csrf_token %}
+      <table align="center">
+      <tr>
+          <td>{{ form.username.label_tag }}</td>
+          <td>{{ form.username }}</td>
+      </tr>
+      <tr>
+          <td>{{ form.password.label_tag }}</td>
+          <td>{{ form.password }}</td>
+      </tr>
+      </table>
+      <br />
+      <input type="submit" value="login" class="loginbtn"/>
+      <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+
+
 <div class="nav">
-    <a href="{% url 'login' %}">
-      <button class='login-link'>Login</button>
-    </a>
     <a href="{% url 'user_register' %}" class='reg'>
         <button>Register</button>
     </a>

@@ -15,7 +15,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView, FormView
 from .models import Product, Appointment, Service, Amount, Brand, Stock
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
-    AmountFormSet, ThresholdForm, ProductUpdateForm
+    AmountFormSet, ThresholdForm, ProductUpdateForm, ProductNoQuantityForm
 
 # Create your views here.
 
@@ -38,6 +38,7 @@ class AllProductsView(LoginRequiredMixin, ListView):
     model = Product
     context_object_name = 'all_products'
     template_name = 'all_products.html'
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
@@ -45,7 +46,7 @@ class AllProductsView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        values_dict = inventory_check(60, self.request.user)
+        values_dict = inventory_check(14, self.request.user)
         amts = []
         prods = []
         for pair in values_dict.items():
@@ -98,6 +99,39 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
         return super().form_valid(form)
 
+#######################################################################################################################
+
+class ProductUpdate(LoginRequiredMixin, UpdateView):
+    model = Product
+    form_class = ProductNoQuantityForm
+    template_name = 'product_update_form.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = Product.objects.get(upc_code=request.GET.get('upc'))
+        if self.request.user == obj.user:
+            return super().dispatch(request, *args, **kwargs)
+
+        else:
+            return HttpResponseForbidden()
+
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
+        return form_class(self.request, **self.get_form_kwargs())
+
+    def get_success_url(self):
+        return reverse('all_products')
+
+    def get_object(self, queryset=None, **kwargs):
+        prod = Product.objects.get(upc_code=self.request.GET.get('upc'))
+        return prod
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        messages.add_message(self.request, messages.SUCCESS,
+                             "Product updated")
+        return super().form_valid(form)
 
 #######################################################################################################################
 
@@ -164,6 +198,7 @@ class AllAppointmentsView(LoginRequiredMixin, ListView):
     model = Appointment
     context_object_name = 'all_appointments'
     template_name = 'all_appointments.html'
+    paginate_by = 6
 
     def get_queryset(self):
         queryset = Appointment.objects.filter(user=self.request.user, date__gte=datetime.today()).order_by('date')
