@@ -802,8 +802,11 @@ def get_all_service_data(request):
     enabled = True
     for service in services:
         appts = Appointment.objects.filter(service=service).order_by('date')
-        dates = sorted([appt.date for appt in appts])
-        date_set = set(dates[0]+timedelta(x) for x in range((dates[-1]-dates[0]).days))
+        if appts:
+            dates = sorted([appt.date for appt in appts])
+            date_set = set(dates[0]+timedelta(x) for x in range((dates[-1]-dates[0]).days))
+        else:
+            date_set = {}
         values = []
         usages = {}
         for date in sorted(date_set):

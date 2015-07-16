@@ -8,7 +8,7 @@ nv.addGraph(function() {
                 .showYAxis(true)        //Show the y-axis
                 .showXAxis(true)        //Show the x-axis
                 .forceY([0])
-                .interpolate('linear')
+                .interpolate('monotone')
       ;
 
 
