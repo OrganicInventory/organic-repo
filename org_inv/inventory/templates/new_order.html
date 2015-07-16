@@ -9,7 +9,7 @@
     <h1 class="secondary-heading">New Order Form</h1>
     <p class="heading-description">Fill out the form to add or update <br/>products from a recent order.</p>
     <div class="form-container">
-        <form class="main-form" method="POST" action="{% url 'new_order' %}">
+        <form class="main-form cancel-submit" method="POST" action="{% url 'new_order' %}">
             {% csrf_token %}
             {% for field in form.hidden_fields %}
                 {{ field }}
