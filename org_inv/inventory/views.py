@@ -3,6 +3,7 @@ import json
 import math
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.views.generic.detail import BaseDetailView
 from org_inv import settings
 import re
 from factual import Factual
@@ -95,7 +96,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         form.instance.new_product_quantity(form.instance.quantity)
         form.instance.update_max_quantity()
         messages.add_message(self.request, messages.SUCCESS,
-                             "{} product was successfully created".format(form.instance.name))
+                             "{} added.".format(form.instance.name))
 
         return super().form_valid(form)
 
@@ -189,6 +190,7 @@ class ProductDeleteView(DeleteView):
         Amount.objects.filter(product=self.object).delete()
         success_url = self.get_success_url()
         self.object.delete()
+        messages.add_message(self.request, messages.SUCCESS,"{} Deleted".format(self.object))
         return HttpResponseRedirect(success_url)
 
 
@@ -226,7 +228,7 @@ class AppointmentCreateView(LoginRequiredMixin, CreateView):
         form.instance = form.save(commit=False)
         form.instance.user = self.request.user
         messages.add_message(self.request, messages.SUCCESS,
-                             "Your appointment for {} was successfully created".format(form.instance.date))
+                             "Appointment for {} created".format(form.instance.date))
         form.save()
         return super().form_valid(form)
 
@@ -258,7 +260,8 @@ class AppointmentDelete(LoginRequiredMixin, DeleteView):
             url = self.get_success_url()
             return HttpResponseRedirect(url)
         else:
-            return super(AppointmentDelete, self).post(request, *args, **kwargs)
+	        messages.add_message(self.request, messages.SUCCESS,"Appointment for {} Cancelled".format(self.get_object(date)))
+        return super(AppointmentDelete, self).post(request, *args, **kwargs)
 
 
 #######################################################################################################################
@@ -292,7 +295,7 @@ class AppointmentUpdate(LoginRequiredMixin, UpdateView):
         self.object = form.save(commit=False)
         self.object.save()
         messages.add_message(self.request, messages.SUCCESS,
-                             "Appointment updated")
+                             "Appointment Updated.")
         return super().form_valid(form)
 
 
@@ -337,7 +340,7 @@ class ServiceCreateView(LoginRequiredMixin, CreateView):
             self.object.save()
             amounts.instance = self.object
             messages.add_message(self.request, messages.SUCCESS,
-                             "{} was successfully created".format(self.object))
+                             "{} Added.".format(self.object))
             amounts.save()
 
         return super().form_valid(form)
@@ -380,7 +383,7 @@ class ServiceUpdate(LoginRequiredMixin, UpdateView):
         if amounts.is_valid():
             amounts.instance = self.object
             messages.add_message(self.request, messages.SUCCESS,
-                             "{} successfully updated".format(self.object))
+                              "{} Updated".format(self.object))
             amounts.save()
 
         return super().form_valid(form)
@@ -526,7 +529,7 @@ class NewOrderView(View):
             prod_instance.update_max_quantity()
             prod_instance.save()
             messages.add_message(request, messages.SUCCESS,
-                                 "Product Successfully Updated!")
+                                 "Product Updated.")
             return redirect("/products/new_order")
         else:
             return render(request, "new_order.html", {"form": form})
@@ -534,18 +537,21 @@ class NewOrderView(View):
 
 #######################################################################################################################
 
-class EmptyProductView(View):
+class EmptyProductView(BaseDetailView):
     def dispatch(self, request, *args, **kwargs):
         prod = Product.objects.get(id=self.kwargs['prod_id'])
         prod.quantity = 0
         prod.save()
         amounts = Amount.objects.filter(product=prod)
+        messages.add_message(self.request, messages.SUCCESS,"{} quantity set to 0.".format(prod.name))
         for amount in amounts:
             up_perc = .1 * amount.amount
             new_amt = amount.amount + up_perc
             amount.amount = new_amt
             amount.save()
         return redirect('/products/')
+    # def get_object(self, request):
+	 #    return Product.objects.get()
 
 
 #######################################################################################################################
@@ -553,6 +559,7 @@ class EmptyProductView(View):
 class CloseShopView(View):
     def dispatch(self, request, *args, **kwargs):
         appts = Appointment.objects.filter(date__lte=datetime.today(), done=False)
+        messages.add_message(self.request, messages.SUCCESS,"Shop Closed and Rectified")
         for appt in appts:
             appt.done = True
             appt.save()
@@ -610,7 +617,9 @@ class TooMuchProductView(LoginRequiredMixin, UpdateView):
             new_amt = amount.amount - down_perc
             amount.amount = new_amt
             amount.save()
-        return redirect('/products/')
+            messages.add_message(self.request, messages.SUCCESS,
+                                 "{} quantity adjusted.".format(self.object.name))
+            return redirect('/products/')
 
 
 #######################################################################################################################
@@ -633,7 +642,7 @@ class AdjustUsageView(View):
             prod = Product.objects.get(id=form.data['product'])
             prod.quantity -= diff
             prod.save()
-        return redirect('/products/')
+            return redirect('/products/')
 
 
 #######################################################################################################################
@@ -651,6 +660,7 @@ class OrderView(View):
         products = {Product.objects.get(user=request.user, upc_code=key): value for key, value in
                     self.request.POST.items() if key != 'csrfmiddlewaretoken'}
         brands = {key.brand for key in products.keys()}
+        messages.add_message(self.request, messages.SUCCESS, "Order Sent")
         for brand in brands:
             brand_products = []
             message = "Hello from {}!\nWould you please order the following products for us:\n".format(
@@ -664,7 +674,7 @@ class OrderView(View):
             if send:
                 send_mail('Order from {} in {}'.format(request.user.profile.spa_name, request.user.profile.location), message, settings.EMAIL_HOST_USER,
                       [brand.email], fail_silently=False)
-        return redirect('/products/')
+            return redirect('/products/')
 
 
 #######################################################################################################################
@@ -683,7 +693,7 @@ class SettingsView(LoginRequiredMixin,View):
             prof = request.user.profile
             prof.threshold = amt
             messages.add_message(self.request, messages.SUCCESS,
-                                 "Threshold updated to {}%".format(amt))
+                                 "Threshold updated to {}%.".format(amt))
             prof.save()
             return redirect('/settings/')
 #######################################################################################################################
