@@ -3,12 +3,13 @@ body{
   background-repeat: no-repeat;
   background:url("spa-spa_fotor_fotor.jpg");
   background-size: cover;
+  background-repeat: no-repeat;
   width:100%;
   font-family: 'Josefin Sans', sans-serif;
   position: fixed;
-  top:0;
   right:0;
   left:0;
+  top: 0;
   }
 
 body:before {
@@ -21,6 +22,7 @@ body:before {
     top: 0
     left: 0;
     right: 0;
+    bottom: 0;
     background: -webkit-radial-gradient(bottom left, ellipse cover, rgba(0,0,0,0.2) 0%,rgba(101,57,37,0.8) 100%);
   }
 .header{
@@ -28,6 +30,9 @@ body:before {
   font-size: 400%;
   font-weight: 500;
   color:#EEE;
+  display: block;
+  margin-top: 7%;
+  margin-right: 12%;
 
 }
 
@@ -132,13 +137,13 @@ button:hover {
 
 
   .login1{
-    font-size: 150%;
+    font-size: 100%;
     margin-top: 5%;
     font-weight: 300;
     color:#EEE;
     min-width: 250px;
     display:block;
-    float: left;
+    margin-right: 10%;
 
   }
 
@@ -147,10 +152,11 @@ button:hover {
     border-radius: 5%;
     color: black;
     padding: 1%;
+    font-size: 100%;
     border: none;
     display: block;
-    margin:0 auto;
     cursor: pointer;
+    float: left;
   }
 
 .nomatch{
@@ -198,4 +204,8 @@ button:hover {
   float:right;
   margin-right:20%;
   color: #caed9a;
+}
+
+.nav{
+  float: left;
 }

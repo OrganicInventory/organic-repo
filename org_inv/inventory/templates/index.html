@@ -13,7 +13,7 @@
 {% if form.errors %}
   <p class="nomatch">Sorry, your username and password didn't match. Please try again.</p>
   {% endif %}
-
+<div class="nav">
   {% if next %}
       {% if user.is_authenticated %}
       <p>Your account doesn't have access to this page. To proceed,
@@ -35,15 +35,9 @@
       </tr>
       </table>
       <br />
-      <input type="submit" value="login" class="loginbtn"/>
+      <input type="submit" value="LogIn" class="loginbtn"/>
       <input type="hidden" name="next" value="{{ next }}" />
   </form>
-
-
-<div class="nav">
-    <a href="{% url 'user_register' %}" class='reg'>
-        <button>Register</button>
-    </a>
 </div>
 <header class="header">
     P.I.M.
