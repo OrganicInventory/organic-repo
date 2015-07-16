@@ -38,6 +38,7 @@ class AllProductsView(LoginRequiredMixin, ListView):
     model = Product
     context_object_name = 'all_products'
     template_name = 'all_products.html'
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
@@ -164,6 +165,7 @@ class AllAppointmentsView(LoginRequiredMixin, ListView):
     model = Appointment
     context_object_name = 'all_appointments'
     template_name = 'all_appointments.html'
+    paginate_by = 6
 
     def get_queryset(self):
         queryset = Appointment.objects.filter(user=self.request.user, date__gte=datetime.today()).order_by('date')
