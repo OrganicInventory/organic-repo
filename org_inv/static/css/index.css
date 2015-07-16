@@ -30,6 +30,9 @@ body:before {
   font-size: 400%;
   font-weight: 500;
   color:#EEE;
+  display: block;
+  margin-top: 7%;
+  margin-right: 12%;
 
 }
 
@@ -134,13 +137,13 @@ button:hover {
 
 
   .login1{
-    font-size: 150%;
+    font-size: 100%;
     margin-top: 5%;
     font-weight: 300;
     color:#EEE;
     min-width: 250px;
     display:block;
-    float: left;
+    margin-right: 10%;
 
   }
 
@@ -149,10 +152,11 @@ button:hover {
     border-radius: 5%;
     color: black;
     padding: 1%;
+    font-size: 100%;
     border: none;
     display: block;
-    margin:0 auto;
     cursor: pointer;
+    float: left;
   }
 
 .nomatch{
@@ -200,4 +204,8 @@ button:hover {
   float:right;
   margin-right:20%;
   color: #caed9a;
+}
+
+.nav{
+  float: left;
 }
