@@ -12,6 +12,7 @@
         <button class="update-btn-table">Update Order Email</button>
     </a>
     {% endfor %}
+    <a href="{% url 'create_brand' %}"><button class="gen-btn">Add New Brand</button></a>
 
     <p>Low inventory threshold: {{ request.user.profile.threshold }}%</p>
     <form method="POST" action="">
