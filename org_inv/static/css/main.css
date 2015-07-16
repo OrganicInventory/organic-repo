@@ -304,7 +304,7 @@ body.user-profile-body .main-content {
     width: 76%;
     margin: 0 auto;
     border-radius: 10px;
-    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
+    /*box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);*/
     margin-top: 25px;
 }
 
