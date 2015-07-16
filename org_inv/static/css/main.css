@@ -308,6 +308,17 @@ body.user-profile-body .main-content {
     margin-top: 25px;
 }
 
+.messages {
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    background-color: #88b288;
+    list-style-type: none;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #ffffff;
+}
+
 .main-header {
     height: 60px;
     width: 100%;

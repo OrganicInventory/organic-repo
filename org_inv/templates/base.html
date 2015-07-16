@@ -68,19 +68,20 @@
       <a href="/users/logout"><li class="submenu-li">Logout</li></a>
     </ul>
   </div>
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</div>
+{% endif %}
   <div class="wrapper">
     <div class="scanner-section">
       {% block scancontent %}
       {% endblock %}
     </div>
     <div class="main-content">
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+
       {% block content %}
       {% endblock %}
 
