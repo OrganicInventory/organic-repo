@@ -38,7 +38,7 @@ class AllProductsView(LoginRequiredMixin, ListView):
     model = Product
     context_object_name = 'all_products'
     template_name = 'all_products.html'
-    paginate_by = 5
+    paginate_by = 10
 
     def get_queryset(self):
         queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
@@ -737,15 +737,23 @@ def get_prod_data(request):
     for product in products:
         services = Service.objects.filter(products__pk=product.id)
         appts = Appointment.objects.filter(service__in=services).order_by('date')
+        if appts:
+            dates = sorted([appt.date for appt in appts])
+            date_set = set(dates[0]+timedelta(x) for x in range((dates[-1]-dates[0]).days))
+        else:
+            date_set = {}
         values = []
         usages = {}
-        for appt in appts:
-            amt = Amount.objects.get(service=appt.service, product=product)
-            date = str(appt.date)
-            if date in usages.keys():
-                usages[date] += amt.amount
-            else:
-                usages[date] = amt.amount
+        for date in sorted(date_set):
+            usages[str(date)] = 0
+            date_appts = [appt for appt in appts if appt.date == date]
+            for appt in date_appts:
+                amt = Amount.objects.get(service=appt.service, product=product)
+                appt_date = str(appt.date)
+                if appt_date in usages.keys():
+                    usages[appt_date] += amt.amount
+                else:
+                    usages[appt_date] = amt.amount
         for key, value in sorted(usages.items(), key=lambda x: x[0]):
             values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
         if enabled:
@@ -783,15 +791,20 @@ def get_all_service_data(request):
     data = []
     enabled = True
     for service in services:
-        appts = Appointment.objects.filter(service=service)
+        appts = Appointment.objects.filter(service=service).order_by('date')
+        dates = sorted([appt.date for appt in appts])
+        date_set = set(dates[0]+timedelta(x) for x in range((dates[-1]-dates[0]).days))
         values = []
         usages = {}
-        for appt in appts:
-            date = str(appt.date)
-            if date in usages.keys():
-                usages[date] += 1
-            else:
-                usages[date] = 1
+        for date in sorted(date_set):
+            usages[str(date)] = 0
+            date_appts = [appt for appt in appts if appt.date == date]
+            for appt in date_appts:
+                appt_date = str(appt.date)
+                if appt_date in usages.keys():
+                    usages[appt_date] += 1
+                else:
+                    usages[appt_date] = 1
         for key, value in sorted(usages.items(), key=lambda x: x[0]):
             values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
         if enabled:
