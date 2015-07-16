@@ -204,9 +204,12 @@ body.edit-profile-body .main-form .focus-out {
   left: 28%;
 }
 
-body.new-order-body .main-content .form-button {
+body.new-order-body .main-content .form-button,
+body.place-order-body .main-content .form-button {
   right: 50%;
   transform: translate(50%, 200%);
+  width: 100%;
+  padding: 15px 0;
 }
 
 body.user-profile-body .main-content {
@@ -547,6 +550,7 @@ table {
   border-radius: 3px;
   box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);
   border: none;
+  outline: none;
 }
 
 .details-button {
@@ -566,6 +570,10 @@ table {
   background-color: #fff;
   border-radius: 3px;
   box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);
+}
+
+.edit-btn {
+  padding: 8px 16px;
 }
 
 .gen-btn a {
@@ -851,8 +859,10 @@ body.new-order-body li.sub-new-order {
 .delete-item {
   font-family: untitled-font-1;
   position: absolute;
-  right: 0;
+  right: 100;
   margin-bottom: -50px;
+  cursor: pointer;
+  bottom: 65px;
 }
 
 .messages{
