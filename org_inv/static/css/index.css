@@ -32,7 +32,7 @@ body:before {
   color:#EEE;
   display: block;
   margin-top: 7%;
-  margin-right: 12%;
+  margin-right: 13%;
 
 }
 
@@ -144,6 +144,8 @@ button:hover {
     min-width: 250px;
     display:block;
     margin-right: 10%;
+    font-family: 'Josefin Sans', sans-serif;
+
 
   }
 
