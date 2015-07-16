@@ -8,14 +8,14 @@ import re
 from factual import Factual
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseRedirect, HttpResponse
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView, FormView
 from .models import Product, Appointment, Service, Amount, Brand, Stock
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
-    AmountFormSet, ThresholdForm, ProductUpdateForm
+    AmountFormSet, ThresholdForm, ProductUpdateForm, ProductNoQuantityForm
 
 # Create your views here.
 
@@ -38,6 +38,7 @@ class AllProductsView(LoginRequiredMixin, ListView):
     model = Product
     context_object_name = 'all_products'
     template_name = 'all_products.html'
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
@@ -45,7 +46,7 @@ class AllProductsView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        values_dict = inventory_check(60, self.request.user)
+        values_dict = inventory_check(14, self.request.user)
         amts = []
         prods = []
         for pair in values_dict.items():
@@ -93,8 +94,44 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         form.instance.url = get_product(form.instance.upc_code)[1]
         form.instance.new_product_quantity(form.instance.quantity)
         form.instance.update_max_quantity()
+        messages.add_message(self.request, messages.SUCCESS,
+                             "{} product was successfully created".format(form.instance.name))
+
         return super().form_valid(form)
 
+#######################################################################################################################
+
+class ProductUpdate(LoginRequiredMixin, UpdateView):
+    model = Product
+    form_class = ProductNoQuantityForm
+    template_name = 'product_update_form.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = Product.objects.get(upc_code=request.GET.get('upc'))
+        if self.request.user == obj.user:
+            return super().dispatch(request, *args, **kwargs)
+
+        else:
+            return HttpResponseForbidden()
+
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
+        return form_class(self.request, **self.get_form_kwargs())
+
+    def get_success_url(self):
+        return reverse('all_products')
+
+    def get_object(self, queryset=None, **kwargs):
+        prod = Product.objects.get(upc_code=self.request.GET.get('upc'))
+        return prod
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        messages.add_message(self.request, messages.SUCCESS,
+                             "Product updated")
+        return super().form_valid(form)
 
 #######################################################################################################################
 
@@ -161,6 +198,7 @@ class AllAppointmentsView(LoginRequiredMixin, ListView):
     model = Appointment
     context_object_name = 'all_appointments'
     template_name = 'all_appointments.html'
+    paginate_by = 6
 
     def get_queryset(self):
         queryset = Appointment.objects.filter(user=self.request.user, date__gte=datetime.today()).order_by('date')
@@ -187,6 +225,9 @@ class AppointmentCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance = form.save(commit=False)
         form.instance.user = self.request.user
+        messages.add_message(self.request, messages.SUCCESS,
+                             "Your appointment for {} was successfully created".format(form.instance.date))
+        form.save()
         return super().form_valid(form)
 
 
@@ -250,6 +291,8 @@ class AppointmentUpdate(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.save()
+        messages.add_message(self.request, messages.SUCCESS,
+                             "Appointment updated")
         return super().form_valid(form)
 
 
@@ -293,6 +336,8 @@ class ServiceCreateView(LoginRequiredMixin, CreateView):
             self.object.user = self.request.user
             self.object.save()
             amounts.instance = self.object
+            messages.add_message(self.request, messages.SUCCESS,
+                             "{} was successfully created".format(self.object))
             amounts.save()
 
         return super().form_valid(form)
@@ -334,6 +379,8 @@ class ServiceUpdate(LoginRequiredMixin, UpdateView):
         amounts = context['amounts']
         if amounts.is_valid():
             amounts.instance = self.object
+            messages.add_message(self.request, messages.SUCCESS,
+                             "{} successfully updated".format(self.object))
             amounts.save()
 
         return super().form_valid(form)
@@ -552,7 +599,7 @@ class TooMuchProductView(LoginRequiredMixin, UpdateView):
         return prod
 
     def get_initial(self):
-        return {'quantity': self.object.display_quantity}
+        return {'quantity': round(self.object.display_quantity, 2)}
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -608,18 +655,22 @@ class OrderView(View):
             brand_products = []
             message = "Hello from {}!\nWould you please order the following products for us:\n".format(
                 request.user.profile.spa_name)
+            send = False
             for key, value in products.items():
-                if key.brand == brand:
+                if key.brand == brand and int(value) > 0:
                     brand_products.append(key)
+                    send = True
                     message += "{} (upc {}): {} unit(s)".format(key.name, key.upc_code, value) + "\n"
-            send_mail('Order from {}'.format(request.user.profile.spa_name), message, settings.EMAIL_HOST_USER,
+            if send:
+                send_mail('Order from {} in {}'.format(request.user.profile.spa_name, request.user.profile.location), message, settings.EMAIL_HOST_USER,
                       [brand.email], fail_silently=False)
         return redirect('/products/')
 
 
 #######################################################################################################################
 
-class SettingsView(LoginRequiredMixin, View):
+class SettingsView(LoginRequiredMixin,View):
+
     def get(self, request, **kwargs):
         form = ThresholdForm()
         brands = Brand.objects.filter(user=request.user)
@@ -631,10 +682,10 @@ class SettingsView(LoginRequiredMixin, View):
             amt = form.data['percent']
             prof = request.user.profile
             prof.threshold = amt
+            messages.add_message(self.request, messages.SUCCESS,
+                                 "Threshold updated to {}%".format(amt))
             prof.save()
-        return redirect('/settings/')
-
-
+            return redirect('/settings/')
 #######################################################################################################################
 
 class EmailUpdate(LoginRequiredMixin, UpdateView):

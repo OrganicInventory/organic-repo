@@ -57,7 +57,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'org_inv.urls'
-LOGIN_URL = '/users/login/'
+LOGIN_URL = ''
 
 TEMPLATES = [
     {

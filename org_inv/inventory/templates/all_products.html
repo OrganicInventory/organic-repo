@@ -19,7 +19,7 @@
                 document.test_form.action = "{% url 'create_product' %}";
             }
             else if (document.pressed == 'Update') {
-                document.test_form.action = "{% url 'new_order' %}";
+                document.test_form.action = "{% url 'update_product' %}";
             }
             else if (document.pressed == 'Detail') {
                 document.test_form.action = "{% url 'product_detail' %}";
@@ -32,31 +32,26 @@
               onsubmit="return OnSubmitForm();">
             <span class="focus-out focus-out-scan">Scan Product UPC</span>
             <input name='upc' class="form-control scan-input" type="text" autocomplete="off"/>
-
-            <div class="scan-btns">
-                <button class="gen-btn" onclick="document.pressed=this.value" type="submit" value="New">Create</button>
-
-                <button class="gen-btn" onclick="document.pressed=this.value" type="submit" value="Update">Update
-                </button>
-
-                <button class="gen-btn" onclick="document.pressed=this.value" type="submit" value="Detail">Details
-                </button>
-            </div>
-        </form>
+          <div class="scan-btns">
+              <button class="gen-btn scan-new" onclick="document.pressed=this.value" type="submit" value="New">Create</button>
+              <button class="gen-btn scan-update" onclick="document.pressed=this.value" type="submit" value="Update">Update</button>
+              <button class="gen-btn scan-details" onclick="document.pressed=this.value" type="submit" value="Detail">Details</button>
+          </div>
+      </form>
     </div>
 {% endblock %}
 
 {% block content %}
-    <table class="content-table content-table-links table-mobile">
+    <table class="content-table content-table-links table-mobile table-upc">
         <tr class="table-header">
-            <th class="status-th">Status</th>
+            <th class="status-th">Status (2 Wks)</th>
             <th>Title</th>
             <th>Product Size</th>
             <th>Qty</th>
             <th></th>
         </tr>
         {% for product in all_products %}
-            <tr>
+            <tr data-upc="{{product.upc_code}}">
                 {% if product in prods %}
                     {% for pair in pairs %}
                         {% if product == pair.0 %}
@@ -72,6 +67,7 @@
                 {% else %}
                     <td class="status-td"></td>
                 {% endif %}
+
                 <td>
                     <a href="{% url 'product_detail' %}?upc={{ product.upc_code }}">
                         <div class="table-id-link">
@@ -87,15 +83,21 @@
             </tr>
         {% endfor %}
     </table>
-
-    <!-- <div class="modal-container">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="secondary-heading">New Product</h2>
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="/appointments?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="/appointments?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
         </div>
-      </div>
-    </div> -->
-
+    {% endif %}
 {% endblock %}
 
 {% block addbutton %}

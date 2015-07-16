@@ -1,3 +1,4 @@
+<body class="edit-profile-body">
 {% extends "base.html" %}
 {% load static %}
 
@@ -6,18 +7,23 @@
 {% endblock %}
 {% block content %}
 
-    <h2>Edit Profile</h2>
+    <h2 class="secondary-heading">Edit Profile</h2>
 
-    <form method="POST" action="{% url 'edit_profile' %}">
+    <form class="main-form" method="POST" action="{% url 'edit_profile' %}">
         {% csrf_token %}
-        {{ form.as_p }}
+        {% for field in form %}
+            <div class="{{ field.label }} input">
 
+                <span class="focus-out">{{ field.label_tag }} </span> {{ field }}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
         <!-- Provide a button to click to submit the form. -->
-        <input type="submit" name="submit" class="btn btn-default" value="Update profile"/>
+        <button type="submit" name="submit" class="gen-btn" value="Update profile">Update Profile</button>
     </form>
 
     <div id='product_chart'>
-    <h4>Product Usage Comparison</h4>
+    <h4 class="secondary-heading">Product Usage Comparison</h4>
         <svg style='height:500px'></svg>
     </div>
     <script src="{% static 'd3.min.js' %}"></script>
@@ -28,7 +34,7 @@
     <script src='{% static 'product_visualization.js' %}' type='text/javascript'></script>
 
     <div id='service_chart'>
-    <h4>Service Booking Comparison</h4>
+    <h4 class="secondary-heading">Service Booking Comparison</h4>
         <svg style='height:500px'></svg>
     </div>
     <script src="{% static 'd3.min.js' %}"></script>
@@ -38,3 +44,4 @@
     </script>
     <script src='{% static 'service_visualization.js' %}' type='text/javascript'></script>
 {% endblock %}
+</body>
