@@ -26,14 +26,6 @@
             }
             return true;
         }
-
-        // function checkUpc() {
-        //   var upcInput  = $('.scan-input').val();
-        //   var productCount = $('.get-upc').length;
-        //   var usedUpc = "{{ product.upc_code }}";
-        //     console.log(productCount);
-        //     console.log(usedUpc);
-        // }
     </script>
     <div class="form-container scan-form">
         <form name='test_form' class="form-control scan-form main-form" id='test_form' method="get"
@@ -59,11 +51,7 @@
             <th></th>
         </tr>
         {% for product in all_products %}
-        <!-- <input type="hidden" class="get-upc" value="{{ product.upc_code }}" /> -->
-            <!-- <tr data-upc="{{product.upc_code}}"> -->
-                <!-- <td class="status-td"></td> -->
-
-            <tr>
+            <tr data-upc="{{product.upc_code}}">
                 {% if product in prods %}
                     {% for pair in pairs %}
                         {% if product == pair.0 %}
@@ -92,18 +80,9 @@
                 <td><a href="{% url 'product_empty' product.id %}">
                     <button class="gen-btn">I'm Out</button>
                 </a></td>
-                <!-- <td>{{ product.upc_code }}</td> -->
             </tr>
         {% endfor %}
     </table>
-
-    <!-- <div class="modal-container">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="secondary-heading">New Product</h2>
-        </div>
-      </div>
-    </div> -->
 
 {% endblock %}
 
