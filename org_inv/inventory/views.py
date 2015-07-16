@@ -209,7 +209,7 @@ class AllAppointmentsView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         events = []
         for appt in Appointment.objects.filter(user=self.request.user).order_by('date'):
-            events.append({'title': appt.service.name, 'start': str(appt.date)})
+            events.append({'title': appt.service.name, 'start': str(appt.date), 'adjust_usage': reverse('adjust_usage', kwargs={'appt_id': appt.id}), 'appt_edit': reverse('update_appointment', kwargs={'app_id': appt.id}), 'appt_cancel': reverse('delete_appointment', kwargs={'app_id': appt.id})})
         context = super().get_context_data(**kwargs)
         context['events'] = events
         return context
@@ -638,8 +638,8 @@ class AdjustUsageView(View):
             return HttpResponseForbidden()
 
     def post(self, request, **kwargs):
-        form = AdjustUsageForm(request.POST, user=request.user)
         appt = Appointment.objects.get(id=self.kwargs['appt_id'])
+        form = AdjustUsageForm(request.POST, user=request.user, appointment=appt)
         if form.is_valid():
             amt = Amount.objects.get(product=form.data['product'], service=appt.service)
             diff = int(form.data['amount_used']) - amt.amount

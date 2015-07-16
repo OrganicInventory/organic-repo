@@ -3,6 +3,8 @@
 
 {% block pagetitle %}
 <h1 class="main-heading">All Appointments</h1>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css">
     <script>
 var appointments = {{ events|safe }}
 $(document).ready(function() {
@@ -11,12 +13,19 @@ $(document).ready(function() {
 
     $('#calendar').fullCalendar({
         eventLimit: true,
-        events: appointments
-        // put your options and callbacks here
+        events: appointments,
+        eventRender: function (event, element) {
+        element.attr('href', 'javascript:void(0);');
+        element.click(function() {
+            $("#adjustLink").attr('href', event.adjust_usage);
+            $("#editLink").attr('href', event.appt_edit);
+            $("#deleteLink").attr('href', event.appt_cancel);
+            $("#eventContent").dialog({ modal: true, title: event.title, width:350});
+        });
+    }
     })
 
 });
-
 </script>
 {% endblock %}
 
@@ -63,7 +72,14 @@ $(document).ready(function() {
 {#            </span>#}
 {#        </div>#}
 {#    {% endif %}#}
+<div id="eventContent" title="Event Details" style="display:none;">
+    <a id="adjustLink" href=""><button class="gen-btn">Adjust Usage</button></a>
+ <a id="editLink" href=""><button class="gen-btn">Reschedule Appointment</button></a>
+ <a id="deleteLink" href=""><button class="gen-btn">Cancel Appointment</button></a>
+</div>
+
     <div id='calendar'></div>
+
 {% endblock %}
 
 
