@@ -121,6 +121,13 @@ getUrlVars();
     }
   });
 
+  $('.cancel-submit').keypress(function(e) {
+    if(e.which === 13) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  });
+
 //CHECK UPC INPUT AND COMPARE TO EXISTING PRODUCTS
   function checkUpc() {
     var upcInput = parseInt($('.scan-input').val());
