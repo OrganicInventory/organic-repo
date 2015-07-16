@@ -45,7 +45,7 @@ class AllProductsView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        values_dict = inventory_check(60, self.request.user)
+        values_dict = inventory_check(14, self.request.user)
         amts = []
         prods = []
         for pair in values_dict.items():
