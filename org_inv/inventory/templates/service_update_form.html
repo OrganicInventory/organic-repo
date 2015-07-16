@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 
+{% block pagetitle %}
+  <h1 class="main-heading">Update {{object.name}}</h1>
+{% endblock %}
+
 {% block content %}
 <div class="main-content-header">
-  <h2 class="secondary-heading">Update Service</h2>
+  <h2 class="secondary-heading">Update {{object.name}}</h2>
 </div>
   <div class="form-container">
     <form class="main-form" method="post" action="">
