@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^low/$', inv_views.LowInventoryView.as_view(), name="low_products"),
     url(r'^products/new/$', inv_views.ProductCreateView.as_view(), name="create_product"),
     url(r'^products/delete/(?P<prod_id>\d+)$', inv_views.ProductDeleteView.as_view(), name='product_confirm_delete'),
+    url(r'^products/update/', inv_views.ProductUpdate.as_view(), name='update_product'),
     url(r'^products/detail/$', inv_views.ProductDetailView.as_view(), name='product_detail'),
     url(r'^services/detail/(?P<serv_id>\d+)$', inv_views.ServiceDetailView.as_view(), name='service_detail'),
     url(r'^appointments/$', inv_views.AllAppointmentsView.as_view(), name='all_appointments'),
