@@ -19,7 +19,19 @@ body {
 }
 
 a {
-    color: #46b8da;
+    /*color: #46b8da;*/
+    text-decoration: none;
+}
+
+a:visited {
+    /*color: #46b8da;*/
+    text-decoration: none;
+}
+
+.pagination {
+    text-align: center;
+    background-color: #e8e6e2;
+    padding-top: 25px;
 }
 
 .prod-image {
