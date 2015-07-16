@@ -20,7 +20,7 @@ getUrlVars();
   var urlRange = getUrlVars()['range'];
   var urlUpc = getUrlVars() ['upc'];
 
-  // $('.scan-input').focus();
+  $('.scan-input').focus();
 
   $('.date-dropdown').val(urlRange);
     if (urlRange === '1') {
@@ -56,18 +56,6 @@ getUrlVars();
     $('.slide-in-menu').slideUp('slow');
   });
 
-//STICKY HEADER ON RESIZE
-  $(window).resize(function() {
-    var width = $(window).width();
-    if (width > 700) {
-      stickyHeader();
-      $('.main-nav-ul').show();
-      $('.dropdown-icon-bottom').css('display', 'none');
-    } else {
-      $('.slide-in-menu').css('display', 'none');
-    }
-  }).resize();
-
 //FORM FLOATING LABELS
   $('input').focusin(function() {
     $(this).siblings('span').addClass('focus-in');
@@ -99,12 +87,16 @@ getUrlVars();
     });
   }
 
-//MODAL
-  // $('.add-content-button').click(function() {
-  //   $('.modal-container').fadeToggle();
-  //   $('.add-content-button').toggleClass('modal-exit-btn');
-  //   $('.add-button').toggleClass('modal-exit-icon');
-  // });
+//STICKY HEADER ON RESIZE
+  $(window).resize(function() {
+    var width = $(window).width();
+    if (width > 700) {
+      stickyHeader();
+      $('.main-nav-ul').show();
+    } else {
+      $('.slide-in-menu').css('display', 'none');
+    }
+  }).resize();
 
 //REMOVING SPECIFIC LABELS
   $('#id_service').siblings().remove();
@@ -125,49 +117,34 @@ getUrlVars();
     e.preventDefault();
     e.stopPropagation();
 
-    // checkUpc();
+    checkUpc();
     }
   });
 
-  // function checkUpc() {
-  //   var upcInput  = parseInt($('.scan-input').val());
-  //   var productCount = $('.get-upc').length;
-  //   var arr = [];
-  //   // var upcVal = $(this).val();
-  //   console.log(upcInput);
-  //
-  //   $('.get-upc').each(function() {
-  //     // console.log($(this).val());
-  //     arr.push($(this).val());
-  //     // console.log(arr.length);
-  //   });
-  //
-  //   for (var i = 0; i < arr.length; i++) {
-  //     console.log(parseInt(arr[i]));
-  //     if (upcInput = 123456789) {
-  //       $('.scan-details').css('display', 'inline');
-  //       $('.scan-update').css('display', 'inline');
-  //       $('.scan-new').css('display', 'none');
-  //     } else {
-  //       $('.scan-new').css('display', 'inline');
-  //       $('.scan-details').css('display', 'none');
-  //       $('.scan-update').css('display', 'none');
-  //     }
-  //   }
-  // }
+//CHECK UPC INPUT AND COMPARE TO EXISTING PRODUCTS
+  function checkUpc() {
+    var upcInput = parseInt($('.scan-input').val());
+    var arr = [];
 
-  // console.log(tr.data('upc'));
+    $('.table-upc tr').each(function() {
+    var upcData = parseInt($(this).attr('data-upc'));
+      arr.push(upcData);
 
-  // function checkUpc() {
-  //   $('table-upc tr').each(function (i, tr) {
-  //     var test = tr.data('upc');
-  //   });
-  // }
-  // checkUpc();
+      for (var i = 0; i < arr.length; i++) {
+        if (arr.indexOf(upcInput) > -1) {
+          $('.scan-details').css('display', 'inline');
+          $('.scan-update').css('display', 'inline');
+          $('.scan-new').css('display', 'none');
 
-
-  // $('table-upc tr').each(function (i, tr) {
-  //   tr.data('upc');
-  // });
+          var trIndex = arr.indexOf(upcInput);
+          $( 'tr:eq(' + trIndex + ')').css('background-color', '#add8e6');
+        } else {
+          $('.scan-new').css('display', 'inline');
+          $('.scan-details').css('display', 'none');
+          $('.scan-update').css('display', 'none');
+        }
+      }
+    });
+  }
 
 });
