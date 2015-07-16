@@ -205,7 +205,11 @@ class AllAppointmentsView(LoginRequiredMixin, ListView):
         return queryset
 
     def get_context_data(self, **kwargs):
+        events = []
+        for appt in Appointment.objects.filter(user=self.request.user, date__gte=datetime.today()).order_by('date'):
+            events.append({'title': appt.service.name, 'start': str(appt.date)})
         context = super().get_context_data(**kwargs)
+        context['events'] = events
         return context
 
 
