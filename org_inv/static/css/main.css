@@ -147,42 +147,46 @@ body.new-order-body li.new-order {
 body.low-inventory-body li.low-inventory:hover, body.all-products-body li.all-products:hover,
 body.services-body li.services:hover, body.appointments-body li.appointments:hover,
 body.new-order-body li.new-order:hover {
-    background-color: inherit;
-    cursor: default;
+  background-color: inherit;
+  cursor: default;
 }
 
 body.services-body .main-content {
-    width: 50%;
+  width: 50%;
 }
 
 body.new-order-body .main-content {
-    width: 100%;
-    box-shadow: none;
-    background-color: #e8e6e2;
+  width: 100%;
+  box-shadow: none;
+  background-color: #e8e6e2;
 }
 
 body.new-order-body .main-content input, body.new-order-body .main-content select {
-    background-color: #e8e6e2;
-    width: 80%;
+  background-color: #e8e6e2;
+  width: 80%;
 }
 
 body.new-order-body .main-content select,
 body.create-product-body .main-content select {
-    border: none;
-    border-bottom: 2px solid #b35b5a;
-    border-left: 2px solid #b35b5a;
-    color: #999;
+  border: none;
+  border-bottom: 2px solid #b35b5a;
+  border-left: 2px solid #b35b5a;
+  color: #999;
 }
 
 body.new-order-body .main-content .form-container {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0);
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 
 body.new-order-body .main-content .form-container .focus-out {
-    position: absolute;
-    left: 70px;
+  position: absolute;
+  left: 70px;
+}
+
+body.edit-profile-body .main-form .focus-out {
+  left: 28%;
 }
 
 body.new-order-body .main-content .form-button {

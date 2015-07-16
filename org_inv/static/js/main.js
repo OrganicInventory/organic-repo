@@ -137,7 +137,7 @@ getUrlVars();
           $('.scan-new').css('display', 'none');
 
           var trIndex = arr.indexOf(upcInput);
-          $( 'tr:eq(' + trIndex + ')').css('background-color', 'red').css('color', 'white');
+          $( 'tr:eq(' + trIndex + ')').css('background-color', '#add8e6');
         } else {
           $('.scan-new').css('display', 'inline');
           $('.scan-details').css('display', 'none');
