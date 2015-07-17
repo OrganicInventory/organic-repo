@@ -1,28 +1,29 @@
 <body class="user-profile-body">
 {% extends "base.html" %}
 
-{% block pagetitle %}
-  <h1 class="main-heading">Settings</h1>
-{% endblock %}
-
 {% block content %}
     <div class="main-content-header">
         <h2 class="secondary-heading">Settings</h2>
     </div>
-    <h2>{{ user.username }}</h2>
 
+    <h2>Brands</h2>
     {% for brand in brands %}
-        <p>{{ brand }}--{{ brand.email }}</p><a href="{% url 'update_email' brand.id %}">
-        <button class="update-btn-table">Update Order Email</button>
+        <div class="brand-div">
+        <a href="{% url 'update_email' brand.id %}"><button class="gen-btn">Edit</button></a>
+        <p class="brand-email">{{ brand }}--{{ brand.email }}</p>
+        </div>
     </a>
     {% endfor %}
     <a href="{% url 'create_brand' %}"><button class="gen-btn">Add New Brand</button></a>
+
 
     <p>Low inventory threshold: {{ request.user.profile.threshold }}%</p>
     <form method="POST" action="">
         {% csrf_token %}
         {{ form }}
-        <button type="submit" class="update-btn-table">Update Threshold</button>
+        <div class="brand-div">
+        <button type="submit" class="gen-btn">Update Threshold</button>
+            </div>
     </form>
 {% endblock %}
 </body>
