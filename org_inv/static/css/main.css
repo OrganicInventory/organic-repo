@@ -141,8 +141,7 @@ table {
 /*DISPLAY CURRENT PAGE*/
 
 body.low-inventory-body li.low-inventory, body.all-products-body li.all-products,
-body.services-body li.services, body.appointments-body li.appointments,
-body.new-order-body li.new-order {
+body.appointments-body li.appointments {
     display: inline-block;
     padding: 15px 10px;
     margin: 5px 9px;
