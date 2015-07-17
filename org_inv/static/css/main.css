@@ -562,25 +562,11 @@ table {
     outline: none;
 }
 
-<<<<<<< HEAD
 .details-button {
     bottom: 5px;
     right: 5px;
 }
 
-.gen-btn {
-    padding: 8px 10px;
-    cursor: pointer;
-    color: #333;
-    border-radius: 2px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border: none;
-    /*box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);*/
-    outline: none;
-    background-color: #fff;
-    border-radius: 3px;
-    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);
-=======
 .gen-btn {
   padding: 8px 10px;
   cursor: pointer;
@@ -593,7 +579,6 @@ table {
   background-color: #eee;
   border-radius: 3px;
   box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);
->>>>>>> c772c1898598b8bc426bacc9a47ddc54a0fcd519
 }
 
 .edit-btn {
