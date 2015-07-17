@@ -100,6 +100,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
         return super().form_valid(form)
 
+
 #######################################################################################################################
 
 class ProductUpdate(LoginRequiredMixin, UpdateView):
@@ -133,6 +134,7 @@ class ProductUpdate(LoginRequiredMixin, UpdateView):
         messages.add_message(self.request, messages.SUCCESS,
                              "Product updated")
         return super().form_valid(form)
+
 
 #######################################################################################################################
 
@@ -190,7 +192,7 @@ class ProductDeleteView(DeleteView):
         Amount.objects.filter(product=self.object).delete()
         success_url = self.get_success_url()
         self.object.delete()
-        messages.add_message(self.request, messages.SUCCESS,"{} Deleted".format(self.object))
+        messages.add_message(self.request, messages.SUCCESS, "{} Deleted".format(self.object))
         return HttpResponseRedirect(success_url)
 
 
@@ -208,8 +210,11 @@ class AllAppointmentsView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         events = []
-        for appt in Appointment.objects.filter(user=self.request.user).order_by('date'):
-            events.append({'title': appt.service.name, 'start': str(appt.date), 'adjust_usage': reverse('adjust_usage', kwargs={'appt_id': appt.id}), 'appt_edit': reverse('update_appointment', kwargs={'app_id': appt.id}), 'appt_cancel': reverse('delete_appointment', kwargs={'app_id': appt.id})})
+        for appt in Appointment.objects.filter(user=self.request.user).prefetch_related('service').order_by('date'):
+            events.append({'title': appt.service.name, 'start': str(appt.date),
+                           'adjust_usage': reverse('adjust_usage', kwargs={'appt_id': appt.id}),
+                           'appt_edit': reverse('update_appointment', kwargs={'app_id': appt.id}),
+                           'appt_cancel': reverse('delete_appointment', kwargs={'app_id': appt.id})})
         context = super().get_context_data(**kwargs)
         context['events'] = events
         return context
@@ -264,7 +269,8 @@ class AppointmentDelete(LoginRequiredMixin, DeleteView):
             url = self.get_success_url()
             return HttpResponseRedirect(url)
         else:
-	        messages.add_message(self.request, messages.SUCCESS,"Appointment for {} Cancelled".format(self.get_object(date)))
+            messages.add_message(self.request, messages.SUCCESS,
+                                 "Appointment for {} Cancelled".format(self.get_object(date)))
         return super(AppointmentDelete, self).post(request, *args, **kwargs)
 
 
@@ -344,7 +350,7 @@ class ServiceCreateView(LoginRequiredMixin, CreateView):
             self.object.save()
             amounts.instance = self.object
             messages.add_message(self.request, messages.SUCCESS,
-                             "{} Added.".format(self.object))
+                                 "{} Added.".format(self.object))
             amounts.save()
 
         return super().form_valid(form)
@@ -387,7 +393,7 @@ class ServiceUpdate(LoginRequiredMixin, UpdateView):
         if amounts.is_valid():
             amounts.instance = self.object
             messages.add_message(self.request, messages.SUCCESS,
-                              "{} Updated".format(self.object))
+                                 "{} Updated".format(self.object))
             amounts.save()
 
         return super().form_valid(form)
@@ -455,7 +461,8 @@ class ServiceDetailView(DetailView):
 
 def inventory_check(daterange, user):
     appointments = Appointment.objects.filter(user=user).filter(date__gt=timezone.now()).filter(
-        date__lte=timezone.now() + timedelta(days=daterange)).order_by('date')
+        date__lte=timezone.now() + timedelta(days=daterange)).order_by('date').select_related().prefetch_related(
+        'service', 'service__products')
     product_dict = {}
     for product in Product.objects.filter(user=user):
         if product.quantity < ((user.profile.threshold * .01) * product.max_quantity):
@@ -465,7 +472,8 @@ def inventory_check(daterange, user):
 
     for appointment in appointments:
         for product in appointment.service.products.all():
-            amount = Amount.objects.get(product=product, service=appointment.service)
+            amount = product.amount_set.get(service=appointment.service)
+            # amount = Amount.objects.get(product=product, service=appointment.service)
             if len(product_dict[product]) == 2:
                 product_dict[product][0] -= amount.amount
             else:
@@ -481,7 +489,8 @@ def inventory_check(daterange, user):
     for key, value in product_dict.items():
         if len(value) == 2:
             low_products[key] = value
-            low_products[key].append(math.ceil((((user.profile.threshold * .01) * key.max_quantity) - low_products[key][0])/key.size))
+            low_products[key].append(
+                math.ceil((((user.profile.threshold * .01) * key.max_quantity) - low_products[key][0]) / key.size))
     return low_products
 
 
@@ -547,15 +556,15 @@ class EmptyProductView(BaseDetailView):
         prod.quantity = 0
         prod.save()
         amounts = Amount.objects.filter(product=prod)
-        messages.add_message(self.request, messages.SUCCESS,"{} quantity set to 0.".format(prod.name))
+        messages.add_message(self.request, messages.SUCCESS, "{} quantity set to 0.".format(prod.name))
         for amount in amounts:
             up_perc = .1 * amount.amount
             new_amt = amount.amount + up_perc
             amount.amount = new_amt
             amount.save()
         return redirect('/products/')
-    # def get_object(self, request):
-	 #    return Product.objects.get()
+        # def get_object(self, request):
+        #    return Product.objects.get()
 
 
 #######################################################################################################################
@@ -563,7 +572,7 @@ class EmptyProductView(BaseDetailView):
 class CloseShopView(View):
     def dispatch(self, request, *args, **kwargs):
         appts = Appointment.objects.filter(date__lte=datetime.today(), done=False)
-        messages.add_message(self.request, messages.SUCCESS,"Shop Closed and Rectified")
+        messages.add_message(self.request, messages.SUCCESS, "Shop Closed and Rectified")
         for appt in appts:
             appt.done = True
             appt.save()
@@ -677,15 +686,15 @@ class OrderView(View):
                     send = True
                     message += "{} (upc {}): {} unit(s)".format(key.name, key.upc_code, value) + "\n"
             if send:
-                send_mail('Order from {} in {}'.format(request.user.profile.spa_name, request.user.profile.location), message, settings.EMAIL_HOST_USER,
-                      [brand.email], fail_silently=False)
+                send_mail('Order from {} in {}'.format(request.user.profile.spa_name, request.user.profile.location),
+                          message, settings.EMAIL_HOST_USER,
+                          [brand.email], fail_silently=False)
         return redirect('/products/')
 
 
 #######################################################################################################################
 
-class SettingsView(LoginRequiredMixin,View):
-
+class SettingsView(LoginRequiredMixin, View):
     def get(self, request, **kwargs):
         form = ThresholdForm()
         brands = Brand.objects.filter(user=request.user)
@@ -701,6 +710,8 @@ class SettingsView(LoginRequiredMixin,View):
                                  "Threshold updated to {}%.".format(amt))
             prof.save()
             return redirect('/settings/')
+
+
 #######################################################################################################################
 
 class EmailUpdate(LoginRequiredMixin, UpdateView):
@@ -743,32 +754,60 @@ class BrandCreateView(LoginRequiredMixin, CreateView):
         form.instance.save()
         return super().form_valid(form)
 
+
 #######################################################################################################################
 
+# def get_prod_data(request):
+#     products = Product.objects.filter(user=request.user).prefetch_related('service_set').prefetch_related('amount_set')
+#     data = []
+#     enabled = True
+#     for product in products:
+#         services = product.service_set.all()
+#         appts = Appointment.objects.filter(service__in=services).order_by('date')
+#         if appts:
+#             dates = sorted([appt.date for appt in appts])
+#             date_set = set(dates[0]+timedelta(x) for x in range((dates[-1]-dates[0]).days))
+#         else:
+#             date_set = {}
+#         values = []
+#         usages = {}
+#         for date in sorted(date_set):
+#             usages[str(date)] = 0
+#             date_appts = [appt for appt in appts if appt.date == date]
+#             for appt in date_appts:
+#                 amt = Amount.objects.get(service=appt.service, product=product)
+#                 appt_date = str(appt.date)
+#                 if appt_date in usages.keys():
+#                     usages[appt_date] += amt.amount
+#                 else:
+#                     usages[appt_date] = amt.amount
+#         for key, value in sorted(usages.items(), key=lambda x: x[0]):
+#             values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
+#         if enabled:
+#             data.append({'values': values, 'key': product.name})
+#             enabled = False
+#         else:
+#             data.append({'values': values, 'key': product.name, 'disabled': 'True'})
+#     return data
+
 def get_prod_data(request):
-    products = Product.objects.filter(user=request.user)
+    products = Product.objects.filter(user=request.user).prefetch_related('stock_set')
     data = []
     enabled = True
     for product in products:
-        services = Service.objects.filter(products__pk=product.id)
-        appts = Appointment.objects.filter(service__in=services).order_by('date')
-        if appts:
-            dates = sorted([appt.date for appt in appts])
-            date_set = set(dates[0]+timedelta(x) for x in range((dates[-1]-dates[0]).days))
+        stocks = product.stock_set.all()
+        if stocks:
+            dates = sorted([stock.date for stock in stocks])
+            date_set = set(dates[0] + timedelta(x) for x in range((dates[-1] - dates[0]).days))
         else:
             date_set = {}
         values = []
         usages = {}
         for date in sorted(date_set):
             usages[str(date)] = 0
-            date_appts = [appt for appt in appts if appt.date == date]
-            for appt in date_appts:
-                amt = Amount.objects.get(service=appt.service, product=product)
-                appt_date = str(appt.date)
-                if appt_date in usages.keys():
-                    usages[appt_date] += amt.amount
-                else:
-                    usages[appt_date] = amt.amount
+            date_stocks = [stock for stock in stocks if stock.date == date]
+            for stock in date_stocks:
+                usages[str(stock.date)] = stock.used
         for key, value in sorted(usages.items(), key=lambda x: x[0]):
             values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
         if enabled:
@@ -809,7 +848,7 @@ def get_all_service_data(request):
         appts = Appointment.objects.filter(service=service).order_by('date')
         if appts:
             dates = sorted([appt.date for appt in appts])
-            date_set = set(dates[0]+timedelta(x) for x in range((dates[-1]-dates[0]).days))
+            date_set = set(dates[0] + timedelta(x) for x in range((dates[-1] - dates[0]).days))
         else:
             date_set = {}
         values = []
@@ -831,6 +870,7 @@ def get_all_service_data(request):
         else:
             data.append({'values': values, 'key': service.name, 'disabled': 'True'})
     return data
+
 
 #######################################################################################################################
 
