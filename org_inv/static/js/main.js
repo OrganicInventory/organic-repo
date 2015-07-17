@@ -162,7 +162,7 @@ getUrlVars();
 //DELETE ITEM FROM ORDER FORM
   $('.delete-item').click(function() {
     $(this).parent().hide();
-    $(this).siblings('input').val('');
+    $(this).siblings('input').val(0);
   });
 
 

@@ -879,6 +879,13 @@ body.new-order-body li.sub-new-order {
   cursor: pointer;
 }
 
+#product_chart {
+  width: 90%;
+  border: 1px solid black;
+  margin: 25px auto;
+  padding-bottom: 25px;
+}
+
 
 /*RESPONSIVE*/
 
@@ -1005,7 +1012,7 @@ body.new-order-body li.sub-new-order {
     }
 
     .table-mobile tr:last-child td:nth-child(2) {
-        border-bottom-left-radius: 10px;
+        /*border-bottom-left-radius: 10px;*/
     }
 
     .add-btn-mobile {
