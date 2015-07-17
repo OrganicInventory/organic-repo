@@ -1,31 +1,30 @@
+<body class="create-service-body">
 {% extends "base.html" %}
 {% load static %}
 
 {% block content %}
     <div class="main-content-header">
         <h2 class="secondary-heading">Add Service</h2>
+        <button class="display-chart-btn">Amount Reference</button>
     </div>
     <div class="form-container">
-        <div class="service-form">
-            <form class="main-form" method="post" action="">
+      <!-- <div class="service-form"> -->
+        <form class="main-form" method="post" action="">
+          {% csrf_token %}
+          {{ form }}
+          {{ amounts.management_form }}
+          {% for form in amounts %}
+            <div class="table">
+              <table class='no_error'>
+                  {{ form.as_table }}
+              </table>
+            </div>
+          {% endfor %}
+          <button class="form-button" type="submit" name="submit">Add</button>
 
-
-                {% csrf_token %}
-                {{ form }}
-                {{ amounts.management_form }}
-                {% for form in amounts %}
-                    <div class="table">
-                        <table class='no_error'>
-                            {{ form.as_table }}
-                        </table>
-                    </div>
-                {% endfor %}
-
-                <button class="form-button" type="submit" name="submit">Add</button>
-
-            </form>
+        </form>
         <input type="button" value="Add More Products" id="add_more">
-</div>
+      <!-- </div> -->
     </div>
     <img class="ref-chart" src="{% static "css/size_chart.png" %}"/>
 
@@ -37,3 +36,4 @@
     </script>
     <script src='{% static 'add_forms.js' %}' type='text/javascript'></script>
 {% endblock %}
+</body>

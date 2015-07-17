@@ -165,5 +165,9 @@ getUrlVars();
     $(this).siblings('input').val(0);
   });
 
+  $('.display-chart-btn').click(function() {
+    $('.ref-chart').slideToggle();
+  });
+
 
 });

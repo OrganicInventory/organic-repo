@@ -18,11 +18,6 @@ body {
   color: #333;
 }
 
-.ref-chart {
-  max-width: 250px;
-  padding-top: 40px;
-}
-
 a {
   color: #46b8da;
   /*color: #46b8da;*/
@@ -924,6 +919,25 @@ body.new-order-body li.sub-new-order {
 
 .edit-profile-container button {
   float: right;
+}
+
+.ref-chart {
+  max-width: 250px;
+  position: absolute;
+  top: 7.5%;
+  right: 0;
+  display: none;
+}
+
+.create-service-body .main-content {
+  position: relative;
+}
+
+.display-chart-btn {
+  position: absolute;
+  top: 20px;
+  right: 60px;
+  cursor: pointer;
 }
 
 
