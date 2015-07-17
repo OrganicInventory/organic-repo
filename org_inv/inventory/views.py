@@ -455,7 +455,7 @@ class ServiceDetailView(DetailView):
 
 def inventory_check(daterange, user):
     appointments = Appointment.objects.filter(user=user).filter(date__gt=timezone.now()).filter(
-        date__lte=timezone.now() + timedelta(days=daterange)).order_by('date')
+        date__lte=timezone.now() + timedelta(days=daterange)).order_by('date').select_related().prefetch_related('service', 'service__products')
     product_dict = {}
     for product in Product.objects.filter(user=user):
         if product.quantity < ((user.profile.threshold * .01) * product.max_quantity):
@@ -465,7 +465,8 @@ def inventory_check(daterange, user):
 
     for appointment in appointments:
         for product in appointment.service.products.all():
-            amount = Amount.objects.get(product=product, service=appointment.service)
+            amount = product.amount_set.get(service=appointment.service)
+            # amount = Amount.objects.get(product=product, service=appointment.service)
             if len(product_dict[product]) == 2:
                 product_dict[product][0] -= amount.amount
             else:
@@ -556,7 +557,6 @@ class EmptyProductView(BaseDetailView):
         return redirect('/products/')
     # def get_object(self, request):
 	 #    return Product.objects.get()
-
 
 #######################################################################################################################
 
