@@ -264,7 +264,7 @@ class AppointmentDelete(LoginRequiredMixin, DeleteView):
             url = self.get_success_url()
             return HttpResponseRedirect(url)
         else:
-	        messages.add_message(self.request, messages.SUCCESS,"Appointment for {} Cancelled".format(self.get_object(date)))
+            messages.add_message(self.request, messages.SUCCESS,"Appointment for {} Cancelled".format(self.get_object(date)))
         return super(AppointmentDelete, self).post(request, *args, **kwargs)
 
 
@@ -679,7 +679,7 @@ class OrderView(View):
             if send:
                 send_mail('Order from {} in {}'.format(request.user.profile.spa_name, request.user.profile.location), message, settings.EMAIL_HOST_USER,
                       [brand.email], fail_silently=False)
-            return redirect('/products/')
+        return redirect('/products/')
 
 
 #######################################################################################################################
@@ -745,15 +745,47 @@ class BrandCreateView(LoginRequiredMixin, CreateView):
 
 #######################################################################################################################
 
+# def get_prod_data(request):
+#     products = Product.objects.filter(user=request.user).prefetch_related('service_set').prefetch_related('amount_set')
+#     data = []
+#     enabled = True
+#     for product in products:
+#         services = product.service_set.all()
+#         appts = Appointment.objects.filter(service__in=services).order_by('date')
+#         if appts:
+#             dates = sorted([appt.date for appt in appts])
+#             date_set = set(dates[0]+timedelta(x) for x in range((dates[-1]-dates[0]).days))
+#         else:
+#             date_set = {}
+#         values = []
+#         usages = {}
+#         for date in sorted(date_set):
+#             usages[str(date)] = 0
+#             date_appts = [appt for appt in appts if appt.date == date]
+#             for appt in date_appts:
+#                 amt = Amount.objects.get(service=appt.service, product=product)
+#                 appt_date = str(appt.date)
+#                 if appt_date in usages.keys():
+#                     usages[appt_date] += amt.amount
+#                 else:
+#                     usages[appt_date] = amt.amount
+#         for key, value in sorted(usages.items(), key=lambda x: x[0]):
+#             values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
+#         if enabled:
+#             data.append({'values': values, 'key': product.name})
+#             enabled = False
+#         else:
+#             data.append({'values': values, 'key': product.name, 'disabled': 'True'})
+#     return data
+
 def get_prod_data(request):
-    products = Product.objects.filter(user=request.user)
+    products = Product.objects.filter(user=request.user).prefetch_related('stock_set')
     data = []
     enabled = True
     for product in products:
-        services = Service.objects.filter(products__pk=product.id)
-        appts = Appointment.objects.filter(service__in=services).order_by('date')
-        if appts:
-            dates = sorted([appt.date for appt in appts])
+        stocks = product.stock_set.all()
+        if stocks:
+            dates = sorted([stock.date for stock in stocks])
             date_set = set(dates[0]+timedelta(x) for x in range((dates[-1]-dates[0]).days))
         else:
             date_set = {}
@@ -761,14 +793,9 @@ def get_prod_data(request):
         usages = {}
         for date in sorted(date_set):
             usages[str(date)] = 0
-            date_appts = [appt for appt in appts if appt.date == date]
-            for appt in date_appts:
-                amt = Amount.objects.get(service=appt.service, product=product)
-                appt_date = str(appt.date)
-                if appt_date in usages.keys():
-                    usages[appt_date] += amt.amount
-                else:
-                    usages[appt_date] = amt.amount
+            date_stocks = [stock for stock in stocks if stock.date == date]
+            for stock in date_stocks:
+               usages[str(stock.date)] = stock.used
         for key, value in sorted(usages.items(), key=lambda x: x[0]):
             values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
         if enabled:
@@ -777,7 +804,6 @@ def get_prod_data(request):
         else:
             data.append({'values': values, 'key': product.name, 'disabled': 'True'})
     return data
-
 
 #######################################################################################################################
 
