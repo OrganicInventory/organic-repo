@@ -461,9 +461,9 @@ class ServiceDetailView(DetailView):
 
 def inventory_check(daterange, user):
     appointments = Appointment.objects.filter(user=user).filter(date__gt=timezone.now()).filter(
-        date__lte=timezone.now() + timedelta(days=daterange)).order_by('date').select_related().prefetch_related(
-        'service', 'service__products')
+        date__lte=timezone.now() + timedelta(days=daterange)).prefetch_related('service').order_by('date')
     product_dict = {}
+    amounts = Amount.objects.all().select_related()
     for product in Product.objects.filter(user=user):
         if product.quantity < ((user.profile.threshold * .01) * product.max_quantity):
             product_dict[product] = [product.quantity, date.today()]
@@ -472,7 +472,7 @@ def inventory_check(daterange, user):
 
     for appointment in appointments:
         for product in appointment.service.products.all():
-            amount = product.amount_set.get(service=appointment.service)
+            amount = amounts.get(product=product, service=appointment.service)
             # amount = Amount.objects.get(product=product, service=appointment.service)
             if len(product_dict[product]) == 2:
                 product_dict[product][0] -= amount.amount
@@ -571,7 +571,7 @@ class EmptyProductView(BaseDetailView):
 
 class CloseShopView(View):
     def dispatch(self, request, *args, **kwargs):
-        appts = Appointment.objects.filter(date__lte=datetime.today(), done=False)
+        appts = Appointment.objects.filter(date__lte=datetime.today(), done=False, user=request.user).order_by('date')
         messages.add_message(self.request, messages.SUCCESS, "Shop Closed and Rectified")
         for appt in appts:
             appt.done = True
@@ -756,39 +756,6 @@ class BrandCreateView(LoginRequiredMixin, CreateView):
 
 
 #######################################################################################################################
-
-# def get_prod_data(request):
-#     products = Product.objects.filter(user=request.user).prefetch_related('service_set').prefetch_related('amount_set')
-#     data = []
-#     enabled = True
-#     for product in products:
-#         services = product.service_set.all()
-#         appts = Appointment.objects.filter(service__in=services).order_by('date')
-#         if appts:
-#             dates = sorted([appt.date for appt in appts])
-#             date_set = set(dates[0]+timedelta(x) for x in range((dates[-1]-dates[0]).days))
-#         else:
-#             date_set = {}
-#         values = []
-#         usages = {}
-#         for date in sorted(date_set):
-#             usages[str(date)] = 0
-#             date_appts = [appt for appt in appts if appt.date == date]
-#             for appt in date_appts:
-#                 amt = Amount.objects.get(service=appt.service, product=product)
-#                 appt_date = str(appt.date)
-#                 if appt_date in usages.keys():
-#                     usages[appt_date] += amt.amount
-#                 else:
-#                     usages[appt_date] = amt.amount
-#         for key, value in sorted(usages.items(), key=lambda x: x[0]):
-#             values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
-#         if enabled:
-#             data.append({'values': values, 'key': product.name})
-#             enabled = False
-#         else:
-#             data.append({'values': values, 'key': product.name, 'disabled': 'True'})
-#     return data
 
 def get_prod_data(request):
     products = Product.objects.filter(user=request.user).prefetch_related('stock_set')
