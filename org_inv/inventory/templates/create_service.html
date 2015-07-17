@@ -6,27 +6,30 @@
         <h2 class="secondary-heading">Add Service</h2>
     </div>
     <div class="form-container">
+        <div class="service-form">
+            <form class="main-form" method="post" action="">
 
 
-        <form class="main-form" method="post" action="">
+                {% csrf_token %}
+                {{ form }}
+                {{ amounts.management_form }}
+                {% for form in amounts %}
+                    <div class="table">
+                        <table class='no_error'>
+                            {{ form.as_table }}
+                        </table>
+                    </div>
+                {% endfor %}
 
+                <button class="form-button" type="submit" name="submit">Add</button>
 
-            {% csrf_token %}
-            {{ form }}
-            {{ amounts.management_form }}
-            {% for form in amounts %}
-                <div class="table">
-                    <table class='no_error'>
-                        {{ form.as_table }}
-                    </table>
-                </div>
-            {% endfor %}
-        <button class="form-button" type="submit" name="submit">Submit</button>
-      </form>
-
+            </form>
+        <input type="button" value="Add More Products" id="add_more">
+</div>
     </div>
+    <img class="ref-chart" src="{% static "css/size_chart.png" %}"/>
 
-    <input type="button" value="Add More" id="add_more">
+
     <script>
         $('#add_more').click(function () {
             cloneMore('div.table:last', 'amount_set');

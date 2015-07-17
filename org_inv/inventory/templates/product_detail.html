@@ -17,7 +17,7 @@
         {% endif %}
         <ul class="list-container-ul">
             <li class="list-container-li">Brand: {{ object.brand }}</li>
-            <li class="list-container-li">Quantity: {{ object.display_quantity }}</li>
+            <li class="list-container-li">Quantity: {{ object.display_quantity|floatformat:2 }}</li>
             <li class="list-container-li">Size: {{ object.size }}</li>
             <li class="list-container-li">UPC: {{ object.upc_code }}</li>
         </ul>

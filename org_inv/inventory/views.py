@@ -574,6 +574,7 @@ class CloseShopView(View):
                 if Stock.objects.filter(product=prod, date=appt.date):
                     obj = Stock.objects.get(product=prod, date=appt.date)
                     obj.used += amt.amount
+                    obj.stocked = stock
                     obj.save()
                 else:
                     amount_used = amt.amount
@@ -642,7 +643,7 @@ class AdjustUsageView(View):
         form = AdjustUsageForm(request.POST, user=request.user, appointment=appt)
         if form.is_valid():
             amt = Amount.objects.get(product=form.data['product'], service=appt.service)
-            diff = int(form.data['amount_used']) - amt.amount
+            diff = float(form.data['amount_used']) - amt.amount
             prod = Product.objects.get(id=form.data['product'])
             prod.quantity -= diff
             prod.save()
