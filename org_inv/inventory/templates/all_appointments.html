@@ -3,6 +3,31 @@
 
 {% block pagetitle %}
 <h1 class="main-heading">All Appointments</h1>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css">
+    <script>
+var appointments = {{ events|safe }}
+$(document).ready(function() {
+
+    // page is now ready, initialize the calendar...
+
+    $('#calendar').fullCalendar({
+        eventLimit: true,
+        events: appointments,
+        eventColor: '#b35b5a',
+        eventRender: function (event, element) {
+        element.attr('href', 'javascript:void(0);');
+        element.click(function() {
+            $("#adjustLink").attr('href', event.adjust_usage);
+            $("#editLink").attr('href', event.appt_edit);
+            $("#deleteLink").attr('href', event.appt_cancel);
+            $("#eventContent").dialog({ modal: true, title: (event.title + " " + moment(event.start).format('MMM Do')), width:350});
+        });
+    }
+    })
+
+});
+</script>
 {% endblock %}
 
 {% block mobileadd %}
@@ -13,41 +38,49 @@
 
 {% block content %}
 
-    <table class="content-table">
-        <tr class="table-header">
-            <th>Title</th>
-            <th>Date</th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-        {% for appointment in all_appointments %}
-            <tr>
-                <td>{{ appointment.service }}</td>
-                <td>{{ appointment.date }}</td>
-                <td><a href="{% url 'adjust_usage' appointment.id %}"><button class="gen-btn">Adjust Usage</button></a></td>
-                <td><a href="{% url 'update_appointment' appointment.id %}">
-                    <button class="update-btn-table">Reschedule</button>
-                </a></td>
-                <td><a href="{% url 'delete_appointment' appointment.id %}"><button class="delete-btn-table">Cancel</button></a></td>
-            </tr>
-        {% endfor %}
-    </table>
-{% if is_paginated %}
-        <div class="pagination">
-            <span class="page-links">
-                {% if page_obj.has_previous %}
-                    <a class="prev-page" href="/appointments?page={{ page_obj.previous_page_number }}"><<</a>
-                {% endif %}
-                <span class="page-current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-                </span>
-                {% if page_obj.has_next %}
-                    <a class="next-page" href="/appointments?page={{ page_obj.next_page_number }}">>></a>
-                {% endif %}
-            </span>
-        </div>
-    {% endif %}
+{#    <table class="content-table">#}
+{#        <tr class="table-header">#}
+{#            <th>Title</th>#}
+{#            <th>Date</th>#}
+{#            <th></th>#}
+{#            <th></th>#}
+{#            <th></th>#}
+{#        </tr>#}
+{#        {% for appointment in all_appointments %}#}
+{#            <tr>#}
+{#                <td>{{ appointment.service }}</td>#}
+{#                <td>{{ appointment.date }}</td>#}
+{#                <td><a href="{% url 'adjust_usage' appointment.id %}"><button class="gen-btn">Adjust Usage</button></a></td>#}
+{#                <td><a href="{% url 'update_appointment' appointment.id %}">#}
+{#                    <button class="update-btn-table">Reschedule</button>#}
+{#                </a></td>#}
+{#                <td><a href="{% url 'delete_appointment' appointment.id %}"><button class="delete-btn-table">Cancel</button></a></td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+{#    </table>#}
+{#{% if is_paginated %}#}
+{#        <div class="pagination">#}
+{#            <span class="page-links">#}
+{#                {% if page_obj.has_previous %}#}
+{#                    <a class="prev-page" href="/appointments?page={{ page_obj.previous_page_number }}"><<</a>#}
+{#                {% endif %}#}
+{#                <span class="page-current">#}
+{#                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}#}
+{#                </span>#}
+{#                {% if page_obj.has_next %}#}
+{#                    <a class="next-page" href="/appointments?page={{ page_obj.next_page_number }}">>></a>#}
+{#                {% endif %}#}
+{#            </span>#}
+{#        </div>#}
+{#    {% endif %}#}
+<div id="eventContent" title="Event Details" style="display:none;">
+    <a id="adjustLink" href=""><button class="gen-btn">Adjust Usage</button></a>
+ <a id="editLink" href=""><button class="gen-btn">Reschedule Appointment</button></a>
+ <a id="deleteLink" href=""><button class="gen-btn">Cancel Appointment</button></a>
+</div>
+
+    <div id='calendar'></div>
+
 {% endblock %}
 
 
@@ -55,6 +88,7 @@
 <a href="/appointments/new"><div class="add-content-button">
   <span class="add-button">q</span>
 </div></a>
+
 
 {% endblock %}
 </body>

@@ -3,14 +3,14 @@
 
 {% block pagetitle %}
     <link href="{% static 'nv.d3.min.css' %}" rel="stylesheet">
-    <h1 class="main-heading">Product Details</h1>
+    <h1 class="main-heading">{{ object.name }} Details</h1>
 {% endblock %}
 
 {% block content %}
     <div class="main-content-header">
         <h2 class="secondary-heading">{{ object.name }}</h2>
     </div>
-    <div class="list-container">
+    <!-- <div class="list-container"> -->
         {% if pic != None %}
             <img class="prod-image" src="{{ pic }}" alt="product image" height="200" width="200">
         {% endif %}
@@ -25,7 +25,7 @@
         <a href="{% url 'product_confirm_delete' product.id %}">
             <button class="form-button details-button">Delete</button>
         </a>
-    </div>
+    <!-- </div> -->
     <div class="list-container-footer"></div>
 
     <div id='product_chart'>

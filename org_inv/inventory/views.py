@@ -203,11 +203,15 @@ class AllAppointmentsView(LoginRequiredMixin, ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        queryset = Appointment.objects.filter(user=self.request.user, date__gte=datetime.today()).order_by('date')
+        queryset = Appointment.objects.filter(user=self.request.user).order_by('date')
         return queryset
 
     def get_context_data(self, **kwargs):
+        events = []
+        for appt in Appointment.objects.filter(user=self.request.user).order_by('date'):
+            events.append({'title': appt.service.name, 'start': str(appt.date), 'adjust_usage': reverse('adjust_usage', kwargs={'appt_id': appt.id}), 'appt_edit': reverse('update_appointment', kwargs={'app_id': appt.id}), 'appt_cancel': reverse('delete_appointment', kwargs={'app_id': appt.id})})
         context = super().get_context_data(**kwargs)
+        context['events'] = events
         return context
 
 

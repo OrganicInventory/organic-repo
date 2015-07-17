@@ -2,11 +2,11 @@
 {% extends "base.html" %}
 
 {% block pagetitle %}
-    <h1 class="main-heading">New Order</h1>
+    <h1 class="main-heading">Place Order</h1>
 {% endblock %}
 
 {% block content %}
-    <h2 class="secondary-heading">New Order</h2>
+    <h2 class="secondary-heading">Place Order</h2>
 <div class="form-container">
     <form class="main-form" method="POST" action="{% url 'order' %}">
         {% csrf_token %}
