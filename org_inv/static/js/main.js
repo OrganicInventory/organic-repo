@@ -101,7 +101,10 @@ getUrlVars();
 //REMOVING SPECIFIC LABELS
   $('#id_service').siblings().remove();
   $('#id_product').siblings().remove();
+  $('.product label').remove();
 
+//SET VALUE FOR SPECIFIC SELECT BOXES
+  $('.Product :selected').text('Select a Product');
 
 //SET FLOATING LABELS THAT ALREADY CONTAIN CONTENT
   $('input, textarea').each(function(){
@@ -161,9 +164,17 @@ getUrlVars();
 
 //DELETE ITEM FROM ORDER FORM
   $('.delete-item').click(function() {
-    $(this).parent().hide();
+    $(this).parent().slideUp();
     $(this).siblings('input').val(0);
   });
+
+  $('.display-chart-btn').click(function() {
+    $('.ref-chart').slideToggle();
+  });
+
+  // console.log($('.input :selected').text('Choose a Product'));
+  $('div.table:eq(0)').hide();
+  $('div.table:eq(1)').hide();
 
 
 });
