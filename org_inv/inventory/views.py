@@ -29,6 +29,16 @@ class LoginRequiredMixin(object):
 
 #######################################################################################################################
 
+class DashboardView(View):
+    def get(self, request, **kwargs):
+        appointments = Appointment.objects.filter(date=date.today(), user=request.user)
+        low = inventory_check(14, request.user)
+        data = get_all_usage_data(request)
+        return render(request, "dash.html", {"appts": appointments, 'low': low, 'data': data})
+
+
+#######################################################################################################################
+
 class IndexView(TemplateView):
     template_name = 'index.html'
 
@@ -333,6 +343,7 @@ class ServiceCreateView(LoginRequiredMixin, CreateView):
         else:
             data['amounts'] = AmountFormSet()
             data['amounts'].form.base_fields['product'].queryset = Product.objects.filter(user=self.request.user)
+            data['amounts'].form.base_fields['product'].empty_label = "Pick a Product"
         return data
 
     def form_valid(self, form):
@@ -455,8 +466,9 @@ class ServiceDetailView(DetailView):
 
 def inventory_check(daterange, user):
     appointments = Appointment.objects.filter(user=user).filter(date__gt=timezone.now()).filter(
-        date__lte=timezone.now() + timedelta(days=daterange)).order_by('date')
+        date__lte=timezone.now() + timedelta(days=daterange)).prefetch_related('service').order_by('date')
     product_dict = {}
+    amounts = Amount.objects.all().select_related()
     for product in Product.objects.filter(user=user):
         if product.quantity < ((user.profile.threshold * .01) * product.max_quantity):
             product_dict[product] = [product.quantity, date.today()]
@@ -465,7 +477,8 @@ def inventory_check(daterange, user):
 
     for appointment in appointments:
         for product in appointment.service.products.all():
-            amount = Amount.objects.get(product=product, service=appointment.service)
+            amount = amounts.get(product=product, service=appointment.service)
+            # amount = Amount.objects.get(product=product, service=appointment.service)
             if len(product_dict[product]) == 2:
                 product_dict[product][0] -= amount.amount
             else:
@@ -899,3 +912,29 @@ def get_usage_data(prod_id):
     data1.append({'values': usage_values, 'key': 'product usage (oz)', 'area': 'True'})
     data1.append({'values': stock_values, 'key': 'product in stock (oz)', 'area': 'True'})
     return data1
+
+#######################################################################################################################
+
+def get_all_usage_data(request):
+    products = Product.objects.filter(user=request.user).prefetch_related('stock_set').order_by('name')
+    data = []
+    enabled = True
+    for product in products:
+        stocks = product.stock_set.filter(date__lte=datetime.today(),
+                                  date__gte=(datetime.today() - timedelta(days=91))).order_by('date')
+        stocks_by_week = [(stock, stock.date.isocalendar()) for stock in stocks]
+        values = []
+        usages = {}
+        for stock in stocks_by_week:
+            if stock[1][2] == 7:
+                date = str(stock[0].date)
+                usages[date] = usages.get(date, 0)
+                usages[date] += stock[0].stocked
+        for key, value in sorted(usages.items(), key=lambda x: x[0]):
+            values.append({'x': datetime.strptime(str(key), "%Y-%m-%d").timestamp(), 'y': value})
+        if enabled:
+            data.append({'values': values, 'key': product.name, 'area': 'True'})
+            enabled = False
+        else:
+            data.append({'values': values, 'key': product.name, 'disabled': 'True', 'area': 'True'})
+    return data
