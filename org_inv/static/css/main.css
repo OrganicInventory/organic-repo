@@ -18,11 +18,6 @@ body {
     color: #333;
 }
 
-.ref-chart {
-    max-width: 250px;
-    padding-top: 40px;
-}
-
 a {
     color: #46b8da;
     /*color: #46b8da;*/
@@ -146,8 +141,7 @@ table {
 /*DISPLAY CURRENT PAGE*/
 
 body.low-inventory-body li.low-inventory, body.all-products-body li.all-products,
-body.services-body li.services, body.appointments-body li.appointments,
-body.new-order-body li.new-order {
+body.appointments-body li.appointments {
     display: inline-block;
     padding: 15px 10px;
     margin: 5px 9px;
@@ -186,7 +180,8 @@ body.place-order-body .main-content input {
 
 body.new-order-body .main-content select,
 body.create-product-body .main-content select,
-body.add-appointment-body .main-content select {
+body.add-appointment-body .main-content select,
+body.create-service-body .main-content select {
     border: none;
     border-bottom: 2px solid #b35b5a;
     border-left: 2px solid #b35b5a;
@@ -937,7 +932,8 @@ body.new-order-body li.sub-new-order {
   cursor: pointer;
 }
 
-.details-button:hover, .gen-btn:hover {
+.details-button:hover, .gen-btn:hover, .display-chart-btn:hover,
+.add-service-btn:hover, .add-products-btn:hover {
   background-color: #fff;
 }
 
@@ -949,6 +945,69 @@ body.new-order-body li.sub-new-order {
 .edit-profile-container button {
   float: right;
 }
+
+.ref-chart {
+  max-width: 250px;
+  position: absolute;
+  top: 54px;
+  right: 0;
+  display: none;
+  border: 2px solid #444c5a;
+  border-top: none;
+}
+
+.create-service-body .main-content {
+  position: relative;
+}
+
+.display-chart-btn {
+  position: absolute;
+  top: 12px;
+  right: 85px;
+  cursor: pointer;
+  padding: 8px 10px;
+  cursor: pointer;
+  color: #333;
+  border: none;
+  outline: none;
+  background-color: #eee;
+  border-radius: 3px;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);
+}
+
+.add-products-btn {
+  position: relative;
+  left: 50%;
+  bottom: 125px;
+  transform: translate(-50%, 0);
+  width: 50%;
+  background-color: #f5f5f5;
+  border-radius: 3px;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+.add-service-btn {
+  position: relative;
+  left: 50%;
+  bottom: 0;
+  margin-top: 60px;
+  transform: translate(-50%, 0);
+  width: 80%;
+  background-color: #f5f5f5;
+  border-radius: 3px;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+.create-service-body input, .create-service-body select {
+  width: 80%;
+}
+
+.create-service-body .focus-out {
+  left: 14%;
+}
+
 
 
 /*RESPONSIVE*/
