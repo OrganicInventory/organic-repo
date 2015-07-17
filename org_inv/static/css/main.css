@@ -685,7 +685,7 @@ table {
 
 .main-content {
   box-sizing: border-box;
-  height: 650px;
+  /*height: 650px;*/
 }
 
 .date-dropdown-container {
