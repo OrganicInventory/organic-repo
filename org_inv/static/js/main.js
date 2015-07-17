@@ -103,6 +103,9 @@ getUrlVars();
   $('#id_product').siblings().remove();
   $('.product label').remove();
 
+//SET VALUE FOR SPECIFIC SELECT BOXES
+  $('.Product :selected').text('Select a Product');
+
 //SET FLOATING LABELS THAT ALREADY CONTAIN CONTENT
   $('input, textarea').each(function(){
     var val = $(this).val();
@@ -175,4 +178,3 @@ getUrlVars();
 
 
 });
-// $('#id_brand :selected').text('Pick a Brand');
