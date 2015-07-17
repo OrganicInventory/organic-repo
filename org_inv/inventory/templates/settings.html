@@ -6,7 +6,8 @@
         <h2 class="secondary-heading">Settings</h2>
     </div>
 
-    <h2>Brands</h2>
+    <h1>Brands</h1>
+    <div class="settings-container">
     {% for brand in brands %}
         <div class="brand-div">
         <a href="{% url 'update_email' brand.id %}"><button class="gen-btn">Edit</button></a>
@@ -15,9 +16,11 @@
     </a>
     {% endfor %}
     <a href="{% url 'create_brand' %}"><button class="gen-btn">Add New Brand</button></a>
+    </div>
 
-
+    <div class="settings-container">
     <p>Low inventory threshold: {{ request.user.profile.threshold }}%</p>
+        </br>
     <form method="POST" action="">
         {% csrf_token %}
         {{ form }}
@@ -25,5 +28,6 @@
         <button type="submit" class="gen-btn">Update Threshold</button>
             </div>
     </form>
+    </div>
 {% endblock %}
 </body>

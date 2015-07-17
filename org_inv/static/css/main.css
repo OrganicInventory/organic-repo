@@ -740,9 +740,16 @@ table {
 }
 
 .brand-div {
-    padding-bottom: 5px;
-    padding-top: 5px;
-    padding-left: 5px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+.settings-container {
+  border-bottom: 3px solid #b35b5a;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 
 /*MODAL*/
 
