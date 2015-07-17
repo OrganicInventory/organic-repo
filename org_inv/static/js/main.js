@@ -101,7 +101,7 @@ getUrlVars();
 //REMOVING SPECIFIC LABELS
   $('#id_service').siblings().remove();
   $('#id_product').siblings().remove();
-
+  $('.product label').remove();
 
 //SET FLOATING LABELS THAT ALREADY CONTAIN CONTENT
   $('input, textarea').each(function(){
@@ -169,5 +169,10 @@ getUrlVars();
     $('.ref-chart').slideToggle();
   });
 
+  // console.log($('.input :selected').text('Choose a Product'));
+  $('div.table:eq(0)').hide();
+  $('div.table:eq(1)').hide();
+
 
 });
+// $('#id_brand :selected').text('Pick a Brand');
