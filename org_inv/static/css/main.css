@@ -18,6 +18,11 @@ body {
   color: #333;
 }
 
+.ref-chart {
+  max-width: 250px;
+  padding-top: 40px;
+}
+
 a {
   color: #46b8da;
   /*color: #46b8da;*/
@@ -44,6 +49,11 @@ a:visited {
 .red, .yellow {
   font-family: untitled-font-1;
   font-size: 28px;
+  max-width: 5px;
+}
+
+.empty-column {
+  max-width: 20px;
 }
 
 .red {
@@ -474,6 +484,10 @@ table {
   font-size: 12px;
 }
 
+.service-form {
+  float: left;
+  padding-right: 80px;
+}
 .focus-out {
   position: absolute;
   top: 15px;
@@ -656,6 +670,7 @@ table {
 
 .main-content {
   box-sizing: border-box;
+  height: 650px;
 }
 
 .date-dropdown-container {
