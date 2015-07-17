@@ -1,22 +1,25 @@
 from datetime import timedelta, datetime, date
 import json
 import math
+
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.db.models import Prefetch
 from django.views.generic.detail import BaseDetailView
 from org_inv import settings
 import re
 from factual import Factual
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseForbidden, HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView, FormView
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView
 from .models import Product, Appointment, Service, Amount, Brand, Stock
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
     AmountFormSet, ThresholdForm, ProductUpdateForm, ProductNoQuantityForm
+
 
 # Create your views here.
 
@@ -474,7 +477,6 @@ def inventory_check(daterange, user):
     appointments = Appointment.objects.filter(user=user).filter(date__gt=timezone.now()).filter(
         date__lte=timezone.now() + timedelta(days=daterange)).prefetch_related('service').order_by('date')
     product_dict = {}
-    amounts = Amount.objects.all().select_related()
     for product in Product.objects.filter(user=user):
         if product.quantity < ((user.profile.threshold * .01) * product.max_quantity):
             product_dict[product] = [product.quantity, date.today()]
@@ -482,9 +484,10 @@ def inventory_check(daterange, user):
             product_dict[product] = [product.quantity]
 
     for appointment in appointments:
-        for product in appointment.service.products.all():
-            amount = amounts.get(product=product, service=appointment.service)
-            # amount = Amount.objects.get(product=product, service=appointment.service)
+        for product in appointment.service.products.all().prefetch_related(
+                Prefetch("amount_set", queryset=Amount.objects.filter(service=appointment.service), to_attr="amounts")):
+            amount = [amount for amount in product.amounts if amount.product == product]
+            amount = amount[0]
             if len(product_dict[product]) == 2:
                 product_dict[product][0] -= amount.amount
             else:
@@ -892,6 +895,7 @@ def get_usage_data(prod_id):
     data1.append({'values': stock_values, 'key': 'product in stock (oz)', 'area': 'True'})
     return data1
 
+
 #######################################################################################################################
 
 def get_all_usage_data(request):
@@ -900,7 +904,7 @@ def get_all_usage_data(request):
     enabled = True
     for product in products:
         stocks = product.stock_set.filter(date__lte=datetime.today(),
-                                  date__gte=(datetime.today() - timedelta(days=91))).order_by('date')
+                                          date__gte=(datetime.today() - timedelta(days=91))).order_by('date')
         stocks_by_week = [(stock, stock.date.isocalendar()) for stock in stocks]
         values = []
         usages = {}
