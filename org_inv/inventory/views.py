@@ -525,7 +525,8 @@ class LowInventoryView(LoginRequiredMixin, ListView):
         if daterange:
             low = inventory_check(int(daterange), self.request.user)
         else:
-            low = inventory_check(14, self.request.user)
+            daterange = self.request.user.profile.interval
+            low = inventory_check(self.request.user.profile.interval, self.request.user)
 
         context['range'] = daterange
         context['low'] = low
