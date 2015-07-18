@@ -10,7 +10,6 @@ $(function() {
       vars.push(hash[0]);
       vars[hash[0]] = hash[1];
     }
-
     return vars;
 }
 getUrlVars();
@@ -19,6 +18,7 @@ getUrlVars();
   $(document).ready(function() {
   var urlRange = getUrlVars()['range'];
   var urlUpc = getUrlVars() ['upc'];
+  var checkId = getUrlVars() ['id'];
 
   $('.scan-input').focus();
 
@@ -101,10 +101,10 @@ getUrlVars();
 //REMOVING SPECIFIC LABELS
   $('#id_service').siblings().remove();
   $('#id_product').siblings().remove();
-  $('.product label').remove();
+  $('.Product label').remove();
 
 //SET VALUE FOR SPECIFIC SELECT BOXES
-  $('.Product :selected').text('Select a Product');
+  // $('.Product :selected').text('Select a Product');
 
 //SET FLOATING LABELS THAT ALREADY CONTAIN CONTENT
   $('input, textarea').each(function(){
@@ -172,9 +172,40 @@ getUrlVars();
     $('.ref-chart').slideToggle();
   });
 
-  // console.log($('.input :selected').text('Choose a Product'));
-  $('div.table:eq(0)').hide();
-  $('div.table:eq(1)').hide();
+//ADD PRODUCT OPTION TO ADD SERVICES/UPDATE SERVICES
+  $('#add_more').click(function () {
+      // cloneMore('div.table:last', 'amount_set');
+      $('.Product:last').clone().appendTo('.table');
+      $('.Amount:last').clone().appendTo('.table');
+      $('.Product select').each(function(i) {
+        this.id = 'id_amount_set-' + i + '-product';
+        this.name = 'amount_set-' + i + '-product';
+      })
 
+      $('.Amount input').each(function(j) {
+        this.id = 'id_amount_set-' + j + '-amount';
+        this.name = 'amount_set-' + j + '-amount';
+      });
+
+      $('.Product').find('option:eq(0)').last().prop('selected', true);
+      $('.Amount input').last().val('');
+
+  });
+
+  $('.appointment-drop').click(function() {
+    $('.appointments-list-container').slideToggle('slow');
+    $('.appointment-button').fadeToggle('fast');
+    $(this).toggleClass('dropdown-switch');
+  });
+
+  $('.product-drop').click(function() {
+    $('.products-list-container').slideToggle('slow');
+    $('.product-button').fadeToggle('fast');
+    $(this).toggleClass('dropdown-switch');
+  });
+
+  $('.show-chart-icon').click(function() {
+    $('.chart-container').slideToggle();
+  });
 
 });

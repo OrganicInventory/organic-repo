@@ -181,7 +181,8 @@ body.place-order-body .main-content input {
 body.new-order-body .main-content select,
 body.create-product-body .main-content select,
 body.add-appointment-body .main-content select,
-body.create-service-body .main-content select {
+body.create-service-body .main-content select,
+body.update-service-body select {
     border: none;
     border-bottom: 2px solid #b35b5a;
     border-left: 2px solid #b35b5a;
@@ -1043,11 +1044,12 @@ body.new-order-body li.sub-new-order {
   cursor: pointer;
 }
 
-.create-service-body input, .create-service-body select {
+.create-service-body input, .create-service-body select,
+.update-service-body input, .update-service-body select {
   width: 80%;
 }
 
-.create-service-body .focus-out {
+.create-service-body .focus-out, .update-service-body .focus-out {
   left: 14%;
 }
 
