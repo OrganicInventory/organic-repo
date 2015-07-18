@@ -72,6 +72,13 @@ class ThresholdForm(forms.Form):
         fields = ['percent']
 
 
+class IntervalForm(forms.Form):
+    interval = forms.ChoiceField(choices=[(1,'1 day'), (7, '1 week'), (14, '2 weeks'), (30, '1 month'), (60, '2 months')], label='')
+
+    class Meta:
+        fields = ['interval']
+
+
 class AppointmentForm(forms.ModelForm):
     def __init__(self, request, *args, **kwargs):
         super().__init__(*args, **kwargs)

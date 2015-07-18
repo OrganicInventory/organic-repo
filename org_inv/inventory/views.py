@@ -18,7 +18,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView
 from .models import Product, Appointment, Service, Amount, Brand, Stock
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
-    AmountFormSet, ThresholdForm, ProductUpdateForm, ProductNoQuantityForm
+    AmountFormSet, ThresholdForm, ProductUpdateForm, ProductNoQuantityForm, IntervalForm
 
 
 # Create your views here.
@@ -549,9 +549,6 @@ class NewOrderView(View):
         form = ProductForm(request, request.POST, initial={'user': self.request.user})
         if Product.objects.filter(upc_code=request.POST.get('upc_code'), user=request.user):
             prod_instance = Product.objects.get(upc_code=request.POST.get('upc_code'), user=request.user)
-            # prod_instance.name = prod_instance.name
-            # prod_instance.brand = prod_instance.brand
-            # prod_instance.size = prod_instance.size
             prod_instance.update_quantity(float(request.POST.get('quantity')))
             prod_instance.save()
             messages.add_message(request, messages.SUCCESS,
@@ -710,19 +707,30 @@ class OrderView(View):
 class SettingsView(LoginRequiredMixin, View):
     def get(self, request, **kwargs):
         form = ThresholdForm()
+        form2 = IntervalForm()
         brands = Brand.objects.filter(user=request.user).order_by('name')
-        return render(request, 'settings.html', {'form': form, 'brands': brands})
+        return render(request, 'settings.html', {'form': form, 'form2': form2, 'brands': brands})
 
     def post(self, request, **kwargs):
         form = ThresholdForm(request.POST)
-        if form.is_valid():
-            amt = form.data['percent']
-            prof = request.user.profile
-            prof.threshold = amt
-            messages.add_message(self.request, messages.SUCCESS,
-                                 "Threshold updated to {}%.".format(amt))
-            prof.save()
-            return redirect('/settings/')
+        form2 = IntervalForm(request.POST)
+        if request.POST.get('thresh-submit'):
+            if form.is_valid():
+                amt = form.data['percent']
+                prof = request.user.profile
+                prof.threshold = amt
+                messages.add_message(self.request, messages.SUCCESS,
+                                     "Threshold updated to {}%.".format(amt))
+                prof.save()
+        else:
+            if form2.is_valid():
+                interval = form2.data['interval']
+                prof = request.user.profile
+                prof.interval = interval
+                messages.add_message(self.request, messages.SUCCESS,
+                                     "Interval updated to {}.".format(interval))
+                prof.save()
+        return redirect('/settings/')
 
 
 #######################################################################################################################
