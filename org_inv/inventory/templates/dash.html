@@ -49,15 +49,20 @@
         </div>
         <div class="icon-nav-container">
           <ul class="icon-nav-ul">
-            <li class="icon-nav-li"><span class="nav-icon low-icon">o</span></li>
-            <li class="icon-nav-li"><span class="nav-icon all-icon">y</span></li>
-            <li class="icon-nav-li"><span class="nav-icon app-icon">z</span></li>
+            <a href="{% url 'low_products' %}"><li class="icon-nav-li"><span class="nav-icon low-icon">o</span></li></a>
+            <a href="{% url 'all_products' %}"><li class="icon-nav-li"><span class="nav-icon all-icon">y</span></li></a>
+            <a href="{% url 'all_appointments' %}"><li class="icon-nav-li"><span class="nav-icon app-icon">z</span></li></a>
           </ul>
         </div>
       </div>
-      <div id='stock_chart'>
-         <svg style='height:500px'></svg>
+      <div class="chart-container">
+        <div id='stock_chart'>
+           <svg style='height:500px'></svg>
+        </div>
       </div>
+    </div>
+    <div class="page-footer">
+      <span class="show-chart-icon">A</span>
     </div>
 
     <script src="{% static 'd3.min.js' %}"></script>

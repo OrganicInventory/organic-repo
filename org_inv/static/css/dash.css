@@ -127,6 +127,11 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.icon-nav-ul a {
+  color: #bebebe;
 }
 
 .icon {
@@ -166,6 +171,51 @@ body {
   transition: 0.8s all ease;
 }
 
+.page-footer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 50px;
+  text-align: center;
+}
+
+.show-chart-icon {
+  font-family: untitled-font-1;
+  font-size: 40px;
+  cursor: pointer;
+  animation: icon-fade 2s ease infinite;
+  opacity: 0.8;
+}
+
 #stock_chart {
-  visibility: hidden;
+  width: 80%;
+  height: 400px;
+  margin: 0 auto;
+  margin-top: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.chart-container {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  height: 500px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+@keyframes icon-fade {
+    0% {opacity: 0.8;}
+    10% {opacity: 0.7;}
+    20% {opacity: 0.6;}
+    30% {opacity: 0.5;}
+    40% {opacity: 0.4;}
+    50% {opacity: 0.3;}
+    60% {opacity: 0.4;}
+    70% {opacity: 0.5;}
+    80% {opacity: 0.6;}
+    90% {opacity: 0.7;}
+    1000% {opacity: 0.8;}
 }
