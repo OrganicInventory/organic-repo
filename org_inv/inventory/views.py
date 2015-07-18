@@ -339,6 +339,7 @@ class ServiceCreateView(LoginRequiredMixin, CreateView):
         else:
             data['amounts'] = AmountFormSet()
             data['amounts'].form.base_fields['product'].queryset = Product.objects.filter(user=self.request.user)
+            data['amounts'].form.base_fields['product'].empty_label = 'Pick a Product'
         return data
 
     def form_valid(self, form):

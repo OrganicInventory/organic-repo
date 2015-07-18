@@ -10,7 +10,6 @@ $(function() {
       vars.push(hash[0]);
       vars[hash[0]] = hash[1];
     }
-
     return vars;
 }
 getUrlVars();
@@ -19,6 +18,7 @@ getUrlVars();
   $(document).ready(function() {
   var urlRange = getUrlVars()['range'];
   var urlUpc = getUrlVars() ['upc'];
+  var checkId = getUrlVars() ['id'];
 
   $('.scan-input').focus();
 
@@ -101,10 +101,10 @@ getUrlVars();
 //REMOVING SPECIFIC LABELS
   $('#id_service').siblings().remove();
   $('#id_product').siblings().remove();
-  $('.product label').remove();
+  $('.Product label').remove();
 
 //SET VALUE FOR SPECIFIC SELECT BOXES
-  $('.Product :selected').text('Select a Product');
+  // $('.Product :selected').text('Select a Product');
 
 //SET FLOATING LABELS THAT ALREADY CONTAIN CONTENT
   $('input, textarea').each(function(){
@@ -172,9 +172,12 @@ getUrlVars();
     $('.ref-chart').slideToggle();
   });
 
-  // console.log($('.input :selected').text('Choose a Product'));
-  $('div.table:eq(0)').hide();
-  $('div.table:eq(1)').hide();
+    // $('div.table:eq(0)').hide();
+    // $('div.table:eq(1)').hide();
+
+  // $('#add_more').click(function () {
+  //
+  // });
 
 
 });
