@@ -1,22 +1,25 @@
 from datetime import timedelta, datetime, date
 import json
 import math
+
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.db.models import Prefetch
 from django.views.generic.detail import BaseDetailView
 from org_inv import settings
 import re
 from factual import Factual
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseForbidden, HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView, FormView
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView, View, TemplateView
 from .models import Product, Appointment, Service, Amount, Brand, Stock
 from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
     AmountFormSet, ThresholdForm, ProductUpdateForm, ProductNoQuantityForm
+
 
 # Create your views here.
 
@@ -25,6 +28,16 @@ class LoginRequiredMixin(object):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
+
+
+#######################################################################################################################
+
+class DashboardView(View):
+    def get(self, request, **kwargs):
+        appointments = Appointment.objects.filter(date=date.today(), user=request.user)
+        low = inventory_check(14, request.user)
+        data = get_all_usage_data(request)
+        return render(request, "dash.html", {"appts": appointments, 'low': low, 'data': data})
 
 
 #######################################################################################################################
@@ -462,8 +475,7 @@ class ServiceDetailView(DetailView):
 
 def inventory_check(daterange, user):
     appointments = Appointment.objects.filter(user=user).filter(date__gt=timezone.now()).filter(
-        date__lte=timezone.now() + timedelta(days=daterange)).order_by('date').select_related().prefetch_related(
-        'service', 'service__products')
+        date__lte=timezone.now() + timedelta(days=daterange)).prefetch_related('service').order_by('date')
     product_dict = {}
     for product in Product.objects.filter(user=user):
         if product.quantity < ((user.profile.threshold * .01) * product.max_quantity):
@@ -472,9 +484,10 @@ def inventory_check(daterange, user):
             product_dict[product] = [product.quantity]
 
     for appointment in appointments:
-        for product in appointment.service.products.all():
-            amount = product.amount_set.get(service=appointment.service)
-            # amount = Amount.objects.get(product=product, service=appointment.service)
+        for product in appointment.service.products.all().prefetch_related(
+                Prefetch("amount_set", queryset=Amount.objects.filter(service=appointment.service), to_attr="amounts")):
+            amount = [amount for amount in product.amounts if amount.product == product]
+            amount = amount[0]
             if len(product_dict[product]) == 2:
                 product_dict[product][0] -= amount.amount
             else:
@@ -572,7 +585,7 @@ class EmptyProductView(BaseDetailView):
 
 class CloseShopView(View):
     def dispatch(self, request, *args, **kwargs):
-        appts = Appointment.objects.filter(date__lte=datetime.today(), done=False)
+        appts = Appointment.objects.filter(date__lte=datetime.today(), done=False, user=request.user).order_by('date')
         messages.add_message(self.request, messages.SUCCESS, "Shop Closed and Rectified")
         for appt in appts:
             appt.done = True
@@ -758,39 +771,6 @@ class BrandCreateView(LoginRequiredMixin, CreateView):
 
 #######################################################################################################################
 
-# def get_prod_data(request):
-#     products = Product.objects.filter(user=request.user).prefetch_related('service_set').prefetch_related('amount_set')
-#     data = []
-#     enabled = True
-#     for product in products:
-#         services = product.service_set.all()
-#         appts = Appointment.objects.filter(service__in=services).order_by('date')
-#         if appts:
-#             dates = sorted([appt.date for appt in appts])
-#             date_set = set(dates[0]+timedelta(x) for x in range((dates[-1]-dates[0]).days))
-#         else:
-#             date_set = {}
-#         values = []
-#         usages = {}
-#         for date in sorted(date_set):
-#             usages[str(date)] = 0
-#             date_appts = [appt for appt in appts if appt.date == date]
-#             for appt in date_appts:
-#                 amt = Amount.objects.get(service=appt.service, product=product)
-#                 appt_date = str(appt.date)
-#                 if appt_date in usages.keys():
-#                     usages[appt_date] += amt.amount
-#                 else:
-#                     usages[appt_date] = amt.amount
-#         for key, value in sorted(usages.items(), key=lambda x: x[0]):
-#             values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
-#         if enabled:
-#             data.append({'values': values, 'key': product.name})
-#             enabled = False
-#         else:
-#             data.append({'values': values, 'key': product.name, 'disabled': 'True'})
-#     return data
-
 def get_prod_data(request):
     products = Product.objects.filter(user=request.user).prefetch_related('stock_set')
     data = []
@@ -914,3 +894,30 @@ def get_usage_data(prod_id):
     data1.append({'values': usage_values, 'key': 'product usage (oz)', 'area': 'True'})
     data1.append({'values': stock_values, 'key': 'product in stock (oz)', 'area': 'True'})
     return data1
+
+
+#######################################################################################################################
+
+def get_all_usage_data(request):
+    products = Product.objects.filter(user=request.user).prefetch_related('stock_set').order_by('name')
+    data = []
+    enabled = True
+    for product in products:
+        stocks = product.stock_set.filter(date__lte=datetime.today(),
+                                          date__gte=(datetime.today() - timedelta(days=91))).order_by('date')
+        stocks_by_week = [(stock, stock.date.isocalendar()) for stock in stocks]
+        values = []
+        usages = {}
+        for stock in stocks_by_week:
+            if stock[1][2] == 7:
+                date = str(stock[0].date)
+                usages[date] = usages.get(date, 0)
+                usages[date] += stock[0].stocked
+        for key, value in sorted(usages.items(), key=lambda x: x[0]):
+            values.append({'x': datetime.strptime(str(key), "%Y-%m-%d").timestamp(), 'y': value})
+        if enabled:
+            data.append({'values': values, 'key': product.name, 'area': 'True'})
+            enabled = False
+        else:
+            data.append({'values': values, 'key': product.name, 'disabled': 'True', 'area': 'True'})
+    return data

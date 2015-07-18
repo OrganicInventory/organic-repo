@@ -85,7 +85,7 @@ class Appointment(models.Model):
 
 class Stock(models.Model):
     date = models.DateField()
-    product = models.ForeignKey(Product)
+    product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
     used = models.FloatField()
     stocked = models.FloatField()
 
