@@ -15,6 +15,7 @@ $(document).ready(function() {
         eventLimit: true,
         events: appointments,
         eventColor: '#b35b5a',
+        height: 'auto',
         eventRender: function (event, element) {
         element.attr('href', 'javascript:void(0);');
         element.click(function() {
@@ -37,7 +38,7 @@ $(document).ready(function() {
 {% endblock %}
 
 {% block content %}
-
+<div id="target"></div>
 {#    <table class="content-table">#}
 {#        <tr class="table-header">#}
 {#            <th>Title</th>#}
@@ -74,8 +75,8 @@ $(document).ready(function() {
 {#        </div>#}
 {#    {% endif %}#}
 <div id="eventContent" title="Event Details" style="display:none;">
-    <a id="adjustLink" href=""><button class="gen-btn">Adjust Usage</button></a>
- <a id="editLink" href=""><button class="gen-btn">Reschedule Appointment</button></a>
+    <a id="adjustLink" href="" ><button class="gen-btn" style="margin-bottom: 10px;">Adjust Usage</button></a>
+ <a id="editLink" href="" ><button class="gen-btn" style="margin-bottom: 10px;">Reschedule Appointment</button></a>
  <a id="deleteLink" href=""><button class="gen-btn">Cancel Appointment</button></a>
 </div>
 

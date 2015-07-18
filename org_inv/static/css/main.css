@@ -740,6 +740,14 @@ table {
     position: absolute;
     right: 15%;
     top: 42%;
+    width: 325px;
+}
+
+.brand-div-bottom-right {
+    position: absolute;
+    right: 15%;
+    top: 68%;
+    width: 325px;
 }
 
 .settings-container {
@@ -755,6 +763,13 @@ table {
 
 svg {
     margin: 10px;
+}
+.ui-dialog > .ui-widget-header {
+    background:  #b35b5a;
+}
+
+.ui-dialog-content{
+    padding: 10px;
 }
 
 /*MODAL*/
