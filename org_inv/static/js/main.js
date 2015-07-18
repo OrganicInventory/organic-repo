@@ -204,4 +204,8 @@ getUrlVars();
     $(this).toggleClass('dropdown-switch');
   });
 
+  $('.show-chart-icon').click(function() {
+    $('.chart-container').slideToggle();
+  });
+
 });
