@@ -201,15 +201,17 @@ $(function () {
 
     });
 
+//DASHBOARD
+
     $('.appointment-drop').click(function () {
       $('.appointments-list-container').slideToggle('slow');
-      $('.appointment-button').fadeToggle('fast');
+      $('.appointment-button').fadeToggle('slow');
       $(this).toggleClass('dropdown-switch');
     });
 
     $('.product-drop').click(function () {
       $('.products-list-container').slideToggle('slow');
-      $('.product-button').fadeToggle('fast');
+      $('.product-button').fadeToggle('slow');
       $(this).toggleClass('dropdown-switch');
     });
 
@@ -219,6 +221,27 @@ $(function () {
 
     $('.header-dropdown-icon').click(function() {
       $('.main-nav-container').slideToggle();
+    });
+
+    $('.low-icon-li').mouseenter(function() {
+      $('.display-icon-text').text('Check what products are low.')
+    });
+    $('.low-icon-li').mouseleave(function() {
+      $('.display-icon-text').text('')
+    });
+
+    $('.all-icon-li').mouseenter(function() {
+      $('.display-icon-text').text('View all of your products.')
+    });
+    $('.all-icon-li').mouseleave(function() {
+      $('.display-icon-text').text('')
+    });
+
+    $('.app-icon-li').mouseenter(function() {
+      $('.display-icon-text').text('Check all of your upcoming appointments.')
+    });
+    $('.app-icon-li').mouseleave(function() {
+      $('.display-icon-text').text('')
     });
 
 });

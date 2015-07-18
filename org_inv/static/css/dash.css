@@ -39,6 +39,12 @@ body {
   transform: translate(0, -50%);
   color: #bebebe;
   cursor: pointer;
+  transition: 0.2s color ease;
+}
+
+.header-dropdown-icon:hover {
+  color: #b35b5a;
+  transition: 0.2s color ease;
 }
 
 .main-nav-container {
@@ -132,6 +138,20 @@ body {
   transition: 0.2s background-color ease;
 }*/
 
+.appointment-button {
+  position: fixed;
+  left: 50px;
+  width: 300px;
+  bottom: 80px;
+}
+
+.product-button {
+  position: fixed;
+  right: 50px;
+  width: 300px;
+  bottom: 80px;
+}
+
 .middle-content-container {
   width: 500px;
   height: 450px;
@@ -184,6 +204,12 @@ body {
 
 .icon-nav-ul a {
   color: #bebebe;
+  transition: 0.2s color ease;
+}
+
+.icon-nav-ul a:hover {
+  color: #b35b5a;
+  transition: 0.2s color ease;
 }
 
 .icon {
@@ -196,6 +222,12 @@ body {
 
 .app-icon, .low-icon {
   padding-top: 80px;
+}
+
+.display-icon-text {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 18px;
 }
 
 .main-heading {
