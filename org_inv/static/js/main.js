@@ -192,4 +192,8 @@ getUrlVars();
 
   });
 
+  // $('.product-drop').click(function() {
+  //
+  // });
+
 });
