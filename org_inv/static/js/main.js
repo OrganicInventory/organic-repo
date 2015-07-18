@@ -217,4 +217,8 @@ $(function () {
       $('.chart-container').slideToggle();
     });
 
+    $('.header-dropdown-icon').click(function() {
+      $('.main-nav-container').slideToggle();
+    });
+
 });

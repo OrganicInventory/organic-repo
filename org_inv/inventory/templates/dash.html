@@ -15,7 +15,19 @@
     <link href="{% static 'nv.d3.min.css' %}" rel="stylesheet">
     <div class="main-container">
       <header class="page-header">
-
+        <span class="header-dropdown-icon">l</span>
+        <div class="main-nav-container">
+          <ul class="main-nav-ul">
+            <a href="/low"><li class="main-nav-li">Low Inventory</li></a>
+            <a href="/products"><li class="main-nav-li">All Products</li></a>
+            <a href="/appointments"><li class="main-nav-li">Appointments</li></a>
+            <a href="/services"><li class="main-nav-li">Services</li></a>
+            <a href="/products/new_order"><li class="main-nav-li">Receive Order</li></a>
+            <a href="{% url 'edit_profile' %}"><li class="main-nav-li">My Profile</li></a>
+            <a href="{% url 'close_shop' %}"><li class="main-nav-li">Close Shop</li></a>
+            <a href="/users/logout"><li class="main-nav-li">Logout</li></a>
+          </ul>
+        </div>
       </header>
       <div class="brand-div appointments-container">
       <h2 class="brand-div-header">Today's Appointments<span class="dropdown-icon appointment-drop">w</span></h2>
