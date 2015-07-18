@@ -755,6 +755,13 @@ table {
 svg {
     margin: 10px;
 }
+.ui-dialog > .ui-widget-header {
+    background:  #b35b5a;
+}
+
+.ui-dialog-content{
+    padding: 10px;
+}
 
 /*MODAL*/
 
