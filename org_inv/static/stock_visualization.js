@@ -33,6 +33,9 @@ nv.addGraph(function() {
       .datum(productdata)         //Populate the <svg> element with chart data...
       .call(chart);          //Finally, render the chart!
 
+    d3.selectAll('#stock_chart svg text')
+        .style('fill', "white");
+
   //Update the chart when window resizes.
   nv.utils.windowResize(function() { chart.update() });
   return chart;
