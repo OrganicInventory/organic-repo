@@ -16,12 +16,24 @@
         <form class="main-form" method="post" action="">
             {% csrf_token %}
 
-            {{ form }}
+            {% for field in form %}
+                <div class="{{ field.label }} input">
+
+                    <span class="focus-out">{{ field.label_tag }} </span> {{ field }}
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
             {{ amounts.management_form }}
             {% for form in amounts %}
             <div class="table">
                 <table class='no_error'>
-                    {{ form.as_table }}
+                  {% for field in form %}
+                      <div class="{{ field.label }} input">
+
+                          <span class="focus-out">{{ field.label_tag }} </span> {{ field }}
+                          {{ field.errors }}
+                      </div>
+                  {% endfor %}
                 </table>
             </div>
         {% endfor %}

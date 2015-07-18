@@ -182,24 +182,24 @@ $(function () {
     });
 
 //ADD PRODUCT OPTION TO ADD SERVICES/UPDATE SERVICES
-    $('#add_more').click(function () {
-      // cloneMore('div.table:last', 'amount_set');
-      $('.Product:last').clone().appendTo('.table');
-      $('.Amount:last').clone().appendTo('.table');
-      $('.Product select').each(function (i) {
-          this.id = 'id_amount_set-' + i + '-product';
-          this.name = 'amount_set-' + i + '-product';
-      })
-
-      $('.Amount input').each(function (j) {
-          this.id = 'id_amount_set-' + j + '-amount';
-          this.name = 'amount_set-' + j + '-amount';
-      });
-
-      $('.Product').find('option:eq(0)').last().prop('selected', true);
-      $('.Amount input').last().val('');
-
-    });
+    // $('#add_more').click(function () {
+    //   // cloneMore('div.table:last', 'amount_set');
+    //   $('.Product:last').clone().appendTo('.table');
+    //   $('.Amount:last').clone().appendTo('.table');
+    //   $('.Product select').each(function (i) {
+    //       this.id = 'id_amount_set-' + i + '-product';
+    //       this.name = 'amount_set-' + i + '-product';
+    //   })
+    //
+    //   $('.Amount input').each(function (j) {
+    //       this.id = 'id_amount_set-' + j + '-amount';
+    //       this.name = 'amount_set-' + j + '-amount';
+    //   });
+    //
+    //   $('.Product').find('option:eq(0)').last().prop('selected', true);
+    //   $('.Amount input').last().val('');
+    //
+    // });
 
 //DASHBOARD
 
