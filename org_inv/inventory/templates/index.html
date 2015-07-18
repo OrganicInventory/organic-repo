@@ -9,7 +9,7 @@
     <link href='http://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body>
-
+<img class="logo" src="http://www.clker.com/cliparts/7/h/S/O/2/Y/leaf-white-md.png">
 {% if form.errors %}
   <p class="nomatch">Sorry, your username and password didn't match. Please try again.</p>
   {% endif %}
@@ -22,7 +22,8 @@
   {#    <p>Please login to see this page.</p>#}
       {% endif %}
   {% endif %}
-  <form method="post" action="{% url 'django.contrib.auth.views.login' %}" class="login1">
+<div class="login1">
+  <form method="post" action="{% url 'django.contrib.auth.views.login' %}" >
   {% csrf_token %}
       <table align="center">
       <tr>
@@ -35,15 +36,16 @@
       </tr>
       </table>
       <br />
-      <input type="submit" value="LogIn" class="loginbtn"/>
+      <input type="submit" value="LogIn" class="loginbtn" id="loginbtn"/>
       <input type="hidden" name="next" value="{{ next }}" />
   </form>
 </div>
 <header class="header">
     P.I.M.
-    <span class="sub-header">Predictive Inventory Management</span>
-    <p class="headspa"><img class="logo" src="https://cdn2.iconfinder.com/data/icons/flaticons-stroke/16/leaf-1-512.png">Spa Edition</p>
+    <div class="sub-header">Predictive<br/> Inventory <br/>Management</div>
+    <div class="headspa">Spa Edition</div>
 </header>
+
 <div class='box'>
     Create Appointments
     <div class='sub-box'><span class="caps">C</span>ustomized schedule to guage your salon's product usage and
@@ -61,10 +63,11 @@
         Our intuitive software will track and diagram product usage based on your appointments.
     </div>
 </div>
-<div class='signup'>Sign up
+<div class='signup'>
     <a href="{% url 'user_register' %}">
-        <button>Register</button>
+        <button class="registerbtn">Sign Up</button>
     </a>
 </div>
 </body>
+
 </html>
