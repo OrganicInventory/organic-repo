@@ -926,6 +926,24 @@ body.new-order-body li.sub-new-order {
     padding-right: 25px;
 }
 
+#service_chart {
+    width: 90%;
+    border: 1px solid black;
+    margin: 25px auto;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-right: 25px;
+}
+
+#stock_chart {
+    width: 90%;
+    border: 1px solid black;
+    margin: 25px auto;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-right: 25px;
+}
+
 .prod-details-container {
   width: 60%;
   margin: 25px auto;

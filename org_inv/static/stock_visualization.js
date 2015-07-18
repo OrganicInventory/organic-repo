@@ -14,12 +14,16 @@ nv.addGraph(function() {
 
   chart.xAxis     //Chart x-axis settings
       .axisLabel('Date')
+      .axisLabelDistance(13)
+      .tickPadding(15)
       .tickFormat(function(d) {
     return d3.time.format('%x')(new Date((d + 86400) * 1000))
 });
 
   chart.yAxis     //Chart y-axis settings
       .axisLabel('Product Stock (oz)')
+      .axisLabelDistance(15)
+      .tickPadding(15)
       .tickFormat(d3.format('.02f'));
 
   /* Done setting the chart up? Time to render it!*/
