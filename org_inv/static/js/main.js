@@ -23,24 +23,32 @@ $(function () {
 
         $('.scan-input').focus();
 
-        $('.date-dropdown').val(urlRange);
-        if (urlRange === '1') {
-            $('.date-range-display').text('1 Day');
-        } else if (urlRange === '7') {
-            $('.date-range-display').text('1 Week');
-        } else if (urlRange === '14') {
-            $('.date-range-display').text('2 Weeks');
-        } else if (urlRange === '30') {
-            $('.date-range-display').text('1 Month');
-        } else if (urlRange === '60') {
-            $('.date-range-display').text('2 Months');
+        if(!urlRange) {
+          $('.date-dropdown').val(dateInterval);
         } else {
-            $('.date-dropdown').val(14);
+          $('.date-dropdown').val(urlRange);
         }
 
         if (!urlUpc) {
             $('#id_brand :selected').text('Pick a Brand');
         }
+
+        // $('.date-dropdown').val(urlRange);
+        // if (urlRange === '1') {
+        //     $('.date-range-display').text('1 Day');
+        // } else if (urlRange === '7') {
+        //     $('.date-range-display').text('1 Week');
+        // } else if (urlRange === '14') {
+        //     $('.date-range-display').text('2 Weeks');
+        // } else if (urlRange === '30') {
+        //     $('.date-range-display').text('1 Month');
+        // } else if (urlRange === '60') {
+        //     $('.date-range-display').text('2 Months');
+        // } else {
+        //     $('.date-dropdown').val(14);
+        // }
+
+
 
     });
 
@@ -175,38 +183,38 @@ $(function () {
 
 //ADD PRODUCT OPTION TO ADD SERVICES/UPDATE SERVICES
     $('#add_more').click(function () {
-        // cloneMore('div.table:last', 'amount_set');
-        $('.Product:last').clone().appendTo('.table');
-        $('.Amount:last').clone().appendTo('.table');
-        $('.Product select').each(function (i) {
-            this.id = 'id_amount_set-' + i + '-product';
-            this.name = 'amount_set-' + i + '-product';
-        })
+      // cloneMore('div.table:last', 'amount_set');
+      $('.Product:last').clone().appendTo('.table');
+      $('.Amount:last').clone().appendTo('.table');
+      $('.Product select').each(function (i) {
+          this.id = 'id_amount_set-' + i + '-product';
+          this.name = 'amount_set-' + i + '-product';
+      })
 
-        $('.Amount input').each(function (j) {
-            this.id = 'id_amount_set-' + j + '-amount';
-            this.name = 'amount_set-' + j + '-amount';
-        });
+      $('.Amount input').each(function (j) {
+          this.id = 'id_amount_set-' + j + '-amount';
+          this.name = 'amount_set-' + j + '-amount';
+      });
 
-        $('.Product').find('option:eq(0)').last().prop('selected', true);
-        $('.Amount input').last().val('');
+      $('.Product').find('option:eq(0)').last().prop('selected', true);
+      $('.Amount input').last().val('');
 
     });
 
     $('.appointment-drop').click(function () {
-        $('.appointments-list-container').slideToggle('slow');
-        $('.appointment-button').fadeToggle('fast');
-        $(this).toggleClass('dropdown-switch');
+      $('.appointments-list-container').slideToggle('slow');
+      $('.appointment-button').fadeToggle('fast');
+      $(this).toggleClass('dropdown-switch');
     });
 
     $('.product-drop').click(function () {
-        $('.products-list-container').slideToggle('slow');
-        $('.product-button').fadeToggle('fast');
-        $(this).toggleClass('dropdown-switch');
+      $('.products-list-container').slideToggle('slow');
+      $('.product-button').fadeToggle('fast');
+      $(this).toggleClass('dropdown-switch');
     });
 
     $('.show-chart-icon').click(function () {
-        $('.chart-container').slideToggle();
+      $('.chart-container').slideToggle();
     });
 
 });

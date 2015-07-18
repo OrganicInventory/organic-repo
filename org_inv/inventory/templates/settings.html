@@ -50,11 +50,15 @@
               </div>
 
           {% endfor %}
-        <button type="submit" name="int-submit" class="gen-btn">Update Interval</button></form>
+        <button type="submit" name="int-submit" class="gen-btn update-interval-btn">Update Interval</button></form>
     </td>
     </tr>
         </table>
     </div>
+    <script type="text/javascript">
+      var dateInterval = "{{ request.user.profile.interval }}";
+      console.log(dateInterval);
+    </script>
 
 
     <div class="brand-div-left">
