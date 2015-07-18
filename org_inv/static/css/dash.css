@@ -127,6 +127,11 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.icon-nav-ul a {
+  color: #bebebe;
 }
 
 .icon {
