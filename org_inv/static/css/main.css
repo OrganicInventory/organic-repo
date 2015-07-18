@@ -732,13 +732,13 @@ table {
 .brand-div-left {
     position: absolute;
     left: 15%;
-    top: 40%;
+    top: 42%;
 }
 
 .brand-div-right {
     position: absolute;
     right: 15%;
-    top: 40%;
+    top: 42%;
 }
 
 .settings-container {
@@ -750,6 +750,10 @@ table {
 .threshold-header {
     margin-top: 7px;
     margin-bottom: 7px;
+}
+
+svg {
+    margin: 10px;
 }
 
 /*MODAL*/
@@ -917,7 +921,9 @@ body.new-order-body li.sub-new-order {
     width: 90%;
     border: 1px solid black;
     margin: 25px auto;
+    padding-top: 25px;
     padding-bottom: 25px;
+    padding-right: 25px;
 }
 
 .prod-details-container {

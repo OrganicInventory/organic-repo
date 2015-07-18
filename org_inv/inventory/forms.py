@@ -66,7 +66,7 @@ class ProductNoQuantityForm(forms.ModelForm):
 
 
 class ThresholdForm(forms.Form):
-    percent = forms.IntegerField(label='Enter New Threshold')
+    percent = forms.IntegerField(label='')
 
     class Meta:
         fields = ['percent']

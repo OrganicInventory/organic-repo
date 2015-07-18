@@ -710,7 +710,7 @@ class OrderView(View):
 class SettingsView(LoginRequiredMixin, View):
     def get(self, request, **kwargs):
         form = ThresholdForm()
-        brands = Brand.objects.filter(user=request.user)
+        brands = Brand.objects.filter(user=request.user).order_by('name')
         return render(request, 'settings.html', {'form': form, 'brands': brands})
 
     def post(self, request, **kwargs):
