@@ -10,7 +10,7 @@ class ServiceForm(forms.ModelForm):
         model = Service
         fields = ['name',]
 
-AmountFormSet = inlineformset_factory(Service, Amount, fields=['product', 'amount'], can_delete=False, max_num=1)
+AmountFormSet = inlineformset_factory(Service, Amount, fields=['product', 'amount'], can_delete=False)
 
 
 class ProductForm(forms.ModelForm):
