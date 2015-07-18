@@ -19,11 +19,12 @@ class ProductForm(forms.ModelForm):
         self.fields['brand'].queryset = Brand.objects.filter(user=request.user)
 
     quantity = forms.FloatField(initial="", label="Quantity (units)")
+    max_quantity = forms.FloatField(initial="", label="Max Quantity (when fully stocked)")
     # brand = forms.CharField(max_length=255)
 
     class Meta:
         model = Product
-        fields = ['name', 'brand', 'size', 'quantity', 'upc_code']
+        fields = ['name', 'brand', 'size', 'quantity', 'max_quantity', 'upc_code']
         labels = {
             'size': 'Size (oz)',
             'brand': ''
@@ -37,6 +38,7 @@ class ProductUpdateForm(forms.Form):
 
     upc_code = forms.CharField(initial="", label="UPC Code")
     quantity = forms.FloatField(initial="", label="Quantity (units)")
+    max_quantity = forms.FloatField(initial="", label="Max Quantity (when fully stocked)")
     name = forms.CharField(max_length=255, widget=forms.HiddenInput(), required=False)
     brand = forms.CharField(max_length=255, widget=forms.HiddenInput(), required=False)
     size = forms.CharField(max_length=255, widget=forms.HiddenInput(), required=False)
@@ -64,7 +66,7 @@ class ProductNoQuantityForm(forms.ModelForm):
 
 
 class ThresholdForm(forms.Form):
-    percent = forms.IntegerField(label='low at ___ %')
+    percent = forms.IntegerField(label='')
 
     class Meta:
         fields = ['percent']

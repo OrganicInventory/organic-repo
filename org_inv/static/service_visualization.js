@@ -1,7 +1,7 @@
 /*These lines are all chart setup.  Pick and choose which chart features you want to utilize. */
 nv.addGraph(function() {
   var chart = nv.models.lineChart()
-                .margin({left: 100})  //Adjust chart margins to give the x-axis some breathing room.
+                .margin({left: 100, right:100, top:100})  //Adjust chart margins to give the x-axis some breathing room.
                 .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
                 .duration(350)  //how fast do you want the lines to transition?
                 .showLegend(true)       //Show the legend, allowing users to turn on/off line series.
@@ -14,12 +14,16 @@ nv.addGraph(function() {
 
   chart.xAxis     //Chart x-axis settings
       .axisLabel('Date')
+      .axisLabelDistance(13)
+      .tickPadding(15)
       .tickFormat(function(d) {
     return d3.time.format('%x')(new Date((d + 86400) * 1000))
 });
 
   chart.yAxis     //Chart y-axis settings
       .axisLabel('Number of Appointments')
+      .axisLabelDistance(15)
+      .tickPadding(15)
       .tickFormat(d3.format('.02f'));
 
   /* Done setting the chart up? Time to render it!*/
