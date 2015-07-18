@@ -18,26 +18,29 @@
 
       </header>
       <div class="brand-div appointments-container">
-      <h2 class="brand-div-header">Today's Appointments<span class="dropdown-icon appointment-drop">v</span></h2>
-
-      <ul class="appointments-ul">
-        {% for appt in appts %}
-            <li class="appointments-li">{{ appt }}</li>
-        {% endfor %}
-      </ul>
-      <a href="{% url 'all_appointments' %}"><button class="main-button">View All Appointments</button></a>
-      <!-- <p>See all your appointments <a href="{% url 'all_appointments' %}">here</a></p> -->
+      <h2 class="brand-div-header">Today's Appointments<span class="dropdown-icon appointment-drop">w</span></h2>
+      <div class="appointments-list-container">
+        <ul class="appointments-ul">
+          {% for appt in appts %}
+              <li class="appointments-li">{{ appt }}</li>
+          {% endfor %}
+        </ul>
+        <a href="{% url 'all_appointments' %}"><button class="main-button appointment-button">View All Appointments</button></a>
+      </div>
+        <!-- <p>See all your appointments <a href="{% url 'all_appointments' %}">here</a></p> -->
       </div>
 
       <div class="brand-div products-container">
-      <h2 class="brand-div-header">Low Inventory<span class="dropdown-icon product-drop">v</span></h2>
-      <ul class="products-ul">
-        {% for prod, value in low.items %}
-            <li class="products-li">{{ prod.name }}</li>
-        {% endfor %}
-      </ul>
-      <!-- <p>Want to place an order? Go  <a href="{% url 'low_products' %}">here</a></p> -->
-      <a href="{% url 'low_products' %}"><button class="main-button">Place an Order</button></a>
+      <h2 class="brand-div-header">Low Inventory<span class="dropdown-icon product-drop">w</span></h2>
+      <div class="products-list-container">
+        <ul class="products-ul">
+          {% for prod, value in low.items %}
+              <li class="products-li">{{ prod.name }}</li>
+          {% endfor %}
+        </ul>
+        <!-- <p>Want to place an order? Go  <a href="{% url 'low_products' %}">here</a></p> -->
+        <a href="{% url 'low_products' %}"><button class="main-button product-button">Place an Order</button></a>
+      </div>
       </div>
       <div class="middle-content-container">
         <div class="page-logo"><span class="icon">u</span>
@@ -46,15 +49,15 @@
         </div>
         <div class="icon-nav-container">
           <ul class="icon-nav-ul">
-            <li class="icon-nav-li"><span class="nav-icon">o</span></li>
-            <li class="icon-nav-li"><span class="nav-icon">h</span></li>
-            <li class="icon-nav-li"><span class="nav-icon">i</span></li>
+            <li class="icon-nav-li"><span class="nav-icon low-icon">o</span></li>
+            <li class="icon-nav-li"><span class="nav-icon all-icon">y</span></li>
+            <li class="icon-nav-li"><span class="nav-icon app-icon">z</span></li>
           </ul>
         </div>
       </div>
       <div id='stock_chart'>
          <svg style='height:500px'></svg>
-     </div>
+      </div>
     </div>
 
     <script src="{% static 'd3.min.js' %}"></script>

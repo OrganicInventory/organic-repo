@@ -192,8 +192,16 @@ getUrlVars();
 
   });
 
-  // $('.product-drop').click(function() {
-  //
-  // });
+  $('.appointment-drop').click(function() {
+    $('.appointments-list-container').slideToggle('slow');
+    $('.appointment-button').fadeToggle('fast');
+    $(this).toggleClass('dropdown-switch');
+  });
+
+  $('.product-drop').click(function() {
+    $('.products-list-container').slideToggle('slow');
+    $('.product-button').fadeToggle('fast');
+    $(this).toggleClass('dropdown-switch');
+  });
 
 });

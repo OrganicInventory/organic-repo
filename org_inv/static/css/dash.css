@@ -31,10 +31,14 @@ body {
 }
 
 .brand-div {
-  background-color: rgba(0, 0, 0, 0.3);
-  min-height: 500px;
+  background-color: rgba(0, 0, 0, 0.2);
+  /*min-height: 500px;*/
   width: 300px;
   position: absolute;
+}
+
+.appointments-list-container, .products-list-container {
+  height: 500px;
 }
 
 .appointments-container {
@@ -115,6 +119,7 @@ body {
   position: relative;
   font-family: untitled-font-1;
   font-size: 42px;
+  padding-left: 30px;
 }
 
 .nav-icon {
@@ -130,6 +135,10 @@ body {
   text-align: center;
   display: block;
   margin: 0 auto;
+}
+
+.app-icon, .low-icon {
+  padding-top: 80px;
 }
 
 .main-heading {
@@ -149,6 +158,12 @@ body {
   position: absolute;
   right: 10px;
   cursor: pointer;
+  transition: 0.8s all ease;
+}
+
+.dropdown-switch {
+  transform: rotateZ(180deg);
+  transition: 0.8s all ease;
 }
 
 #stock_chart {
