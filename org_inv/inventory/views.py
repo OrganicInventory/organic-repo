@@ -107,7 +107,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         form.instance.url = get_product(form.instance.upc_code)[1]
         form.instance.new_product_quantity(form.instance.quantity)
-        form.instance.update_max_quantity()
+        form.instance.save()
         messages.add_message(self.request, messages.SUCCESS,
                              "{} added.".format(form.instance.name))
 
@@ -553,7 +553,6 @@ class NewOrderView(View):
             # prod_instance.brand = prod_instance.brand
             # prod_instance.size = prod_instance.size
             prod_instance.update_quantity(float(request.POST.get('quantity')))
-            prod_instance.update_max_quantity()
             prod_instance.save()
             messages.add_message(request, messages.SUCCESS,
                                  "Product Updated.")
@@ -772,7 +771,7 @@ class BrandCreateView(LoginRequiredMixin, CreateView):
 #######################################################################################################################
 
 def get_prod_data(request):
-    products = Product.objects.filter(user=request.user).prefetch_related('stock_set')
+    products = Product.objects.filter(user=request.user).prefetch_related('stock_set').order_by('name')
     data = []
     enabled = True
     for product in products:
@@ -822,7 +821,7 @@ def get_service_data(serv_id):
 #######################################################################################################################
 
 def get_all_service_data(request):
-    services = Service.objects.filter(user=request.user)
+    services = Service.objects.filter(user=request.user).order_by('name')
     data = []
     enabled = True
     for service in services:
