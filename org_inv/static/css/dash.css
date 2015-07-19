@@ -153,7 +153,7 @@ body {
 }
 
 .middle-content-container {
-  width: 500px;
+  width: 480px;
   height: 450px;
   margin: 0 auto;
   position: relative;
@@ -280,12 +280,14 @@ body {
 }
 
 .chart-container {
-  display: none;
+  /*display: none;*/
   position: fixed;
+  /*top: 50px;*/
   left: 0;
   right: 0;
   bottom: 0;
-  height: 690px;
+  height: 0;
+  /*z-index: 501;*/
   background-color: #e8e6e2;
   background: rgb(68,76,90); /* Old browsers */
   background: -moz-linear-gradient(top,  rgba(68,76,90,1) 0%, rgba(84,84,84,1) 50%, rgba(68,76,90,1) 100%); /* FF3.6+ */
@@ -295,6 +297,12 @@ body {
   background: -ms-linear-gradient(top,  rgba(68,76,90,1) 0%,rgba(84,84,84,1) 50%,rgba(68,76,90,1) 100%); /* IE10+ */
   background: linear-gradient(to bottom,  rgba(68,76,90,1) 0%,rgba(84,84,84,1) 50%,rgba(68,76,90,1) 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#444c5a', endColorstr='#444c5a',GradientType=0 ); /* IE6-9 */
+  transition: 1s height ease;
+}
+
+.chart-container-show {
+  height: 680px;
+  transition: 1s height ease;
 }
 
 @keyframes icon-fade {

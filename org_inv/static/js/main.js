@@ -216,7 +216,8 @@ $(function () {
     });
 
     $('.show-chart-icon').click(function () {
-      $('.chart-container').slideToggle();
+      // $('.chart-container').slideToggle();
+      $('.chart-container').toggleClass('chart-container-show');
     });
 
     $('.header-dropdown-icon').click(function() {

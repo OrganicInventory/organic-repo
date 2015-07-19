@@ -43,11 +43,12 @@
     <div class="page-header-footer">
       <div class="main-nav-container">
         <ul class="main-nav-ul">
+          <a href="/index"><li class="main-nav-li settings-links mobile-li-bg">My Dashboard</li></a>
           <a href="/low"><li class="main-nav-li low-inventory">Low Inventory</li></a>
           <a href="/products"><li class="main-nav-li all-products">All Products</li></a>
           <a href="/appointments"><li class="main-nav-li appointments">Appointments</li></a>
-          <a href="/services"><li class="main-nav-li services settings-links">Services</li></a>
-          <a href="/products/new_order"><li class="main-nav-li new-order settings-links">Receive Order</li></a>
+          <a href="/services"><li class="main-nav-li services settings-links mobile-li-bg">Services</li></a>
+          <a href="/products/new_order"><li class="main-nav-li new-order settings-links mobile-li-bg">Receive Order</li></a>
           <a href="{% url 'edit_profile' %}"><li class="main-nav-li settings-links">My Profile</li></a>
           <a href="{% url 'close_shop' %}"><li class="main-nav-li settings-links">Close Shop</li></a>
           <a href="/users/logout"><li class="main-nav-li settings-links">Logout</li></a>
@@ -63,6 +64,7 @@
   <div class="slide-in-menu">
     <span class="slide-in-menu-exit">m</span>
     <ul class="submenu-ul">
+      <a href="/index"><li class="submenu-li">My Dashboard</li></a>
       <a href="/services"><li class="submenu-li expand-services">Services</li></a>
       <a href="/products/new_order"><li class="submenu-li sub-new-order">Receive Order</li></a>
       <a href="{% url 'edit_profile' %}"><li class="submenu-li">My Profile</li></a>
