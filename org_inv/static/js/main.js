@@ -130,6 +130,7 @@ $(function () {
             e.stopPropagation();
 
             checkUpc();
+            checkName();
         }
     });
 
@@ -149,6 +150,7 @@ $(function () {
             var upcData = parseInt($(this).attr('data-upc'));
             arr.push(upcData);
 
+
             for (var i = 0; i < arr.length; i++) {
                 if (arr.indexOf(upcInput) > -1) {
                     $('.scan-details').css('display', 'inline');
@@ -164,6 +166,32 @@ $(function () {
                 }
             }
         });
+    }
+
+    function checkName() {
+      var nameInput = $('.scan-input').val();
+      var name = [];
+
+      $('.table-upc tr').each(function () {
+        var nameData = $(this).attr('name');
+        name.push(nameData);
+
+        for (var i = 0; i < name.length; i++) {
+          if (name.indexOf(nameInput) > -1 ) {
+            $('.scan-details').css('display', 'inline');
+            $('.scan-update').css('display', 'inline');
+            $('.scan-new').css('display', 'none');
+
+          var trIndexName = name.indexOf(nameInput);
+            $('tr:eq(' + trIndexName + ')').css('background-color', '#add8e6');
+          } else {
+            $('.scan-new').css('display', 'inline');
+            $('.scan-details').css('display', 'none');
+            $('.scan-update').css('display', 'none');
+          }
+        }
+
+      });
     }
 
 //EXIT SUCCESS MESSAGES
