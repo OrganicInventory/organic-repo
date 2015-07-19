@@ -471,10 +471,13 @@ table {
 }
 
 .main-form select {
-    border: 1px solid rgba(204, 0, 0, 1);
-    height: 30px;
-    outline: none;
-    font-size: 12px;
+  border: none;
+  border-bottom: 2px solid #b35b5a;
+  border-left: 2px solid #b35b5a;
+  color: #999;
+  height: 30px;
+  outline: none;
+  font-size: 12px;
 }
 
 .service-form {

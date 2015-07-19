@@ -27,7 +27,7 @@
             {% for form in amounts %}
             <div class="table">
                 <table class='no_error'>
-                  {% for field in form %}
+                  {% for field in form.visible_fields %}
                       <div class="{{ field.label }} input">
 
                           <span class="focus-out">{{ field.label_tag }} </span> {{ field }}
