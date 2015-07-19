@@ -1087,15 +1087,20 @@ body.new-order-body li.sub-new-order {
 }
 
 .settings-h2 {
-    padding-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 #id_percent {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 
 .fc-left {
-    font-size: 25pt;
+  font-size: 25pt;
+}
+
+.fc-toolbar {
+  margin: 10px;
+  padding-top: 10px;
 }
 
 /*RESPONSIVE*/
@@ -1125,28 +1130,29 @@ body.new-order-body li.sub-new-order {
 }
 
 @media (max-width: 700px) {
-    .main-nav-li {
-        display: none;
-    }
+  .main-nav-li {
+      display: none;
+  }
 
-    .main-nav-container {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
+  .main-nav-container {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+  }
 
-    .main-nav-ul {
-        margin: 0;
-        margin-top: 60px;
-        border-radius: 0;
-        text-align: center;
-        background-color: #444c5a;
-        display: none;
-        position: fixed;
-        left: 0;
-        right: 0;
-        z-index: 1001;
-    }
+  .main-nav-ul {
+      margin: 0;
+      margin-top: 60px;
+      border-radius: 0;
+      text-align: center;
+      background-color: #444c5a;
+      display: none;
+      position: fixed;
+      left: 0;
+      right: 0;
+      z-index: 1001;
+      border-top: 3px solid #565d6a;
+  }
 
     .main-nav-ul a {
         text-decoration: none;
@@ -1157,6 +1163,7 @@ body.new-order-body li.sub-new-order {
         margin: 0;
         font-size: 16px;
         padding-bottom: 20px;
+        border-bottom: 3px solid #565d6a;
     }
 
     .main-nav-li:hover {
@@ -1167,9 +1174,13 @@ body.new-order-body li.sub-new-order {
 
     .settings-links {
         display: block;
-        background-color: #565d6a;
         border-radius: 0;
         border-bottom: 3px solid #565d6a;
+    }
+
+    .mobile-li-bg {
+      background-color: #444c5a;
+      border-bottom: 3px solid #565d6a;
     }
 
     .top-nav-container {
