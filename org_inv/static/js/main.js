@@ -129,8 +129,13 @@ $(function () {
             e.preventDefault();
             e.stopPropagation();
 
-            checkUpc();
-            checkName();
+            var checkNum = $('.scan-input').val();
+            if (isNaN(checkNum)) {
+              checkName();
+            } else {
+              checkUpc();
+            }
+
         }
     });
 
