@@ -16,6 +16,11 @@ $(document).ready(function() {
         events: appointments,
         eventColor: '#b35b5a',
         height: 'auto',
+        header: {
+            left:   'title',
+            center: '',
+            right:  'prev,today,next'
+        },
         eventRender: function (event, element) {
         element.attr('href', 'javascript:void(0);');
         element.click(function() {
