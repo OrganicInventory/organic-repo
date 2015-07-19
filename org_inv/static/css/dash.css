@@ -79,6 +79,10 @@ body {
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
+.main-nav-ul a:hover {
+  color: #b35b5a;
+}
+
 .brand-div {
   background-color: rgba(0, 0, 0, 0.2);
   /*min-height: 500px;*/
