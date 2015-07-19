@@ -860,13 +860,19 @@ th {
 }
 
 .dropdown-icon {
-    font-family: untitled-font-1;
-    font-size: 2em;
-    position: absolute;
-    cursor: pointer;
-    top: 50%;
-    right: 25px;
-    transform: translate(0, -50%);
+  font-family: untitled-font-1;
+  font-size: 2em;
+  position: absolute;
+  cursor: pointer;
+  top: 50%;
+  right: 25px;
+  transform: translate(0, -50%);
+  transition: 0.2s color ease;
+}
+
+.dropdown-icon:hover {
+  color: #b35b5a;
+  transition: 0.2s color ease;
 }
 
 .dropdown-icon-bottom {
@@ -1193,6 +1199,12 @@ body.new-order-body li.sub-new-order {
         font-size: 2em;
         color: #eee;
         cursor: pointer;
+        transition: 0.2s color ease;
+    }
+
+    .nav-dropdown-btn:hover, .add-btn-mobile:hover {
+      color: #b35b5a;
+      transition: 0.2s color ease;
     }
 
     .table-mobile th:nth-child(2) {
