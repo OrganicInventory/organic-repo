@@ -38,7 +38,7 @@ class ProductUpdateForm(forms.Form):
 
     upc_code = forms.CharField(initial="", label="UPC Code")
     quantity = forms.FloatField(initial="", label="Quantity (units)")
-    max_quantity = forms.FloatField(initial="", label="Max Quantity (when fully stocked)")
+    max_quantity = forms.FloatField(widget=forms.HiddenInput(), required=False)
     name = forms.CharField(max_length=255, widget=forms.HiddenInput(), required=False)
     brand = forms.CharField(max_length=255, widget=forms.HiddenInput(), required=False)
     size = forms.CharField(max_length=255, widget=forms.HiddenInput(), required=False)
@@ -46,7 +46,7 @@ class ProductUpdateForm(forms.Form):
 
     class Meta:
         model = Product
-        fields = ['upc_code', 'quantity', 'name', 'brand', 'size']
+        fields = ['upc_code', 'quantity', 'name', 'brand', 'size', 'max_quantity']
         labels = {'brand': '', 'name': '', 'size': ''}
 
 
@@ -61,8 +61,8 @@ class ProductNoQuantityForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ['upc_code', 'quantity', 'name', 'brand', 'size']
-        labels = {'brand': '', 'name': 'Name', 'size': 'Size (oz)'}
+        fields = ['upc_code', 'quantity', 'name', 'brand', 'size', 'max_quantity']
+        labels = {'brand': '', 'name': 'Name', 'size': 'Size (oz)', 'max_quantity': 'Max Quantity (fully stocked)'}
 
 
 class ThresholdForm(forms.Form):
