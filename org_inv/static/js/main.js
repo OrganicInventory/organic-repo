@@ -216,7 +216,8 @@ $(function () {
     });
 
     $('.show-chart-icon').click(function () {
-      $('.chart-container').slideToggle();
+      // $('.chart-container').slideToggle();
+      $('.chart-container').toggleClass('chart-container-show');
     });
 
     $('.header-dropdown-icon').click(function() {
@@ -243,5 +244,19 @@ $(function () {
     $('.app-icon-li').mouseleave(function() {
       $('.display-icon-text').text('')
     });
+
+    $(window).resize(function() {
+      if ($(window).width() < 701) {
+        $('.product-drop').click(function() {
+          $('.appointments-list-container').hide();
+        });
+        $('.appointment-drop').click(function() {
+          $('.products-list-container').hide();
+        });
+      }
+      else {
+
+      }
+    }).resize();
 
 });
