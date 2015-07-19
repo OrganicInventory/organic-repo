@@ -259,6 +259,7 @@ body.user-profile-body .main-content {
 .user-icon-image img {
     max-width: 40px;
     width: 150%;
+    max-width: 50px;
 }
 
 .secondary-dropdown-icon {
