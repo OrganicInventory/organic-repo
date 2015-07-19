@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<img class="logo" src={% static 'css/leaf-white-md.png' %}>
+
 {% if form.errors %}
   <p class="nomatch">Sorry, your username and password didn't match. Please try again.</p>
   {% endif %}
@@ -43,6 +43,7 @@
 </div>
 
 <header class="header">
+    <div class="logo-img"><img class="logo" src={% static 'css/pump_bottle_logo.png' %}></div>
     P.I.M.
     <div class="sub-header">Predictive<br/> Inventory <br/>Management</div>
     <div class="headspa">Spa Edition</div>
