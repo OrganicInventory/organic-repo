@@ -772,6 +772,23 @@ svg {
     padding: 10px;
 }
 
+.fc-toolbar {
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#calendar {
+    /*background-color: #e8e6e2;*/
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#calendar h2 {
+    font-family: sans-serif;
+    font-size: 28px;
+}
+
 /*MODAL*/
 
 .modal-container {
