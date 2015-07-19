@@ -11,23 +11,47 @@
         <h2 class="secondary-heading">{{ object.name }}</h2>
     </div>
     <!-- <div class="list-container"> -->
-      <div class="prod-details-container">
+    <div class="prod-details-container">
         {% if pic != None %}
             <img class="prod-image" src="{{ pic }}" alt="product image" height="200" width="200">
         {% endif %}
+
+        {% if img == 1 %}
+            <img class="meter" src="{% static 'css/1.png' %}">
+        {% elif img == 2 %}
+            <img class="meter" src="{% static 'css/2.png' %}">
+        {% elif img == 3 %}
+            <img class="meter" src="{% static 'css/3.png' %}">
+        {% elif img == 4 %}
+            <img class="meter" src="{% static 'css/4.png' %}">
+        {% elif img == 5 %}
+            <img class="meter" src="{% static 'css/5.png' %}">
+        {% elif img == 6 %}
+            <img class="meter" src="{% static 'css/6.png' %}">
+        {% elif img == 7 %}
+            <img class="meter" src="{% static 'css/7.png' %}">
+        {% elif img == 8 %}
+            <img class="meter" src="{% static 'css/8.png' %}">
+        {% elif img == 9 %}
+            <img class="meter" src="{% static 'css/9.png' %}">
+        {% elif img == 10 %}
+            <img class="meter" src="{% static 'css/10.png' %}">
+        {% endif %}
+
         <ul class="list-container-ul">
             <li class="list-container-li">Brand: {{ object.brand }}</li>
             <li class="list-container-li">Quantity: {{ object.display_quantity|floatformat:2 }}</li>
             <li class="list-container-li">Size: {{ object.size }}</li>
             <li class="list-container-li">UPC: {{ object.upc_code }}</li>
+            <li class="list-container-li"><a href="{% url 'product_confirm_delete' product.id %}">
+                <button class="details-button">Delete</button>
+            </a><a href="{% url 'update_product' %}?upc={{ product.upc_code }}">
+                <button class="details-button">Update</button></li>
+
         </ul>
-        <a href="{% url 'product_confirm_delete' product.id %}">
-            <button class="details-button">Delete</button>
-        </a>
-        <a href="{% url 'update_product'%}?upc={{ product.upc_code }}">
-          <button class="details-button">Update</button>
-        </a>
-      </div>
+
+
+    </div>
 
     <!-- </div> -->
     <div class="list-container-footer"></div>
