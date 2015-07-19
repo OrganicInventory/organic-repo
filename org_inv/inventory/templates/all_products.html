@@ -51,7 +51,7 @@
             <th></th>
         </tr>
         {% for product in all_products %}
-            <tr data-upc="{{product.upc_code}}" name="{{product.name}}">
+            <tr data-upc="{{product.upc_code}}" name="{{product.name|lower}}">
                 {% if product in prods %}
                     {% for pair in pairs %}
                         {% if product == pair.0 %}

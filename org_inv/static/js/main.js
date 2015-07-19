@@ -174,8 +174,10 @@ $(function () {
     }
 
     function checkName() {
-      var nameInput = $('.scan-input').val();
+      var nameInput = $('.scan-input').val().toLowerCase();
       var name = [];
+
+      console.log(nameInput);
 
       $('.table-upc tr').each(function () {
         var nameData = $(this).attr('name');
