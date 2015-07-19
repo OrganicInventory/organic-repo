@@ -182,34 +182,36 @@ $(function () {
     });
 
 //ADD PRODUCT OPTION TO ADD SERVICES/UPDATE SERVICES
-    $('#add_more').click(function () {
-      // cloneMore('div.table:last', 'amount_set');
-      $('.Product:last').clone().appendTo('.table');
-      $('.Amount:last').clone().appendTo('.table');
-      $('.Product select').each(function (i) {
-          this.id = 'id_amount_set-' + i + '-product';
-          this.name = 'amount_set-' + i + '-product';
-      })
+    // $('#add_more').click(function () {
+    //   // cloneMore('div.table:last', 'amount_set');
+    //   $('.Product:last').clone().appendTo('.table');
+    //   $('.Amount:last').clone().appendTo('.table');
+    //   $('.Product select').each(function (i) {
+    //       this.id = 'id_amount_set-' + i + '-product';
+    //       this.name = 'amount_set-' + i + '-product';
+    //   })
+    //
+    //   $('.Amount input').each(function (j) {
+    //       this.id = 'id_amount_set-' + j + '-amount';
+    //       this.name = 'amount_set-' + j + '-amount';
+    //   });
+    //
+    //   $('.Product').find('option:eq(0)').last().prop('selected', true);
+    //   $('.Amount input').last().val('');
+    //
+    // });
 
-      $('.Amount input').each(function (j) {
-          this.id = 'id_amount_set-' + j + '-amount';
-          this.name = 'amount_set-' + j + '-amount';
-      });
-
-      $('.Product').find('option:eq(0)').last().prop('selected', true);
-      $('.Amount input').last().val('');
-
-    });
+//DASHBOARD
 
     $('.appointment-drop').click(function () {
       $('.appointments-list-container').slideToggle('slow');
-      $('.appointment-button').fadeToggle('fast');
+      $('.appointment-button').fadeToggle('slow');
       $(this).toggleClass('dropdown-switch');
     });
 
     $('.product-drop').click(function () {
       $('.products-list-container').slideToggle('slow');
-      $('.product-button').fadeToggle('fast');
+      $('.product-button').fadeToggle('slow');
       $(this).toggleClass('dropdown-switch');
     });
 
@@ -219,6 +221,27 @@ $(function () {
 
     $('.header-dropdown-icon').click(function() {
       $('.main-nav-container').slideToggle();
+    });
+
+    $('.low-icon-li').mouseenter(function() {
+      $('.display-icon-text').text('Check what products are low.')
+    });
+    $('.low-icon-li').mouseleave(function() {
+      $('.display-icon-text').text('')
+    });
+
+    $('.all-icon-li').mouseenter(function() {
+      $('.display-icon-text').text('View all of your products.')
+    });
+    $('.all-icon-li').mouseleave(function() {
+      $('.display-icon-text').text('')
+    });
+
+    $('.app-icon-li').mouseenter(function() {
+      $('.display-icon-text').text('Check all of your upcoming appointments.')
+    });
+    $('.app-icon-li').mouseleave(function() {
+      $('.display-icon-text').text('')
     });
 
 });
