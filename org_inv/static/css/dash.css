@@ -133,6 +133,7 @@ body {
   color: #333;
   outline: none;
   transition: 0.5s background-color ease;
+  display: none;
 }
 
 /*.main-button:hover {
