@@ -20,7 +20,7 @@
 
               <div class="{{ field.label }} input">
 
-                  <h2>Enter New Threshold: {{ field }}</h2>
+                  <h2 class="settings-h2">Enter New Threshold: {{ field }}</h2>
                   {{ field.errors }}
               </div>
 
@@ -45,16 +45,20 @@
 
               <div class="{{ field.label }} input">
 
-                  <h2>Enter New Interval: {{ field }}</h2>
+                  <h2 class="settings-h2">Enter New Interval: {{ field }}</h2>
                   {{ field.errors }}
               </div>
 
           {% endfor %}
-        <button type="submit" name="int-submit" class="gen-btn">Update Interval</button></form>
+        <button type="submit" name="int-submit" class="gen-btn update-interval-btn">Update Interval</button></form>
     </td>
     </tr>
         </table>
     </div>
+    <script type="text/javascript">
+      var dateInterval = "{{ request.user.profile.interval }}";
+      console.log(dateInterval);
+    </script>
 
 
     <div class="brand-div-left">

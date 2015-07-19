@@ -1077,7 +1077,17 @@ body.new-order-body li.sub-new-order {
   left: 14%;
 }
 
+.settings-h2 {
+    padding-bottom: 20px;
+}
 
+#id_percent {
+    margin-top: 15px;
+}
+
+.fc-left {
+    font-size: 25pt;
+}
 
 /*RESPONSIVE*/
 
