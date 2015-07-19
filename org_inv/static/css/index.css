@@ -48,10 +48,14 @@ body:before {
 }
 
 /*Spacing for 3 landing page articles*/
+
+.boxes {
+  width:1280px;
+}
 .box {
     float: left;
-    margin: 5% 1.5%;
-    width: 30%;
+    margin: 3% 1.5%;
+    width: 25%;
     text-align: left;
     font-weight: 800;
     font-size: 180%;
