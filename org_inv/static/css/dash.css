@@ -318,3 +318,82 @@ body {
     90% {opacity: 0.7;}
     100% {opacity: 0.8;}
 }
+
+@media (max-width: 1150px) {
+    .main-heading {
+      font-size: 52px;
+      margin-top: 25px;
+      margin-bottom: 25px;
+      transition: 0.2s all ease;
+    }
+
+    .secondary-heading {
+      font-size: 20px;
+      transition: 0.2s all ease;
+    }
+
+    .icon-nav-li {
+      width: 100px;
+      font-size: 38px;
+      padding-left: 8px;
+      transition: 0.2s all ease;
+    }
+
+    .middle-content-container {
+      width: 380px;
+      transition: 0.2s all ease;
+    }
+}
+
+@media (max-width: 1065px) {
+  .page-logo {
+    width: 300px;
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    transform: translate(-50%, -10%);
+    transition: 0.2s all ease;
+  }
+
+  .icon-nav-container {
+    height: 100px;
+    margin: -100px auto 0 auto;
+    transition: 0.2s all ease;
+  }
+
+  .icon-nav-li {
+    display: block;
+    width: 50px;
+    height: 100px;
+    position: relative;
+    font-size: 42px;
+    margin: 0 auto;
+    padding: 0;
+    border-radius: 0;
+    transition: 0.2s all ease;
+  }
+
+  .icon-nav-ul {
+    width: 80px;
+    margin: 50px auto 0 auto;
+    transition: 0.2s all ease;
+  }
+
+  .app-icon, .low-icon {
+    padding-top: 0;
+    width: 80px;
+    transition: 0.2s all ease;
+  }
+
+  .middle-content-container {
+    width: 300px;
+    transition: 0.2s all ease;
+  }
+
+  .display-icon-text {
+    margin-top: 0;
+    padding-top: 0;
+    transition: 0.2s all ease;
+  }
+
+}
