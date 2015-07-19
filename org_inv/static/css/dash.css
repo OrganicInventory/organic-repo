@@ -417,8 +417,8 @@ body {
 
   .icon {
     position: fixed;
-    top: 5px;
-    left: 60px;
+    top: 25px;
+    left: 10px;
     /*font-size: 30px;*/
     transition: 0.5s all ease;
   }
