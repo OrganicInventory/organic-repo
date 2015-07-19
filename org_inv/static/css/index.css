@@ -1,16 +1,16 @@
 /*Centering background image*/
-body{
-  /*background:linear-gradient(to top,rgba(255,255,255,0.175),rgba(0,0,0,0.3)), url("spa-spa-kamni-svechi-cvety-546.jpg");*/
-  background-repeat: no-repeat;
-  background:url("spa-spa_fotor_fotor.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  width:100%;
-  font-family: 'Josefin Sans', sans-serif;
-  position: fixed;
-  right:0;
-  left:0;
-  top: 0;
+body {
+    /*background:linear-gradient(to top,rgba(255,255,255,0.175),rgba(0,0,0,0.3)), url("spa-spa-kamni-svechi-cvety-546.jpg");*/
+    background-repeat: no-repeat;
+    background: url("spa-spa_fotor_fotor.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    font-family: 'Josefin Sans', sans-serif;
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
 }
 
 /*setting gradient over background*/
@@ -24,219 +24,229 @@ body:before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: -webkit-radial-gradient(bottom left, ellipse cover, rgba(0,0,0,0.5) 0%,rgba(101,57,37,0.8) 100%);
+    background: -webkit-radial-gradient(bottom left, ellipse cover, rgba(0, 0, 0, 0.5) 0%, rgba(101, 57, 37, 0.8) 100%);
 }
 
 /*Landing page*/
-header{
-  text-align: right;
-  font-size: 500%;
-  font-weight: 500;
-  color:#EEE;
-  display: block;
-  padding: 0;
-  margin-right: 38%;
+.header {
+    text-align: right;
+    font-size: 600%;
+    font-weight: 500;
+    color: #EEE;
+    display: block;
+    /*padding: 0;*/
+    margin-right: 38%;
+    margin-top: 3%;
 }
 
-.sub-header{
-  font-size: 35%;
-  text-align: left;
-  float: right;
-  padding: 0;
+.sub-header {
+    font-size: 28%;
+    text-align: left;
+    float: right;
+    padding-top: 0px;
+    /*padding: 0;*/
 }
 
 /*Spacing for 3 landing page articles*/
-.box{
-  float:left;
-	margin:5% 1.5%;
-	width:30%;
-  text-align: left;
-  font-weight: 800;
-  font-size: 180%;
-  color:#EEE;
-  min-width: 250px;
-  display:block;
-  margin-top: 9%;
+
+.boxes {
+  width:1280px;
+}
+.box {
+    float: left;
+    margin: 3% 1.5%;
+    width: 25%;
+    text-align: left;
+    font-weight: 800;
+    font-size: 180%;
+    color: #EEE;
+    min-width: 250px;
+    display: block;
+    margin-top: 9%;
 }
 
 /*article descriptions*/
-.sub-box{
-  font-size: 60%;
-  font-weight: 300;
-  line-height: 150%;
+.sub-box {
+    font-size: 60%;
+    font-weight: 300;
+    line-height: 150%;
 }
 
 /*Larger first letter of sub-box*/
-.caps{
-  font-size: 120%;
-  font-weight: 500;
+.caps {
+    font-size: 120%;
+    font-weight: 500;
 }
 
-
-
 /*Universal Styling across buttons*/
-button{
-  background-color: #caed9a;
-  border-radius: 5%;
-  color: black;
-  padding: 1%;
-  border: none;
-  margin-top: 2%;
+button {
+    background-color: #caed9a;
+    border-radius: 5%;
+    color: black;
+    padding: 1%;
+    border: none;
+    margin-top: 2%;
 }
 
 button:hover {
-  background-color: #EEE;
-  cursor: pointer;
+    background-color: #EEE;
+    cursor: pointer;
 }
 
 /*Header on signup page*/
-.register{
-  text-align: center;
-  font-size: 280%;
-  font-weight: 400;
-  color:#EEE;
-  margin-top: 5%;
+.register {
+    text-align: center;
+    font-size: 280%;
+    font-weight: 400;
+    color: #EEE;
+    margin-top: 5%;
 }
 
 /*form on signup page*/
-.register2{
-  font-weight: 300;
-  font-size: 120%;
-  color:#EEE;
-  display:block;
+.register2 {
+    font-weight: 300;
+    font-size: 120%;
+    color: #EEE;
+    display: block;
 }
 
 .register2 input {
-  margin:0 auto;
-  display:block;
+    margin: 0 auto;
+    display: block;
 }
 
-.register2 label{
-  text-align: left;
-  margin-left: 35%;
-  font-size: 130%;
+.register2 label {
+    text-align: left;
+    margin-left: 35%;
+    font-size: 130%;
 }
 
-  /*button-link to submit signup form*/
-.btn-register{
-  font-size: 70%;
-  display: block;
-  margin: 0 auto;
-  margin-top: 1%;
-  background-color: transparent;
-  border: 2px solid #EEE;
-  color: #EEE;
-  opacity: .8;
-  padding: 1%;
-  font-size: 100%;
-  cursor: pointer;
-  border-radius: 5%;
+/*button-link to submit signup form*/
+.btn-register {
+    font-size: 70%;
+    display: block;
+    margin: 0 auto;
+    margin-top: 1%;
+    background-color: transparent;
+    border: 2px solid #EEE;
+    color: #EEE;
+    opacity: .8;
+    padding: 1%;
+    font-size: 100%;
+    cursor: pointer;
+    border-radius: 5%;
 }
 
-.btn-register:hover{
-  border: 4px solid #caed9a;
-  cursor: pointer;
-  background: none;
+.btn-register:hover {
+    border: 4px solid #caed9a;
+    cursor: pointer;
+    background: none;
 }
 
 /*login feilds div*/
-.login1{
-  font-size: 100%;
-  font-weight: 300;
-  color:#EEE;
-  min-width: 250px;
-  margin-right: 4%;
-  font-family: 'Josefin Sans', sans-serif;
-  text-align: right;
-  float: right;
+.login1 {
+    font-size: 100%;
+    font-weight: 300;
+    color: #EEE;
+    min-width: 250px;
+    margin-right: 4%;
+    font-family: 'Josefin Sans', sans-serif;
+    text-align: right;
+    float: right;
 }
 
-.loginbtn{
-  background-color: transparent;
-  border: 1px solid #EEE;
-  color: #EEE;
-  font-size: 70%;
-  opacity: .8;
-  padding: 2%;
-  font-size: 100%;
-  cursor: pointer;
-  border-radius: 6%;
-  margin-right: 2%;
-  }
+.loginbtn {
+    background-color: transparent;
+    border: 1px solid #EEE;
+    color: #EEE;
+    font-size: 70%;
+    opacity: .8;
+    padding: 2%;
+    font-size: 100%;
+    cursor: pointer;
+    border-radius: 6%;
+    margin-right: 2%;
+}
 
-.loginbtn:hover{
-  border: 2px solid #caed9a;
-  cursor: pointer;
-  background: none;
+.loginbtn:hover {
+    border: 2px solid #caed9a;
+    cursor: pointer;
+    background: none;
 }
 
 /*password required alert*/
-.nomatch{
-  color: #caed9a;
-  text-align: center;
-  font-size: 100%;
+.nomatch {
+    color: #caed9a;
+    text-align: center;
+    font-size: 100%;
 }
 
 /*Spa Edition header*/
-.headspa{
-  font-size: 50%;
-  font-weight: 400;
-  color: #caed9a;
-  margin-left: 40%;
+.headspa {
+    font-size: 50%;
+    font-weight: 400;
+    color: #caed9a;
+    margin-right: 147px;
+    /*margin-left: 30%;*/
 }
 
 /*Landing page leaf logo*/
-.logo{
-  height:80px;
-  float: left;
-  margin-left: 1%;
-  margin-top: 1%;
+.logo {
+    height: 135px;
+    /*float: left;*/
+    margin-left: 240%;
+    margin-top: 0%;
+}
+
+.logo-img {
+    float: left;
 }
 
 /* PIM on Register page*/
-.pim{
-  color:#EEE;
-  text-align: center;
-  font-size: 180%;
-  font-weight: 300;
+.pim {
+    color: #EEE;
+    text-align: center;
+    font-size: 180%;
+    font-weight: 300;
 }
 
 /*Register page leaf logo*/
-.logo1{
-  height:40px;
-  display: block;
-  margin: 0 auto;
+.logo1 {
+    height: 40px;
+    display: block;
+    margin: 0 auto;
 }
 
 /*required fields alert on register page*/
-.errors{
-  font-size: 30%;
-  float:right;
-  margin-right:20%;
-  color: #caed9a;
+.errors {
+    font-size: 30%;
+    float: right;
+    margin-right: 20%;
+    color: #caed9a;
 }
 
 /*spacing*/
-.nav{
-  float: left;
+.nav {
+    float: left;
 }
 
 /*Landing page SIGN UP button*/
-.registerbtn{
-  background-color: transparent;
-  border: 2px solid #EEE;
-  color: #EEE;  display: block;
-  margin: 0 auto;
-  text-align: center;
-  font-size: 60%;
-  border-radius: 6%;
-  font-size: 150%;
+.registerbtn {
+    background-color: transparent;
+    border: 2px solid #EEE;
+    color: #EEE;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 60%;
+    border-radius: 6%;
+    font-size: 150%;
 }
 
-.registerbtn:hover{
-  border: 3px solid #caed9a;
-  cursor: pointer;
-  background-color: transparent;
+.registerbtn:hover {
+    border: 3px solid #caed9a;
+    cursor: pointer;
+    background-color: transparent;
 }
 
 /*Remove underline from SIGN UP button*/
