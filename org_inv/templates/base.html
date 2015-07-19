@@ -28,7 +28,7 @@
   <div class="page-header-container">
     <header class="page-header">
       <div class="top-nav-container">
-        <a href="{% url 'edit_profile' %}"><div class="user-icon"><span class="user-icon-image">t</span></div></a>
+        <div class="user-icon"><span class="user-icon-image"><img src={% static 'css/leaf-white-md.png' %}></span></div>
         <span class="user-name">
           <span class="user-welcome">Welcome </span>
           <a href="{% url 'edit_profile' %}">{{request.user.username}}</a>

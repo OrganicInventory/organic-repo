@@ -236,11 +236,11 @@ body.user-profile-body .main-content {
 .user-icon {
     width: 40px;
     height: 40px;
-    border-radius: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
+    /*border-radius: 100%;*/
+    /*background-color: rgba(255, 255, 255, 0.5);*/
     display: inline-block;
-    cursor: pointer;
-    font-family: untitled-font-1;
+    /*cursor: pointer;*/
+    /*font-family: untitled-font-1;*/
     font-size: 32px;
     text-align: center;
     position: relative;
@@ -251,6 +251,10 @@ body.user-profile-body .main-content {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+
+.user-icon-image img {
+    max-width: 40px;
 }
 
 .secondary-dropdown-icon {
