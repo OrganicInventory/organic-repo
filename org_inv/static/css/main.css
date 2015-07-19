@@ -252,14 +252,13 @@ body.user-profile-body .main-content {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    /*width: 20%;
-    padding: 50px;*/
+    width: 80%;
 }
 
 .user-icon-image img {
-    max-width: 40px;
+    /*max-width: 40px;
+    max-width: 50px;*/
     width: 150%;
-    max-width: 50px;
 }
 
 .secondary-dropdown-icon {
