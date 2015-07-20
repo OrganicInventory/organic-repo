@@ -136,7 +136,7 @@ class ProductUpdate(LoginRequiredMixin, UpdateView):
     def get_form(self, form_class=None):
         if form_class is None:
             form_class = self.get_form_class()
-        return form_class(self.request, **self.get_form_kwargs())
+            return form_class(self.request, **self.get_form_kwargs())
 
     def get_success_url(self):
         return reverse('all_products')
@@ -147,6 +147,7 @@ class ProductUpdate(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
+        self.object.max_quantity = form.validated_data['max_quantity'] * self.object.size
         self.object.save()
         messages.add_message(self.request, messages.SUCCESS,
                              "Product updated")
@@ -498,7 +499,7 @@ class ServiceDetailView(DetailView):
             amt = Amount.objects.get(product=prod, service=self.object)
             amts.append(amt)
         context['prods'] = self.object.products.all()
-        context['prods_amts'] = zip(prods,amts)
+        context['prods_amts'] = zip(prods, amts)
         return context
 
 
@@ -634,6 +635,7 @@ class CloseShopView(View):
                 prod.save()
         return redirect('/low/')
 
+
 class CloseShopView(View):
     def dispatch(self, request, *args, **kwargs):
         appts = Appointment.objects.filter(date__lte=datetime.today(), done=False, user=request.user).order_by('date')
@@ -656,6 +658,7 @@ class CloseShopView(View):
                 prod.quantity -= amt.amount
                 prod.save()
         return redirect('/low/')
+
 
 #######################################################################################################################
 
@@ -965,19 +968,20 @@ def get_all_usage_data(request):
     enabled = True
     for product in products:
         stocks = product.stock_set.filter(date__lte=datetime.today(),
-                                          date__gte=(datetime.today() - timedelta(days=91))).order_by('date')
+                                          date__gte=(datetime.today() - timedelta(days=61))).order_by('date')
         if stocks:
             initial = stocks[0].stocked
         else:
             initial = product.quantity
-        days = set((datetime.today() - timedelta(days=91)) + timedelta(x) for x in range((datetime.today() - (datetime.today() - timedelta(days=91))).days))
+        days = list((datetime.today() - timedelta(days=61)) + timedelta(x) for x in
+                    range(((datetime.today() + timedelta(days=1)) - (datetime.today() - timedelta(days=61))).days))
         sundays = [day for day in days if day.isocalendar()[2] == 7]
         values = []
         usages = {}
         for sunday in sundays:
             stock = product.stock_set.filter(date__lte=sunday).order_by('-date')
             if stock:
-                date = str(stock[0].date)
+                date = str(sunday.date())
                 usages[date] = usages.get(date, 0)
                 usages[date] += stock[0].stocked
                 initial = stock[0].stocked
