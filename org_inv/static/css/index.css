@@ -28,25 +28,31 @@ body:before {
 }
 
 /*Landing page*/
-.header {
-    text-align: right;
-    font-size: 600%;
-    font-weight: 500;
-    color: #EEE;
-    display: block;
-    /*padding: 0;*/
-    margin-right: 38%;
-    margin-top: 3%;
+header{
+  text-align: right;
+  font-size: 500%;
+  font-weight: 500;
+  color:#EEE;
+  display: block;
+  padding: 0;
+  margin-right: 38%;
+  margin-top: 10%;
 }
 
-.sub-header {
-    font-size: 28%;
-    text-align: left;
-    float: right;
-    padding-top: 0px;
-    /*padding: 0;*/
+.sub-header{
+  font-size: 30%;
+  text-align: left;
+  float: right;
+  padding: 0;
 }
 
+/*Spa Edition header*/
+.headspa{
+  font-size: 50%;
+  font-weight: 400;
+  color: #8DB78D;
+  text-align: right;
+}
 
 /*Spacing for 3 landing page articles*/
 
@@ -123,56 +129,57 @@ button:hover {
     font-size: 130%;
 }
 
-/*button-link to submit signup form*/
-.btn-register {
-    font-size: 70%;
-    display: block;
-    margin: 0 auto;
-    margin-top: 1%;
-    background-color: transparent;
-    border: 2px solid #EEE;
-    color: #EEE;
-    opacity: .8;
-    padding: 1%;
-    font-size: 100%;
-    cursor: pointer;
-    border-radius: 5%;
+  /*button-link to submit signup form on Register page*/
+.btn-register{
+  font-size: 70%;
+  display: block;
+  margin: 0 auto;
+  margin-top: 1%;
+  background-color: transparent;
+  border: 2px solid #EEE;
+  color: #EEE;
+  opacity: .8;
+  padding: 1%;
+  font-size: 100%;
+  cursor: pointer;
+  border-radius: 5%;
 }
 
-.btn-register:hover {
-    border: 4px solid #caed9a;
-    cursor: pointer;
-    background: none;
+.btn-register:hover{
+  border: 4px solid #8DB78D;
+  cursor: pointer;
+  background: none;
 }
 
 /*login feilds div*/
-.login1 {
-    font-size: 100%;
-    font-weight: 300;
-    color: #EEE;
-    min-width: 250px;
-    margin-right: 4%;
-    font-family: 'Josefin Sans', sans-serif;
-    text-align: right;
-    float: right;
+.login1{
+  font-size: 100%;
+  font-weight: 300;
+  color:#EEE;
+  min-width: 250px;
+  margin-right: 4%;
+  font-family: 'Josefin Sans', sans-serif;
+  text-align: right;
+  float: right;
 }
 
-.loginbtn {
-    background-color: transparent;
-    border: 1px solid #EEE;
-    color: #EEE;
-    font-size: 70%;
-    padding: 2%;
-    font-size: 100%;
-    cursor: pointer;
-    border-radius: 6%;
-    margin-right: 2%;
-}
+.loginbtn{
+  background-color: transparent;
+  border: 1px solid #EEE;
+  color: #EEE;
+  font-size: 70%;
+  opacity: .8;
+  padding: 2%;
+  font-size: 100%;
+  cursor: pointer;
+  border-radius: 6%;
+  margin-right: 2%;
+  }
 
-.loginbtn:hover {
-    border: 2px solid #88b288;
-    cursor: pointer;
-    background: none;
+.loginbtn:hover{
+  border: 2px solid #8DB78D;
+  cursor: pointer;
+  background: none;
 }
 
 /*password required alert*/
@@ -211,12 +218,12 @@ button:hover {
     font-weight: 300;
 }
 
-/*Register page leaf logo*/
-.logo1 {
-    height: 80px;
-    display: block;
-    margin: 0 auto;
-    padding-bottom: 20px;
+/*Register page bottle logo*/
+.logo1{
+  height:60px;
+  display: block;
+  margin: 0 auto;
+
 }
 
 /*required fields alert on register page*/
@@ -233,25 +240,25 @@ button:hover {
 }
 
 /*Landing page SIGN UP button*/
-.registerbtn {
-    background-color: transparent;
-    border: 2px solid #EEE;
-    color: #EEE;
-    display: block;
-    margin: 0 auto;
-    text-align: center;
-    font-size: 60%;
-    border-radius: 6%;
-    font-size: 150%;
+.registerbtn{
+  background-color: transparent;
+  border: 2px solid #EEE;
+  color: #EEE;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 60%;
+  border-radius: 6%;
+  font-size: 150%;
 }
 
-.registerbtn:hover {
-    border: 3px solid #88b288;
-    cursor: pointer;
-    background-color: transparent;
+.registerbtn:hover{
+  border: 3px solid #8DB78D;
+  cursor: pointer;
+  background-color: transparent;
 }
 
 /*Remove underline from SIGN UP button*/
 a:link {
-    text-decoration: none;
+  text-decoration: none;
 }
