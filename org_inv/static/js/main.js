@@ -251,7 +251,14 @@ $(function () {
     });
 
     $('.show-chart-icon').click(function () {
-      // $('.chart-container').slideToggle();
+      $('.chart-container').toggleClass('chart-container-show');
+      $(this).toggle('fast');
+      $('.show-chart-icon-click').toggle('fast');
+    });
+
+    $('.show-chart-icon-click').click(function() {
+      $(this).toggle('fast');
+      $('.show-chart-icon').toggle('fast');
       $('.chart-container').toggleClass('chart-container-show');
     });
 
@@ -259,26 +266,26 @@ $(function () {
       $('.main-nav-container').slideToggle();
     });
 
-    $('.low-icon-li').mouseenter(function() {
-      $('.display-icon-text').text('Check what products are low.')
-    });
-    $('.low-icon-li').mouseleave(function() {
-      $('.display-icon-text').text('')
-    });
-
-    $('.all-icon-li').mouseenter(function() {
-      $('.display-icon-text').text('View all of your products.')
-    });
-    $('.all-icon-li').mouseleave(function() {
-      $('.display-icon-text').text('')
-    });
-
-    $('.app-icon-li').mouseenter(function() {
-      $('.display-icon-text').text('Check all of your upcoming appointments.')
-    });
-    $('.app-icon-li').mouseleave(function() {
-      $('.display-icon-text').text('')
-    });
+    // $('.low-icon-li').mouseenter(function() {
+    //   $('.display-icon-text').text('Check what products are low.')
+    // });
+    // $('.low-icon-li').mouseleave(function() {
+    //   $('.display-icon-text').text('')
+    // });
+    //
+    // $('.all-icon-li').mouseenter(function() {
+    //   $('.display-icon-text').text('View all of your products.')
+    // });
+    // $('.all-icon-li').mouseleave(function() {
+    //   $('.display-icon-text').text('')
+    // });
+    //
+    // $('.app-icon-li').mouseenter(function() {
+    //   $('.display-icon-text').text('Check all of your upcoming appointments.')
+    // });
+    // $('.app-icon-li').mouseleave(function() {
+    //   $('.display-icon-text').text('')
+    // });
 
     // $(window).resize(function() {
     //   if ($(window).width() < 701) {

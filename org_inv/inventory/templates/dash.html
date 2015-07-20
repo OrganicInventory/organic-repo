@@ -15,6 +15,14 @@
     <link href="{% static 'nv.d3.min.css' %}" rel="stylesheet">
     <div class="main-container">
       <header class="page-header">
+        <span class="user-icon-image"><img src={% static 'css/logo_grey_outline.png' %}></span>
+        <div class="top-nav-container">
+          <ul class="top-nav-ul">
+            <a href="/low"><li class="top-nav-li">Low Inventory</li></a>
+            <a href="/products"><li class="top-nav-li">All Products</li></a>
+            <a href="/appointments"><li class="top-nav-li">Appointments</li></a>
+          </ul>
+        </div>
         <span class="header-dropdown-icon">l</span>
         <div class="main-nav-container">
           <ul class="main-nav-ul">
@@ -59,6 +67,7 @@
       </div>
       </div>
       <div class="middle-content-container">
+        <h1 class="welcome-user-heading">Welcome {{ user.profile.spa_name }}</h1>
         <div class="page-logo"><span class="icon"><img class='logo' src={% static 'css/logo_grey_outline.png' %}></span>
           <h1 class="main-heading">PIM</h1>
           <h2 class="secondary-heading">Predictive Inventory Management</h2>
@@ -80,6 +89,7 @@
     </div>
     <div class="page-footer">
       <span class="show-chart-icon">A</span>
+      <span class="show-chart-icon-click">C</span>
     </div>
 
     <script src="{% static 'd3.min.js' %}"></script>
