@@ -30,11 +30,11 @@
         </div>
       </header>
       <div class="brand-div appointments-container">
-      <h2 class="brand-div-header">Today's Appointments<span class="dropdown-icon appointment-drop">w</span></h2>
+      <h2 class="brand-div-header">Today's Services<span class="dropdown-icon appointment-drop">w</span></h2>
       <div class="appointments-list-container">
         <ul class="appointments-ul">
-          {% for appt in appts %}
-              <li class="appointments-li">{{ appt }}</li>
+          {% for appt, value in appts.items %}
+              <li class="appointments-li">{{ appt }}: {{ value }}</li>
           {% endfor %}
         </ul>
         <a href="{% url 'all_appointments' %}"><button class="main-button appointment-button">View All Appointments</button></a>
