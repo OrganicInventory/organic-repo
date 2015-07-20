@@ -35,10 +35,10 @@
         {% endfor %}
         <button class="form-button" type="submit" name="submit">Submit</button>
         </form>
-
+        <input type="button" value="Add More" id="add_more" class="gen-btn add-products-btn">
     </div>
 
-    <input type="button" value="Add More" id="add_more">
+
     <script>
         $('#add_more').click(function () {
             cloneMore('div.table:last', 'amount_set');
