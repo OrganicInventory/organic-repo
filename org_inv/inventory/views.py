@@ -35,9 +35,13 @@ class LoginRequiredMixin(object):
 class DashboardView(View):
     def get(self, request, **kwargs):
         appointments = Appointment.objects.filter(date=date.today(), user=request.user)
-        low = inventory_check(14, request.user)
+        appts = {}
+        for appt in appointments:
+            appts[appt.service] = appts.get(appt.service, 0)
+            appts[appt.service] += 1
+        low = inventory_check(request.user.profile.interval, request.user)
         data = get_all_usage_data(request)
-        return render(request, "dash.html", {"appts": appointments, 'low': low, 'data': data})
+        return render(request, "dash.html", {"appts": appts, 'low': low, 'data': data})
 
 
 #######################################################################################################################
