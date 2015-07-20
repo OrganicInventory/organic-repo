@@ -10,14 +10,15 @@
     <div class="main-content-header">
         <h2 class="secondary-heading">{{ object.name }}</h2>
     </div>
-    <div class="list-container">
+    <div class="prod-details-container">
         <ul class="list-container-ul">
-            <li class="list-container-li">Name: {{ object.name }}</li>
             <li class="list-container-li">Products: <br />{% for prod in prods %} -{{ prod.name }}<br /> {% endfor %}</li>
-            <li class="list-container-li">User: {{ object.user }}</li>
         </ul>
         <a href="{% url 'delete_service' object.id %}">
-            <button class="form-button details-button">Delete</button>
+            <button class="details-button">Delete</button>
+        </a>
+        <a href="{% url 'update_service' object.id %}">
+            <button class="details-button">Update</button>
         </a>
 
     </div>

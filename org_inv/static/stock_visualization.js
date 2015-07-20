@@ -21,7 +21,7 @@ nv.addGraph(function() {
 });
 
   chart.yAxis     //Chart y-axis settings
-      .axisLabel('Number of Appointments')
+      .axisLabel('Product Stock (oz)')
       .axisLabelDistance(15)
       .tickPadding(15)
       .tickFormat(d3.format('.02f'));
@@ -29,9 +29,12 @@ nv.addGraph(function() {
   /* Done setting the chart up? Time to render it!*/
 
 
-  d3.select('#service_chart svg')    //Select the <svg> element you want to render the chart in.
-      .datum(servicedata)         //Populate the <svg> element with chart data...
+  d3.select('#stock_chart svg')    //Select the <svg> element you want to render the chart in.
+      .datum(productdata)         //Populate the <svg> element with chart data...
       .call(chart);          //Finally, render the chart!
+
+    //d3.selectAll('#stock_chart svg text')
+    //    .style('fill', "white");
 
   //Update the chart when window resizes.
   nv.utils.windowResize(function() { chart.update() });

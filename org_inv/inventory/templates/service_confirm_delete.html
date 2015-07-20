@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 
+{% block pagetitle %}
+  <h1 class="main-heading">Delete {{object.name}}</h1>
+{% endblock %}
+
 {% block content %}
 <div class="main-content-header">
-  <h2 class="secondary-heading">Header</h2>
+  <h2 class="secondary-heading">Delete {{object.name}}</h2>
 </div>
     <form action="" method="post">{% csrf_token %}
         <p>Are you sure you want to delete this service?</p>

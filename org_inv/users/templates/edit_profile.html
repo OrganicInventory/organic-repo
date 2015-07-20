@@ -4,23 +4,26 @@
 
 {% block pagetitle %}
     <link href="{% static 'nv.d3.min.css' %}" rel="stylesheet">
+    <h1 class="main-heading">My Profile</h1>
 {% endblock %}
 {% block content %}
 
     <h2 class="secondary-heading">Edit Profile</h2>
 
-    <form class="main-form" method="POST" action="{% url 'edit_profile' %}">
-        {% csrf_token %}
-        {% for field in form %}
-            <div class="{{ field.label }} input">
+    <div class="edit-profile-container">
+      <form class="main-form" method="POST" action="{% url 'edit_profile' %}">
+          {% csrf_token %}
+          {% for field in form %}
+              <div class="{{ field.label }} input">
 
-                <span class="focus-out">{{ field.label_tag }} </span> {{ field }}
-                {{ field.errors }}
-            </div>
-        {% endfor %}
-        <!-- Provide a button to click to submit the form. -->
-        <button type="submit" name="submit" class="gen-btn" value="Update profile">Update Profile</button>
-    </form>
+                  <span class="focus-out">{{ field.label_tag }} </span> {{ field }}
+                  {{ field.errors }}
+              </div>
+          {% endfor %}
+          <!-- Provide a button to click to submit the form. -->
+          <button type="submit" name="submit" class="gen-btn" value="Update profile">Update Profile</button>
+      </form>
+    </div>
 
     <div id='product_chart'>
     <h4 class="secondary-heading">Product Usage Comparison</h4>

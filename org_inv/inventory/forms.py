@@ -10,7 +10,7 @@ class ServiceForm(forms.ModelForm):
         model = Service
         fields = ['name',]
 
-AmountFormSet = inlineformset_factory(Service, Amount, fields=['product', 'amount'], can_delete=False)
+AmountFormSet = inlineformset_factory(Service, Amount, fields=['product', 'amount'], can_delete=False, max_num=1)
 
 
 class ProductForm(forms.ModelForm):
@@ -19,11 +19,12 @@ class ProductForm(forms.ModelForm):
         self.fields['brand'].queryset = Brand.objects.filter(user=request.user)
 
     quantity = forms.FloatField(initial="", label="Quantity (units)")
+    max_quantity = forms.FloatField(initial="", label="Max Quantity (when fully stocked)")
     # brand = forms.CharField(max_length=255)
 
     class Meta:
         model = Product
-        fields = ['name', 'brand', 'size', 'quantity', 'upc_code']
+        fields = ['name', 'brand', 'size', 'quantity', 'max_quantity', 'upc_code']
         labels = {
             'size': 'Size (oz)',
             'brand': ''
@@ -37,6 +38,7 @@ class ProductUpdateForm(forms.Form):
 
     upc_code = forms.CharField(initial="", label="UPC Code")
     quantity = forms.FloatField(initial="", label="Quantity (units)")
+    max_quantity = forms.FloatField(widget=forms.HiddenInput(), required=False)
     name = forms.CharField(max_length=255, widget=forms.HiddenInput(), required=False)
     brand = forms.CharField(max_length=255, widget=forms.HiddenInput(), required=False)
     size = forms.CharField(max_length=255, widget=forms.HiddenInput(), required=False)
@@ -44,7 +46,7 @@ class ProductUpdateForm(forms.Form):
 
     class Meta:
         model = Product
-        fields = ['upc_code', 'quantity', 'name', 'brand', 'size']
+        fields = ['upc_code', 'quantity', 'name', 'brand', 'size', 'max_quantity']
         labels = {'brand': '', 'name': '', 'size': ''}
 
 
@@ -59,15 +61,22 @@ class ProductNoQuantityForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ['upc_code', 'quantity', 'name', 'brand', 'size']
-        labels = {'brand': '', 'name': 'Name', 'size': 'Size (oz)'}
+        fields = ['upc_code', 'quantity', 'name', 'brand', 'size', 'max_quantity']
+        labels = {'brand': '', 'name': 'Name', 'size': 'Size (oz)', 'max_quantity': 'Max Quantity (fully stocked)'}
 
 
 class ThresholdForm(forms.Form):
-    percent = forms.IntegerField(label='low at ___ %')
+    percent = forms.IntegerField(label='')
 
     class Meta:
         fields = ['percent']
+
+
+class IntervalForm(forms.Form):
+    interval = forms.ChoiceField(choices=[(1,'1 day'), (7, '1 week'), (14, '2 weeks'), (30, '1 month'), (60, '2 months')], label='')
+
+    class Meta:
+        fields = ['interval']
 
 
 class AppointmentForm(forms.ModelForm):
