@@ -7,9 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="main-content-header">
-        <h2 class="secondary-heading">Add Product</h2>
-    </div>
+    <h1 class="secondary-heading">Add New Product</h1>
     <div class="form-container">
         <form id='test' class="main-form" method="POST" action="{% url 'create_product' %}">
             {% csrf_token %}

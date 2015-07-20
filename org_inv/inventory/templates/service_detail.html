@@ -12,7 +12,10 @@
     </div>
     <div class="prod-details-container">
         <ul class="list-container-ul">
-            <li class="list-container-li">Products: <br />{% for prod in prods %} -{{ prod.name }}<br /> {% endfor %}</li>
+            Products: <br/>
+            {% for prod in prods_amts %}
+                <li class="list-container-li">-{{ prod.0.name }}--{{ prod.1.amount }}oz.</li>
+            {% endfor %}
         </ul>
         <a href="{% url 'delete_service' object.id %}">
             <button class="details-button">Delete</button>
@@ -28,9 +31,9 @@
         <svg style='height:500px'></svg>
     </div>
     <script src="{% static 'd3.min.js' %}"></script>
-   <script src="{% static 'nv.d3.min.js' %}"></script>
+    <script src="{% static 'nv.d3.min.js' %}"></script>
     <script>
-    var servicedata = {{ data|safe }};
+        var servicedata = {{ data|safe }};
     </script>
     <script src='{% static 'service_visualization.js' %}' type='text/javascript'></script>
 

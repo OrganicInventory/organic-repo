@@ -2,11 +2,13 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block pagetitle %}
+  <h1 class="main-heading">Create Service</h1>
+{% endblock %}
+
 {% block content %}
-    <div class="main-content-header">
-        <h2 class="secondary-heading">Add Service</h2>
-        <button class="display-chart-btn">Amount Reference</button>
-    </div>
+    <h1 class="secondary-heading">Create New Service</h1>
+      <!-- <button class="display-chart-btn">Amount Reference</button> -->
     <div class="form-container">
         <!-- <div class="service-form"> -->
         <form class="main-form" method="post" action="">
@@ -35,10 +37,14 @@
         {% endfor %}
         <button class="form-button" type="submit" name="submit">Submit</button>
         </form>
-
+        <div class="double-btns-container">
+          <button type="button" value="Add More" class="add-products-btn" id="add_more">Add Another Product</button>
+          <button class="display-chart-btn">Amount Reference</button>
+        </div>
     </div>
 
-    <input type="button" value="Add More" id="add_more">
+
+
     <script>
         $('#add_more').click(function () {
             cloneMore('div.table:last', 'amount_set');

@@ -21,7 +21,7 @@ nv.addGraph(function() {
 });
 
   chart.yAxis     //Chart y-axis settings
-      .axisLabel('Product Usage (oz)')
+      .axisLabel('Amount of Product (oz)')
       .axisLabelDistance(15)
       .tickPadding(15)
       .tickFormat(d3.format('.02f'));
