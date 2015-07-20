@@ -1139,14 +1139,16 @@ body.new-order-body li.sub-new-order {
 body.create-product-body .main-content,
 body.add-appointment-body .main-content,
 body.create-service-body .main-content,
-body.update-service-body .main-content {
+body.update-service-body .main-content,
+body.update-product-body .main-content {
   background-color: #e8e6e2;
 }
 
 body.create-product-body .main-content .form-container,
 body.add-appointment-body .main-content .form-container,
 body.create-service-body .main-content .form-container,
-body.update-service-body .main-content .form-container {
+body.update-service-body .main-content .form-container,
+body.update-product-body .main-content .form-container {
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0);
@@ -1156,8 +1158,9 @@ body.update-service-body .main-content .form-container {
 
 body.create-product-body .main-content .form-container .focus-out,
 body.add-appointment-body .main-content .form-container .focus-out,
-body.create-service .main-content .form-container .focus-out,
-body.update-service .main-content .form-container .focus-out {
+body.create-service-body .main-content .form-container .focus-out,
+body.update-service-body .main-content .form-container .focus-out,
+body.update-product-body .main-content .form-container .focus-out {
     position: absolute;
     left: 70px;
 }
@@ -1169,7 +1172,9 @@ body.add-appointment-body .main-content select,
 body.create-service-body .main-content input,
 body.create-service-body .main-content select,
 body.update-service-body .main-content input,
-body.update-service-body .main-content select {
+body.update-service-body .main-content select,
+body.update-product-body .main-content input,
+body.update-product-body .main-content select {
   background-color: #e8e6e2;
   width: 80%;
 }
@@ -1177,7 +1182,8 @@ body.update-service-body .main-content select {
 body.create-product-body .main-content .form-button,
 body.add-appointment-body .main-content .form-button,
 body.create-service-body .main-content .form-button,
-body.update-service-body .main-content .form-button {
+body.update-service-body .main-content .form-button,
+body.update-product-body .main-content .form-button {
   right: 50%;
   transform: translate(50%, 200%);
   width: 80%;
