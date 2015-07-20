@@ -21,6 +21,7 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand, null=True)
     upc_code = models.CharField(max_length=100, null=True)
     url = models.CharField(null=True, max_length=255)
+    ordered = models.NullBooleanField(default=False)
 
     class Meta:
         unique_together = ('name', 'size', 'user')
