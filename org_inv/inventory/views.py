@@ -56,7 +56,7 @@ class AllProductsView(LoginRequiredMixin, ListView):
     model = Product
     context_object_name = 'all_products'
     template_name = 'all_products.html'
-    paginate_by = 10
+    paginate_by = 50
 
     def get_queryset(self):
         queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
