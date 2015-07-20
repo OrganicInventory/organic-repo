@@ -42,11 +42,15 @@
         {% if low %}
             {% for key, value in low.items %}
                 <tr>
+                {% if key.ordered %}
+                    <td class="green">D</td>
+                    {% else %}
                     {% if value.0 <= 0 %}
                         <td class="red">p</td>
                     {% else %}
                         <td class="yellow">o</td>
                     {% endif %}
+                {% endif %}
                     <td>
                         <a href="{% url 'product_detail' %}?upc={{ key.upc_code }}">
                             <div class="table-id-link">
