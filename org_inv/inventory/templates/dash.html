@@ -1,0 +1,90 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>PIM | Predictive Inventory Management</title>
+    <link rel="stylesheet" href="../../static/css/reset.css">
+    <link rel="stylesheet" href="../../static/css/dash.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link href="https://fontastic.s3.amazonaws.com/Cez3KECLTfVWYyJGtXZ3XW/icons.css" rel="stylesheet">
+</head>
+<body>
+
+{% block content %}
+    <link href="{% static 'nv.d3.min.css' %}" rel="stylesheet">
+    <div class="main-container">
+      <header class="page-header">
+        <span class="header-dropdown-icon">l</span>
+        <div class="main-nav-container">
+          <ul class="main-nav-ul">
+            <a href="/low"><li class="main-nav-li">Low Inventory</li></a>
+            <a href="/products"><li class="main-nav-li">All Products</li></a>
+            <a href="/appointments"><li class="main-nav-li">Appointments</li></a>
+            <a href="/services"><li class="main-nav-li">Services</li></a>
+            <a href="/products/new_order"><li class="main-nav-li">Receive Order</li></a>
+            <a href="{% url 'edit_profile' %}"><li class="main-nav-li">My Profile</li></a>
+            <a href="{% url 'close_shop' %}"><li class="main-nav-li">Close Shop</li></a>
+            <a href="/users/logout"><li class="main-nav-li">Logout</li></a>
+          </ul>
+        </div>
+      </header>
+      <div class="brand-div appointments-container">
+      <h2 class="brand-div-header">Today's Services<span class="dropdown-icon appointment-drop">w</span></h2>
+      <div class="appointments-list-container">
+        <ul class="appointments-ul">
+          {% for appt, value in appts.items %}
+              <li class="appointments-li">{{ appt }}: {{ value }}</li>
+          {% endfor %}
+        </ul>
+        <a href="{% url 'all_appointments' %}"><button class="main-button appointment-button">View All Appointments</button></a>
+      </div>
+        <!-- <p>See all your appointments <a href="{% url 'all_appointments' %}">here</a></p> -->
+      </div>
+
+      <div class="brand-div products-container">
+      <h2 class="brand-div-header">Low Inventory<span class="dropdown-icon product-drop">w</span></h2>
+      <div class="products-list-container">
+        <ul class="products-ul">
+          {% for prod, value in low.items %}
+              <li class="products-li">{{ prod.name }}</li>
+          {% endfor %}
+        </ul>
+        <!-- <p>Want to place an order? Go  <a href="{% url 'low_products' %}">here</a></p> -->
+        <a href="{% url 'low_products' %}"><button class="main-button product-button">Place an Order</button></a>
+      </div>
+      </div>
+      <div class="middle-content-container">
+        <div class="page-logo"><span class="icon"><img class='logo' src={% static 'css/pump_bottle_logo.png' %}></span>
+          <h1 class="main-heading">PIM</h1>
+          <h2 class="secondary-heading">Predictive Inventory Management</h2>
+        </div>
+        <div class="icon-nav-container">
+          <ul class="icon-nav-ul">
+            <a href="{% url 'all_appointments' %}"><li class="icon-nav-li app-icon-li"><span class="nav-icon app-icon">z</span></li></a>
+            <a href="{% url 'all_products' %}"><li class="icon-nav-li all-icon-li"><span class="nav-icon all-icon">B</span></li></a>
+            <a href="{% url 'low_products' %}"><li class="icon-nav-li low-icon-li"><span class="nav-icon low-icon">o</span></li></a>
+          </ul>
+          <h2 class="display-icon-text"></h2>
+        </div>
+      </div>
+      <div class="chart-container">
+        <div id='stock_chart'>
+           <svg style='height:500px'></svg>
+        </div>
+      </div>
+    </div>
+    <div class="page-footer">
+      <span class="show-chart-icon">A</span>
+    </div>
+
+    <script src="{% static 'd3.min.js' %}"></script>
+    <script src="{% static 'nv.d3.min.js' %}"></script>
+    <script>
+        var productdata = {{ data|safe }};
+    </script>
+    <script src='{% static 'stock_visualization.js' %}' type='text/javascript'></script>
+{% endblock %}
+</body>
+<script src="{% static 'js/main.js' %}"></script>
+</html>
