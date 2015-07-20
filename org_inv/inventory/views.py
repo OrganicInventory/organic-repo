@@ -608,7 +608,7 @@ class EmptyProductView(BaseDetailView):
 class CloseShopView(View):
     def dispatch(self, request, *args, **kwargs):
         appts = Appointment.objects.filter(date__lte=datetime.today(), done=False, user=request.user).order_by('date')
-        messages.add_message(self.request, messages.SUCCESS, "Shop Closed and Rectified")
+        messages.add_message(self.request, messages.SUCCESS, "Shop Closed")
         for appt in appts:
             appt.done = True
             appt.save()
