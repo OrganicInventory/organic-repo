@@ -161,25 +161,26 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.object.quantity < .1 * self.object.max_quantity:
-            context['img'] = 1
+            context['img'] = 'css/1.png'
         elif self.object.quantity < .2 * self.object.max_quantity:
-            context['img'] = 2
+            context['img'] = 'css/2.png'
         elif self.object.quantity < .3 * self.object.max_quantity:
-            context['img'] = 3
+            context['img'] = 'css/3.png'
         elif self.object.quantity < .4 * self.object.max_quantity:
-            context['img'] = 4
+            context['img'] = 'css/4.png'
         elif self.object.quantity < .5 * self.object.max_quantity:
-            context['img'] = 5
+            context['img'] = 'css/5.png'
         elif self.object.quantity < .6 * self.object.max_quantity:
-            context['img'] = 6
+            context['img'] = 'css/6.png'
         elif self.object.quantity < .7 * self.object.max_quantity:
-            context['img'] = 7
+            context['img'] = 'css/7.png'
         elif self.object.quantity < .8 * self.object.max_quantity:
-            context['img'] = 8
+            context['img'] = 'css/8.png'
         elif self.object.quantity < .9 * self.object.max_quantity:
-            context['img'] = 9
+            context['img'] = 'css/9.png'
         else:
-            context['img'] = 10
+            context['img'] = 'css/10.png'
+
         context['data'] = get_usage_data(self.object.id)
         context['pic'] = self.object.url
         return context
