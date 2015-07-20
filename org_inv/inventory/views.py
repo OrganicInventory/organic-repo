@@ -993,3 +993,13 @@ def get_all_usage_data(request):
         else:
             data.append({'values': values, 'key': product.name, 'disabled': 'True', 'area': 'True'})
     return data
+
+#######################################################################################################################
+
+def search_bar(request):
+	query = request.GET.get('upc')
+	if query:
+		results = Product.objects.filter(name__icontains=request.GET['upc'])
+	else:
+		results = Product.objects.all()
+	return render(request, 'search_results.html', {'results':results})

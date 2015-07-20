@@ -23,6 +23,8 @@
             }
             else if (document.pressed == 'Detail') {
                 document.test_form.action = "{% url 'product_detail' %}";
+            else if (document.pressed == 'Search') {
+                document.test_form.action = "{% url 'search' %}
             }
             return true;
         }
@@ -33,6 +35,7 @@
             <span class="focus-out focus-out-scan">Search by Name or Scan Product UPC</span>
             <input name='upc' class="form-control scan-input" type="text" autocomplete="off"/>
           <div class="scan-btns">
+	          <button class="gen-btn scan-new" onclick="document.pressed=this.value" type="submit" value="Search">Search</button>
               <button class="gen-btn scan-new" onclick="document.pressed=this.value" type="submit" value="New">Create</button>
               <button class="gen-btn scan-update" onclick="document.pressed=this.value" type="submit" value="Update">Update</button>
               <button class="gen-btn scan-details" onclick="document.pressed=this.value" type="submit" value="Detail">Details</button>
