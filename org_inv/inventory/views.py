@@ -34,7 +34,7 @@ class LoginRequiredMixin(object):
 
 class DashboardView(View):
     def get(self, request, **kwargs):
-        appointments = Appointment.objects.filter(date=date.today(), user=request.user)
+        appointments = Appointment.objects.prefetch_related('service').filter(date=date.today(), user=request.user)
         appts = {}
         for appt in appointments:
             appts[appt.service] = appts.get(appt.service, 0)
@@ -138,6 +138,9 @@ class ProductUpdate(LoginRequiredMixin, UpdateView):
             form_class = self.get_form_class()
             return form_class(self.request, **self.get_form_kwargs())
 
+    def get_initial(self):
+        return {'max_quantity':self.object.display_max_quantity}
+
     def get_success_url(self):
         return reverse('all_products')
 
@@ -147,7 +150,7 @@ class ProductUpdate(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.max_quantity = form.validated_data['max_quantity'] * self.object.size
+        self.object.max_quantity = float(form.data['max_quantity']) * self.object.size
         self.object.save()
         messages.add_message(self.request, messages.SUCCESS,
                              "Product updated")
