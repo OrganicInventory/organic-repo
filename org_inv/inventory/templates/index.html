@@ -6,15 +6,18 @@
     <meta charset="UTF-8">
     <title>P.I.M.</title>
     <link rel="stylesheet" href="../../static/css/index.css">
-    <link href='http://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
+
+{#<img class="logo" src={% static 'css/leaf-white-md.png' %}>#}
 
 {% if form.errors %}
     <p class="nomatch">Sorry, your username and password didn't match. Please try again.</p>
 {% endif %}
 <div class="nav">
+
     {% if next %}
         {% if user.is_authenticated %}
             <p>Your account doesn't have access to this page. To proceed,
@@ -70,11 +73,12 @@
         </div>
     </div>
 
-    <div class='signup'>
+    <div class='signup2'>
         <a href="{% url 'user_register' %}">
             <button class="registerbtn">Sign Up</button>
         </a>
     </div>
 </body>
+
 
 </html>

@@ -58,8 +58,6 @@ target/
 
 *.sqlite
 *.sqlite3
-migrations/
-migrations/*
 .idea/
 fixtures/
 .direnv

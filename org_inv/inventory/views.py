@@ -518,10 +518,10 @@ def inventory_check(daterange, user):
         else:
             product_dict[product] = [product.quantity]
 
-    for appointment in appointments:
-        for product in appointment.service.products.all().prefetch_related(
-                Prefetch("amount_set", queryset=Amount.objects.filter(service=appointment.service), to_attr="amounts")):
-            amount = [amount for amount in product.amounts if amount.product == product]
+    appts = appointments.prefetch_related('service__products__amount_set')
+    for appointment in appts:
+        for product in appointment.service.products.all():
+            amount = [amount for amount in product.amount_set.all() if amount.product == product]
             amount = amount[0]
             if len(product_dict[product]) == 2:
                 product_dict[product][0] -= amount.amount

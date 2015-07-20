@@ -6,7 +6,7 @@ from django.contrib.auth.models import User, AnonymousUser
 class Profile(models.Model):
     location = models.CharField(max_length=255, null=True, blank=True)
     spa_name = models.CharField(max_length=255, null=True)
-    phone_number = models.CharField(max_length=15)
+    phone_number = models.CharField(max_length=15, null=True)
     threshold = models.IntegerField(null=True, default=30)
     interval = models.IntegerField(null=True, default=14)
     user = models.OneToOneField(User, null=True)
