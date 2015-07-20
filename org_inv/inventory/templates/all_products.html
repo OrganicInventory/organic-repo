@@ -30,7 +30,7 @@
     <div class="form-container scan-form">
         <form name='test_form' class="form-control scan-form main-form" id='test_form' method="get"
               onsubmit="return OnSubmitForm();">
-            <span class="focus-out focus-out-scan">Scan Product UPC</span>
+            <span class="focus-out focus-out-scan">Search by Name or Scan Product UPC</span>
             <input name='upc' class="form-control scan-input" type="text" autocomplete="off"/>
           <div class="scan-btns">
               <button class="gen-btn scan-new" onclick="document.pressed=this.value" type="submit" value="New">Create</button>
@@ -51,7 +51,7 @@
             <th></th>
         </tr>
         {% for product in all_products %}
-            <tr data-upc="{{product.upc_code}}">
+            <tr data-upc="{{product.upc_code}}" name="{{product.name|lower}}">
                 {% if product in prods %}
                     {% for pair in pairs %}
                         {% if product == pair.0 %}
