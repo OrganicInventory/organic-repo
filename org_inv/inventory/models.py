@@ -29,6 +29,10 @@ class Product(models.Model):
     def display_quantity(self):
         return self.quantity / self.size
 
+    @property
+    def display_max_quantity(self):
+        return self.max_quantity / self.size
+
     def new_product_quantity(self, quantity_entered):
         self.quantity = quantity_entered * self.size
         self.save()
@@ -37,10 +41,6 @@ class Product(models.Model):
         add_this = quantity_entered * self.size
         updated = self.quantity + add_this
         self.quantity = updated
-        self.save()
-
-    def update_max_quantity(self):
-        self.max_quantity = self.quantity
         self.save()
 
     def __str__(self):

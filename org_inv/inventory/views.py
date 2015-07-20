@@ -492,7 +492,13 @@ class ServiceDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['data'] = get_service_data(self.object.id)
+        prods = list(self.object.products.all())
+        amts = []
+        for prod in prods:
+            amt = Amount.objects.get(product=prod, service=self.object)
+            amts.append(amt)
         context['prods'] = self.object.products.all()
+        context['prods_amts'] = zip(prods,amts)
         return context
 
 
