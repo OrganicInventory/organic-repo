@@ -38,7 +38,8 @@
               <li class="appointments-li">{{ appt }} <span class="appointment-value">{{ value }}</span></li>
           {% endfor %}
         </ul>
-        <a href="{% url 'all_appointments' %}"><button class="main-button appointment-button">View All Appointments</button></a>
+        <!-- <a href="{% url 'all_appointments' %}"><button class="main-button appointment-button">View All Appointments</button></a> -->
+        <a href="{% url 'all_appointments' %}"><button class="place-order-btn">View All Appointments</button></a>
       </div>
         <!-- <p>See all your appointments <a href="{% url 'all_appointments' %}">here</a></p> -->
       </div>
@@ -48,11 +49,13 @@
       <div class="products-list-container">
         <ul class="products-ul">
           {% for prod, value in low.items %}
-              <li class="products-li">{{ prod.name }}</li>
+              <a href="{% url 'product_detail' %}?upc={{ prod.upc_code }}"><li class="products-li">{{ prod.name }}</li></a>
           {% endfor %}
+          <!-- <li class="dash-place-order-li"><button class="dash-place-order-btn">Place Order</button></li> -->
         </ul>
         <!-- <p>Want to place an order? Go  <a href="{% url 'low_products' %}">here</a></p> -->
-        <a href="{% url 'low_products' %}"><button class="main-button product-button">Place an Order</button></a>
+        <!-- <a href="{% url 'low_products' %}"><button class="main-button product-button">Place an Order</button></a> -->
+        <a href="{% url 'low_products' %}"><button class="place-order-btn">Place an Order</button></a>
       </div>
       </div>
       <div class="middle-content-container">

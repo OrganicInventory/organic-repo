@@ -114,6 +114,28 @@ body {
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
+.products-ul a {
+  color: #bebebe;
+  text-decoration: none;
+}
+
+.products-li:hover {
+  color: #b35b5a;
+}
+
+.place-order-btn {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 15px 0;
+  cursor: pointer;
+  border: none;
+}
+
+.place-order-btn:hover {
+  background-color: #eee;
+}
+
 .appointments-li,  .products-li {
   padding: 15px 0 15px 15px;
   background-color: rgba(68, 76, 90, 0.3);
