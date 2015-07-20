@@ -185,16 +185,16 @@ $(function () {
 
         for (var i = 0; i < name.length; i++) {
           if (name.indexOf(nameInput) > -1 ) {
-            $('.scan-details').css('display', 'inline');
-            $('.scan-update').css('display', 'inline');
-            $('.scan-new').css('display', 'none');
+            // $('.scan-details').css('display', 'inline');
+            // $('.scan-update').css('display', 'inline');
+            // $('.scan-new').css('display', 'none');
 
           var trIndexName = name.indexOf(nameInput);
             $('tr:eq(' + trIndexName + ')').css('background-color', '#add8e6');
           } else {
-            $('.scan-new').css('display', 'inline');
-            $('.scan-details').css('display', 'none');
-            $('.scan-update').css('display', 'none');
+            // $('.scan-new').css('display', 'inline');
+            // $('.scan-details').css('display', 'none');
+            // $('.scan-update').css('display', 'none');
           }
         }
 
