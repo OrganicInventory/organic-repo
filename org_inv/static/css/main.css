@@ -1071,6 +1071,13 @@ body.new-order-body li.sub-new-order {
     border-top: none;
 }
 
+.ref-chart-update {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(0, -50%);
+}
+
 .create-service-body .main-content {
     position: relative;
 }
