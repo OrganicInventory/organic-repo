@@ -64,6 +64,35 @@ a:visited {
     padding-top: 20px;
 }
 
+.confirm-delete {
+    text-align: center;
+    padding-top: 30px;
+    height: 100px;
+}
+
+.confirm-delete li {
+    text-align: left;
+    list-style: square;
+
+}
+
+.services ul {
+    padding-top: 10px;
+    padding-left: 20px;
+}
+
+.services {
+    position: absolute;
+    left: 40%;
+    padding-top: 10px;
+}
+
+.confirm-delete-buttons {
+    position: absolute;
+    top: 48%;
+    left: 45%;
+}
+
 .page-header {
     position: absolute;
     left: 0;
@@ -789,7 +818,8 @@ svg {
 }
 
 .ui-dialog > .ui-widget-header {
-    background: #b35b5a;
+    background:  #b35b5a;
+    color: #FFFFFF;
 }
 
 .ui-dialog-content {

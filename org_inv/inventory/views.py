@@ -35,9 +35,13 @@ class LoginRequiredMixin(object):
 class DashboardView(View):
     def get(self, request, **kwargs):
         appointments = Appointment.objects.filter(date=date.today(), user=request.user)
-        low = inventory_check(14, request.user)
+        appts = {}
+        for appt in appointments:
+            appts[appt.service] = appts.get(appt.service, 0)
+            appts[appt.service] += 1
+        low = inventory_check(request.user.profile.interval, request.user)
         data = get_all_usage_data(request)
-        return render(request, "dash.html", {"appts": appointments, 'low': low, 'data': data})
+        return render(request, "dash.html", {"appts": appts, 'low': low, 'data': data})
 
 
 #######################################################################################################################
@@ -488,7 +492,13 @@ class ServiceDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['data'] = get_service_data(self.object.id)
+        prods = list(self.object.products.all())
+        amts = []
+        for prod in prods:
+            amt = Amount.objects.get(product=prod, service=self.object)
+            amts.append(amt)
         context['prods'] = self.object.products.all()
+        context['prods_amts'] = zip(prods,amts)
         return context
 
 
@@ -624,6 +634,28 @@ class CloseShopView(View):
                 prod.save()
         return redirect('/low/')
 
+class CloseShopView(View):
+    def dispatch(self, request, *args, **kwargs):
+        appts = Appointment.objects.filter(date__lte=datetime.today(), done=False, user=request.user).order_by('date')
+        messages.add_message(self.request, messages.SUCCESS, "Shop Closed")
+        for appt in appts:
+            appt.done = True
+            appt.save()
+            service = appt.service
+            for prod in service.products.all():
+                stock = prod.quantity
+                amt = Amount.objects.get(product=prod, service=service)
+                if Stock.objects.filter(product=prod, date=appt.date):
+                    obj = Stock.objects.get(product=prod, date=appt.date)
+                    obj.used += amt.amount
+                    obj.stocked = stock
+                    obj.save()
+                else:
+                    amount_used = amt.amount
+                    Stock.objects.create(product=prod, used=amount_used, stocked=stock, date=appt.date)
+                prod.quantity -= amt.amount
+                prod.save()
+        return redirect('/low/')
 
 #######################################################################################################################
 
@@ -928,20 +960,31 @@ def get_usage_data(prod_id):
 #######################################################################################################################
 
 def get_all_usage_data(request):
-    products = Product.objects.filter(user=request.user).prefetch_related('stock_set').order_by('name')
+    products = Product.objects.filter(user=request.user).prefetch_related(Prefetch("stock_set", queryset=Stock.objects.filter(date__lte=datetime.today(),
+                                          date__gte=(datetime.today() - timedelta(days=91))).order_by('date'), to_attr="stocks")).order_by('name')
     data = []
     enabled = True
     for product in products:
-        stocks = product.stock_set.filter(date__lte=datetime.today(),
-                                          date__gte=(datetime.today() - timedelta(days=91))).order_by('date')
-        stocks_by_week = [(stock, stock.date.isocalendar()) for stock in stocks]
+        stocks = [stock for stock in product.stocks if stock.product == product]
+        if stocks:
+            initial = stocks[0].stocked
+        else:
+            initial = product.quantity
+        days = list((date.today() - timedelta(days=91)) + timedelta(x) for x in range((date.today() - (date.today() - timedelta(days=91))).days))
+        sundays = [day for day in days if day.isocalendar()[2] == 7]
         values = []
         usages = {}
-        for stock in stocks_by_week:
-            if stock[1][2] == 7:
-                date = str(stock[0].date)
-                usages[date] = usages.get(date, 0)
-                usages[date] += stock[0].stocked
+        for sunday in sundays:
+            stock = [stock for stock in stocks if stock.date <= sunday]
+            if stock:
+                day = str(sunday)
+                usages[day] = usages.get(day, 0)
+                usages[day] += stock[-1].stocked
+                initial = stock[-1].stocked
+            else:
+                day = str(sunday)
+                usages[day] = usages.get(day, 0)
+                usages[day] += initial
         for key, value in sorted(usages.items(), key=lambda x: x[0]):
             values.append({'x': datetime.strptime(str(key), "%Y-%m-%d").timestamp(), 'y': value})
         if enabled:
