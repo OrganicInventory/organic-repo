@@ -963,32 +963,31 @@ def get_usage_data(prod_id):
 #######################################################################################################################
 
 def get_all_usage_data(request):
-    products = Product.objects.filter(user=request.user).prefetch_related('stock_set').order_by('name')
+    products = Product.objects.filter(user=request.user).prefetch_related(Prefetch("stock_set", queryset=Stock.objects.filter(date__lte=datetime.today(),
+                                          date__gte=(datetime.today() - timedelta(days=91))).order_by('date'), to_attr="stocks")).order_by('name')
     data = []
     enabled = True
     for product in products:
-        stocks = product.stock_set.filter(date__lte=datetime.today(),
-                                          date__gte=(datetime.today() - timedelta(days=61))).order_by('date')
+        stocks = [stock for stock in product.stocks if stock.product == product]
         if stocks:
             initial = stocks[0].stocked
         else:
             initial = product.quantity
-        days = list((datetime.today() - timedelta(days=61)) + timedelta(x) for x in
-                    range(((datetime.today() + timedelta(days=1)) - (datetime.today() - timedelta(days=61))).days))
+        days = list((date.today() - timedelta(days=91)) + timedelta(x) for x in range((date.today() - (date.today() - timedelta(days=91))).days))
         sundays = [day for day in days if day.isocalendar()[2] == 7]
         values = []
         usages = {}
         for sunday in sundays:
-            stock = product.stock_set.filter(date__lte=sunday).order_by('-date')
+            stock = [stock for stock in stocks if stock.date <= sunday]
             if stock:
-                date = str(sunday.date())
-                usages[date] = usages.get(date, 0)
-                usages[date] += stock[0].stocked
-                initial = stock[0].stocked
+                day = str(sunday)
+                usages[day] = usages.get(day, 0)
+                usages[day] += stock[-1].stocked
+                initial = stock[-1].stocked
             else:
-                date = str(sunday.date())
-                usages[date] = usages.get(date, 0)
-                usages[date] += initial
+                day = str(sunday)
+                usages[day] = usages.get(day, 0)
+                usages[day] += initial
         for key, value in sorted(usages.items(), key=lambda x: x[0]):
             values.append({'x': datetime.strptime(str(key), "%Y-%m-%d").timestamp(), 'y': value})
         if enabled:
