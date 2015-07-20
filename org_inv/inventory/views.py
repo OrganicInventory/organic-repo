@@ -639,34 +639,6 @@ class CloseShopView(View):
                 prod.save()
         return redirect('/low/')
 
-<<<<<<< HEAD
-
-class CloseShopView(View):
-    def dispatch(self, request, *args, **kwargs):
-        appts = Appointment.objects.filter(date__lte=datetime.today(), done=False, user=request.user).order_by('date')
-        messages.add_message(self.request, messages.SUCCESS, "Shop Closed")
-        for appt in appts:
-            appt.done = True
-            appt.save()
-            service = appt.service
-            for prod in service.products.all():
-                stock = prod.quantity
-                amt = Amount.objects.get(product=prod, service=service)
-                if Stock.objects.filter(product=prod, date=appt.date):
-                    obj = Stock.objects.get(product=prod, date=appt.date)
-                    obj.used += amt.amount
-                    obj.stocked = stock
-                    obj.save()
-                else:
-                    amount_used = amt.amount
-                    Stock.objects.create(product=prod, used=amount_used, stocked=stock, date=appt.date)
-                prod.quantity -= amt.amount
-                prod.save()
-        return redirect('/low/')
-
-
-=======
->>>>>>> 5b184b78710625c1c573694003c2e7d36ec52481
 #######################################################################################################################
 
 class TooMuchProductView(LoginRequiredMixin, UpdateView):
