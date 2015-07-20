@@ -812,7 +812,8 @@ svg {
 }
 
 .ui-dialog > .ui-widget-header {
-    background: #b35b5a;
+    background:  #b35b5a;
+    color: #FFFFFF;
 }
 
 .ui-dialog-content {
