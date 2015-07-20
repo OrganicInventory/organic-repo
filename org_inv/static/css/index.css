@@ -47,11 +47,13 @@ body:before {
     /*padding: 0;*/
 }
 
+
 /*Spacing for 3 landing page articles*/
 
 .boxes {
-  width:1280px;
+    width: 1280px;
 }
+
 .box {
     float: left;
     margin: 3% 1.5%;
@@ -160,7 +162,6 @@ button:hover {
     border: 1px solid #EEE;
     color: #EEE;
     font-size: 70%;
-    opacity: .8;
     padding: 2%;
     font-size: 100%;
     cursor: pointer;
@@ -169,7 +170,7 @@ button:hover {
 }
 
 .loginbtn:hover {
-    border: 2px solid #caed9a;
+    border: 2px solid #88b288;
     cursor: pointer;
     background: none;
 }
@@ -183,7 +184,7 @@ button:hover {
 
 /*Spa Edition header*/
 .headspa {
-    font-size: 50%;
+    font-size: 36%;
     font-weight: 400;
     color: #88b288;
     margin-right: 147px;
@@ -192,9 +193,9 @@ button:hover {
 
 /*Landing page leaf logo*/
 .logo {
-    height: 135px;
+    height: 130px;
     /*float: left;*/
-    margin-left: 240%;
+    margin-left: 290%;
     margin-top: 0%;
 }
 
@@ -212,9 +213,10 @@ button:hover {
 
 /*Register page leaf logo*/
 .logo1 {
-    height: 40px;
+    height: 80px;
     display: block;
     margin: 0 auto;
+    padding-bottom: 20px;
 }
 
 /*required fields alert on register page*/
@@ -244,7 +246,7 @@ button:hover {
 }
 
 .registerbtn:hover {
-    border: 3px solid #caed9a;
+    border: 3px solid #88b288;
     cursor: pointer;
     background-color: transparent;
 }
