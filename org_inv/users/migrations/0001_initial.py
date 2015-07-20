@@ -15,11 +15,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Profile',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
                 ('location', models.CharField(null=True, blank=True, max_length=255)),
                 ('spa_name', models.CharField(null=True, max_length=255)),
-                ('phone_number', models.CharField(max_length=15)),
-                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL, null=True)),
+                ('phone_number', models.CharField(null=True, max_length=15)),
+                ('threshold', models.IntegerField(null=True, default=30)),
+                ('interval', models.IntegerField(null=True, default=14)),
+                ('user', models.OneToOneField(null=True, to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]
