@@ -92,7 +92,7 @@ body {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#444c5a', endColorstr='#444c5a',GradientType=0 ); /* IE6-9 */
   width: 25%;
   position: fixed;
-  top: 50px;
+  top: 60px;
   right: 0;
   bottom: 0;
   z-index: 500;
