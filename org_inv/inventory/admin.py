@@ -9,9 +9,6 @@ class BrandAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    #prod = Product.objects.get(pk=1)
-    #prod.update_quantity(4)
-    #quant = prod.display_quantity()
     list_display = ['name', 'quantity', 'max_quantity', 'display_quantity', 'size', 'id', 'user']
 
 class ServiceAdmin(admin.ModelAdmin):
@@ -21,8 +18,6 @@ class AppointmentAdmin(admin.ModelAdmin):
     list_display = ['date', 'service', 'id', 'done']
 
 class AmountAdmin(admin.ModelAdmin):
-    #amt = Amount.objects.get(pk=1)
-    #amt.subtract()
     list_display = ['amount', 'service', 'product']
 
 class StockAdmin(admin.ModelAdmin):
