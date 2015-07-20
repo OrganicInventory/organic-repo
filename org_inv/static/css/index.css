@@ -244,8 +244,6 @@ button:hover {
   background-color: transparent;
   border: 2px solid #EEE;
   color: #EEE;
-  display: block;
-  margin: 0 auto;
   text-align: center;
   font-size: 60%;
   border-radius: 6%;
@@ -261,4 +259,11 @@ button:hover {
 /*Remove underline from SIGN UP button*/
 a:link {
   text-decoration: none;
+}
+
+.signup2{
+  width:100px;
+  height:25px;
+  display: block;
+  margin:0 auto;
 }
