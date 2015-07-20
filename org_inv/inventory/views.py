@@ -854,14 +854,22 @@ def get_prod_data(request):
 def get_service_data(serv_id):
     service = Service.objects.get(id=serv_id)
     appts = Appointment.objects.filter(service=service)
+    if appts:
+        dates = sorted([appt.date for appt in appts])
+        date_set = set(dates[0] + timedelta(x) for x in range((dates[-1] - dates[0]).days))
+    else:
+        date_set = {}
     values = []
     usages = {}
-    for appt in appts:
-        date = str(appt.date)
-        if date in usages.keys():
-            usages[date] += 1
-        else:
-            usages[date] = 1
+    for date in sorted(date_set):
+        usages[str(date)] = 0
+        date_appts = [appt for appt in appts if appt.date == date]
+        for appt in date_appts:
+            appt_date = str(appt.date)
+            if appt_date in usages.keys():
+                usages[appt_date] += 1
+            else:
+                usages[appt_date] = 1
     for key, value in sorted(usages.items(), key=lambda x: x[0]):
         values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
     data = []
