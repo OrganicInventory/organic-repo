@@ -67,7 +67,7 @@
       </div>
       </div>
       <div class="middle-content-container">
-        <h1 class="welcome-user-heading">Welcome {{request.user.username}}</h1>
+        <h1 class="welcome-user-heading">Welcome {{ user.profile.spa_name }}</h1>
         <div class="page-logo"><span class="icon"><img class='logo' src={% static 'css/logo_grey_outline.png' %}></span>
           <h1 class="main-heading">PIM</h1>
           <h2 class="secondary-heading">Predictive Inventory Management</h2>
