@@ -31,7 +31,7 @@
         <div class="user-icon"><span class="user-icon-image"><img src={% static 'css/pump_bottle_logo.png' %}></span></div>
         <span class="user-name">
           <span class="user-welcome">Welcome </span>
-          <a href="{% url 'edit_profile' %}">{{request.user.username}}</a>
+          <a href="{% url 'edit_profile' %}">{{request.user.profile.spa_name}}</a>
         </span>
       </div>
       <div class=""><span class="dropdown-icon">l</span></div>
