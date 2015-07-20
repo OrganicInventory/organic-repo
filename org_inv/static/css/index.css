@@ -1,10 +1,8 @@
 /*Centering background image*/
 body{
   /*background:linear-gradient(to top,rgba(255,255,255,0.175),rgba(0,0,0,0.3)), url("spa-spa-kamni-svechi-cvety-546.jpg");*/
-  background-repeat: no-repeat;
   background:url("spa-spa_fotor_fotor.jpg");
   background-size: cover;
-  background-repeat: no-repeat;
   width:100%;
   font-family: 'Josefin Sans', sans-serif;
   position: fixed;
@@ -36,13 +34,22 @@ header{
   display: block;
   padding: 0;
   margin-right: 38%;
+  margin-top: 10%;
 }
 
 .sub-header{
-  font-size: 35%;
+  font-size: 30%;
   text-align: left;
   float: right;
   padding: 0;
+}
+
+/*Spa Edition header*/
+.headspa{
+  font-size: 50%;
+  font-weight: 400;
+  color: #8DB78D;
+  text-align: right;
 }
 
 /*Spacing for 3 landing page articles*/
@@ -117,7 +124,7 @@ button:hover {
   font-size: 130%;
 }
 
-  /*button-link to submit signup form*/
+  /*button-link to submit signup form on Register page*/
 .btn-register{
   font-size: 70%;
   display: block;
@@ -134,7 +141,7 @@ button:hover {
 }
 
 .btn-register:hover{
-  border: 4px solid #caed9a;
+  border: 4px solid #8DB78D;
   cursor: pointer;
   background: none;
 }
@@ -165,7 +172,7 @@ button:hover {
   }
 
 .loginbtn:hover{
-  border: 2px solid #caed9a;
+  border: 2px solid #8DB78D;
   cursor: pointer;
   background: none;
 }
@@ -177,20 +184,13 @@ button:hover {
   font-size: 100%;
 }
 
-/*Spa Edition header*/
-.headspa{
-  font-size: 50%;
-  font-weight: 400;
-  color: #caed9a;
-  margin-left: 40%;
-}
 
-/*Landing page leaf logo*/
+/*Landing page bottle logo*/
 .logo{
-  height:80px;
-  float: left;
-  margin-left: 1%;
-  margin-top: 1%;
+  height:70px;
+  /*float: right;
+  margin-left: 4%;
+  margin-top: 4%;*/
 }
 
 /* PIM on Register page*/
@@ -201,9 +201,9 @@ button:hover {
   font-weight: 300;
 }
 
-/*Register page leaf logo*/
+/*Register page bottle logo*/
 .logo1{
-  height:40px;
+  height:60px;
   display: block;
   margin: 0 auto;
 }
@@ -225,7 +225,8 @@ button:hover {
 .registerbtn{
   background-color: transparent;
   border: 2px solid #EEE;
-  color: #EEE;  display: block;
+  color: #EEE;
+  display: block;
   margin: 0 auto;
   text-align: center;
   font-size: 60%;
@@ -234,12 +235,12 @@ button:hover {
 }
 
 .registerbtn:hover{
-  border: 3px solid #caed9a;
+  border: 3px solid #8DB78D;
   cursor: pointer;
   background-color: transparent;
 }
 
 /*Remove underline from SIGN UP button*/
 a:link {
-    text-decoration: none;
+  text-decoration: none;
 }

@@ -10,7 +10,6 @@
 </head>
 
 <body>
-<img class="logo" src="http://www.clker.com/cliparts/7/h/S/O/2/Y/leaf-white-md.png">
 {% if form.errors %}
   <p class="nomatch">Sorry, your username and password didn't match. Please try again.</p>
   {% endif %}
@@ -37,12 +36,15 @@
       </tr>
       </table>
       <br />
+
       <input type="submit" value="LogIn" class="loginbtn" id="loginbtn"/>
       <input type="hidden" name="next" value="{{ next }}" />
   </form>
 </div>
 
 <header class="header">
+  <img class="logo" src="../../static/css/pump_bottle_logo.png">
+
     P.I.M.
     <div class="sub-header">Predictive<br/> Inventory <br/>Management</div>
     <div class="headspa">Spa Edition</div>
@@ -66,11 +68,14 @@
     </div>
 </div>
 
-<div class='signup'>
-    <a href="{% url 'user_register' %}">
-        <button class="registerbtn">Sign Up</button>
-    </a>
-</div>
+        <a href = "{% url 'user_register' %}">
+        <button class="registerbtn">
+            Sign Up
+          </button>
+          </a>
+
+
 </body>
+
 
 </html>
