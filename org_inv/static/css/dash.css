@@ -26,8 +26,30 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 50px;
+  height: 60px;
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+.top-nav-container {
+  position: absolute;
+  left: 50px;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.top-nav-ul a {
+  text-decoration: none;
+  color: #bebebe;
+}
+
+.top-nav-li {
+  display: inline-block;
+  padding: 10px 15px;
+  border-bottom: 3px solid rgba(0, 0, 0, 0);
+}
+
+.top-nav-li:hover {
+  border-bottom: 3px solid #b35b5a;
 }
 
 .header-dropdown-icon {
