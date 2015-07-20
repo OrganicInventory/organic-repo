@@ -835,6 +835,7 @@ def get_prod_data(request):
         else:
             date_set = {}
         values = []
+        aggregate = []
         usages = {}
         for date in sorted(date_set):
             usages[str(date)] = 0
@@ -842,7 +843,19 @@ def get_prod_data(request):
             for stock in date_stocks:
                 usages[str(stock.date)] = stock.used
         for key, value in sorted(usages.items(), key=lambda x: x[0]):
-            values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
+            aggregate.append((key, value))
+
+        def to_week(day_data):
+            sunday = datetime.strptime(str(day_data[0]), '%Y-%m-%d').strftime('%Y-%U-0')
+            return datetime.strptime(sunday, '%Y-%U-%w').strftime('%Y-%m-%d')
+
+        weekly = itertools.groupby(aggregate, to_week)
+
+        aggregate_weekly = (
+            (week, sum(day_usages for date, day_usages in usages))
+            for week, usages in weekly)
+        for week, value in aggregate_weekly:
+            values.append({'x': datetime.strptime(week, "%Y-%m-%d").timestamp(), 'y': value})
         if enabled:
             data.append({'values': values, 'key': product.name})
             enabled = False
