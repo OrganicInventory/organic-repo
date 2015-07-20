@@ -34,7 +34,7 @@ class LoginRequiredMixin(object):
 
 class DashboardView(View):
     def get(self, request, **kwargs):
-        appointments = Appointment.objects.filter(date=date.today(), user=request.user)
+        appointments = Appointment.objects.prefetch_related('service').filter(date=date.today(), user=request.user)
         appts = {}
         for appt in appointments:
             appts[appt.service] = appts.get(appt.service, 0)
