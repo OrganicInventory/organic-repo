@@ -944,7 +944,7 @@ body.new-order-body li.sub-new-order {
 }
 
 .scan-new, .scan-details, .scan-update {
-    display: none;
+  display: none;
 }
 
 .expand-services {
