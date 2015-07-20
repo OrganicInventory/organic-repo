@@ -586,6 +586,7 @@ class NewOrderView(View):
         if Product.objects.filter(upc_code=request.POST.get('upc_code'), user=request.user):
             prod_instance = Product.objects.get(upc_code=request.POST.get('upc_code'), user=request.user)
             prod_instance.update_quantity(float(request.POST.get('quantity')))
+            prod_instance.ordered = False
             prod_instance.save()
             messages.add_message(request, messages.SUCCESS,
                                  "Product Updated.")
@@ -638,6 +639,7 @@ class CloseShopView(View):
                 prod.save()
         return redirect('/low/')
 
+<<<<<<< HEAD
 
 class CloseShopView(View):
     def dispatch(self, request, *args, **kwargs):
@@ -663,6 +665,8 @@ class CloseShopView(View):
         return redirect('/low/')
 
 
+=======
+>>>>>>> 5b184b78710625c1c573694003c2e7d36ec52481
 #######################################################################################################################
 
 class TooMuchProductView(LoginRequiredMixin, UpdateView):
@@ -735,14 +739,25 @@ class OrderView(View):
     def get(self, request, **kwargs):
         daterange = self.request.GET.get('range')
         if daterange != 'None':
-            low = inventory_check(int(daterange), self.request.user).items()
+            all_low = inventory_check(int(daterange), self.request.user)
+            low ={}
+            for product, value in all_low.items():
+                if not product.ordered:
+                    low[product] = value
         else:
-            low = inventory_check(14, self.request.user).items()
-        return render(request, "order.html", {'products': low})
+            all_low = inventory_check(self.request.user.profile.interval, self.request.user)
+            low ={}
+            for product, value in all_low.items():
+                if not product.ordered:
+                    low[product] = value
+        return render(request, "order.html", {'products': low.items()})
 
     def post(self, request, *args, **kwargs):
         products = {Product.objects.get(user=request.user, upc_code=key): value for key, value in
                     self.request.POST.items() if key != 'csrfmiddlewaretoken'}
+        for product in products:
+            product.ordered = True
+            product.save()
         brands = {key.brand for key in products.keys()}
         messages.add_message(self.request, messages.SUCCESS, "Order Sent")
         for brand in brands:
