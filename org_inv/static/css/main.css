@@ -78,13 +78,11 @@ a:visited {
 }
 
 .meter {
-    /*max-width: 200px;
-    float: right;
-    padding-top: 20px;*/
-    max-width: 200px;
-    position: absolute;
-    right: 10px;
-    bottom: 0;
+  max-width: 200px;
+  position: absolute;
+  right: 10px;
+  bottom: 75px;
+  mix-blend-mode: multiply;
 }
 
 .confirm-delete {
@@ -1112,14 +1110,10 @@ body.edit-profile-body #product_chart {
 }
 
 .prod-image {
-    /*float: left;
-    max-height: 200px;
-    padding: 10px;
-    padding-top: 30px;*/
     max-width: 200px;
     position: absolute;
     left: 10px;
-    bottom: 0;
+    bottom: 75px;
     mix-blend-mode: multiply;
 }
 
