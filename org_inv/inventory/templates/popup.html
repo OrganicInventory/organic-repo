@@ -1,0 +1,10 @@
+  <h2 class="secondary-heading">Add Product</h2>
+  <div class="form-container">
+    <form class="main-form" method="POST" action="{% url 'create_product' %}">
+        {% csrf_token %}
+            {{ form }}
+
+        <!-- Provide a button to click to submit the form. -->
+        <input type="submit" name="submit"  value="Add"/>
+    </form>
+  </div>
