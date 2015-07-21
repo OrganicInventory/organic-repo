@@ -1,16 +1,18 @@
+<body class="appointment-delete-body">
 {% extends "base.html" %}
   {% block pagetitle %}
   <h1 class="main-heading">Delete Appointment</h1>
   {% endblock %}
 {% block content %}
-<div class="main-content-header">
-{#  <h2 class="secondary-heading">Header</h2>#}
-</div>
+    <div class="main-content-header">
+        <h2 class="secondary-heading">Are you sure you want to delete {{object.service}} for {{object.date}}?  </h2>
+    </div>
     <form class="confirm-delete" action="" method="post">{% csrf_token %}
-        <p>Are you sure you want to delete this appointment?</p>
+        <p class="confirm-delete-affect">Are you sure you want to delete this appointment?</p>
         <div class="confirm-delete-buttons">
-        <input type="submit" value="Confirm"/>
-         <input type="submit" name="cancel" value="Cancel" />
-            </div>
+          <button class="confirm" type="submit" value="Confirm">Confirm</button>
+          <button class="cancel" type="submit" name="cancel" value="Cancel">Cancel</button>
+        </div>
     </form>
 {% endblock %}
+</body>

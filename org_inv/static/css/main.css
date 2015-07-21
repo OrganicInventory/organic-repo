@@ -150,7 +150,9 @@ a:visited {
   z-index: 1000;
 }
 
-body.product-delete-body .main-content {
+body.product-delete-body .main-content,
+body.service-delete-body .main-content,
+body.appointment-delete-body .main-content {
   position: relative;
 }
 
