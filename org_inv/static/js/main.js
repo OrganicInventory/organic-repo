@@ -105,16 +105,39 @@ $(function () {
     });
 
 //PREVENT SCAN FROM FROM AUTO SUBMITTING
+    // $('.scan-form').keypress(function (e) {
+    //   if (e.which === 13) {
+    //     e.preventDefault();
+    //     e.stopPropagation();
+    //
+    //     var checkNum = $('.scan-input').val();
+    //
+    //     if (isNaN(checkNum)) {
+    //       checkName();
+    //     } else {
+    //       checkUpc();
+    //     }
+    //   }
+    // });
+
+    $('.scan-input').on('input', function() {
+      if ($(this).val() !== '' && (isNaN($(this).val()))) {
+        $('.scan-search').css('display', 'inline');
+        $('.scan-details').css('display', 'none');
+        $('.scan-update').css('display', 'none');
+      } else {
+        $('.scan-search').css('display', 'none');
+      }
+    });
+
     $('.scan-form').keypress(function (e) {
-      if (e.which === 13) {
-        e.preventDefault();
-        e.stopPropagation();
+      var checkNum = $('.scan-input').val();
 
-        var checkNum = $('.scan-input').val();
+      if (!isNaN(checkNum)) {
+        if (e.which === 13) {
+          e.preventDefault();
+          e.stopPropagation();
 
-        if (isNaN(checkNum)) {
-          checkName();
-        } else {
           checkUpc();
         }
       }
@@ -154,24 +177,24 @@ $(function () {
         });
     }
 
-    function checkName() {
-      var nameInput = $('.scan-input').val().toLowerCase();
-      var name = [];
-
-      console.log(nameInput);
-
-      $('.table-upc tr').each(function () {
-        var nameData = $(this).attr('name');
-        name.push(nameData);
-
-        for (var i = 0; i < name.length; i++) {
-          if (name.indexOf(nameInput) > -1 ) {
-          var trIndexName = name.indexOf(nameInput);
-            $('tr:eq(' + trIndexName + ')').css('background-color', '#add8e6');
-          }
-        }
-      });
-    }
+    // function checkName() {
+    //   var nameInput = $('.scan-input').val().toLowerCase();
+    //   var name = [];
+    //
+    //   console.log(nameInput);
+    //
+    //   $('.table-upc tr').each(function () {
+    //     var nameData = $(this).attr('name');
+    //     name.push(nameData);
+    //
+    //     for (var i = 0; i < name.length; i++) {
+    //       if (name.indexOf(nameInput) > -1 ) {
+    //       var trIndexName = name.indexOf(nameInput);
+    //         $('tr:eq(' + trIndexName + ')').css('background-color', '#add8e6');
+    //       }
+    //     }
+    //   });
+    // }
 
 //EXIT SUCCESS MESSAGES
     $('.success-exit').click(function () {
