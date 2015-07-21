@@ -9,7 +9,7 @@ class BrandAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'quantity', 'max_quantity', 'display_quantity', 'size', 'id', 'user']
+    list_display = ['name', 'quantity', 'max_quantity', 'display_max_quantity', 'display_quantity', 'size', 'id', 'user']
 
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ['name',]
