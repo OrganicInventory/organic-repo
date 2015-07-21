@@ -1,3 +1,4 @@
+<body class="adjust-product-body">
 {% extends "base.html" %}
 
 {% block pagetitle %}
@@ -5,9 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="main-content-header">
-    <h2 class="secondary-heading">Adjust Product Quantity</h2>
-</div>
+    <h1 class="secondary-heading">Adjust Product Quantity</h1>
   <div class="form-container">
     <form class="main-form" method="POST" action="{% url 'adjust_product' product.id %}">
         {% csrf_token %}
@@ -21,3 +20,4 @@
     </form>
   </div>
 {% endblock %}
+</body>

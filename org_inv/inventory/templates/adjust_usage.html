@@ -1,11 +1,10 @@
+<body class="adjust-usage-body">
 {% extends "base.html" %}
   {% block pagetitle %}
   <h1 class="main-heading">Adjust Usage</h1>
   {% endblock %}
 {% block content %}
-<div class="main-content-header">
-  <h2 class="secondary-heading">{{ appt.date }} - {{ appt.service }}</h2>
-</div>
+  <h1 class="secondary-heading">{{ appt.service }} - {{ appt.date }}</h1>
 <div class="form-container">
   <form class="main-form" method="POST" action="{% url 'adjust_usage' appt.id %}">
     {% csrf_token %}
@@ -19,3 +18,4 @@
   </form>
 </div>
 {% endblock %}
+</body>
