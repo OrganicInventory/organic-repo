@@ -910,7 +910,7 @@ def get_all_service_data(request):
 #######################################################################################################################
 
 def get_product(upc_code):
-    factual = Factual("V5TWGZgmLymx6fQjI1yjJ5HxMODvTnf2sh5piCNR", "klz6SaOxUFYHjQhW1MiTPwRhaFG2QHlgIliflIG8")
+    factual = Factual("gCKclwfy6eBki5UyHDxS56x7zmcvCMaGJ7l7v9cM", "Dt8V4ngb484Blmyaw5G9SxbycgpOsJL0ENckwxX0")
     products = factual.table('products')
     data = products.filters({'upc': {'$includes': upc_code}}).data()
     if data:
@@ -986,3 +986,13 @@ def get_all_usage_data(request):
         else:
             data.append({'values': values, 'key': product.name, 'disabled': 'True', 'area': 'True'})
     return data
+
+#######################################################################################################################
+
+def search_bar(request):
+	query = request.GET.get('upc')
+	if query:
+		results = Product.objects.filter(user=request.user, name__icontains=request.GET['upc'])
+	else:
+		results = Product.objects.all()
+	return render(request, 'search_results.html', {'results':results})
