@@ -1,9 +1,8 @@
-<body class="all-products-body">
 {% extends "base.html" %}
 {% load static %}
 
 {% block pagetitle %}
-    <h1 class="main-heading">All Products</h1>
+    <h1 class="main-heading">Search Results</h1>
 {% endblock %}
 
 {% block mobileadd %}
@@ -11,48 +10,6 @@
         <span class="add-btn-mobile">q</span>
     </a>
 {% endblock %}
-
-{% block scancontent %}
-    <script type="text/javascript">
-        function OnSubmitForm() {
-            if (document.pressed == 'New') {
-                document.test_form.action = "{% url 'create_product' %}";
-            }
-            else if (document.pressed == 'Update') {
-                document.test_form.action = "{% url 'update_product' %}";
-            }
-            else if (document.pressed == 'Detail') {
-                document.test_form.action = "{% url 'product_detail' %}";
-            }
-            else if (document.pressed == 'Search') {
-                document.test_form.action = "{% url 'search' %}"
-            }
-            return true;
-        }
-    </script>
-    <div class="form-container scan-form">
-        <form name='test_form' class="form-control scan-form main-form" id='test_form' method="get"
-              onsubmit="return OnSubmitForm();">
-            <span class="focus-out focus-out-scan">Search by Name or Scan Product UPC</span>
-            <input name='upc' class="form-control scan-input" type="text" autocomplete="off"/>
-
-          <div class="scan-btns">
-              <button class="gen-btn scan-new" onclick="document.pressed=this.value" type="submit" value="New">Create</button>
-              <button class="gen-btn scan-update" onclick="document.pressed=this.value" type="submit" value="Update">Update</button>
-              <button class="gen-btn scan-details" onclick="document.pressed=this.value" type="submit" value="Detail">Details</button>
-            <div align="center">
-	            <button class="gen-btn scan-search" onclick="document.pressed=this.value" type="submit" value="Search">Search</button>
-            </div>
-
-          </div>
-
-
-
-
-      </form>
-    </div>
-{% endblock %}
-
 {% block content %}
     <table class="content-table content-table-links table-mobile table-upc">
         <tr class="table-header">
@@ -62,14 +19,11 @@
             <th>Qty</th>
             <th></th>
         </tr>
-        {% for product in all_products %}
+        {% for product in results %}
             <tr data-upc="{{product.upc_code}}" name="{{product.name|lower}}">
                 {% if product in prods %}
                     {% for pair in pairs %}
                         {% if product == pair.0 %}
-                            {% if pair.0.ordered %}
-                                <td class="green">D</td>
-                                {% else %}
                             {% if pair.1 <= 0 %}
                                 <td class="red">p</td>
 
@@ -77,7 +31,6 @@
                                 <td class="yellow">o</td>
 
                             {% endif %}
-                                {% endif %}
                         {% endif %}
                     {% endfor %}
                 {% else %}
@@ -116,12 +69,3 @@
         </div>
     {% endif %}
 {% endblock %}
-
-{% block addbutton %}
-    <a href="/products/new">
-        <div class="add-content-button">
-            <span class="add-button">q</span>
-        </div>
-    </a>
-{% endblock %}
-</body>
