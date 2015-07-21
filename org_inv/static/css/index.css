@@ -6,8 +6,8 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     width: 100%;
-    font-family: 'Josefin Sans', sans-serif;
-    position: fixed;
+font-family: 'Josefin Sans', sans-serif;
+   position: fixed;
     right: 0;
     left: 0;
     top: 0;
@@ -51,7 +51,6 @@ header{
   font-size: 50%;
   font-weight: 400;
   color: #8DB78D;
-  text-align: right;
 }
 
 /*Spacing for 3 landing page articles*/
@@ -69,7 +68,7 @@ header{
     font-size: 180%;
     color: #EEE;
     min-width: 250px;
-    display: block;
+    display: inline-block;
     margin-top: 9%;
 }
 
@@ -89,7 +88,7 @@ header{
 /*Universal Styling across buttons*/
 button {
     background-color: #caed9a;
-    border-radius: 5%;
+    border-radius: 10%;
     color: black;
     padding: 1%;
     border: none;
@@ -142,7 +141,7 @@ button:hover {
   padding: 1%;
   font-size: 100%;
   cursor: pointer;
-  border-radius: 5%;
+  border-radius: 10%;
 }
 
 .btn-register:hover{
@@ -172,7 +171,7 @@ button:hover {
   padding: 2%;
   font-size: 100%;
   cursor: pointer;
-  border-radius: 6%;
+  border-radius: 10%;
   margin-right: 2%;
   }
 
@@ -184,18 +183,9 @@ button:hover {
 
 /*password required alert*/
 .nomatch {
-    color: #caed9a;
-    text-align: center;
-    font-size: 100%;
-}
-
-/*Spa Edition header*/
-.headspa {
-    font-size: 36%;
-    font-weight: 400;
-    color: #88b288;
-    margin-right: 147px;
-    /*margin-left: 30%;*/
+  color: #8DB78D;
+  text-align: center;
+  font-size: 100%;
 }
 
 /*Landing page leaf logo*/
@@ -228,15 +218,23 @@ button:hover {
 
 /*required fields alert on register page*/
 .errors {
-    font-size: 30%;
-    float: right;
-    margin-right: 20%;
-    color: #caed9a;
+  font-size: 25%;
+  float: right;
+  margin-right: 20%;
+  color: #8DB78D;
 }
 
 /*spacing*/
 .nav {
     float: left;
+}
+
+.signup{
+  width:100px;
+  height:25px;
+  display: block;
+  margin:0 auto;
+  margin-top: 10%;
 }
 
 /*Landing page SIGN UP button*/
@@ -246,8 +244,11 @@ button:hover {
   color: #EEE;
   text-align: center;
   font-size: 60%;
-  border-radius: 6%;
-  font-size: 150%;
+  border-radius: 10%;
+  font-size: 185%;
+  margin: 0 auto;
+  display: block;
+  margin-top: 10%;
 }
 
 .registerbtn:hover{
@@ -259,11 +260,4 @@ button:hover {
 /*Remove underline from SIGN UP button*/
 a:link {
   text-decoration: none;
-}
-
-.signup2{
-  width:100px;
-  height:25px;
-  display: block;
-  margin:0 auto;
 }
