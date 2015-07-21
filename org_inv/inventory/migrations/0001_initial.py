@@ -47,7 +47,6 @@ class Migration(migrations.Migration):
                 ('size', models.FloatField()),
                 ('upc_code', models.CharField(null=True, max_length=100)),
                 ('url', models.CharField(null=True, max_length=255)),
-                ('ordered', models.NullBooleanField(default=False)),
                 ('brand', models.ForeignKey(null=True, to='inventory.Brand')),
                 ('user', models.ForeignKey(null=True, to=settings.AUTH_USER_MODEL)),
             ],
