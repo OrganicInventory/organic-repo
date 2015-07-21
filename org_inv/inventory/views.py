@@ -874,14 +874,14 @@ def get_prod_data(request):
 
 def get_service_data(serv_id):
     service = Service.objects.get(id=serv_id)
-    appts = Appointment.objects.filter(service=service)
+    appts = Appointment.objects.filter(service=service, date__lte=datetime.today(),
+                                  date__gte=(datetime.today() - timedelta(days=31)))
     if appts:
         dates = sorted([appt.date for appt in appts])
         date_set = set(dates[0] + timedelta(x) for x in range((dates[-1] - dates[0]).days))
     else:
         date_set = {}
     values = []
-    aggregate = []
     usages = {}
     for date in sorted(date_set):
         usages[str(date)] = 0
@@ -893,23 +893,10 @@ def get_service_data(serv_id):
             else:
                 usages[appt_date] = 1
     for key, value in sorted(usages.items(), key=lambda x: x[0]):
-        aggregate.append((key, value))
-
-    def to_week(day_data):
-        sunday = datetime.strptime(str(day_data[0]), '%Y-%m-%d').strftime('%Y-%U-0')
-        return datetime.strptime(sunday, '%Y-%U-%w').strftime('%Y-%m-%d')
-
-    weekly = itertools.groupby(aggregate, to_week)
-
-    aggregate_weekly = (
-        (week, sum(day_usages for date, day_usages in usages))
-        for week, usages in weekly)
-    for week, value in aggregate_weekly:
-        values.append({'x': datetime.strptime(week, "%Y-%m-%d").timestamp(), 'y': value})
+        values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
     data = []
     data.append({'values': values, 'key': 'number of appointments', 'area': 'True'})
     return data
-
 
 #######################################################################################################################
 
