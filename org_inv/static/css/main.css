@@ -433,7 +433,6 @@ body.all-products-body .main-content {
 
 .list-container-footer {
     height: 25px;
-    background-color: #eee;
     margin: 5px 0;
 }
 
@@ -871,6 +870,18 @@ svg {
   width: 100%;
 }
 
+#eventContent {
+  width: 100%;
+  /*background-color: green;*/
+}
+
+.fixed-dialog {
+  position: fixed !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+
 /*MODAL*/
 
 .modal-container {
@@ -1119,6 +1130,10 @@ body.edit-profile-body #product_chart {
     background-color: #fff;
 }
 
+.prod-brand {
+  font-size: 22px;
+}
+
 .edit-profile-container {
     width: 80%;
     margin: 0 auto;
@@ -1208,7 +1223,8 @@ body.add-appointment-body .main-content,
 body.create-service-body .main-content,
 body.update-service-body .main-content,
 body.update-product-body .main-content,
-body.edit-profile-body .main-content {
+body.edit-profile-body .main-content,
+body.product-details-body .main-content {
   background-color: #e8e6e2;
 }
 
