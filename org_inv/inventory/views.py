@@ -717,7 +717,7 @@ class OrderView(View):
             all_low = inventory_check(int(daterange), self.request.user)
             low = {}
             for product, value in all_low.items():
-                if not product.ordered:
+                if product.brand.email and not product.ordered:
                     low[product] = value
         else:
             all_low = inventory_check(self.request.user.profile.interval, self.request.user)
