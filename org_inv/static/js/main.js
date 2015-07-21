@@ -111,7 +111,7 @@ $(function () {
         e.stopPropagation();
 
         var checkNum = $('.scan-input').val();
-        
+
         if (isNaN(checkNum)) {
           checkName();
         } else {
@@ -204,13 +204,13 @@ $(function () {
 
     $('.show-chart-icon').click(function () {
       $('.chart-container').toggleClass('chart-container-show');
-      $(this).toggle('fast');
-      $('.show-chart-icon-click').toggle('fast');
+      $(this).toggle();
+      $('.show-chart-icon-click').slideDown('slow');
     });
 
     $('.show-chart-icon-click').click(function() {
-      $(this).toggle('fast');
-      $('.show-chart-icon').toggle('fast');
+      $(this).toggle();
+      $('.show-chart-icon').slideDown('slow');
       $('.chart-container').toggleClass('chart-container-show');
     });
 
