@@ -24,7 +24,7 @@ body:before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: -webkit-radial-gradient(bottom left, ellipse cover, rgba(0, 0, 0, 0.5) 0%, rgba(101, 57, 37, 0.8) 100%);
+    background: -webkit-radial-gradient(bottom left, ellipse cover, rgba(0, 0, 0, 0.5) 0%, rgba(68, 76, 90, 1) 100%);
 }
 
 /*Landing page*/

@@ -13,7 +13,7 @@ body {
     background-color: #dfdcd6;
     background-color: #e5e3de;
     background-color: #e8e6e2;
-    /*background-color: #efedea;*/
+    /*background-color: #d8d8d8;*/
     font-family: sans-serif;
     color: #333;
 }
@@ -264,8 +264,8 @@ body.user-profile-body .main-content {
     position: absolute;
     left: 0;
     top: 50%;
-    transform: translate(15%, -50%);
-    width: 200px;
+    transform: translate(0, -50%);
+    width: 300px;
     height: 40px;
     color: #eee;
     z-index: -1;
@@ -313,7 +313,8 @@ body.user-profile-body .main-content {
 .user-name {
     display: inline-block;
     position: absolute;
-    transform: translate(0, 120%);
+    top: 30px;
+    /*transform: translate(0, 120%);*/
     margin-left: 6px;
     text-transform: uppercase;
     font-size: 12px;
@@ -910,7 +911,7 @@ th {
     top: 0;
     right: 0;
     bottom: 0;
-    width: 33%;
+    width: 25%;
     background-color: #444c5a;
     z-index: 10002;
     display: none;
@@ -923,7 +924,6 @@ th {
     right: 10px;
     top: 10px;
     padding: 10px;
-    /*background-color: blue;*/
     border-radius: 100%;
     color: #eee;
     font-size: 28px;
@@ -1026,6 +1026,7 @@ body.new-order-body li.sub-new-order {
     transform: translate(0, -50%);
     border-radius: 100%;
     cursor: pointer;
+    z-index: 1000;
 }
 
 #product_chart {
@@ -1216,7 +1217,8 @@ body.create-product-body .main-content .form-button,
 body.add-appointment-body .main-content .form-button,
 body.create-service-body .main-content .form-button,
 body.update-service-body .main-content .form-button,
-body.update-product-body .main-content .form-button {
+body.update-product-body .main-content .form-button,
+body.new-order-body .main-content .form-button {
   right: 50%;
   transform: translate(50%, 200%);
   width: 80%;
