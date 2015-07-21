@@ -125,6 +125,7 @@ $(function () {
         $('.scan-search').css('display', 'inline');
         $('.scan-details').css('display', 'none');
         $('.scan-update').css('display', 'none');
+        $('.scan-new').css('display', 'none');
       } else {
         $('.scan-search').css('display', 'none');
       }
@@ -162,12 +163,13 @@ $(function () {
 
             for (var i = 0; i < arr.length; i++) {
                 if (arr.indexOf(upcInput) > -1) {
-                    $('.scan-details').css('display', 'inline');
-                    $('.scan-update').css('display', 'inline');
+                    $('.scan-details').trigger('click');
+                    // $('.scan-details').css('display', 'inline');
+                    // $('.scan-update').css('display', 'inline');
                     $('.scan-new').css('display', 'none');
 
-                    var trIndex = arr.indexOf(upcInput);
-                    $('tr:eq(' + trIndex + ')').css('background-color', '#add8e6');
+                    // var trIndex = arr.indexOf(upcInput);
+                    // $('tr:eq(' + trIndex + ')').css('background-color', '#add8e6');
                 } else {
                     $('.scan-new').css('display', 'inline');
                     $('.scan-details').css('display', 'none');
