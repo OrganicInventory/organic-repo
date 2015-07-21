@@ -27,7 +27,7 @@ $(document).ready(function() {
             $("#adjustLink").attr('href', event.adjust_usage);
             $("#editLink").attr('href', event.appt_edit);
             $("#deleteLink").attr('href', event.appt_cancel);
-            $("#eventContent").dialog({ modal: true, title: (event.title + " " + moment(event.start).format('MMM Do')), width:350});
+            $("#eventContent").dialog({ modal: true, title: (event.title + " " + moment(event.start).format('MMM Do')), width:350, dialogClass: 'fixed-dialog'});
         });
     }
     })
