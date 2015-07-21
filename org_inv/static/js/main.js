@@ -32,24 +32,6 @@ $(function () {
         if (!urlUpc) {
             $('#id_brand :selected').text('Pick a Brand');
         }
-
-        // $('.date-dropdown').val(urlRange);
-        // if (urlRange === '1') {
-        //     $('.date-range-display').text('1 Day');
-        // } else if (urlRange === '7') {
-        //     $('.date-range-display').text('1 Week');
-        // } else if (urlRange === '14') {
-        //     $('.date-range-display').text('2 Weeks');
-        // } else if (urlRange === '30') {
-        //     $('.date-range-display').text('1 Month');
-        // } else if (urlRange === '60') {
-        //     $('.date-range-display').text('2 Months');
-        // } else {
-        //     $('.date-dropdown').val(14);
-        // }
-
-
-
     });
 
 //HAMBURGER DROPDOWN MENU
@@ -59,10 +41,12 @@ $(function () {
 
     $('.dropdown-icon').click(function () {
         $('.slide-in-menu').slideDown('slow');
+        $('.click-catch').toggle();
     });
 
     $('.slide-in-menu-exit').click(function () {
         $('.slide-in-menu').slideUp('slow');
+        $('.click-catch').hide();
     });
 
 //FORM FLOATING LABELS
@@ -79,21 +63,21 @@ $(function () {
 
 //STICKY HEADER
     function stickyHeader() {
-        var stick = $('.page-header-footer');
+      var stick = $('.page-header-footer');
 
-        $(window).scroll(function () {
-            if ($(this).scrollTop() > 136) {
-                stick.addClass('sticky');
-                $('.top-nav-container').css('display', 'none');
-                $('.top-nav-container-hide').css('display', 'block');
-                $('.dropdown-icon-bottom').css('display', 'block');
-            } else {
-                stick.removeClass('sticky');
-                $('.top-nav-container').css('display', 'block');
-                $('.top-nav-container-hide').css('display', 'none');
-                $('.dropdown-icon-bottom').css('display', 'none');
-            }
-        });
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > 136) {
+          stick.addClass('sticky');
+          $('.top-nav-container').css('display', 'none');
+          $('.top-nav-container-hide').css('display', 'block');
+          $('.dropdown-icon-bottom').css('display', 'block');
+        } else {
+          stick.removeClass('sticky');
+          $('.top-nav-container').css('display', 'block');
+          $('.top-nav-container-hide').css('display', 'none');
+          $('.dropdown-icon-bottom').css('display', 'none');
+        }
+      });
     }
 
 //STICKY HEADER ON RESIZE
@@ -112,9 +96,6 @@ $(function () {
     $('#id_product').siblings().remove();
     $('.Product label').remove();
 
-//SET VALUE FOR SPECIFIC SELECT BOXES
-    // $('.Product :selected').text('Select a Product');
-
 //SET FLOATING LABELS THAT ALREADY CONTAIN CONTENT
     $('input, textarea').each(function () {
         var val = $(this).val();
@@ -125,18 +106,18 @@ $(function () {
 
 //PREVENT SCAN FROM FROM AUTO SUBMITTING
     $('.scan-form').keypress(function (e) {
-        if (e.which === 13) {
-            e.preventDefault();
-            e.stopPropagation();
+      if (e.which === 13) {
+        e.preventDefault();
+        e.stopPropagation();
 
-            var checkNum = $('.scan-input').val();
-            if (isNaN(checkNum)) {
-              checkName();
-            } else {
-              checkUpc();
-            }
+        var checkNum = $('.scan-input').val();
 
+        if (isNaN(checkNum)) {
+          checkName();
+        } else {
+          checkUpc();
         }
+      }
     });
 
     $('.cancel-submit').keypress(function (e) {
@@ -185,19 +166,10 @@ $(function () {
 
         for (var i = 0; i < name.length; i++) {
           if (name.indexOf(nameInput) > -1 ) {
-            // $('.scan-details').css('display', 'inline');
-            // $('.scan-update').css('display', 'inline');
-            // $('.scan-new').css('display', 'none');
-
           var trIndexName = name.indexOf(nameInput);
             $('tr:eq(' + trIndexName + ')').css('background-color', '#add8e6');
-          } else {
-            // $('.scan-new').css('display', 'inline');
-            // $('.scan-details').css('display', 'none');
-            // $('.scan-update').css('display', 'none');
           }
         }
-
       });
     }
 
@@ -216,26 +188,6 @@ $(function () {
         $('.ref-chart').slideToggle();
     });
 
-//ADD PRODUCT OPTION TO ADD SERVICES/UPDATE SERVICES
-    // $('#add_more').click(function () {
-    //   // cloneMore('div.table:last', 'amount_set');
-    //   $('.Product:last').clone().appendTo('.table');
-    //   $('.Amount:last').clone().appendTo('.table');
-    //   $('.Product select').each(function (i) {
-    //       this.id = 'id_amount_set-' + i + '-product';
-    //       this.name = 'amount_set-' + i + '-product';
-    //   })
-    //
-    //   $('.Amount input').each(function (j) {
-    //       this.id = 'id_amount_set-' + j + '-amount';
-    //       this.name = 'amount_set-' + j + '-amount';
-    //   });
-    //
-    //   $('.Product').find('option:eq(0)').last().prop('selected', true);
-    //   $('.Amount input').last().val('');
-    //
-    // });
-
 //DASHBOARD
 
     $('.appointment-drop').click(function () {
@@ -252,53 +204,27 @@ $(function () {
 
     $('.show-chart-icon').click(function () {
       $('.chart-container').toggleClass('chart-container-show');
-      $(this).toggle('fast');
-      $('.show-chart-icon-click').toggle('fast');
+      $(this).toggle();
+      $('.show-chart-icon-click').slideDown('slow');
     });
 
     $('.show-chart-icon-click').click(function() {
-      $(this).toggle('fast');
-      $('.show-chart-icon').toggle('fast');
+      $(this).toggle();
+      $('.show-chart-icon').slideDown('slow');
       $('.chart-container').toggleClass('chart-container-show');
     });
 
     $('.header-dropdown-icon').click(function() {
       $('.main-nav-container').slideToggle();
+      $('.click-catch').toggle();
     });
 
-    // $('.low-icon-li').mouseenter(function() {
-    //   $('.display-icon-text').text('Check what products are low.')
-    // });
-    // $('.low-icon-li').mouseleave(function() {
-    //   $('.display-icon-text').text('')
-    // });
-    //
-    // $('.all-icon-li').mouseenter(function() {
-    //   $('.display-icon-text').text('View all of your products.')
-    // });
-    // $('.all-icon-li').mouseleave(function() {
-    //   $('.display-icon-text').text('')
-    // });
-    //
-    // $('.app-icon-li').mouseenter(function() {
-    //   $('.display-icon-text').text('Check all of your upcoming appointments.')
-    // });
-    // $('.app-icon-li').mouseleave(function() {
-    //   $('.display-icon-text').text('')
-    // });
+    $('.click-catch').click(function() {
+      $('.main-nav-container-click').slideToggle();
+      $('.slide-in-menu').slideToggle();
+      $(this).hide();
+    });
 
-    // $(window).resize(function() {
-    //   if ($(window).width() < 701) {
-    //     $('.product-drop').click(function() {
-    //       $('.appointments-list-container').hide();
-    //     });
-    //     $('.appointment-drop').click(function() {
-    //       $('.products-list-container').hide();
-    //     });
-    //   }
-    //   else {
-    //
-    //   }
-    // }).resize();
+
 
 });
