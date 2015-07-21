@@ -13,6 +13,7 @@
 
 {% block content %}
     <link href="{% static 'nv.d3.min.css' %}" rel="stylesheet">
+    <div class="click-catch"></div>
     <div class="main-container">
       <header class="page-header">
         <span class="user-icon-image"><img src={% static 'css/logo_grey_outline.png' %}></span>
@@ -24,7 +25,7 @@
           </ul>
         </div>
         <span class="header-dropdown-icon">l</span>
-        <div class="main-nav-container">
+        <div class="main-nav-container main-nav-container-click">
           <ul class="main-nav-ul">
             <a href="/services"><li class="main-nav-li">Services</li></a>
             <a href="/products/new_order"><li class="main-nav-li">Receive Order</li></a>
