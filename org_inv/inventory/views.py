@@ -1048,3 +1048,4 @@ def search_bar(request):
 	else:
 		results = Product.objects.all()
 	return render(request, 'search_results.html', {'results':results})
+
