@@ -12,23 +12,30 @@
         <h2 class="secondary-heading">{{ object.name }}</h2>
     </div> -->
     <h1 class="secondary-heading">{{object.name}}</h1>
+    <h2 class="secondary-heading prod-det-info prod-brand">by {{ object.brand }}</h2><br />
     <div class="prod-details-container">
         {% if pic != None %}
             <img class="prod-image" src="{{ pic }}" alt="product image" height="200" width="200">
         {% endif %}
 
-    <img class="meter" src="{% static img %}">
-
-        <span class="prod-det-info prod-brand">Brand: {{ object.brand }}</span><br />
-        <span class="prod-det-info prod-qty">Quantity: {{ object.display_quantity|floatformat:2 }} units</span>
-        <span class="prod-det-info prod-max">Max Quantity: {{ object.display_max_quantity|floatformat:2 }} units</span><br />
-        <span class="prod-det-info prod-size">Size: {{ object.size }} oz.</span>
-        <span class="prod-det-info prod-upc">UPC: {{ object.upc_code }}</span><br />
+        <img class="meter" src="{% static img %}">
+        <div class="prod-text-content">
+          <ul class="prod-details-list-ul">
+            <li class="prod-details-list-li">Quantity: {{ object.display_quantity|floatformat:2 }} units</li>
+            <li class="prod-details-list-li">Max Quantity: {{ object.display_max_quantity|floatformat:2 }} units</li>
+            <li class="prod-details-list-li">Size: {{ object.size }} oz.</li>
+            <li class="prod-details-list-li">UPC: {{ object.upc_code }}</li>
+          </ul>
+        </div>
+        <div class="prod-details-btns-container">
           <a href="{% url 'product_confirm_delete' product.id %}">
-          <button class="details-button">Delete</button></a>
+          <button class="details-button prod-delete">Delete</button></a>
           <a href="{% url 'update_product' %}?upc={{ product.upc_code }}">
-          <button class="details-button">Edit</button></a>
+          <button class="details-button prod-edit">Edit</button></a>
+        </div>
     </div>
+    <hr>
+
 
     <div id='product_chart'>
         <svg style='height:500px'></svg>
