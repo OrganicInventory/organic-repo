@@ -890,6 +890,7 @@ table {
     top: 68%;
     /*width: 325px;*/
     width: 25%;
+    margin-top: 50px;
 }
 
 .settings-container {
@@ -1482,12 +1483,15 @@ body.place-order-body .main-content .form-button {
 }
 
 .content-table td:last-child {
-  /*background-color: red;*/
   text-align: right;
 }
 
 .header-btn th:last-child {
   text-align: right;
+}
+
+.content-table .td-left-align {
+  text-align: left !important;
 }
 
 

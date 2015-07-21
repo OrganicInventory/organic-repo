@@ -1,4 +1,4 @@
-<body class="user-profile-body">
+<body class="settings-body">
 {% extends "base.html" %}
 
 {% block pagetitle %}
@@ -15,7 +15,7 @@
         <form method="POST" action="">
         {% csrf_token %}
         <tr>
-        <td>
+        <td class="td-left-align">
         {% for field in form %}
 
               <div class="{{ field.label }} input">
@@ -41,7 +41,7 @@
         <form method="POST" action="">
         {% csrf_token %}
         <tr>
-        <td>
+        <td class="td-left-align">
         {% for field in form2 %}
 
               <div class="{{ field.label }} input">
