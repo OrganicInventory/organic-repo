@@ -51,6 +51,8 @@ header{
   font-size: 50%;
   font-weight: 400;
   color: #8DB78D;
+  text-align: center;
+  margin-left: 43%;
 }
 
 /*Spacing for 3 landing page articles*/
@@ -190,10 +192,11 @@ button:hover {
 
 /*Landing page leaf logo*/
 .logo {
-    height: 130px;
+    height: 125px;
     /*float: left;*/
     margin-left: 290%;
-    margin-top: 0%;
+    margin-top: 0;
+    margin-right: 0;
 }
 
 .logo-img {
@@ -229,15 +232,17 @@ button:hover {
     float: left;
 }
 
+
+
+/*Landing page SIGN UP button*/
 .signup{
   width:120px;
-  height:5px;
+  height:0;
   display: block;
   margin:0 auto;
 }
 
 
-/*Landing page SIGN UP button*/
 .registerbtn{
   background-color: transparent;
   border: 2px solid #EEE;
@@ -255,12 +260,12 @@ button:hover {
   background-color: transparent;
 }
 
-/*.signup2{
+.signup2{
   height:0;
   width: 150px;
   display: block;
   margin: 0 auto;
-}*/
+}
 
 
 /*Remove underline from SIGN UP button*/
