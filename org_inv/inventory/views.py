@@ -114,6 +114,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         form.instance.url = get_product(form.instance.upc_code)[1]
         form.instance.new_product_quantity(form.instance.quantity)
+        form.instance.max_quantity = (form.instance.max_quantity * form.instance.size)
         form.instance.save()
         messages.add_message(self.request, messages.SUCCESS,
                              "{} added.".format(form.instance.name))
