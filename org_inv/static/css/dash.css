@@ -178,6 +178,7 @@ body {
   padding: 15px 0;
   cursor: pointer;
   border: none;
+  outline: none;
 }
 
 .place-order-btn:hover {
