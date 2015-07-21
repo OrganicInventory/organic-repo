@@ -25,6 +25,7 @@
             {#    <p>Please login to see this page.</p>#}
         {% endif %}
     {% endif %}
+</div>
     <div class="login1">
         <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
             {% csrf_token %}
@@ -56,7 +57,7 @@
     <div class="boxes">
         <div class='box'>
             Create Appointments
-            <div class='sub-box'><span class="caps">A</span> customized schedule to guage your salon's product usage and
+            <div class='sub-box'><span class="caps">A</span> customized schedule to gauge your salon's product usage and
                 inventory trends.
             </div>
         </div>
@@ -75,10 +76,10 @@
     </div>
 
     <div class='signup'>
-        <a href="{% url 'user_register' %} class="signup2"">
+        <a href="{% url 'user_register' %}" class='signup2'>
             <button class="registerbtn">Sign Up</button>
         </a>
-    <div>
+    </div>
 </body>
 
 
