@@ -1,11 +1,15 @@
+<body class="product-delete-body">
 {% extends "base.html" %}
 
 {% block content %}
+    <div class="main-content-header">
+        <h2 class="secondary-heading">Are you sure you want to delete {{ product.name }}?</h2>
+    </div>
     <form class="confirm-delete" action="" method="post">{% csrf_token %}
-        <p>Are you sure you want to delete {{ product.name }}?</p>
+        <!-- <p>Are you sure you want to delete {{ product.name }}?</p> -->
 
         <div class="services">
-            <p>This product deletion will affect: </p>
+            <p class="confirm-delete-affect">This product deletion will affect: </p>
             <ul>
                 {% for service in affected_services %}
                     <li>{{ service.name }}</li>
@@ -13,8 +17,9 @@
             </ul>
         </div>
         <div class="confirm-delete-buttons">
-            <input type="submit" value="Confirm"/>
-            <input type="submit" name="cancel" value="Cancel"/>
+            <button class="confirm" type="submit" value="Confirm">Confirm</button>
+            <button class="cancel" type="submit" name="cancel" value="Cancel">Cancel</button>
         </div>
     </form>
 {% endblock %}
+</body>
