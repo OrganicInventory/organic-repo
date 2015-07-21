@@ -1,15 +1,33 @@
-{% extends "base.html" %}
+{% load staticfiles%}
 
-{% block content %}
-    <h2>Register</h2>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+  <link href='https://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
+</head>
 
-    <form method="POST" action="{% url 'user_register' %}">
+<body>
+  <div>
+    <div class='register'>Create an Account
+    </div>
+    <img class="logo1" src={% static 'css/pump_bottle_logo.png' %}>
+    <div class="pim">P.I.M.
+      <p>Predictive Inventory Management</p>
+    </div>
+    <form method="POST" action="{% url 'user_register' %}" class='register2'>
         {% csrf_token %}
-        {{ form1.as_p }}
-        {{ form2.as_p }}
+
+        {% include "form-fields.html" with frm=form1 %}
+        {% include "form-fields.html" with frm=form2 %}
 
         <!-- Provide a button to click to submit the form. -->
-        <button type="submit" class="btn btn-default">Register</button>
         <input type="hidden" name="next" id="id_next" value="{{ request.REQUEST.next }}" />
+
+    <button type="submit" class="btn-register">Register</button>
     </form>
-{% endblock %}
+  </div>
+</body>
+</html>

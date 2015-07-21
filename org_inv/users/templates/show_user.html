@@ -1,10 +1,38 @@
+<body class="user-profile-body">
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>{{ user.username }}</h2>
+    <div class="main-content-header">
+        <h2 class="secondary-heading">User Profile</h2>
+    </div>
+    <!-- <h2>{{ user.username }}</h2>
     <p>
         Spa: {{ user.profile.spa_name }}<br/>
         Location: {{ user.profile.location }}<br/>
         Phone: {{ user.profile.phone_number }}
-    </p>
+    </p> -->
+    <table class="content-table">
+        <tr>
+            <td>User Name</td>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <td>Spa</td>
+            <td>{{ user.profile.spa_name }}</td>
+        </tr>
+        <tr>
+            <td>Location</td>
+            <td>{{ user.profile.location }}</td>
+        </tr>
+        <tr>
+            <td>Phone</td>
+            <td>{{ user.profile.phone_number }}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{ user.email }}</td>
+        </tr>
+    </table>
+<p> <a href="{% url 'edit_profile' %}">Edit</a></p>
 {% endblock %}
+</body>

@@ -1,14 +1,28 @@
+<body class="create-product-body">
 {% extends "base.html" %}
+{% load static %}
+
+{% block pagetitle %}
+  <h1 class="main-heading">Add Product</h1>
+{% endblock %}
 
 {% block content %}
-  <h2 class="secondary-heading">Add Product</h2>
-  <div class="form-container">
-    <form class="main-form" method="POST" action="{% url 'create_product' %}">
-        {% csrf_token %}
-            {{ form.as_p }}
+    <h1 class="secondary-heading">Add New Product</h1>
+    <div class="form-container">
+        <form id='test' class="main-form" method="POST" action="{% url 'create_product' %}">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="{{ field.label }} input">
 
-        <!-- Provide a button to click to submit the form. -->
-        <input type="submit" name="submit"  value="Add"/>
-    </form>
-  </div>
+                    <span class="focus-out">{{ field.label_tag }} </span> {{ field }}
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
+
+            <!-- Provide a button to click to submit the form. -->
+            <button class="form-button" type="submit" name="submit">Add New</button>
+        </form>
+
+    </div>
 {% endblock %}
+</body>

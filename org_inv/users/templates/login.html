@@ -1,38 +1,51 @@
-{% extends "base.html" %}
+{% load staticfiles%}
 
-{% block content %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Log-in</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+    <link href='http://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
 
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+  {% if form.errors %}
+  <p class="nomatch">Sorry, your username and password didn't match. Please try again.</p>
+  {% endif %}
 
-{% if next %}
-    {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-    {% else %}
-{#    <p>Please login to see this page.</p>#}
-    {% endif %}
-{% endif %}
+  {% if next %}
+      {% if user.is_authenticated %}
+      <p>Your account doesn't have access to this page. To proceed,
+      please login with an account that has access.</p>
+      {% else %}
+  {#    <p>Please login to see this page.</p>#}
+      {% endif %}
+  {% endif %}
+  <h1 class="logplease">Log In</h1>
+  <img class="logo1" src="https://cdn2.iconfinder.com/data/icons/flaticons-stroke/16/leaf-1-512.png">
+  <p class="pim">P.I.M.
+    <br>Predictive Inventory Management</br>
+  </p>
+  <form method="post" action="{% url 'django.contrib.auth.views.login' %}" class="login1">
+  {% csrf_token %}
+      <table align="center">
+      <tr>
+          <td>{{ form.username.label_tag }}</td>
+          <td>{{ form.username }}</td>
+      </tr>
+      <tr>
+          <td>{{ form.password.label_tag }}</td>
+          <td>{{ form.password }}</td>
+      </tr>
+      </table>
+      <br />
+      <input type="submit" value="login" class="loginbtn"/>
+      <input type="hidden" name="next" value="{{ next }}" />
+  </form>
 
-<form method="post" action="{% url 'django.contrib.auth.views.login' %}" align="center">
-{% csrf_token %}
-    <table align="center">
-    <tr>
-        <td>{{ form.username.label_tag }}</td>
-        <td>{{ form.username }}</td>
-    </tr>
-    <tr>
-        <td>{{ form.password.label_tag }}</td>
-        <td>{{ form.password }}</td>
-    </tr>
-    </table>
-    <br />
-    <input type="submit" value="login"/>
-    <input type="hidden" name="next" value="{{ next }}" />
-</form>
-
-<!--{# Assumes you setup the password_reset view in your URLconf #}-->
-<!--{# <p><a href="{% url 'password_reset' %}">Lost password?</a></p> #}-->
-
-{% endblock %}
+  <!--{# Assumes you setup the password_reset view in your URLconf #}-->
+  <!--{# <p><a href="{% url 'password_reset' %}">Lost password?</a></p> #}-->
+</body>
+</html>
+<script="org_inv/static/js/index.js">

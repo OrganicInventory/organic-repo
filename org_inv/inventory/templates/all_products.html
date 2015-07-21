@@ -1,28 +1,127 @@
+<body class="all-products-body">
 {% extends "base.html" %}
+{% load static %}
+
+{% block pagetitle %}
+    <h1 class="main-heading">All Products</h1>
+{% endblock %}
+
+{% block mobileadd %}
+    <a href="/products/new">
+        <span class="add-btn-mobile">q</span>
+    </a>
+{% endblock %}
+
+{% block scancontent %}
+    <script type="text/javascript">
+        function OnSubmitForm() {
+            if (document.pressed == 'New') {
+                document.test_form.action = "{% url 'create_product' %}";
+            }
+            else if (document.pressed == 'Update') {
+                document.test_form.action = "{% url 'update_product' %}";
+            }
+            else if (document.pressed == 'Detail') {
+                document.test_form.action = "{% url 'product_detail' %}";
+            }
+            else if (document.pressed == 'Search') {
+                document.test_form.action = "{% url 'search' %}"
+            }
+            return true;
+        }
+    </script>
+    <div class="form-container scan-form">
+        <form name='test_form' class="form-control scan-form main-form" id='test_form' method="get"
+              onsubmit="return OnSubmitForm();">
+            <span class="focus-out focus-out-scan">Search by Name or Scan Product UPC</span>
+            <input name='upc' class="form-control scan-input" type="text" autocomplete="off"/>
+
+          <div class="scan-btns">
+              <button class="gen-btn scan-new" onclick="document.pressed=this.value" type="submit" value="New">Create</button>
+              <button class="gen-btn scan-update" onclick="document.pressed=this.value" type="submit" value="Update">Update</button>
+              <button class="gen-btn scan-details" onclick="document.pressed=this.value" type="submit" value="Detail">Details</button>
+            <div align="center">
+	            <button class="gen-btn scan-search" onclick="document.pressed=this.value" type="submit" value="Search">Search</button>
+            </div>
+
+          </div>
+
+
+
+
+      </form>
+    </div>
+{% endblock %}
+
 {% block content %}
-    <table class="content-table">
-      <tr class="table-header">
-        <th>Status</th>
-        <th>Title</th>
-        <th>Product Size</th>
-        <th>Qty</th>
-        <th></th>
-      </tr>
-      <tr class="padding-row"><td></td><td></td><td></td><td></td><td></td></tr>
-    {% for product in all_products %}
-      <tr>
-        <td></td>
-        <td>{{ product.name }} </td>
-        <td>{{ product.size }}oz.</td>
-        <td>{{ product.display_quantity }}</td>
-        <td></td>
-      </tr>
-    {% endfor %}
+    <table class="content-table content-table-links table-mobile table-upc">
+        <tr class="table-header">
+            <th class="empty-column"></th>
+            <th>Title</th>
+            <th>Product Size</th>
+            <th>Qty</th>
+            <th></th>
+        </tr>
+        {% for product in all_products %}
+            <tr data-upc="{{product.upc_code}}" name="{{product.name|lower}}">
+                {% if product in prods %}
+                    {% for pair in pairs %}
+                        {% if product == pair.0 %}
+                            {% if pair.0.ordered %}
+                                <td class="green">D</td>
+                                {% else %}
+                            {% if pair.1 <= 0 %}
+                                <td class="red">p</td>
+
+                            {% else %}
+                                <td class="yellow">o</td>
+
+                            {% endif %}
+                                {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <td class="status-td"></td>
+                {% endif %}
+
+                <td>
+                    <a href="{% url 'product_detail' %}?upc={{ product.upc_code }}">
+                        <div class="table-id-link">
+                            {{ product.name }}
+                        </div>
+                    </a>
+                </td>
+                <td>{{ product.size }}oz.</td>
+                <td>{{ product.display_quantity|floatformat:2 }}</td>
+                <td><a href="{% url 'product_empty' product.id %}">
+                    <button class="gen-btn">I'm Out</button>
+                </a>
+                </td>
+            </tr>
+        {% endfor %}
     </table>
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="/products?page={{ page_obj.previous_page_number }}"><<</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="/products?page={{ page_obj.next_page_number }}">>></a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block addbutton %}
-<a href="/products/new"><div class="add-content-button">
-  <span class="add-button">q</span>
-</div></a>
+    <a href="/products/new">
+        <div class="add-content-button">
+            <span class="add-button">q</span>
+        </div>
+    </a>
 {% endblock %}
+</body>

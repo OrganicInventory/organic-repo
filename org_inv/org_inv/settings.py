@@ -57,7 +57,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'org_inv.urls'
-LOGIN_URL = '/users/login/'
+LOGIN_URL = ''
 
 TEMPLATES = [
     {
@@ -100,7 +100,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LOGIN_REDIRECT_URL = '/products/'
+LOGIN_REDIRECT_URL = '/index/'
 
 LANGUAGE_CODE = 'en-us'
 
@@ -120,3 +120,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'pimspaedition@gmail.com'
+EMAIL_HOST_PASSWORD = 'pimspa2015'
+DEFAULT_FROM_EMAIL = 'pimspaedition@gmail.com'
+SERVER_EMAIL = 'pimspaedition@gmail.com'

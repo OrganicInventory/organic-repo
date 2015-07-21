@@ -1,0 +1,263 @@
+/*Centering background image*/
+body {
+    /*background:linear-gradient(to top,rgba(255,255,255,0.175),rgba(0,0,0,0.3)), url("spa-spa-kamni-svechi-cvety-546.jpg");*/
+    background-repeat: no-repeat;
+    background: url("./spa-spa_Fotor_Fotor.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+font-family: 'Josefin Sans', sans-serif;
+   position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+}
+
+/*setting gradient over background*/
+body:before {
+    content: " ";
+    width: 100%;
+    height: 100%;
+    max-height: 1500px;
+    position: fixed;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: -webkit-radial-gradient(bottom left, ellipse cover, rgba(0, 0, 0, 0.5) 0%, rgba(68, 76, 90, 1) 100%);
+}
+
+/*Landing page*/
+header{
+  text-align: right;
+  font-size: 500%;
+  font-weight: 500;
+  color:#EEE;
+  display: block;
+  padding: 0;
+  margin-right: 38%;
+  margin-top: 10%;
+}
+
+.sub-header{
+  font-size: 30%;
+  text-align: left;
+  float: right;
+  padding: 0;
+}
+
+/*Spa Edition header*/
+.headspa{
+  font-size: 50%;
+  font-weight: 400;
+  color: #8DB78D;
+}
+
+/*Spacing for 3 landing page articles*/
+
+.boxes {
+    width: 1280px;
+}
+
+.box {
+    float: left;
+    margin: 3% 1.5%;
+    width: 25%;
+    text-align: left;
+    font-weight: 800;
+    font-size: 180%;
+    color: #EEE;
+    min-width: 250px;
+    display: inline-block;
+    margin-top: 9%;
+}
+
+/*article descriptions*/
+.sub-box {
+    font-size: 60%;
+    font-weight: 300;
+    line-height: 150%;
+}
+
+/*Larger first letter of sub-box*/
+.caps {
+    font-size: 120%;
+    font-weight: 500;
+}
+
+/*Universal Styling across buttons*/
+button {
+    background-color: #caed9a;
+    border-radius: 10%;
+    color: black;
+    padding: 1%;
+    border: none;
+    margin-top: 2%;
+}
+
+button:hover {
+    background-color: #EEE;
+    cursor: pointer;
+}
+
+/*Header on signup page*/
+.register {
+    text-align: center;
+    font-size: 280%;
+    font-weight: 400;
+    color: #EEE;
+    margin-top: 5%;
+}
+
+/*form on signup page*/
+.register2 {
+    font-weight: 300;
+    font-size: 120%;
+    color: #EEE;
+    display: block;
+}
+
+.register2 input {
+    margin: 0 auto;
+    display: block;
+}
+
+.register2 label {
+    text-align: left;
+    margin-left: 35%;
+    font-size: 130%;
+}
+
+  /*button-link to submit signup form on Register page*/
+.btn-register{
+  font-size: 70%;
+  display: block;
+  margin: 0 auto;
+  margin-top: 1%;
+  background-color: transparent;
+  border: 2px solid #EEE;
+  color: #EEE;
+  opacity: .8;
+  padding: 1%;
+  font-size: 100%;
+  cursor: pointer;
+  border-radius: 10%;
+}
+
+.btn-register:hover{
+  border: 4px solid #8DB78D;
+  cursor: pointer;
+  background: none;
+}
+
+/*login feilds div*/
+.login1{
+  font-size: 100%;
+  font-weight: 300;
+  color:#EEE;
+  min-width: 250px;
+  margin-right: 4%;
+  font-family: 'Josefin Sans', sans-serif;
+  text-align: right;
+  float: right;
+}
+
+.loginbtn{
+  background-color: transparent;
+  border: 1px solid #EEE;
+  color: #EEE;
+  font-size: 70%;
+  opacity: .8;
+  padding: 2%;
+  font-size: 100%;
+  cursor: pointer;
+  border-radius: 10%;
+  margin-right: 2%;
+  }
+
+.loginbtn:hover{
+  border: 2px solid #8DB78D;
+  cursor: pointer;
+  background: none;
+}
+
+/*password required alert*/
+.nomatch {
+  color: #8DB78D;
+  text-align: center;
+  font-size: 100%;
+}
+
+/*Landing page leaf logo*/
+.logo {
+    height: 130px;
+    /*float: left;*/
+    margin-left: 290%;
+    margin-top: 0%;
+}
+
+.logo-img {
+    float: left;
+}
+
+/* PIM on Register page*/
+.pim {
+    color: #EEE;
+    text-align: center;
+    font-size: 180%;
+    font-weight: 300;
+}
+
+/*Register page bottle logo*/
+.logo1{
+  height:60px;
+  display: block;
+  margin: 0 auto;
+
+}
+
+/*required fields alert on register page*/
+.errors {
+  font-size: 25%;
+  float: right;
+  margin-right: 20%;
+  color: #8DB78D;
+}
+
+/*spacing*/
+.nav {
+    float: left;
+}
+
+.signup{
+  width:100px;
+  height:25px;
+  display: block;
+  margin:0 auto;
+  margin-top: 10%;
+}
+
+/*Landing page SIGN UP button*/
+.registerbtn{
+  background-color: transparent;
+  border: 2px solid #EEE;
+  color: #EEE;
+  text-align: center;
+  font-size: 60%;
+  border-radius: 10%;
+  font-size: 185%;
+  margin: 0 auto;
+  display: block;
+  margin-top: 10%;
+}
+
+.registerbtn:hover{
+  border: 3px solid #8DB78D;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+/*Remove underline from SIGN UP button*/
+a:link {
+  text-decoration: none;
+}

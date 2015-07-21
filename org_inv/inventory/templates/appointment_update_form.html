@@ -1,12 +1,26 @@
 {% extends "base.html" %}
 
+{% block pagetitle %}
+  <h1 class="main-heading">Update Appointment</h1>
+{% endblock %}
 
 {% block content %}
 <div class="main-content-header">
-  <h2 class="secondary-heading">Header</h2>
+  <h2 class="secondary-heading">Update Appointment</h2>
 </div>
-    <form action="" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Update"/>
-    </form>
+  <div class="form-container">
+    <form class="main-form" action="" method="post">
+      {% csrf_token %}
+      {% for field in form %}
+         <div class="{{ field.label }} input">
+
+             <span class="focus-out">{{ field.label_tag }} </span> {{ field }}
+             {{ field.errors }}
+         </div>
+     {% endfor %}
+
+      <!-- Provide a button to click to submit the form. -->
+      <button class="form-button" type="submit" name="submit">Update</button>
+  </form>
+</div>
 {% endblock %}

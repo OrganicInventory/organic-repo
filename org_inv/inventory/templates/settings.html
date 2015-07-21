@@ -1,0 +1,82 @@
+<body class="user-profile-body">
+{% extends "base.html" %}
+
+{% block pagetitle %}
+  <h1 class="main-heading">Settings</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="brand-div-right">
+    <table class="content-table content-table-links table-mobile table-upc">
+    <tr class="table-header">
+            <th><h1 class='threshold-header'>Current Low Inventory Threshold: {{ request.user.profile.threshold }}%</h1></th>
+        </tr>
+
+        <form method="POST" action="">
+        {% csrf_token %}
+        <tr>
+        <td>
+        {% for field in form %}
+
+              <div class="{{ field.label }} input">
+
+                  <h2 class="settings-h2">Enter New Threshold: {{ field }}</h2>
+                  {{ field.errors }}
+              </div>
+
+          {% endfor %}
+        <button type="submit" name="thresh-submit" class="gen-btn">Update Threshold</button></form>
+    </td>
+    </tr>
+        </table>
+    </div>
+
+    <div class="brand-div-bottom-right">
+    <table class="content-table content-table-links table-mobile table-upc">
+    <tr class="table-header">
+            <th><h1 class='threshold-header'>Current Default Order Interval: {{ request.user.profile.interval }} days</h1></th>
+        </tr>
+
+        <form method="POST" action="">
+        {% csrf_token %}
+        <tr>
+        <td>
+        {% for field in form2 %}
+
+              <div class="{{ field.label }} input">
+
+                  <h2 class="settings-h2">Enter New Interval: {{ field }}</h2>
+                  {{ field.errors }}
+              </div>
+
+          {% endfor %}
+        <button type="submit" name="int-submit" class="gen-btn update-interval-btn">Update Interval</button></form>
+    </td>
+    </tr>
+        </table>
+    </div>
+    <script type="text/javascript">
+      var dateInterval = "{{ request.user.profile.interval }}";
+      console.log(dateInterval);
+    </script>
+
+
+    <div class="brand-div-left">
+<table class="content-table content-table-links table-mobile table-upc">
+        <tr class="table-header">
+            <th>Brand</th>
+            <th>Rep Email</th>
+            <th><a href="{% url 'create_brand' %}"><button class="gen-btn">Add New Brand</button></a></th>
+        </tr>
+    {% for brand in brands %}
+        <tr>
+        <td>{{ brand }}</td>
+            <td>{{ brand.email }}</td>
+        <td><a href="{% url 'update_email' brand.id %}"><button class="gen-btn">Edit</button></a></td>
+        </tr>
+    {% endfor %}
+    </table>
+    </div>
+
+{% endblock %}
+</body>

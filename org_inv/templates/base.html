@@ -4,40 +4,102 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Organic Inventory</title>
+    <title>PIM | Predictive Inventory Management</title>
     <link rel="stylesheet"  href="{% static 'css/reset.css' %}" />
     <link rel="stylesheet"  href="{% static 'css/main.css' %}" />
+    <link rel='stylesheet' href="{% static 'fullcalendar.min.css' %}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+    <script src="{% static 'fullcalendar.min.js' %}"></script>
     <link href="https://fontastic.s3.amazonaws.com/Cez3KECLTfVWYyJGtXZ3XW/icons.css" rel="stylesheet">
+
 </head>
-<body>
-  <header class="page-header">
-    <div class="top-nav-container">
-      <div class="user-icon"></div>
-      <span class="user-name">{{request.user.username}}</span>
-    </div>
-  </header>
-  <div class="wrapper">
-    <div class="page-logo"></div>
-    <div class="main-nav-container">
-      <h1 class="main-heading">All Products</h1>
-      <ul class="main-nav-ul">
-        <a href="/low"><li class="main-nav-li">Low Inventory</li></a>
-        <a href="/products"><li class="main-nav-li">All Products</li></a>
-        <a href="/services"><li class="main-nav-li">Services</li></a>
-        <a href="/appointments"><li class="main-nav-li">Appointments</li></a>
-      </ul>
-    </div>
-    <div class="main-content">
-      {% block content %}
+  <div class="click-catch"></div>
+  <div class="nav-dropdown-container">
+    <span class="nav-dropdown-btn">l</span>
+    {% block mobileadd %}
+    {% endblock %}
+  </div>
+  <div class="page-header-container">
+    <header class="page-header">
+      <div class="top-nav-container">
+        <div class="user-icon"><span class="user-icon-image"><a href="/index"><img src={% static 'css/logo_white_outline.png' %}></a></span></div>
+        <span class="user-name">
+          <span class="user-welcome">Welcome </span>
+          <a href="{% url 'edit_profile' %}">{{request.user.profile.spa_name}}</a>
+          </span>
+      </div>
+      <div class=""><span class="dropdown-icon">l</span></div>
+    </header>
+    <div class="page-title">
+      {% block pagetitle %}
       {% endblock %}
     </div>
-    <div class="test-container">
-      {% block addbutton %}
-      {% endblock %}
+    <div class="page-header-footer">
+      <div class="main-nav-container">
+        <ul class="main-nav-ul">
+          <a href="/index"><li class="main-nav-li settings-links mobile-li-bg">My Dashboard</li></a>
+          <a href="/low"><li class="main-nav-li low-inventory">Low Inventory</li></a>
+          <a href="/products"><li class="main-nav-li all-products">All Products</li></a>
+          <a href="/appointments"><li class="main-nav-li appointments">Appointments</li></a>
+          <a href="/services"><li class="main-nav-li services settings-links mobile-li-bg">Services</li></a>
+          <a href="/products/new_order"><li class="main-nav-li new-order settings-links mobile-li-bg">Receive Order</li></a>
+          <a href="{% url 'edit_profile' %}"><li class="main-nav-li settings-links">My Profile</li></a>
+          <a href="{% url 'close_shop' %}"><li class="main-nav-li settings-links">Close Shop</li></a>
+          <a href="/users/logout"><li class="main-nav-li settings-links">Logout</li></a>
+
+        </ul>
+      </div>
+      <div class="top-nav-container-hide">
+        <a href="/index"><div class="user-icon"><span class="user-icon-image"><img src={% static 'css/logo_white_outline.png' %}></span></div></a>
+      </div>
+      <div class=""><span class="dropdown-icon dropdown-icon-bottom">l</span></div>
     </div>
   </div>
+  <div class="slide-in-menu">
+    <span class="slide-in-menu-exit">m</span>
+    <ul class="submenu-ul">
+      <a href="/index"><li class="submenu-li">My Dashboard</li></a>
+      <a href="/services"><li class="submenu-li expand-services">Services</li></a>
+      <a href="/products/new_order"><li class="submenu-li sub-new-order">Receive Order</li></a>
+      <a href="{% url 'edit_profile' %}"><li class="submenu-li">My Profile</li></a>
+        <a href="{% url 'settings' %}"><li class="submenu-li">Settings</li></a>
+      <a href="{% url 'close_shop' %}"><li class="submenu-li">Close Shop</li></a>
+      <a href="/users/logout"><li class="submenu-li">Logout</li></a>
+    </ul>
+  </div>
+{% if messages %}
+<div class="messages">
+  {% for message in messages %}
+  <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+  {% endfor %}
+
+  <div class="success-exit">m</div>
+
+</div>
+{% endif %}
+  <div class="wrapper">
+    <!-- <div class="scanner-section"> -->
+      {% block scancontent %}
+      {% endblock %}
+    <!-- </div> -->
+    <div class="main-content">
+
+      {% block content %}
+      {% endblock %}
+
+    </div>
+    <!-- <div class="test-container"> -->
+      {% block addbutton %}
+      {% endblock %}
+    <!-- </div> -->
+  </div>
+<body>
+
+</body>
 
 <script src="{% static 'js/main.js' %}"></script>
+<body>
+
 </body>
 </html>

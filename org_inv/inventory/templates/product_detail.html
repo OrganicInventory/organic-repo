@@ -1,14 +1,50 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block pagetitle %}
+    <link href="{% static 'nv.d3.min.css' %}" rel="stylesheet">
+    <h1 class="main-heading">Product Details</h1>
+{% endblock %}
+
 {% block content %}
+    <div class="main-content-header">
+        <h2 class="secondary-heading">{{ object.name }}</h2>
+    </div>
+    <!-- <div class="list-container"> -->
+    <div class="prod-details-container">
+        {% if pic != None %}
+            <img class="prod-image" src="{{ pic }}" alt="product image" height="200" width="200">
+        {% endif %}
 
-<h3>Product Details</h3>
+    <img class="meter" src="{% static img %}">
 
-   Name:  {{ object.name }}<br>
-   Quantity: {{ object.quantity }}<br>
-   Max_Quantity: {{ object.max_quantity }}<br>
-   Size: {{ object.size }}<br>
-   User:  {{ object.user }}<br>
+        <ul class="list-container-ul">
+            <li class="list-container-li">Brand: {{ object.brand }}</li>
+            <li class="list-container-li">Quantity: {{ object.display_quantity|floatformat:2 }} units</li>
+            <li class="list-container-li">Max Quantity: {{ object.display_max_quantity|floatformat:2 }} units</li>
+            <li class="list-container-li">Size: {{ object.size }} oz.</li>
+            <li class="list-container-li">UPC: {{ object.upc_code }}</li>
+            <li class="list-container-li"><a href="{% url 'product_confirm_delete' product.id %}">
+                <button class="details-button">Delete</button>
+            </a><a href="{% url 'update_product' %}?upc={{ product.upc_code }}">
+                <button class="details-button">Edit</button></a></li>
 
-<a href="{% url 'product_confirm_delete' product.id %}">Delete</a>
+        </ul>
+
+
+    </div>
+
+    <!-- </div> -->
+    <div class="list-container-footer"></div>
+
+    <div id='product_chart'>
+        <svg style='height:500px'></svg>
+    </div>
+    <script src="{% static 'd3.min.js' %}"></script>
+    <script src="{% static 'nv.d3.min.js' %}"></script>
+    <script>
+        var productdata = {{ data|safe }};
+    </script>
+    <script src='{% static 'product_visualization.js' %}' type='text/javascript'></script>
 
 {% endblock %}

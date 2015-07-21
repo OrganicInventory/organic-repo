@@ -1,23 +1,81 @@
+<body class="low-inventory-body">
 {% extends "base.html" %}
+{% load static %}
+
+{% block pagetitle %}
+    <h1 class="main-heading">Low Inventory</h1>
+{% endblock %}
+
+{% block scancontent %}
+    <div class="date-dropdown-container">
+        <form method="get" action="{% url 'order' %}">
+            <input type="hidden" value="{{ range }}" name="range">
+            <button class="create-order-btn accent-btn" type="submit">Place Order</button>
+        </form>
+        <form class="date-dropdown-form" id='range' action="{% url 'low_products' %}">
+            <select class="date-dropdown" id='range' form="range" name="range" onchange="this.form.submit();">
+                <option selected disabled>Date Range</option>
+                <option value="1">1 Day</option>
+                <option value="7">1 Week</option>
+                <option value="14">2 Weeks</option>
+                <option value="30">1 Month</option>
+                <option value="60">2 Months</option>
+            </select>
+        </form>
+    </div>
+    <script type="text/javascript">
+      var dateInterval = "{{ request.user.profile.interval }}";
+
+    </script>
+{% endblock %}
+
 {% block content %}
 
-  <table class="content-table">
-    <tr class="table-header">
-      <th>Status</th>
-      <th>Title</th>
-      <th>Product Size</th>
-      <th>Qty</th>
-      <th></th>
-    </tr>
-    <tr class="padding-row"><td></td><td></td><td></td><td></td><td></td></tr>
-    {% if low %}
-      <td></td>
-        {% for key, value in low.items %}
-      <td>{{ key.name }}</td>
-      <td>{{ key.size }}oz.</td>
-      <td>{{ value|floatformat:2 }}oz. left in 2 weeks<br/>
-        {% endfor %}
-    {% else %}
-        <p>No products are currently low</p>
-    {% endif %}
+    <table class="content-table content-table-links table-mobile">
+        <tr class="table-header">
+            <th class="empty-column"></th>
+            <th>Title</th>
+            <th>Product Size</th>
+            <th>Date Low</th>
+            <th></th>
+        </tr>
+        {% if low %}
+            {% for key, value in low.items %}
+                <tr>
+                {% if key.ordered %}
+                    <td class="green">D</td>
+                    {% else %}
+                    {% if value.0 <= 0 %}
+                        <td class="red">p</td>
+                    {% else %}
+                        <td class="yellow">o</td>
+                    {% endif %}
+                {% endif %}
+                    <td>
+                        <a href="{% url 'product_detail' %}?upc={{ key.upc_code }}">
+                            <div class="table-id-link">
+                                {{ key.name }}
+                            </div>
+                        </a>
+                    </td>
+                    <td>{{ key.size }}oz.</td>
+                    <td>{{ value.1 }}</td>
+                    {#                    <td>{{ value|floatformat:2 }} oz. left in <span class="date-range-display">2 Weeks</span></td>#}
+                    <td><a href="{% url 'adjust_product' key.id %}">
+                        <button class="gen-btn">Adjust Inventory</button>
+                    </a></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td>No products are currently low</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        {% endif %}
+    </table>
+
 {% endblock %}
+</body>

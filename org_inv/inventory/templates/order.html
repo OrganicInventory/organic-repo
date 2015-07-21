@@ -1,0 +1,25 @@
+<body class="place-order-body">
+{% extends "base.html" %}
+
+{% block pagetitle %}
+    <h1 class="main-heading">Place Order</h1>
+{% endblock %}
+
+{% block content %}
+    <h2 class="secondary-heading">Place Order</h2>
+<div class="form-container">
+    <form class="main-form" method="POST" action="{% url 'order' %}">
+        {% csrf_token %}
+        {% for product, value in products %}
+        <div class="input">
+         <span class="focus-out">{{ product.brand }} {{ product.name }} ({{ product.size }} oz): </span>
+         <input class="form-control scan-input" type="text" name="{{ product.upc_code }}" value="{{ value.2 }}"/>
+        <div class="delete-item">m</div>
+        </div>
+
+        {% endfor %}
+        <button class="form-button" type="submit">Email Reps</button>
+    </form>
+</div>
+{% endblock %}
+</body>
