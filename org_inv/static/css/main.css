@@ -1031,8 +1031,9 @@ body.new-order-body li.sub-new-order {
 
 #product_chart {
     width: 90%;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     margin: 25px auto;
+    margin-top: 300px;
     padding-top: 25px;
     padding-bottom: 25px;
     padding-right: 25px;
@@ -1040,7 +1041,7 @@ body.new-order-body li.sub-new-order {
 
 #service_chart {
     width: 90%;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     margin: 25px auto;
     padding-top: 25px;
     padding-bottom: 25px;
@@ -1049,7 +1050,7 @@ body.new-order-body li.sub-new-order {
 
 #stock_chart {
     width: 90%;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     margin: 25px auto;
     padding-top: 25px;
     padding-bottom: 25px;
@@ -1174,7 +1175,8 @@ body.create-product-body .main-content,
 body.add-appointment-body .main-content,
 body.create-service-body .main-content,
 body.update-service-body .main-content,
-body.update-product-body .main-content {
+body.update-product-body .main-content,
+body.edit-profile-body .main-content {
   background-color: #e8e6e2;
 }
 
@@ -1182,7 +1184,8 @@ body.create-product-body .main-content .form-container,
 body.add-appointment-body .main-content .form-container,
 body.create-service-body .main-content .form-container,
 body.update-service-body .main-content .form-container,
-body.update-product-body .main-content .form-container {
+body.update-product-body .main-content .form-container,
+body.edit-profile-body .main-content .form-container {
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0);
@@ -1194,7 +1197,8 @@ body.create-product-body .main-content .form-container .focus-out,
 body.add-appointment-body .main-content .form-container .focus-out,
 body.create-service-body .main-content .form-container .focus-out,
 body.update-service-body .main-content .form-container .focus-out,
-body.update-product-body .main-content .form-container .focus-out {
+body.update-product-body .main-content .form-container .focus-out,
+body.edit-profile-body .main-content .form-container .focus-out {
     position: absolute;
     left: 70px;
 }
@@ -1208,7 +1212,9 @@ body.create-service-body .main-content select,
 body.update-service-body .main-content input,
 body.update-service-body .main-content select,
 body.update-product-body .main-content input,
-body.update-product-body .main-content select {
+body.update-product-body .main-content select,
+body.edit-profile-body .main-content input,
+body.edit-profile-body .main-content select {
   background-color: #e8e6e2;
   width: 80%;
 }
@@ -1218,7 +1224,8 @@ body.add-appointment-body .main-content .form-button,
 body.create-service-body .main-content .form-button,
 body.update-service-body .main-content .form-button,
 body.update-product-body .main-content .form-button,
-body.new-order-body .main-content .form-button {
+body.new-order-body .main-content .form-button,
+body.edit-profile-body .main-content .form-button {
   right: 50%;
   transform: translate(50%, 200%);
   width: 80%;
