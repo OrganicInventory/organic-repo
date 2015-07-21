@@ -791,20 +791,24 @@ table {
     position: absolute;
     left: 15%;
     top: 42%;
+    /*margin-bottom: 50px;*/
+    width: 40%;
 }
 
 .brand-div-right {
     position: absolute;
     right: 15%;
     top: 42%;
-    width: 325px;
+    /*width: 325px;*/
+    width: 25%;
 }
 
 .brand-div-bottom-right {
     position: absolute;
     right: 15%;
     top: 68%;
-    width: 325px;
+    /*width: 325px;*/
+    width: 25%;
 }
 
 .settings-container {
