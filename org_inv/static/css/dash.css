@@ -26,8 +26,42 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 50px;
+  height: 60px;
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+.user-icon-image {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+    width: 20%
+}
+
+.user-icon-image img {
+    width: 20%;
+}
+
+.top-nav-container {
+  position: absolute;
+  left: 50px;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.top-nav-ul a {
+  text-decoration: none;
+  color: #bebebe;
+}
+
+.top-nav-li {
+  display: inline-block;
+  padding: 10px 15px;
+  border-bottom: 3px solid rgba(0, 0, 0, 0);
+}
+
+.top-nav-li:hover {
+  border-bottom: 3px solid #b35b5a;
 }
 
 .header-dropdown-icon {
@@ -58,7 +92,7 @@ body {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#444c5a', endColorstr='#444c5a',GradientType=0 ); /* IE6-9 */
   width: 25%;
   position: fixed;
-  top: 50px;
+  top: 60px;
   right: 0;
   bottom: 0;
   z-index: 500;
@@ -205,17 +239,23 @@ body {
   /*height: 100px;*/
   position: absolute;
   left: 50%;
-  top: 30%;
-  transform: translate(-50%, -30%);
+  top: 70%;
+  transform: translate(-50%, -70%);
+}
+
+.welcome-user-heading {
+  padding-top: 50px;
+  font-size: 42px;
+  text-align: center;
 }
 
 .icon-nav-container {
-  /*background-color: green;*/
   position: absolute;
   width: 100%;
   height: 100px;
   top: 80%;
   transform: translate(0, -80%);
+  display: none;
 }
 
 .icon-nav-ul {
@@ -316,6 +356,15 @@ body {
   cursor: pointer;
   animation: icon-fade 2s ease infinite;
   opacity: 0.8;
+}
+
+.show-chart-icon-click {
+  font-family: untitled-font-1;
+  font-size: 40px;
+  cursor: pointer;
+  animation: icon-fade 2s ease infinite;
+  opacity: 0.8;
+  display: none;
 }
 
 #stock_chart {
