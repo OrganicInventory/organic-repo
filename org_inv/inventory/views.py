@@ -22,8 +22,6 @@ from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
     AmountFormSet, ThresholdForm, ProductUpdateForm, ProductNoQuantityForm, IntervalForm
 
 
-
-
 # Create your views here.
 
 
@@ -765,7 +763,7 @@ class SettingsView(LoginRequiredMixin, View):
     def post(self, request, **kwargs):
         form = ThresholdForm(request.POST)
         form2 = IntervalForm(request.POST)
-        if request.POST.get('thresh-submit'):
+        if request.POST.get('thresh-submit') == '':
             if form.is_valid():
                 amt = form.data['percent']
                 prof = request.user.profile
