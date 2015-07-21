@@ -35,11 +35,13 @@ body {
     left: 0;
     top: 50%;
     transform: translate(0, -50%);
-    width: 20%
+    width: 50px;
+    height: 50px;
 }
 
 .user-icon-image img {
-    width: 20%;
+    width: 50px;
+    height: 50px;
 }
 
 .top-nav-container {
@@ -91,11 +93,23 @@ body {
   background: linear-gradient(to bottom,  rgba(68,76,90,1) 0%,rgba(84,84,84,1) 50%,rgba(68,76,90,1) 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#444c5a', endColorstr='#444c5a',GradientType=0 ); /* IE6-9 */
   width: 25%;
+  max-width: 300px;
   position: fixed;
   top: 60px;
   right: 0;
   bottom: 0;
   z-index: 500;
+  display: none;
+}
+
+.click-catch {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 499;
   display: none;
 }
 
@@ -445,8 +459,8 @@ body {
     width: 300px;
     position: absolute;
     left: 50%;
-    top: 10%;
-    transform: translate(-50%, -10%);
+    top: 70%;
+    transform: translate(-50%, -70%);
     /*transition: 0.2s all ease;*/
   }
 
@@ -508,8 +522,14 @@ body {
   }
 
   .page-logo {
-    top: -30px;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
     transition: 0.5s all ease;
+  }
+
+  .welcome-user-heading {
+    display: none;
   }
 
   .display-icon-text, .secondary-heading {
@@ -551,6 +571,10 @@ body {
     background: rgba(68, 76, 90, 0.8);
   }
 
+  .page-logo {
+    top: -40px;
+  }
+
   .products-container, .appointments-container, .products-list-container, .appointments-list-container {
     background-color: inherit;
     height: 250px;
@@ -572,6 +596,10 @@ body {
 
   .appointments-container {
     top: 34%;
+  }
+
+  .place-order-btn {
+    display: none;
   }
 
   .products-container {

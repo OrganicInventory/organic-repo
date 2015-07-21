@@ -10,7 +10,7 @@
 
     <h2 class="secondary-heading">Edit Profile</h2>
 
-    <div class="edit-profile-container">
+    <div class="form-container">
       <form class="main-form" method="POST" action="{% url 'edit_profile' %}">
           {% csrf_token %}
           {% for field in form %}
@@ -21,7 +21,7 @@
               </div>
           {% endfor %}
           <!-- Provide a button to click to submit the form. -->
-          <button type="submit" name="submit" class="gen-btn" value="Update profile">Update Profile</button>
+          <button type="submit" name="submit" class="form-button" value="Update profile">Update Profile</button>
       </form>
     </div>
 

@@ -23,6 +23,7 @@ from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
 
 
 
+
 # Create your views here.
 
 
@@ -142,7 +143,7 @@ class ProductUpdate(LoginRequiredMixin, UpdateView):
             return form_class(self.request, **self.get_form_kwargs())
 
     def get_initial(self):
-        return {'max_quantity':self.object.display_max_quantity}
+        return {'max_quantity': self.object.display_max_quantity}
 
     def get_success_url(self):
         return reverse('all_products')
@@ -840,6 +841,7 @@ def get_prod_data(request):
         else:
             date_set = {}
         values = []
+        aggregate = []
         usages = {}
         for date in sorted(date_set):
             usages[str(date)] = 0
@@ -847,7 +849,19 @@ def get_prod_data(request):
             for stock in date_stocks:
                 usages[str(stock.date)] = stock.used
         for key, value in sorted(usages.items(), key=lambda x: x[0]):
-            values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
+            aggregate.append((key, value))
+
+        def to_week(day_data):
+            sunday = datetime.strptime(str(day_data[0]), '%Y-%m-%d').strftime('%Y-%U-0')
+            return datetime.strptime(sunday, '%Y-%U-%w').strftime('%Y-%m-%d')
+
+        weekly = itertools.groupby(aggregate, to_week)
+
+        aggregate_weekly = (
+            (week, sum(day_usages for date, day_usages in usages))
+            for week, usages in weekly)
+        for week, value in aggregate_weekly:
+            values.append({'x': datetime.strptime(week, "%Y-%m-%d").timestamp(), 'y': value})
         if enabled:
             data.append({'values': values, 'key': product.name})
             enabled = False
@@ -867,6 +881,7 @@ def get_service_data(serv_id):
     else:
         date_set = {}
     values = []
+    aggregate = []
     usages = {}
     for date in sorted(date_set):
         usages[str(date)] = 0
@@ -878,45 +893,25 @@ def get_service_data(serv_id):
             else:
                 usages[appt_date] = 1
     for key, value in sorted(usages.items(), key=lambda x: x[0]):
-        values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
+        aggregate.append((key, value))
+
+    def to_week(day_data):
+        sunday = datetime.strptime(str(day_data[0]), '%Y-%m-%d').strftime('%Y-%U-0')
+        return datetime.strptime(sunday, '%Y-%U-%w').strftime('%Y-%m-%d')
+
+    weekly = itertools.groupby(aggregate, to_week)
+
+    aggregate_weekly = (
+        (week, sum(day_usages for date, day_usages in usages))
+        for week, usages in weekly)
+    for week, value in aggregate_weekly:
+        values.append({'x': datetime.strptime(week, "%Y-%m-%d").timestamp(), 'y': value})
     data = []
     data.append({'values': values, 'key': 'number of appointments', 'area': 'True'})
     return data
 
 
 #######################################################################################################################
-
-def get_all_service_data(request):
-    services = Service.objects.filter(user=request.user).order_by('name')
-    data = []
-    enabled = True
-    for service in services:
-        appts = Appointment.objects.filter(service=service).order_by('date')
-        if appts:
-            dates = sorted([appt.date for appt in appts])
-            date_set = set(dates[0] + timedelta(x) for x in range((dates[-1] - dates[0]).days))
-        else:
-            date_set = {}
-        values = []
-        usages = {}
-        for date in sorted(date_set):
-            usages[str(date)] = 0
-            date_appts = [appt for appt in appts if appt.date == date]
-            for appt in date_appts:
-                appt_date = str(appt.date)
-                if appt_date in usages.keys():
-                    usages[appt_date] += 1
-                else:
-                    usages[appt_date] = 1
-        for key, value in sorted(usages.items(), key=lambda x: x[0]):
-            values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
-        if enabled:
-            data.append({'values': values, 'key': service.name})
-            enabled = False
-        else:
-            data.append({'values': values, 'key': service.name, 'disabled': 'True'})
-    return data
-
 
 def get_all_service_data(request):
     services = Service.objects.filter(user=request.user).order_by('name')
@@ -994,12 +989,62 @@ def get_product(upc_code):
 def get_usage_data(prod_id):
     prod = Product.objects.get(pk=prod_id)
     stocks = Stock.objects.filter(product=prod, date__lte=datetime.today(),
-                                  date__gte=(datetime.today() - timedelta(days=365))).order_by('date')
+                                  date__gte=(datetime.today() - timedelta(days=91))).order_by('date')
+    delta = (date.today() - stocks[0].date).days
+    if delta > 91:
+        delta = 91
+    if stocks:
+        initial = stocks[0].stocked
+    else:
+        initial = prod.quantity
+    days = list((date.today() - timedelta(days=(delta + 7))) + timedelta(x) for x in
+                range((date.today() - (date.today() - timedelta(days=(delta + 7)))).days))
+    sundays = [day for day in days if day.isocalendar()[2] == 7]
     usage_values = []
     stock_values = []
-    for stock in stocks:
-        usage_values.append({'x': datetime.strptime(str(stock.date), "%Y-%m-%d").timestamp(), 'y': stock.used})
-        stock_values.append({'x': datetime.strptime(str(stock.date), "%Y-%m-%d").timestamp(), 'y': stock.stocked})
+    usages = {}
+    for sunday in sundays:
+        stock = [stock for stock in stocks if stock.date <= sunday]
+        if stock:
+            day = str(sunday)
+            usages[day] = usages.get(day, 0)
+            usages[day] += stock[-1].stocked
+            initial = stock[-1].stocked
+        else:
+            day = str(sunday)
+            usages[day] = usages.get(day, 0)
+            usages[day] += initial
+    for key, value in sorted(usages.items(), key=lambda x: x[0]):
+        stock_values.append({'x': datetime.strptime(str(key), "%Y-%m-%d").timestamp(), 'y': value})
+    if stocks:
+        dates = sorted([stock.date for stock in stocks])
+        date_set = set(dates[0] + timedelta(x) for x in range((dates[-1] - dates[0]).days))
+    else:
+        date_set = {}
+    aggregate = []
+    usages = {}
+    for day in sorted(date_set):
+        usages[str(day)] = 0
+        date_stocks = [stock for stock in stocks if stock.date == day]
+        for stock in date_stocks:
+            usages[str(stock.date)] = stock.used
+    for key, value in sorted(usages.items(), key=lambda x: x[0]):
+        aggregate.append((key, value))
+
+    def to_week(day_data):
+        sunday = datetime.strptime(str(day_data[0]), '%Y-%m-%d').strftime('%Y-%U-0')
+        return datetime.strptime(sunday, '%Y-%U-%w').strftime('%Y-%m-%d')
+
+    weekly = itertools.groupby(aggregate, to_week)
+
+    aggregate_weekly = (
+        (week, sum(day_usages for date, day_usages in usages))
+        for week, usages in weekly)
+    for week, value in aggregate_weekly:
+        usage_values.append({'x': datetime.strptime(week, "%Y-%m-%d").timestamp(), 'y': value})
+        # for stock in stocks:
+        #     usage_values.append({'x': datetime.strptime(str(stock.date), "%Y-%m-%d").timestamp(), 'y': stock.used})
+        # stock_values.append({'x': datetime.strptime(str(stock.date), "%Y-%m-%d").timestamp(), 'y': stock.stocked})
     data1 = []
     data1.append({'values': usage_values, 'key': 'product usage (oz)', 'area': 'True'})
     data1.append({'values': stock_values, 'key': 'product in stock (oz)', 'area': 'True'})
@@ -1046,12 +1091,13 @@ def get_all_usage_data(request):
             data.append({'values': values, 'key': product.name, 'disabled': 'True', 'area': 'True'})
     return data
 
+
 #######################################################################################################################
 
 def search_bar(request):
-	query = request.GET.get('upc')
-	if query:
-		results = Product.objects.filter(user=request.user, name__icontains=request.GET['upc'])
-	else:
-		results = Product.objects.all()
-	return render(request, 'search_results.html', {'results':results})
+    query = request.GET.get('upc')
+    if query:
+        results = Product.objects.filter(user=request.user, name__icontains=request.GET['upc'])
+    else:
+        results = Product.objects.all()
+    return render(request, 'search_results.html', {'results': results})
