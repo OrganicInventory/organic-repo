@@ -39,6 +39,7 @@ a:visited {
     font-family: untitled-font-1;
     font-size: 28px;
     max-width: 5px;
+    vertical-align: middle;
 }
 
 .empty-column {
@@ -1033,10 +1034,13 @@ body.new-order-body li.sub-new-order {
     width: 90%;
     /*border: 1px solid black;*/
     margin: 25px auto;
-    margin-top: 300px;
     padding-top: 25px;
     padding-bottom: 25px;
     padding-right: 25px;
+}
+
+body.edit-profile-body #product_chart {
+  margin-top: 300px;
 }
 
 #service_chart {
