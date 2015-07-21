@@ -13,7 +13,7 @@ body {
     background-color: #dfdcd6;
     background-color: #e5e3de;
     background-color: #e8e6e2;
-    /*background-color: #efedea;*/
+    /*background-color: #d8d8d8;*/
     font-family: sans-serif;
     color: #333;
 }
@@ -39,6 +39,18 @@ a:visited {
     font-family: untitled-font-1;
     font-size: 28px;
     max-width: 5px;
+    vertical-align: middle;
+}
+
+.click-catch {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 499;
+  display: none;
 }
 
 .empty-column {
@@ -264,8 +276,8 @@ body.user-profile-body .main-content {
     position: absolute;
     left: 0;
     top: 50%;
-    transform: translate(15%, -50%);
-    width: 200px;
+    transform: translate(0, -50%);
+    width: 300px;
     height: 40px;
     color: #eee;
     z-index: -1;
@@ -276,29 +288,24 @@ body.user-profile-body .main-content {
 }
 
 .user-icon {
-    width: 40px;
-    height: 40px;
-    /*border-radius: 100%;*/
-    /*background-color: rgba(255, 255, 255, 0.5);*/
+    width: 50px;
+    height: 50px;
     display: inline-block;
-    /*cursor: pointer;*/
-    /*font-family: untitled-font-1;*/
-    /*font-size: 32px;*/
-    text-align: center;
     position: relative;
+    left: 0;
+    top: 50%;
+    transform: translate(0, -50%);
 }
 
 .user-icon-image {
     position: absolute;
-    left: 50%;
+    left: 0;
     top: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
+    transform: translate(0, -50%);
+    width: 70%;
 }
 
 .user-icon-image img {
-    /*max-width: 40px;
-    max-width: 50px;*/
     width: 150%;
 }
 
@@ -318,7 +325,8 @@ body.user-profile-body .main-content {
 .user-name {
     display: inline-block;
     position: absolute;
-    transform: translate(0, 120%);
+    top: 30px;
+    /*transform: translate(0, 120%);*/
     margin-left: 6px;
     text-transform: uppercase;
     font-size: 12px;
@@ -773,14 +781,15 @@ table {
     position: absolute;
     left: 12%;
     top: 75%;
-    padding: 10px 15px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 12px 15px;
+    /*border: 1px solid rgba(0, 0, 0, 0.1);*/
+    border: none;
     background-color: #fff;
     cursor: pointer;
     outline: none;
     color: #333;
     border-radius: 5px;
-    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);
+    /*box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);*/
 }
 
 .brand-email {
@@ -793,20 +802,24 @@ table {
     position: absolute;
     left: 15%;
     top: 42%;
+    /*margin-bottom: 50px;*/
+    width: 40%;
 }
 
 .brand-div-right {
     position: absolute;
     right: 15%;
     top: 42%;
-    width: 325px;
+    /*width: 325px;*/
+    width: 25%;
 }
 
 .brand-div-bottom-right {
     position: absolute;
     right: 15%;
     top: 68%;
-    width: 325px;
+    /*width: 325px;*/
+    width: 25%;
 }
 
 .settings-container {
@@ -848,6 +861,14 @@ svg {
 #calendar h2 {
     font-family: sans-serif;
     font-size: 28px;
+}
+
+.fc-day-grid-event, #eventContent a, .fc-next-button, .fc-prev-button, .fc-today-button {
+  outline: none;
+}
+
+#eventContent .gen-btn {
+  width: 100%;
 }
 
 /*MODAL*/
@@ -914,7 +935,7 @@ th {
     top: 0;
     right: 0;
     bottom: 0;
-    width: 33%;
+    width: 25%;
     background-color: #444c5a;
     z-index: 10002;
     display: none;
@@ -927,7 +948,6 @@ th {
     right: 10px;
     top: 10px;
     padding: 10px;
-    /*background-color: blue;*/
     border-radius: 100%;
     color: #eee;
     font-size: 28px;
@@ -1030,20 +1050,25 @@ body.new-order-body li.sub-new-order {
     transform: translate(0, -50%);
     border-radius: 100%;
     cursor: pointer;
+    z-index: 1000;
 }
 
 #product_chart {
     width: 90%;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     margin: 25px auto;
     padding-top: 25px;
     padding-bottom: 25px;
     padding-right: 25px;
 }
 
+body.edit-profile-body #product_chart {
+  margin-top: 300px;
+}
+
 #service_chart {
     width: 90%;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     margin: 25px auto;
     padding-top: 25px;
     padding-bottom: 25px;
@@ -1052,7 +1077,7 @@ body.new-order-body li.sub-new-order {
 
 #stock_chart {
     width: 90%;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     margin: 25px auto;
     padding-top: 25px;
     padding-bottom: 25px;
@@ -1177,7 +1202,8 @@ body.create-product-body .main-content,
 body.add-appointment-body .main-content,
 body.create-service-body .main-content,
 body.update-service-body .main-content,
-body.update-product-body .main-content {
+body.update-product-body .main-content,
+body.edit-profile-body .main-content {
   background-color: #e8e6e2;
 }
 
@@ -1185,7 +1211,8 @@ body.create-product-body .main-content .form-container,
 body.add-appointment-body .main-content .form-container,
 body.create-service-body .main-content .form-container,
 body.update-service-body .main-content .form-container,
-body.update-product-body .main-content .form-container {
+body.update-product-body .main-content .form-container,
+body.edit-profile-body .main-content .form-container {
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0);
@@ -1197,7 +1224,8 @@ body.create-product-body .main-content .form-container .focus-out,
 body.add-appointment-body .main-content .form-container .focus-out,
 body.create-service-body .main-content .form-container .focus-out,
 body.update-service-body .main-content .form-container .focus-out,
-body.update-product-body .main-content .form-container .focus-out {
+body.update-product-body .main-content .form-container .focus-out,
+body.edit-profile-body .main-content .form-container .focus-out {
     position: absolute;
     left: 70px;
 }
@@ -1211,7 +1239,9 @@ body.create-service-body .main-content select,
 body.update-service-body .main-content input,
 body.update-service-body .main-content select,
 body.update-product-body .main-content input,
-body.update-product-body .main-content select {
+body.update-product-body .main-content select,
+body.edit-profile-body .main-content input,
+body.edit-profile-body .main-content select {
   background-color: #e8e6e2;
   width: 80%;
 }
@@ -1220,7 +1250,9 @@ body.create-product-body .main-content .form-button,
 body.add-appointment-body .main-content .form-button,
 body.create-service-body .main-content .form-button,
 body.update-service-body .main-content .form-button,
-body.update-product-body .main-content .form-button {
+body.update-product-body .main-content .form-button,
+body.new-order-body .main-content .form-button,
+body.edit-profile-body .main-content .form-button {
   right: 50%;
   transform: translate(50%, 200%);
   width: 80%;
@@ -1249,18 +1281,26 @@ body.update-product-body .main-content .form-button {
 }
 
 .display-chart-btn {
-    margin-bottom: 10px;
-    width: 50%;
-    cursor: pointer;
-    padding: 8px 22px;
-    cursor: pointer;
-    color: #333;
-    border: none;
-    outline: none;
-    background-color: #fff;
-    border-radius: 3px;
-    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);
-    float: right;
+  margin-bottom: 10px;
+  width: 50%;
+  cursor: pointer;
+  padding: 8px 22px;
+  cursor: pointer;
+  color: #333;
+  border: none;
+  outline: none;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);
+  float: right;
+}
+
+.accent-btn {
+  background-color: #88b288;
+  color: #eee;
+  border-radius: 3px;
+  padding: 10px 15px;
+  font-size: 13px;
 }
 
 

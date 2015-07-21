@@ -58,7 +58,7 @@ class AllProductsView(LoginRequiredMixin, ListView):
     model = Product
     context_object_name = 'all_products'
     template_name = 'all_products.html'
-    paginate_by = 10
+    paginate_by = 50
 
     def get_queryset(self):
         queryset = Product.objects.filter(user=self.request.user).order_by('name', 'size')
@@ -138,7 +138,10 @@ class ProductUpdate(LoginRequiredMixin, UpdateView):
     def get_form(self, form_class=None):
         if form_class is None:
             form_class = self.get_form_class()
-        return form_class(self.request, **self.get_form_kwargs())
+            return form_class(self.request, **self.get_form_kwargs())
+
+    def get_initial(self):
+        return {'max_quantity':self.object.display_max_quantity}
 
     def get_success_url(self):
         return reverse('all_products')
@@ -149,6 +152,7 @@ class ProductUpdate(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
+        self.object.max_quantity = float(form.data['max_quantity']) * self.object.size
         self.object.save()
         messages.add_message(self.request, messages.SUCCESS,
                              "Product updated")
@@ -955,7 +959,7 @@ def get_all_service_data(request):
 #######################################################################################################################
 
 def get_product(upc_code):
-    factual = Factual("NKesunTqQ4HJkZuf0snbTjvn1F6gKMG8DwTPJJVh", "suzMzZZLymEzvXHPm5BBO8dg8Zgy1FSeHBfX6Xae")
+    factual = Factual("gCKclwfy6eBki5UyHDxS56x7zmcvCMaGJ7l7v9cM", "Dt8V4ngb484Blmyaw5G9SxbycgpOsJL0ENckwxX0")
     products = factual.table('products')
     data = products.filters({'upc': {'$includes': upc_code}}).data()
     if data:
@@ -1034,3 +1038,13 @@ def get_all_usage_data(request):
         else:
             data.append({'values': values, 'key': product.name, 'disabled': 'True', 'area': 'True'})
     return data
+
+#######################################################################################################################
+
+def search_bar(request):
+	query = request.GET.get('upc')
+	if query:
+		results = Product.objects.filter(user=request.user, name__icontains=request.GET['upc'])
+	else:
+		results = Product.objects.all()
+	return render(request, 'search_results.html', {'results':results})
