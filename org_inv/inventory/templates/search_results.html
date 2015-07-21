@@ -1,1 +1,71 @@
-{{ results }}
+{% extends "base.html" %}
+{% load static %}
+
+{% block pagetitle %}
+    <h1 class="main-heading">Search Results</h1>
+{% endblock %}
+
+{% block mobileadd %}
+    <a href="/products/new">
+        <span class="add-btn-mobile">q</span>
+    </a>
+{% endblock %}
+{% block content %}
+    <table class="content-table content-table-links table-mobile table-upc">
+        <tr class="table-header">
+            <th class="empty-column"></th>
+            <th>Title</th>
+            <th>Product Size</th>
+            <th>Qty</th>
+            <th></th>
+        </tr>
+        {% for product in results %}
+            <tr data-upc="{{product.upc_code}}" name="{{product.name|lower}}">
+                {% if product in prods %}
+                    {% for pair in pairs %}
+                        {% if product == pair.0 %}
+                            {% if pair.1 <= 0 %}
+                                <td class="red">p</td>
+
+                            {% else %}
+                                <td class="yellow">o</td>
+
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <td class="status-td"></td>
+                {% endif %}
+
+                <td>
+                    <a href="{% url 'product_detail' %}?upc={{ product.upc_code }}">
+                        <div class="table-id-link">
+                            {{ product.name }}
+                        </div>
+                    </a>
+                </td>
+                <td>{{ product.size }}oz.</td>
+                <td>{{ product.display_quantity|floatformat:2 }}</td>
+                <td><a href="{% url 'product_empty' product.id %}">
+                    <button class="gen-btn">I'm Out</button>
+                </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="/products?page={{ page_obj.previous_page_number }}"><<</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="/products?page={{ page_obj.next_page_number }}">>></a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% endblock %}
