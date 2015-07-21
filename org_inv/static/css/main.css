@@ -1025,6 +1025,11 @@ body.new-order-body li.sub-new-order {
   left: 40px;
 }
 
+.scan-search {
+  position: absolute;
+  right: 40px;
+}
+
 .expand-services {
     cursor: pointer;
 }
