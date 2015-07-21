@@ -694,6 +694,26 @@ table {
     box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);
 }
 
+.gen-btn {
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 12px;
+  background-color: rgba(0, 0, 0, 0.08);
+  color: #333;
+}
+
+.gen-btn-dark {
+  padding: 8px 10px;
+  cursor: pointer;
+  color: #333;
+  border-radius: 2px;
+  border: none;
+  outline: none;
+  background-color: #eee;
+  border-radius: 3px;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);
+}
+
 .edit-btn {
     padding: 8px 16px;
 }
@@ -1082,6 +1102,13 @@ body.new-order-body li.sub-new-order {
 
 .scan-new, .scan-details, .scan-update, .scan-search {
   display: none;
+  font-size: 13px;
+  background-color: rgba(0, 0, 0, 0.08);
+  color: #333;
+}
+
+.scan-new:hover, .scan-details:hover, .scan-update:hover, .scan-search:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important;
 }
 
 .scan-update {
@@ -1092,6 +1119,7 @@ body.new-order-body li.sub-new-order {
 .scan-new {
   position: absolute;
   left: 40px;
+  width: 40%;
 }
 
 .scan-details {
@@ -1102,6 +1130,7 @@ body.new-order-body li.sub-new-order {
 .scan-search {
   position: absolute;
   right: 40px;
+  width: 40%;
 }
 
 .expand-services {
@@ -1229,6 +1258,9 @@ body.edit-profile-body #product_chart {
 .details-button:hover, .gen-btn:hover, .display-chart-btn:hover,
 .add-service-btn:hover, .add-products-btn:hover, .confirm:hover, .cancel:hover {
     background-color: #fff;
+}
+.gen-btn:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important;
 }
 
 .prod-brand {
@@ -1447,6 +1479,15 @@ body.place-order-body .main-content .form-button {
   border-radius: 3px;
   padding: 10px 15px;
   font-size: 13px;
+}
+
+.content-table td:last-child {
+  /*background-color: red;*/
+  text-align: right;
+}
+
+.header-btn th:last-child {
+  text-align: right;
 }
 
 
