@@ -22,7 +22,6 @@ from .forms import ServiceForm, ProductForm, AppointmentForm, AdjustUsageForm, \
     AmountFormSet, ThresholdForm, ProductUpdateForm, ProductNoQuantityForm, IntervalForm
 
 
-
 # Create your views here.
 
 
@@ -113,6 +112,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         form.instance.url = get_product(form.instance.upc_code)[1]
         form.instance.new_product_quantity(form.instance.quantity)
+        form.instance.max_quantity = (form.instance.max_quantity * form.instance.size)
         form.instance.save()
         messages.add_message(self.request, messages.SUCCESS,
                              "{} added.".format(form.instance.name))
@@ -141,7 +141,7 @@ class ProductUpdate(LoginRequiredMixin, UpdateView):
             return form_class(self.request, **self.get_form_kwargs())
 
     def get_initial(self):
-        return {'max_quantity':self.object.display_max_quantity}
+        return {'max_quantity': self.object.display_max_quantity}
 
     def get_success_url(self):
         return reverse('all_products')
@@ -763,7 +763,7 @@ class SettingsView(LoginRequiredMixin, View):
     def post(self, request, **kwargs):
         form = ThresholdForm(request.POST)
         form2 = IntervalForm(request.POST)
-        if request.POST.get('thresh-submit'):
+        if request.POST.get('thresh-submit') == '':
             if form.is_valid():
                 amt = form.data['percent']
                 prof = request.user.profile
@@ -872,14 +872,14 @@ def get_prod_data(request):
 
 def get_service_data(serv_id):
     service = Service.objects.get(id=serv_id)
-    appts = Appointment.objects.filter(service=service)
+    appts = Appointment.objects.filter(service=service, date__lte=datetime.today(),
+                                  date__gte=(datetime.today() - timedelta(days=31)))
     if appts:
         dates = sorted([appt.date for appt in appts])
         date_set = set(dates[0] + timedelta(x) for x in range((dates[-1] - dates[0]).days))
     else:
         date_set = {}
     values = []
-    aggregate = []
     usages = {}
     for date in sorted(date_set):
         usages[str(date)] = 0
@@ -891,23 +891,10 @@ def get_service_data(serv_id):
             else:
                 usages[appt_date] = 1
     for key, value in sorted(usages.items(), key=lambda x: x[0]):
-        aggregate.append((key, value))
-
-    def to_week(day_data):
-        sunday = datetime.strptime(str(day_data[0]), '%Y-%m-%d').strftime('%Y-%U-0')
-        return datetime.strptime(sunday, '%Y-%U-%w').strftime('%Y-%m-%d')
-
-    weekly = itertools.groupby(aggregate, to_week)
-
-    aggregate_weekly = (
-            (week, sum(day_usages for date, day_usages in usages))
-            for week, usages in weekly)
-    for week, value in aggregate_weekly:
-        values.append({'x': datetime.strptime(week, "%Y-%m-%d").timestamp(), 'y': value})
+        values.append({'x': datetime.strptime(key, "%Y-%m-%d").timestamp(), 'y': value})
     data = []
     data.append({'values': values, 'key': 'number of appointments', 'area': 'True'})
     return data
-
 
 #######################################################################################################################
 
@@ -998,7 +985,6 @@ def get_usage_data(prod_id):
     data1.append({'values': stock_values, 'key': 'product in stock (oz)', 'area': 'True'})
     return data1
 
-
 #######################################################################################################################
 
 def get_all_usage_data(request):
@@ -1039,13 +1025,13 @@ def get_all_usage_data(request):
             data.append({'values': values, 'key': product.name, 'disabled': 'True', 'area': 'True'})
     return data
 
+
 #######################################################################################################################
 
 def search_bar(request):
-	query = request.GET.get('upc')
-	if query:
-		results = Product.objects.filter(user=request.user, name__icontains=request.GET['upc'])
-	else:
-		results = Product.objects.all()
-	return render(request, 'search_results.html', {'results':results})
-
+    query = request.GET.get('upc')
+    if query:
+        results = Product.objects.filter(user=request.user, name__icontains=request.GET['upc'])
+    else:
+        results = Product.objects.all()
+    return render(request, 'search_results.html', {'results': results})
