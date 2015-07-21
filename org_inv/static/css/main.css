@@ -1006,7 +1006,7 @@ body.new-order-body li.sub-new-order {
     cursor: default;
 }
 
-.scan-new, .scan-details, .scan-update {
+.scan-new, .scan-details, .scan-update, .scan-search {
   display: none;
 }
 
