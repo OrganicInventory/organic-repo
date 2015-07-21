@@ -852,7 +852,7 @@ svg {
     font-size: 28px;
 }
 
-.fc-day-grid-event, #eventContent a {
+.fc-day-grid-event, #eventContent a, .fc-next-button, .fc-prev-button, .fc-today-button {
   outline: none;
 }
 
