@@ -4,10 +4,10 @@ body {
     background-repeat: no-repeat;
     background: url("./spa-spa_Fotor_Fotor.jpg");
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     width: 100%;
-font-family: 'Josefin Sans', sans-serif;
-   position: fixed;
+    font-family: 'Josefin Sans', sans-serif;
+    position: fixed;
     right: 0;
     left: 0;
     top: 0;
@@ -51,6 +51,8 @@ header{
   font-size: 50%;
   font-weight: 400;
   color: #8DB78D;
+  text-align: center;
+  margin-left: 43%;
 }
 
 /*Spacing for 3 landing page articles*/
@@ -190,10 +192,11 @@ button:hover {
 
 /*Landing page leaf logo*/
 .logo {
-    height: 130px;
+    height: 125px;
     /*float: left;*/
     margin-left: 290%;
-    margin-top: 0%;
+    margin-top: 0;
+    margin-right: 0;
 }
 
 .logo-img {
@@ -229,26 +232,26 @@ button:hover {
     float: left;
 }
 
-.signup{
-  width:100px;
-  height:25px;
-  display: block;
-  margin:0 auto;
-  margin-top: 10%;
-}
+
 
 /*Landing page SIGN UP button*/
+.signup{
+  width:120px;
+  height:0;
+  display: block;
+  margin:0 auto;
+}
+
+
 .registerbtn{
   background-color: transparent;
   border: 2px solid #EEE;
   color: #EEE;
   text-align: center;
-  font-size: 60%;
   border-radius: 10%;
   font-size: 185%;
   margin: 0 auto;
   display: block;
-  margin-top: 10%;
 }
 
 .registerbtn:hover{
@@ -256,6 +259,14 @@ button:hover {
   cursor: pointer;
   background-color: transparent;
 }
+
+.signup2{
+  height:0;
+  width: 150px;
+  display: block;
+  margin: 0 auto;
+}
+
 
 /*Remove underline from SIGN UP button*/
 a:link {
