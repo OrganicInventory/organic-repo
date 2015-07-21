@@ -47,4 +47,5 @@ urlpatterns = [
     url(r'^update_email/(?P<brand_id>\d+)$', inv_views.EmailUpdate.as_view(), name="update_email"),
     url(r'^brands/new', inv_views.BrandCreateView.as_view(), name="create_brand"),
     url(r'^index/', inv_views.DashboardView.as_view(), name="dash"),
+	url(r'^search_results/$', inv_views.search_bar, name='search'),
 ]

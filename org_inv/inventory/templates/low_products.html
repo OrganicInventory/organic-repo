@@ -10,7 +10,7 @@
     <div class="date-dropdown-container">
         <form method="get" action="{% url 'order' %}">
             <input type="hidden" value="{{ range }}" name="range">
-            <button class="create-order-btn" type="submit">Place Order</button>
+            <button class="create-order-btn accent-btn" type="submit">Place Order</button>
         </form>
         <form class="date-dropdown-form" id='range' action="{% url 'low_products' %}">
             <select class="date-dropdown" id='range' form="range" name="range" onchange="this.form.submit();">
@@ -25,7 +25,7 @@
     </div>
     <script type="text/javascript">
       var dateInterval = "{{ request.user.profile.interval }}";
-      
+
     </script>
 {% endblock %}
 
@@ -42,11 +42,15 @@
         {% if low %}
             {% for key, value in low.items %}
                 <tr>
+                {% if key.ordered %}
+                    <td class="green">D</td>
+                    {% else %}
                     {% if value.0 <= 0 %}
                         <td class="red">p</td>
                     {% else %}
                         <td class="yellow">o</td>
                     {% endif %}
+                {% endif %}
                     <td>
                         <a href="{% url 'product_detail' %}?upc={{ key.upc_code }}">
                             <div class="table-id-link">
