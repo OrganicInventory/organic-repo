@@ -1,4 +1,4 @@
-<body class="user-profile-body">
+<body class="settings-body">
 {% extends "base.html" %}
 
 {% block pagetitle %}
@@ -15,7 +15,7 @@
         <form method="POST" action="">
         {% csrf_token %}
         <tr>
-        <td>
+        <td class="td-left-align">
         {% for field in form %}
 
               <div class="{{ field.label }} input">
@@ -25,7 +25,7 @@
               </div>
 
           {% endfor %}
-        <button type="submit" name="thresh-submit" class="gen-btn">Update Threshold</button>
+        <button type="submit" name="thresh-submit" class="gen-btn-dark">Update Threshold</button>
         </form>
     </td>
     </tr>
@@ -41,7 +41,7 @@
         <form method="POST" action="">
         {% csrf_token %}
         <tr>
-        <td>
+        <td class="td-left-align">
         {% for field in form2 %}
 
               <div class="{{ field.label }} input">
@@ -51,7 +51,7 @@
               </div>
 
           {% endfor %}
-        <button type="submit" name="int-submit" class="gen-btn update-interval-btn">Update Interval</button></form>
+        <button type="submit" name="int-submit" class="gen-btn-dark update-interval-btn">Update Interval</button></form>
     </td>
     </tr>
         </table>
@@ -63,11 +63,11 @@
 
 
     <div class="brand-div-left">
-<table class="content-table content-table-links table-mobile table-upc">
+<table class="content-table content-table-links table-mobile table-upc header-btn">
         <tr class="table-header">
             <th>Brand</th>
             <th>Rep Email</th>
-            <th><a href="{% url 'create_brand' %}"><button class="gen-btn">Add New Brand</button></a></th>
+            <th><a href="{% url 'create_brand' %}"><button class="gen-btn-dark">Add New Brand</button></a></th>
         </tr>
     {% for brand in brands %}
         <tr>

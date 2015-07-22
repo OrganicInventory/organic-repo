@@ -244,6 +244,7 @@ body.appointments-body li.appointments {
     padding: 15px 10px;
     margin: 5px 9px;
     cursor: pointer;
+    -webkit-transition: 0.2s all ease-out;
     transition: 0.2s all ease-out;
     /*border-radius: 10px 10px 0 0;*/
     color: #eee;
@@ -290,6 +291,7 @@ body.update-service-body select {
 body.new-order-body .main-content .form-container {
     position: absolute;
     left: 50%;
+    -webkit-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
 }
 
@@ -305,6 +307,7 @@ body.edit-profile-body .main-form .focus-out {
 body.new-order-body .main-content .form-button,
 body.place-order-body .main-content .form-button {
     right: 50%;
+    -webkit-transform: translate(50%, 200%);
     transform: translate(50%, 200%);
     width: 100%;
     padding: 15px 0;
@@ -320,6 +323,7 @@ body.user-profile-body .main-content {
     position: absolute;
     left: 0;
     top: 50%;
+    -webkit-transform: translate(0, -50%);
     transform: translate(0, -50%);
     width: 300px;
     height: 40px;
@@ -338,6 +342,7 @@ body.user-profile-body .main-content {
     position: relative;
     left: 0;
     top: 50%;
+    -webkit-transform: translate(0, -50%);
     transform: translate(0, -50%);
 }
 
@@ -345,6 +350,7 @@ body.user-profile-body .main-content {
     position: absolute;
     left: 0;
     top: 50%;
+    -webkit-transform: translate(0, -50%);
     transform: translate(0, -50%);
     width: 70%;
 }
@@ -382,7 +388,8 @@ body.user-profile-body .main-content {
     left: 0;
     top: 0;
     width: 100%;
-    transition: 2s all ease;
+    /*-webkit-transition: 2s all ease;
+    transition: 2s all ease;*/
 }
 
 /*MAIN NAV*/
@@ -634,6 +641,7 @@ table {
 
 .add-content-button:hover .add-button {
     transition: all 0.2s ease;
+    -webkit-transform: translate(-50%, -50%) scale(1.1) rotateZ(90deg);
     transform: translate(-50%, -50%) scale(1.1) rotateZ(90deg);
 }
 
@@ -643,6 +651,7 @@ table {
     position: absolute;
     top: 50%;
     left: 50%;
+    -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     color: #eee;
     transition: all 0.5s ease;
@@ -675,14 +684,35 @@ table {
     padding: 8px 10px;
     cursor: pointer;
     color: #333;
-    border-radius: 2px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
     border: none;
-    /*box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);*/
     outline: none;
     background-color: #eee;
     border-radius: 3px;
-    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.4);
+}
+
+.gen-btn {
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 12px;
+  background-color: rgba(0, 0, 0, 0.08);
+  color: #333;
+}
+
+table .gen-btn {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.gen-btn-dark {
+  padding: 8px 10px;
+  cursor: pointer;
+  color: #333;
+  border-radius: 2px;
+  border: none;
+  outline: none;
+  background-color: #eee;
+  border-radius: 3px;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);
 }
 
 .edit-btn {
@@ -710,11 +740,13 @@ table {
     margin: 0 auto;
     position: absolute;
     left: 50%;
+    -webkit-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
     font-size: 14px;
     border: none;
     background-color: #dfdcd6;
     background-color: #fff;
+    border-radius: 3px;
 }
 
 .scan-form {
@@ -776,6 +808,7 @@ table {
     position: absolute;
     top: 50%;
     left: 50%;
+    -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     color: #eee;
     transition: all 0.2s ease;
@@ -859,6 +892,7 @@ table {
     top: 68%;
     /*width: 325px;*/
     width: 25%;
+    margin-top: 50px;
 }
 
 .settings-container {
@@ -927,6 +961,7 @@ body.appointments-body .main-content {
   position: fixed !important;
   left: 50% !important;
   top: 50% !important;
+  -webkit-transform: translate(-50%, -50%) !important;
   transform: translate(-50%, -50%) !important;
 }
 
@@ -950,6 +985,7 @@ body.appointments-body .main-content {
     position: fixed;
     top: 50%;
     left: 50%;
+    -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
 
@@ -957,6 +993,7 @@ body.appointments-body .main-content {
     top: 50px;
     right: 50px;
     z-index: 10000;
+    -webkit-transform: rotateZ(135deg);
     transform: rotateZ(135deg);
     transition: 2s all ease;
     box-shadow: -2px -2px 10px rgba(0, 0, 0, 0.5);
@@ -1020,6 +1057,7 @@ th {
     cursor: pointer;
     top: 50%;
     right: 25px;
+    -webkit-transform: translate(0, -50%);
     transform: translate(0, -50%);
     transition: 0.2s color ease;
 }
@@ -1067,6 +1105,13 @@ body.new-order-body li.sub-new-order {
 
 .scan-new, .scan-details, .scan-update, .scan-search {
   display: none;
+  font-size: 13px;
+  background-color: rgba(0, 0, 0, 0.08);
+  color: #333;
+}
+
+.scan-new:hover, .scan-details:hover, .scan-update:hover, .scan-search:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important;
 }
 
 .scan-update {
@@ -1077,6 +1122,7 @@ body.new-order-body li.sub-new-order {
 .scan-new {
   position: absolute;
   left: 40px;
+  width: 40%;
 }
 
 .scan-details {
@@ -1087,6 +1133,7 @@ body.new-order-body li.sub-new-order {
 .scan-search {
   position: absolute;
   right: 40px;
+  width: 40%;
 }
 
 .expand-services {
@@ -1096,7 +1143,7 @@ body.new-order-body li.sub-new-order {
 .delete-item {
     font-family: untitled-font-1;
     position: absolute;
-    right: 100;
+    right: 0;
     margin-bottom: -50px;
     cursor: pointer;
     bottom: 65px;
@@ -1111,6 +1158,7 @@ body.new-order-body li.sub-new-order {
     position: absolute;
     right: 20px;
     top: 50%;
+    -webkit-transform: translate(0, -50%);
     transform: translate(0, -50%);
     border-radius: 100%;
     cursor: pointer;
@@ -1167,6 +1215,7 @@ body.edit-profile-body #product_chart {
   position: absolute;
   left: 50%;
   top: 50%;
+  -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
 
@@ -1194,6 +1243,7 @@ body.edit-profile-body #product_chart {
   position: absolute;
   height: 50px;
   left: 50%;
+  -webkit-transform: translate(-50%, 0);
   transform: translate(-50%, 0);
   bottom: 0;
 }
@@ -1211,6 +1261,9 @@ body.edit-profile-body #product_chart {
 .details-button:hover, .gen-btn:hover, .display-chart-btn:hover,
 .add-service-btn:hover, .add-products-btn:hover, .confirm:hover, .cancel:hover {
     background-color: #fff;
+}
+.gen-btn:hover {
+  background-color: rgba(0, 0, 0, 0.02) !important;
 }
 
 .prod-brand {
@@ -1242,6 +1295,7 @@ body.edit-profile-body #product_chart {
   position: absolute;
   top: 50%;
   right: 0;
+  -webkit-transform: translate(0, -50%);
   transform: translate(0, -50%);
 }
 
@@ -1269,6 +1323,7 @@ body.edit-profile-body #product_chart {
     left: 50%;
     bottom: 0;
     margin-top: 60px;
+    -webkit-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
     width: 80%;
     background-color: #f5f5f5;
@@ -1311,7 +1366,8 @@ body.update-product-body .main-content,
 body.edit-profile-body .main-content,
 body.product-details-body .main-content,
 body.adjust-usage-body .main-content,
-body.adjust-product-body .main-content {
+body.adjust-product-body .main-content,
+body.place-order-body .main-content {
   background-color: #e8e6e2;
 }
 
@@ -1322,9 +1378,11 @@ body.update-service-body .main-content .form-container,
 body.update-product-body .main-content .form-container,
 body.edit-profile-body .main-content .form-container,
 body.adjust-usage-body .main-content .form-container,
-body.adjust-product-body .main-content .form-container {
+body.adjust-product-body .main-content .form-container,
+body.place-order-body .main-content .form-container {
   position: absolute;
   left: 50%;
+  -webkit-transform: translate(-50%, 0);
   transform: translate(-50%, 0);
   margin-top: -20px;
   margin-bottom: 80px;
@@ -1337,7 +1395,8 @@ body.update-service-body .main-content .form-container .focus-out,
 body.update-product-body .main-content .form-container .focus-out,
 body.edit-profile-body .main-content .form-container .focus-out,
 body.adjust-usage-body .main-content .form-container .focus-out,
-body.adjust-product-body .main-content .form-container .focus-out {
+body.adjust-product-body .main-content .form-container .focus-out,
+body.place-order-body .main-content .form-container .focus-out {
     position: absolute;
     left: 70px;
 }
@@ -1357,7 +1416,9 @@ body.edit-profile-body .main-content select,
 body.adjust-usage-body .main-content input,
 body.adjust-usage-body .main-content select,
 body.adjust-product-body .main-content input,
-body.adjust-product-body .main-content select {
+body.adjust-product-body .main-content select,
+body.place-order-body .main-content input,
+body.place-order-body .main-content select {
   background-color: #e8e6e2;
   width: 80%;
 }
@@ -1370,8 +1431,10 @@ body.update-product-body .main-content .form-button,
 body.new-order-body .main-content .form-button,
 body.edit-profile-body .main-content .form-button,
 body.adjust-usage-body .main-content .form-button,
-body.adjust-product-body .main-content .form-button {
+body.adjust-product-body .main-content .form-button,
+body.place-order-body .main-content .form-button {
   right: 50%;
+  -webkit-transform: translate(50%, 200%);
   transform: translate(50%, 200%);
   width: 80%;
   padding: 15px 0;
@@ -1421,6 +1484,17 @@ body.adjust-product-body .main-content .form-button {
   font-size: 13px;
 }
 
+.content-table td:last-child {
+  text-align: right;
+}
+
+.header-btn th:last-child {
+  text-align: right;
+}
+
+.content-table .td-left-align {
+  text-align: left !important;
+}
 
 
 /*RESPONSIVE*/
@@ -1437,7 +1511,8 @@ body.adjust-product-body .main-content .form-button {
     }
 
     .add-content-button, .close-shop {
-        transform: translate(50%, 0);
+      -webkit-transform: translate(50%, 0);
+      transform: translate(50%, 0);
     }
 
     body.low-inventory-body li.low-inventory, body.all-products-body li.all-products,
@@ -1627,6 +1702,7 @@ body.adjust-product-body .main-content .form-button {
         position: absolute;
         bottom: 5px;
         right: 50px;
+        -webkit-transform: translate(50%, 0);
         transform: translate(50%, 0);
         border: 1px solid rgba(0, 0, 0, 0.1);
         background-color: #eee;
