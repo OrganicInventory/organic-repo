@@ -129,6 +129,10 @@ $(function () {
       } else {
         $('.scan-search').css('display', 'none');
       }
+
+      if ($(this).val() === '') {
+        $('.scan-new').css('display', 'none');
+      }
     });
 
     $('.scan-form').keypress(function (e) {
