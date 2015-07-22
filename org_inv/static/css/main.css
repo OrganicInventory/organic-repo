@@ -684,14 +684,11 @@ table {
     padding: 8px 10px;
     cursor: pointer;
     color: #333;
-    border-radius: 2px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
     border: none;
-    /*box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);*/
     outline: none;
     background-color: #eee;
     border-radius: 3px;
-    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.4);
 }
 
 .gen-btn {
@@ -700,6 +697,10 @@ table {
   font-size: 12px;
   background-color: rgba(0, 0, 0, 0.08);
   color: #333;
+}
+
+table .gen-btn {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .gen-btn-dark {
@@ -745,6 +746,7 @@ table {
     border: none;
     background-color: #dfdcd6;
     background-color: #fff;
+    border-radius: 3px;
 }
 
 .scan-form {
@@ -1261,7 +1263,7 @@ body.edit-profile-body #product_chart {
     background-color: #fff;
 }
 .gen-btn:hover {
-  background-color: rgba(0, 0, 0, 0.04) !important;
+  background-color: rgba(0, 0, 0, 0.02) !important;
 }
 
 .prod-brand {
@@ -1493,7 +1495,6 @@ body.place-order-body .main-content .form-button {
 .content-table .td-left-align {
   text-align: left !important;
 }
-
 
 
 /*RESPONSIVE*/

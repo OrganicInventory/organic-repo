@@ -46,7 +46,9 @@
               <li class="appointments-li">{{ appt }} <span class="appointment-value">{{ value }}</span></li>
           {% endfor %}
         </ul>
-        <a href="{% url 'all_appointments' %}"><button class="place-order-btn">View All Appointments</button></a>
+        <div class="appt-btn-container">
+          <a href="{% url 'all_appointments' %}"><button class="place-order-btn">View All Appointments</button></a>
+        </div>
       </div>
       </div>
 
@@ -63,7 +65,9 @@
         </ul>
         <!-- <p>Want to place an order? Go  <a href="{% url 'low_products' %}">here</a></p> -->
         <!-- <a href="{% url 'low_products' %}"><button class="main-button product-button">Place an Order</button></a> -->
-        <a href="{% url 'low_products' %}"><button class="place-order-btn">Place an Order</button></a>
+        <div class="order-btn-container">
+          <a href="{% url 'low_products' %}"><button class="place-order-btn">Place an Order</button></a>
+        </div>
       </div>
       </div>
       <div class="middle-content-container">

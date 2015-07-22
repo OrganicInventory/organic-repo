@@ -176,6 +176,20 @@ body {
   color: #b35b5a;
 }
 
+.appt-btn-container {
+  position: fixed;
+  top: 580px;
+  width: 300px;
+  height: 50px;
+}
+
+.order-btn-container {
+  position: fixed;
+  top: 580px;
+  width: 300px;
+  height: 50px;
+}
+
 .place-order-btn {
   position: absolute;
   bottom: 0;
@@ -259,14 +273,14 @@ body {
   /*height: 100px;*/
   position: absolute;
   left: 50%;
-  top: 70%;
+  top: 75%;
   -webkit-transform: translate(-50%, -70%);
   transform: translate(-50%, -70%);
 }
 
 .welcome-user-heading {
   padding-top: 50px;
-  font-size: 42px;
+  font-size: 38px;
   text-align: center;
 }
 
@@ -392,7 +406,7 @@ body {
 }
 
 #stock_chart {
-  width: 60%;
+  width: 75%;
   height: 400px;
   margin: 0 auto;
   margin-top: 50px;
@@ -449,6 +463,10 @@ body {
     .secondary-heading {
       font-size: 20px;
       transition: 0.2s all ease;
+    }
+
+    .welcome-user-heading {
+      font-size: 32px;
     }
 
     .icon-nav-li {
@@ -581,7 +599,7 @@ body {
     display: none;
   }*/
   body {
-    background: rgba(68, 76, 90, 0.8);
+    background: rgba(68, 76, 90, 1);
   }
 
   .page-logo {
