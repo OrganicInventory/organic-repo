@@ -17,6 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 import inventory.views as inv_views
 from django.contrib.auth import views
+from django.views.generic import RedirectView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -48,4 +49,6 @@ urlpatterns = [
     url(r'^brands/new', inv_views.BrandCreateView.as_view(), name="create_brand"),
     url(r'^index/', inv_views.DashboardView.as_view(), name="dash"),
 	url(r'^search_results/$', inv_views.search_bar, name='search'),
+	url(r'^favicon\.ico$', RedirectView.as_view(url='/static/favicon.ico'))
+
 ]
