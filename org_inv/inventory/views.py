@@ -748,7 +748,7 @@ class OrderView(View):
                 send_mail('Order from {} in {}'.format(request.user.profile.spa_name, request.user.profile.location),
                           message, settings.EMAIL_HOST_USER,
                           [brand.email], fail_silently=False)
-        return redirect('/products/')
+        return redirect('/low/')
 
 
 #######################################################################################################################
